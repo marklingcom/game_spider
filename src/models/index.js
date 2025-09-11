@@ -2,7 +2,6 @@ const { Sequelize } = require("sequelize");
 const SpinData = require("./SpinData");
 const JiliGameInfo = require("./JiliGameInfo");
 const JiliProto = require("./JiliProto");
-const JiliSpider = require("./JiliSpider");
 
 class DatabaseManager {
   constructor() {
@@ -29,7 +28,6 @@ class DatabaseManager {
       this.models.SpinData = SpinData(this.sequelize);
       this.models.JiliGameInfo = JiliGameInfo(this.sequelize);
       this.models.JiliProto = JiliProto(this.sequelize);
-      this.models.JiliSpider = JiliSpider(this.sequelize);
 
       return this.sequelize;
     } catch (error) {
