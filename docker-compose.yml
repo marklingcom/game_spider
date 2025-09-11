@@ -1,0 +1,32 @@
+services:
+  jili-spider:
+    build: .
+    container_name: jili-spider
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./config:/app/config
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    networks:
+      - jili-spider-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: jili-spider-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: aigc
+      MYSQL_USER: jili_spider
+      MYSQL_PASSWORD: jili_spider123
+    ports:
+      - "13306:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    networks:
+      - jili-spider-network
+
+networks:
+  jili-spider-network:
+    driver: bridge

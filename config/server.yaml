@@ -1,0 +1,49 @@
+proxy:
+  enable: false
+  server: http://127.0.0.1:1087
+
+db:
+  default:
+    type: mysql
+    dsn: root:m9KxXa7j@tcp(sss.cpigame.com:13306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
+
+config:
+  thread: 1
+  sleep: 0
+  auto_migrate: false
+  form: "huidu"
+
+betConfig:
+  bet: 50
+  buyBouns: false
+  extra: false
+
+awcConfig:
+  gameName: "Money Coming 2"
+
+huiduConfig:
+  coin: 100000
+  uid: 1641530
+  game_uid: b4a3e54cabeecd94ebbd1cc217a5b069
+  company_id: 1
+  uid_list:
+    - 7632856
+    - 7633004
+    - 7633124
+    - 7633167
+    - 7633257
+    - 7633277
+    - 7633299
+    - 7633335
+    - 7633361
+    - 7633397
+    - 7633421
+    - 7633453
+    - 7633474
+    - 7633496
+    - 7633516
+    - 7633544
+    - 7633568
+    - 7633588
+    - 7633606
+    - 7633621

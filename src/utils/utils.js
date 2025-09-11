@@ -1,0 +1,117 @@
+const crypto = require("crypto");
+const fs = require("fs");
+const TelegramBot = require("node-telegram-bot-api");
+
+function fromJson(jsonStr) {
+  try {
+    const decodedMap = JSON.parse(jsonStr);
+    const decodedBytes = [];
+
+    for (let i = 0; i < Object.keys(decodedMap).length; i++) {
+      decodedBytes.push(decodedMap[i.toString()]);
+    }
+
+    return Buffer.from(decodedBytes);
+  } catch (error) {
+    console.error("JSON解析失败:", error);
+    process.exit(-1);
+  }
+}
+
+function pkcs5UnPadding(origData) {
+  const length = origData.length;
+  const unpadding = origData[length - 1];
+  return origData.slice(0, length - unpadding);
+}
+
+function decrypted(token, gaiaResponse) {
+  try {
+    const key = Buffer.concat([
+      Buffer.from(token.slice(0, 16)),
+      Buffer.from(token.slice(-16)),
+    ]);
+
+    const iv = gaiaResponse.slice(0, 16);
+    const encryptedData = gaiaResponse.slice(16);
+
+    const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
+    decipher.setAutoPadding(false);
+
+    let decrypted = decipher.update(encryptedData);
+    decrypted = Buffer.concat([decrypted, decipher.final()]);
+
+    return pkcs5UnPadding(decrypted);
+  } catch (error) {
+    console.error("解密失败:", error);
+    throw error;
+  }
+}
+
+function reverseString(s) {
+  return s.split("").reverse().join("");
+}
+
+function createDirectoryIfNotExists(dir) {
+  try {
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+      console.log(`目录 ${dir} 创建成功`);
+    }
+  } catch (error) {
+    throw new Error(`创建目录失败: ${error.message}`);
+  }
+}
+
+function bytesToJSON(data) {
+  const result = {};
+
+  for (let i = 0; i < data.length; i++) {
+    result[i.toString()] = data[i];
+  }
+
+  return JSON.stringify(result);
+}
+
+function fileExists(filename) {
+  try {
+    fs.accessSync(filename);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+async function sendMessageToTelegram(message) {
+  try {
+    const botToken = "7534595370:AAEyHi8oAUJPhjI7ejIWRr7C2NtjPKQ4u3M";
+    const bot = new TelegramBot(botToken, { polling: false });
+
+    const chatId = 5682897061;
+
+    await bot.sendMessage(chatId, message);
+    console.log("Telegram消息发送成功");
+  } catch (error) {
+    console.error("Telegram消息发送失败:", error);
+    throw error;
+  }
+}
+
+function findValidDenominator(betArray) {
+  for (const bet of betArray) {
+    if (bet > 0) {
+      return [bet, true];
+    }
+  }
+  return [0, false];
+}
+
+module.exports = {
+  fromJson,
+  decrypted,
+  reverseString,
+  createDirectoryIfNotExists,
+  bytesToJSON,
+  fileExists,
+  sendMessageToTelegram,
+  findValidDenominator,
+};
