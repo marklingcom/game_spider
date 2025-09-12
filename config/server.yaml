@@ -3,14 +3,13 @@ proxy:
   server: http://127.0.0.1:1087
 
 db:
-  default:
-    type: mysql
-    dsn: root:m9KxXa7j@tcp(sss.cpigame.com:13306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
+  type: mysql
+  dsn: root:m9KxXa7j@tcp(sss.cpigame.com:13306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
 
 config:
   thread: 1
   sleep: 0
-  auto_migrate: false
+  autoMigrate: false
   form: "huidu"
 
 betConfig:
@@ -23,10 +22,12 @@ awcConfig:
 
 huiduConfig:
   coin: 100000
-  uid: 1641530
-  game_uid: b4a3e54cabeecd94ebbd1cc217a5b069
-  company_id: 1
-  uid_list:
+  # uid: 1641530
+  uid: 7632856
+  # game_uid: b4a3e54cabeecd94ebbd1cc217a5b069
+  gameUid: f301fe0b22d1540b1f215d282b20c642
+  companyId: 1
+  uidList:
     - 7632856
     - 7633004
     - 7633124
