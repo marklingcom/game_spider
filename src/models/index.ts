@@ -67,6 +67,39 @@ export default class DatabaseManager {
   getDB(): Sequelize | null {
     return this.sequelize;
   }
+
+  async ensureTableExists(tabName: string): Promise<any> {
+    try {
+      if (this.models[tabName as keyof Models]) {
+        return this.models[tabName as keyof Models];
+      }
+
+      if (!this.sequelize) {
+        throw new Error('数据库未初始化');
+      }
+
+      const tables = await this.sequelize.getQueryInterface().showAllTables();
+      if (!tables.includes(tabName)) {
+        const model = this.getModel('SpinData');
+        const attributes = model.getAttributes();
+
+        await this.sequelize.getQueryInterface().createTable(tabName, attributes);
+        console.log(`Created table: ${tabName}`);
+      }
+
+      const model = this.getModel('SpinData');
+      const tableModel = this.sequelize.define(tabName, model.getAttributes(), {
+        tableName: tabName,
+        timestamps: false,
+      });
+
+      (this.models as any)[tabName] = tableModel;
+      return tableModel;
+    } catch (error) {
+      console.error(`Failed to ensure table exists: ${tabName}`, error);
+      throw error;
+    }
+  }
 }
 
 export const dbManager = new DatabaseManager();

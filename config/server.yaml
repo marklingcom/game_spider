@@ -6,14 +6,12 @@ db:
   type: mysql
   dsn: root:m9KxXa7j@tcp(sss.cpigame.com:13306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
 
-config:
-  thread: 1
-  sleep: 0
+spiderConfig:
   autoMigrate: false
   form: "huidu"
 
 betConfig:
-  bet: 50
+  # bet: 50
   buyBouns: false
   extra: false
 
@@ -25,6 +23,7 @@ huiduConfig:
   # uid: 1641530
   uid: 7632856
   # game_uid: b4a3e54cabeecd94ebbd1cc217a5b069
+  # gameUid: b4a3e54cabeecd94ebbd1cc217a5b069
   gameUid: f301fe0b22d1540b1f215d282b20c642
   companyId: 1
   uidList:

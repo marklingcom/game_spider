@@ -717,34 +717,34 @@ message VipSignRewardResp {
 }
 // Spin 请求消息
 message SpinReq {
-  double bet = 1;
-  uint32 cheat = 2;
-  uint32 itemIndex = 3;
-  uint32 itemID = 4;
-  int32 currencyNumber = 7;
-  double mallBet = 8;
-  uint32 vip = 9;
-  bytes customReq = 10;
-  bool isFree = 11;
-  uint32 Extra = 12;
-  uint32 Level = 13;
-  int32 BDType = 14;
-  int32 BBTimes = 15;
-  double AccuMallBet = 16;
-  double GameMallBet = 17;
-  int32 GameMallType = 18;
-  bool isr = 19;
-  int32 BuyCustomType = 20;
-  bool isturbo = 21;
-  ItemSpin item = 22;
-  MallSpin mall = 23;
-  BuySpin buy = 24;
-  SpecialCase special = 25;
-  ExtraSpin extraSpin = 26;
-  FreeSpin freeSpin = 27;
-  bytes clientRecord = 28;
-  SpecialBonus specialBonus = 29;
-  bool istournament = 30;
+  optional double bet = 1;
+  optional uint32 cheat = 2;
+  optional uint32 itemIndex = 3;
+  optional uint32 itemID = 4;
+  optional int32 currencyNumber = 7;
+  optional double mallBet = 8;
+  optional uint32 vip = 9;
+  optional bytes customReq = 10;
+  optional bool isFree = 11;
+  optional uint32 Extra = 12;
+  optional uint32 Level = 13;
+  optional int32 BDType = 14;
+  optional int32 BBTimes = 15;
+  optional double AccuMallBet = 16;
+  optional double GameMallBet = 17;
+  optional int32 GameMallType = 18;
+  optional bool isr = 19;
+  optional int32 BuyCustomType = 20;
+  optional bool isturbo = 21;
+  optional ItemSpin item = 22;
+  optional MallSpin mall = 23;
+  optional BuySpin buy = 24;
+  optional SpecialCase special = 25;
+  optional ExtraSpin extraSpin = 26;
+  optional FreeSpin freeSpin = 27;
+  optional bytes clientRecord = 28;
+  optional SpecialBonus specialBonus = 29;
+  optional bool istournament = 30;
 }
 // 客户端记录消息
 message ClientRecord {

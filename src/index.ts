@@ -9,7 +9,7 @@ async function main(): Promise<void> {
 
   await dbManager.initDB(configData.db);
 
-  if (configData.config.autoMigrate) {
+  if (configData.spiderConfig.autoMigrate) {
     console.log('🔄 运行数据库迁移...');
     try {
       await dbManager.sync(false);

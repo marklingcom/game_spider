@@ -1,7 +1,7 @@
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 import axios from 'axios';
 import protobuf from 'protobufjs';
+import { __protoGeneralDir } from '../utils/env';
 
 export interface SpiderData {
   token: string;
@@ -9,6 +9,7 @@ export interface SpiderData {
   name: string;
   from: string;
   webSocketData: Buffer;
+  gi: number;
 }
 
 interface JiliSSOLoginResponse {
@@ -130,9 +131,7 @@ export async function generateWebSocketData(
   accountId: string
 ): Promise<Buffer> {
   try {
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = dirname(__filename);
-    const protoPath = join(__dirname, '../proto/lifeServiceProto.proto');
+    const protoPath = join(__protoGeneralDir, 'lifeServiceProto.proto');
     const root = await protobuf.load(protoPath);
     const LifeServiceInitInfo = root.lookupType('lifeServiceProto.LifeServiceInitInfo');
 
@@ -187,6 +186,7 @@ export async function getGameInfoFromApi(gameUrl: string): Promise<SpiderData> {
       webSocketData: Buffer.alloc(0),
       spin: '',
       from: '',
+      gi: 0,
     };
 
     const params = parseJiliGameUrl(gameUrl);
@@ -195,6 +195,7 @@ export async function getGameInfoFromApi(gameUrl: string): Promise<SpiderData> {
     }
 
     ret.name = params.gameName;
+    ret.gi = parseInt(params.gameID, 10);
 
     if (!params.ssoKey) {
       throw new Error('ssoKey为空');

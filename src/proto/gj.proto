@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package gjProto;
+
+// Award data structure for slot machine wins
+message AwardData {
+    int32 Symbol = 1;    // Symbol ID that won
+    int32 Count = 2;     // Number of symbols
+    int32 Line = 3;      // Winning line number
+    double Win = 4;      // Win amount
+    double Mult = 5;     // Multiplier applied
+}
+
+// Column structure representing a reel
+message Column {
+    repeated int32 Col = 1;  // Array of symbol IDs in the column
+}
+
+// Information about a single game round
+message RoundInfo {
+    repeated Column PlateSymbol = 1;     // Symbol layout on all reels
+    repeated AwardData AwardDataVec = 2; // All awards won in this round
+    int32 AwardTypeFlag = 3;             // Type of award/feature triggered
+    int32 RespinColumn = 4;              // Which column triggered respin
+    int32 ToWildColumn = 5;              // Which column becomes wild
+    double Wheel = 6;                    // Wheel bonus value
+    double WheelWin = 7;                 // Amount won from wheel bonus
+    double RoundWin = 8;                 // Total win for this round
+    bool MaxFlag = 9;                    // Whether max win was achieved
+}
+
+// Response message for spin request
+message SpinAck {
+    repeated RoundInfo RoundQueue = 1;   // Queue of game rounds (base + bonus rounds)
+    double TotalWin = 2;                 // Total amount won across all rounds
+    string ShowIndex = 3;                // Display sequence identifier
+    double NowMoney = 4;                 // Player's current balance
+    int32 AckType = 5;                   // Response type identifier
+    bool Extra = 6;                      // Whether extra features are active
+    double RTP = 12;                     // Return to Player percentage
+    int32 LID = 13;                      // Line ID or configuration ID
+    int32 RID = 14;                      // Round ID
+}
+
+// Game configuration and setup information
+message GameInfoAck {
+    repeated double Mul = 6;             // Available multiplier values
+    repeated double WheelList = 9;       // Wheel bonus values configuration
+}

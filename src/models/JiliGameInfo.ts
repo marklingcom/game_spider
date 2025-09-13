@@ -1,6 +1,6 @@
 import { DataTypes, Model, type Sequelize } from 'sequelize';
 
-interface JiliGameInfoAttributes {
+export interface JiliGameInfoAttributes {
   id?: number;
   gi?: number;
   fullName?: string;

@@ -1,6 +1,6 @@
 import { DataTypes, Model, type Sequelize } from 'sequelize';
 
-interface JiliProtoAttributes {
+export interface JiliProtoAttributes {
   id?: number;
   name?: string;
   gi?: number;

@@ -1,6 +1,6 @@
 import { DataTypes, Model, type Sequelize } from 'sequelize';
 
-interface SpinDataAttributes {
+export interface SpinDataAttributes {
   id?: number;
   data?: Buffer;
   compress?: number;
@@ -11,7 +11,7 @@ interface SpinDataAttributes {
   createTime?: Date;
 }
 
-class SpinDataModel extends Model<SpinDataAttributes> implements SpinDataAttributes {
+export class SpinDataModel extends Model<SpinDataAttributes> implements SpinDataAttributes {
   declare id: number;
   declare data?: Buffer;
   declare compress?: number;

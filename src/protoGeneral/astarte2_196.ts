@@ -1771,117 +1771,117 @@ export interface VipSignRewardResp {
  */
 export interface SpinReq {
     /**
-     * @generated from protobuf field: double bet = 1
+     * @generated from protobuf field: optional double bet = 1
      */
-    bet: number;
+    bet?: number;
     /**
-     * @generated from protobuf field: uint32 cheat = 2
+     * @generated from protobuf field: optional uint32 cheat = 2
      */
-    cheat: number;
+    cheat?: number;
     /**
-     * @generated from protobuf field: uint32 itemIndex = 3
+     * @generated from protobuf field: optional uint32 itemIndex = 3
      */
-    itemIndex: number;
+    itemIndex?: number;
     /**
-     * @generated from protobuf field: uint32 itemID = 4
+     * @generated from protobuf field: optional uint32 itemID = 4
      */
-    itemID: number;
+    itemID?: number;
     /**
-     * @generated from protobuf field: int32 currencyNumber = 7
+     * @generated from protobuf field: optional int32 currencyNumber = 7
      */
-    currencyNumber: number;
+    currencyNumber?: number;
     /**
-     * @generated from protobuf field: double mallBet = 8
+     * @generated from protobuf field: optional double mallBet = 8
      */
-    mallBet: number;
+    mallBet?: number;
     /**
-     * @generated from protobuf field: uint32 vip = 9
+     * @generated from protobuf field: optional uint32 vip = 9
      */
-    vip: number;
+    vip?: number;
     /**
-     * @generated from protobuf field: bytes customReq = 10
+     * @generated from protobuf field: optional bytes customReq = 10
      */
-    customReq: Uint8Array;
+    customReq?: Uint8Array;
     /**
-     * @generated from protobuf field: bool isFree = 11
+     * @generated from protobuf field: optional bool isFree = 11
      */
-    isFree: boolean;
+    isFree?: boolean;
     /**
-     * @generated from protobuf field: uint32 Extra = 12
+     * @generated from protobuf field: optional uint32 Extra = 12
      */
-    extra: number;
+    extra?: number;
     /**
-     * @generated from protobuf field: uint32 Level = 13
+     * @generated from protobuf field: optional uint32 Level = 13
      */
-    level: number;
+    level?: number;
     /**
-     * @generated from protobuf field: int32 BDType = 14
+     * @generated from protobuf field: optional int32 BDType = 14
      */
-    bDType: number;
+    bDType?: number;
     /**
-     * @generated from protobuf field: int32 BBTimes = 15
+     * @generated from protobuf field: optional int32 BBTimes = 15
      */
-    bBTimes: number;
+    bBTimes?: number;
     /**
-     * @generated from protobuf field: double AccuMallBet = 16
+     * @generated from protobuf field: optional double AccuMallBet = 16
      */
-    accuMallBet: number;
+    accuMallBet?: number;
     /**
-     * @generated from protobuf field: double GameMallBet = 17
+     * @generated from protobuf field: optional double GameMallBet = 17
      */
-    gameMallBet: number;
+    gameMallBet?: number;
     /**
-     * @generated from protobuf field: int32 GameMallType = 18
+     * @generated from protobuf field: optional int32 GameMallType = 18
      */
-    gameMallType: number;
+    gameMallType?: number;
     /**
-     * @generated from protobuf field: bool isr = 19
+     * @generated from protobuf field: optional bool isr = 19
      */
-    isr: boolean;
+    isr?: boolean;
     /**
-     * @generated from protobuf field: int32 BuyCustomType = 20
+     * @generated from protobuf field: optional int32 BuyCustomType = 20
      */
-    buyCustomType: number;
+    buyCustomType?: number;
     /**
-     * @generated from protobuf field: bool isturbo = 21
+     * @generated from protobuf field: optional bool isturbo = 21
      */
-    isturbo: boolean;
+    isturbo?: boolean;
     /**
-     * @generated from protobuf field: serverProto.ItemSpin item = 22
+     * @generated from protobuf field: optional serverProto.ItemSpin item = 22
      */
     item?: ItemSpin;
     /**
-     * @generated from protobuf field: serverProto.MallSpin mall = 23
+     * @generated from protobuf field: optional serverProto.MallSpin mall = 23
      */
     mall?: MallSpin;
     /**
-     * @generated from protobuf field: serverProto.BuySpin buy = 24
+     * @generated from protobuf field: optional serverProto.BuySpin buy = 24
      */
     buy?: BuySpin;
     /**
-     * @generated from protobuf field: serverProto.SpecialCase special = 25
+     * @generated from protobuf field: optional serverProto.SpecialCase special = 25
      */
     special?: SpecialCase;
     /**
-     * @generated from protobuf field: serverProto.ExtraSpin extraSpin = 26
+     * @generated from protobuf field: optional serverProto.ExtraSpin extraSpin = 26
      */
     extraSpin?: ExtraSpin;
     /**
-     * @generated from protobuf field: serverProto.FreeSpin freeSpin = 27
+     * @generated from protobuf field: optional serverProto.FreeSpin freeSpin = 27
      */
     freeSpin?: FreeSpin;
     /**
-     * @generated from protobuf field: bytes clientRecord = 28
+     * @generated from protobuf field: optional bytes clientRecord = 28
      */
-    clientRecord: Uint8Array;
+    clientRecord?: Uint8Array;
     /**
-     * @generated from protobuf field: serverProto.SpecialBonus specialBonus = 29
+     * @generated from protobuf field: optional serverProto.SpecialBonus specialBonus = 29
      */
     specialBonus?: SpecialBonus;
     /**
-     * @generated from protobuf field: bool istournament = 30
+     * @generated from protobuf field: optional bool istournament = 30
      */
-    istournament: boolean;
+    istournament?: boolean;
 }
 /**
  * 客户端记录消息
@@ -7628,59 +7628,38 @@ export const VipSignRewardResp = new VipSignRewardResp$Type();
 class SpinReq$Type extends MessageType<SpinReq> {
     constructor() {
         super("serverProto.SpinReq", [
-            { no: 1, name: "bet", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 2, name: "cheat", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 3, name: "itemIndex", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 4, name: "itemID", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 7, name: "currencyNumber", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 8, name: "mallBet", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 9, name: "vip", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 10, name: "customReq", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 11, name: "isFree", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 12, name: "Extra", kind: "scalar", jsonName: "Extra", T: 13 /*ScalarType.UINT32*/ },
-            { no: 13, name: "Level", kind: "scalar", jsonName: "Level", T: 13 /*ScalarType.UINT32*/ },
-            { no: 14, name: "BDType", kind: "scalar", jsonName: "BDType", T: 5 /*ScalarType.INT32*/ },
-            { no: 15, name: "BBTimes", kind: "scalar", jsonName: "BBTimes", T: 5 /*ScalarType.INT32*/ },
-            { no: 16, name: "AccuMallBet", kind: "scalar", jsonName: "AccuMallBet", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 17, name: "GameMallBet", kind: "scalar", jsonName: "GameMallBet", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 18, name: "GameMallType", kind: "scalar", jsonName: "GameMallType", T: 5 /*ScalarType.INT32*/ },
-            { no: 19, name: "isr", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 20, name: "BuyCustomType", kind: "scalar", jsonName: "BuyCustomType", T: 5 /*ScalarType.INT32*/ },
-            { no: 21, name: "isturbo", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 1, name: "bet", kind: "scalar", opt: true, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 2, name: "cheat", kind: "scalar", opt: true, T: 13 /*ScalarType.UINT32*/ },
+            { no: 3, name: "itemIndex", kind: "scalar", opt: true, T: 13 /*ScalarType.UINT32*/ },
+            { no: 4, name: "itemID", kind: "scalar", opt: true, T: 13 /*ScalarType.UINT32*/ },
+            { no: 7, name: "currencyNumber", kind: "scalar", opt: true, T: 5 /*ScalarType.INT32*/ },
+            { no: 8, name: "mallBet", kind: "scalar", opt: true, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 9, name: "vip", kind: "scalar", opt: true, T: 13 /*ScalarType.UINT32*/ },
+            { no: 10, name: "customReq", kind: "scalar", opt: true, T: 12 /*ScalarType.BYTES*/ },
+            { no: 11, name: "isFree", kind: "scalar", opt: true, T: 8 /*ScalarType.BOOL*/ },
+            { no: 12, name: "Extra", kind: "scalar", jsonName: "Extra", opt: true, T: 13 /*ScalarType.UINT32*/ },
+            { no: 13, name: "Level", kind: "scalar", jsonName: "Level", opt: true, T: 13 /*ScalarType.UINT32*/ },
+            { no: 14, name: "BDType", kind: "scalar", jsonName: "BDType", opt: true, T: 5 /*ScalarType.INT32*/ },
+            { no: 15, name: "BBTimes", kind: "scalar", jsonName: "BBTimes", opt: true, T: 5 /*ScalarType.INT32*/ },
+            { no: 16, name: "AccuMallBet", kind: "scalar", jsonName: "AccuMallBet", opt: true, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 17, name: "GameMallBet", kind: "scalar", jsonName: "GameMallBet", opt: true, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 18, name: "GameMallType", kind: "scalar", jsonName: "GameMallType", opt: true, T: 5 /*ScalarType.INT32*/ },
+            { no: 19, name: "isr", kind: "scalar", opt: true, T: 8 /*ScalarType.BOOL*/ },
+            { no: 20, name: "BuyCustomType", kind: "scalar", jsonName: "BuyCustomType", opt: true, T: 5 /*ScalarType.INT32*/ },
+            { no: 21, name: "isturbo", kind: "scalar", opt: true, T: 8 /*ScalarType.BOOL*/ },
             { no: 22, name: "item", kind: "message", T: () => ItemSpin },
             { no: 23, name: "mall", kind: "message", T: () => MallSpin },
             { no: 24, name: "buy", kind: "message", T: () => BuySpin },
             { no: 25, name: "special", kind: "message", T: () => SpecialCase },
             { no: 26, name: "extraSpin", kind: "message", T: () => ExtraSpin },
             { no: 27, name: "freeSpin", kind: "message", T: () => FreeSpin },
-            { no: 28, name: "clientRecord", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 28, name: "clientRecord", kind: "scalar", opt: true, T: 12 /*ScalarType.BYTES*/ },
             { no: 29, name: "specialBonus", kind: "message", T: () => SpecialBonus },
-            { no: 30, name: "istournament", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 30, name: "istournament", kind: "scalar", opt: true, T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<SpinReq>): SpinReq {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.bet = 0;
-        message.cheat = 0;
-        message.itemIndex = 0;
-        message.itemID = 0;
-        message.currencyNumber = 0;
-        message.mallBet = 0;
-        message.vip = 0;
-        message.customReq = new Uint8Array(0);
-        message.isFree = false;
-        message.extra = 0;
-        message.level = 0;
-        message.bDType = 0;
-        message.bBTimes = 0;
-        message.accuMallBet = 0;
-        message.gameMallBet = 0;
-        message.gameMallType = 0;
-        message.isr = false;
-        message.buyCustomType = 0;
-        message.isturbo = false;
-        message.clientRecord = new Uint8Array(0);
-        message.istournament = false;
         if (value !== undefined)
             reflectionMergePartial<SpinReq>(this, message, value);
         return message;
@@ -7690,88 +7669,88 @@ class SpinReq$Type extends MessageType<SpinReq> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* double bet */ 1:
+                case /* optional double bet */ 1:
                     message.bet = reader.double();
                     break;
-                case /* uint32 cheat */ 2:
+                case /* optional uint32 cheat */ 2:
                     message.cheat = reader.uint32();
                     break;
-                case /* uint32 itemIndex */ 3:
+                case /* optional uint32 itemIndex */ 3:
                     message.itemIndex = reader.uint32();
                     break;
-                case /* uint32 itemID */ 4:
+                case /* optional uint32 itemID */ 4:
                     message.itemID = reader.uint32();
                     break;
-                case /* int32 currencyNumber */ 7:
+                case /* optional int32 currencyNumber */ 7:
                     message.currencyNumber = reader.int32();
                     break;
-                case /* double mallBet */ 8:
+                case /* optional double mallBet */ 8:
                     message.mallBet = reader.double();
                     break;
-                case /* uint32 vip */ 9:
+                case /* optional uint32 vip */ 9:
                     message.vip = reader.uint32();
                     break;
-                case /* bytes customReq */ 10:
+                case /* optional bytes customReq */ 10:
                     message.customReq = reader.bytes();
                     break;
-                case /* bool isFree */ 11:
+                case /* optional bool isFree */ 11:
                     message.isFree = reader.bool();
                     break;
-                case /* uint32 Extra */ 12:
+                case /* optional uint32 Extra */ 12:
                     message.extra = reader.uint32();
                     break;
-                case /* uint32 Level */ 13:
+                case /* optional uint32 Level */ 13:
                     message.level = reader.uint32();
                     break;
-                case /* int32 BDType */ 14:
+                case /* optional int32 BDType */ 14:
                     message.bDType = reader.int32();
                     break;
-                case /* int32 BBTimes */ 15:
+                case /* optional int32 BBTimes */ 15:
                     message.bBTimes = reader.int32();
                     break;
-                case /* double AccuMallBet */ 16:
+                case /* optional double AccuMallBet */ 16:
                     message.accuMallBet = reader.double();
                     break;
-                case /* double GameMallBet */ 17:
+                case /* optional double GameMallBet */ 17:
                     message.gameMallBet = reader.double();
                     break;
-                case /* int32 GameMallType */ 18:
+                case /* optional int32 GameMallType */ 18:
                     message.gameMallType = reader.int32();
                     break;
-                case /* bool isr */ 19:
+                case /* optional bool isr */ 19:
                     message.isr = reader.bool();
                     break;
-                case /* int32 BuyCustomType */ 20:
+                case /* optional int32 BuyCustomType */ 20:
                     message.buyCustomType = reader.int32();
                     break;
-                case /* bool isturbo */ 21:
+                case /* optional bool isturbo */ 21:
                     message.isturbo = reader.bool();
                     break;
-                case /* serverProto.ItemSpin item */ 22:
+                case /* optional serverProto.ItemSpin item */ 22:
                     message.item = ItemSpin.internalBinaryRead(reader, reader.uint32(), options, message.item);
                     break;
-                case /* serverProto.MallSpin mall */ 23:
+                case /* optional serverProto.MallSpin mall */ 23:
                     message.mall = MallSpin.internalBinaryRead(reader, reader.uint32(), options, message.mall);
                     break;
-                case /* serverProto.BuySpin buy */ 24:
+                case /* optional serverProto.BuySpin buy */ 24:
                     message.buy = BuySpin.internalBinaryRead(reader, reader.uint32(), options, message.buy);
                     break;
-                case /* serverProto.SpecialCase special */ 25:
+                case /* optional serverProto.SpecialCase special */ 25:
                     message.special = SpecialCase.internalBinaryRead(reader, reader.uint32(), options, message.special);
                     break;
-                case /* serverProto.ExtraSpin extraSpin */ 26:
+                case /* optional serverProto.ExtraSpin extraSpin */ 26:
                     message.extraSpin = ExtraSpin.internalBinaryRead(reader, reader.uint32(), options, message.extraSpin);
                     break;
-                case /* serverProto.FreeSpin freeSpin */ 27:
+                case /* optional serverProto.FreeSpin freeSpin */ 27:
                     message.freeSpin = FreeSpin.internalBinaryRead(reader, reader.uint32(), options, message.freeSpin);
                     break;
-                case /* bytes clientRecord */ 28:
+                case /* optional bytes clientRecord */ 28:
                     message.clientRecord = reader.bytes();
                     break;
-                case /* serverProto.SpecialBonus specialBonus */ 29:
+                case /* optional serverProto.SpecialBonus specialBonus */ 29:
                     message.specialBonus = SpecialBonus.internalBinaryRead(reader, reader.uint32(), options, message.specialBonus);
                     break;
-                case /* bool istournament */ 30:
+                case /* optional bool istournament */ 30:
                     message.istournament = reader.bool();
                     break;
                 default:
@@ -7786,89 +7765,89 @@ class SpinReq$Type extends MessageType<SpinReq> {
         return message;
     }
     internalBinaryWrite(message: SpinReq, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* double bet = 1; */
-        if (message.bet !== 0)
+        /* optional double bet = 1; */
+        if (message.bet !== undefined)
             writer.tag(1, WireType.Bit64).double(message.bet);
-        /* uint32 cheat = 2; */
-        if (message.cheat !== 0)
+        /* optional uint32 cheat = 2; */
+        if (message.cheat !== undefined)
             writer.tag(2, WireType.Varint).uint32(message.cheat);
-        /* uint32 itemIndex = 3; */
-        if (message.itemIndex !== 0)
+        /* optional uint32 itemIndex = 3; */
+        if (message.itemIndex !== undefined)
             writer.tag(3, WireType.Varint).uint32(message.itemIndex);
-        /* uint32 itemID = 4; */
-        if (message.itemID !== 0)
+        /* optional uint32 itemID = 4; */
+        if (message.itemID !== undefined)
             writer.tag(4, WireType.Varint).uint32(message.itemID);
-        /* int32 currencyNumber = 7; */
-        if (message.currencyNumber !== 0)
+        /* optional int32 currencyNumber = 7; */
+        if (message.currencyNumber !== undefined)
             writer.tag(7, WireType.Varint).int32(message.currencyNumber);
-        /* double mallBet = 8; */
-        if (message.mallBet !== 0)
+        /* optional double mallBet = 8; */
+        if (message.mallBet !== undefined)
             writer.tag(8, WireType.Bit64).double(message.mallBet);
-        /* uint32 vip = 9; */
-        if (message.vip !== 0)
+        /* optional uint32 vip = 9; */
+        if (message.vip !== undefined)
             writer.tag(9, WireType.Varint).uint32(message.vip);
-        /* bytes customReq = 10; */
-        if (message.customReq.length)
+        /* optional bytes customReq = 10; */
+        if (message.customReq !== undefined)
             writer.tag(10, WireType.LengthDelimited).bytes(message.customReq);
-        /* bool isFree = 11; */
-        if (message.isFree !== false)
+        /* optional bool isFree = 11; */
+        if (message.isFree !== undefined)
             writer.tag(11, WireType.Varint).bool(message.isFree);
-        /* uint32 Extra = 12; */
-        if (message.extra !== 0)
+        /* optional uint32 Extra = 12; */
+        if (message.extra !== undefined)
             writer.tag(12, WireType.Varint).uint32(message.extra);
-        /* uint32 Level = 13; */
-        if (message.level !== 0)
+        /* optional uint32 Level = 13; */
+        if (message.level !== undefined)
             writer.tag(13, WireType.Varint).uint32(message.level);
-        /* int32 BDType = 14; */
-        if (message.bDType !== 0)
+        /* optional int32 BDType = 14; */
+        if (message.bDType !== undefined)
             writer.tag(14, WireType.Varint).int32(message.bDType);
-        /* int32 BBTimes = 15; */
-        if (message.bBTimes !== 0)
+        /* optional int32 BBTimes = 15; */
+        if (message.bBTimes !== undefined)
             writer.tag(15, WireType.Varint).int32(message.bBTimes);
-        /* double AccuMallBet = 16; */
-        if (message.accuMallBet !== 0)
+        /* optional double AccuMallBet = 16; */
+        if (message.accuMallBet !== undefined)
             writer.tag(16, WireType.Bit64).double(message.accuMallBet);
-        /* double GameMallBet = 17; */
-        if (message.gameMallBet !== 0)
+        /* optional double GameMallBet = 17; */
+        if (message.gameMallBet !== undefined)
             writer.tag(17, WireType.Bit64).double(message.gameMallBet);
-        /* int32 GameMallType = 18; */
-        if (message.gameMallType !== 0)
+        /* optional int32 GameMallType = 18; */
+        if (message.gameMallType !== undefined)
             writer.tag(18, WireType.Varint).int32(message.gameMallType);
-        /* bool isr = 19; */
-        if (message.isr !== false)
+        /* optional bool isr = 19; */
+        if (message.isr !== undefined)
             writer.tag(19, WireType.Varint).bool(message.isr);
-        /* int32 BuyCustomType = 20; */
-        if (message.buyCustomType !== 0)
+        /* optional int32 BuyCustomType = 20; */
+        if (message.buyCustomType !== undefined)
             writer.tag(20, WireType.Varint).int32(message.buyCustomType);
-        /* bool isturbo = 21; */
-        if (message.isturbo !== false)
+        /* optional bool isturbo = 21; */
+        if (message.isturbo !== undefined)
             writer.tag(21, WireType.Varint).bool(message.isturbo);
-        /* serverProto.ItemSpin item = 22; */
+        /* optional serverProto.ItemSpin item = 22; */
         if (message.item)
             ItemSpin.internalBinaryWrite(message.item, writer.tag(22, WireType.LengthDelimited).fork(), options).join();
-        /* serverProto.MallSpin mall = 23; */
+        /* optional serverProto.MallSpin mall = 23; */
         if (message.mall)
             MallSpin.internalBinaryWrite(message.mall, writer.tag(23, WireType.LengthDelimited).fork(), options).join();
-        /* serverProto.BuySpin buy = 24; */
+        /* optional serverProto.BuySpin buy = 24; */
         if (message.buy)
             BuySpin.internalBinaryWrite(message.buy, writer.tag(24, WireType.LengthDelimited).fork(), options).join();
-        /* serverProto.SpecialCase special = 25; */
+        /* optional serverProto.SpecialCase special = 25; */
         if (message.special)
             SpecialCase.internalBinaryWrite(message.special, writer.tag(25, WireType.LengthDelimited).fork(), options).join();
-        /* serverProto.ExtraSpin extraSpin = 26; */
+        /* optional serverProto.ExtraSpin extraSpin = 26; */
         if (message.extraSpin)
             ExtraSpin.internalBinaryWrite(message.extraSpin, writer.tag(26, WireType.LengthDelimited).fork(), options).join();
-        /* serverProto.FreeSpin freeSpin = 27; */
+        /* optional serverProto.FreeSpin freeSpin = 27; */
         if (message.freeSpin)
             FreeSpin.internalBinaryWrite(message.freeSpin, writer.tag(27, WireType.LengthDelimited).fork(), options).join();
-        /* bytes clientRecord = 28; */
-        if (message.clientRecord.length)
+        /* optional bytes clientRecord = 28; */
+        if (message.clientRecord !== undefined)
             writer.tag(28, WireType.LengthDelimited).bytes(message.clientRecord);
-        /* serverProto.SpecialBonus specialBonus = 29; */
+        /* optional serverProto.SpecialBonus specialBonus = 29; */
         if (message.specialBonus)
             SpecialBonus.internalBinaryWrite(message.specialBonus, writer.tag(29, WireType.LengthDelimited).fork(), options).join();
-        /* bool istournament = 30; */
-        if (message.istournament !== false)
+        /* optional bool istournament = 30; */
+        if (message.istournament !== undefined)
             writer.tag(30, WireType.Varint).bool(message.istournament);
         let u = options.writeUnknownFields;
         if (u !== false)

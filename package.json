@@ -9,7 +9,7 @@
     "dev": "tsx watch src/index.ts",
     "start": "node dist/index.js",
     "clean": "rm -rf dist",
-    "proto": "npx protoc --plugin=./node_modules/.bin/protoc-gen-ts --ts_out=src/proto --proto_path=src/proto src/proto/*.proto",
+    "proto": "npx protoc --plugin=./node_modules/.bin/protoc-gen-ts --ts_out=src/protoGeneral --proto_path=src/protoGeneral src/protoGeneral/*.proto",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "lint": "biome lint .",

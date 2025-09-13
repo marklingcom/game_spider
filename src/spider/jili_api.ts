@@ -4,16 +4,15 @@ import WebSocket from 'ws';
 import type { SpiderData } from '../gameFrom/info.js';
 import {
   type Browser,
-  GaiaResponse,
   GameInfoAck,
   InfoReq,
+  MallType,
   Request,
-  type SpecialCase,
   SpinReq,
-} from '../proto/astarte2_196.js';
+} from '../protoGeneral/astarte2_196.js';
 import { getCacert } from '../utils/cacert.js';
 import type Config from '../utils/config.js';
-import { decrypted } from '../utils/utils.js';
+import { decryptResponseBuffer } from '../utils/decrypt.js';
 
 export interface WebSocketMessage {
   cmdType: number;
@@ -21,15 +20,6 @@ export interface WebSocketMessage {
     currentDatetime: string;
   };
 }
-
-export class NeedRetryError extends Error {
-  constructor() {
-    super('ret is 254');
-    this.name = 'NeedRetryError';
-  }
-}
-
-// 接口定义已移动到 ../proto/types.ts
 
 export default class JiliApi extends EventEmitter {
   private client: any;
@@ -68,18 +58,19 @@ export default class JiliApi extends EventEmitter {
     const url = `${this.jiliSpider.spin}/${this.jiliSpider.name}/req`;
 
     try {
-      const spinReqData = {
+      const spinReqData: SpinReq = {
         bet: bet,
         special: {
           turbo: false,
           cheat: 0,
+          robot: false,
           tournament: false,
-        } as SpecialCase,
-      } as SpinReq;
+        },
+      };
 
       if (isBuyBonus && this.gameInfoAck?.mall) {
         spinReqData.mall = {
-          type: 0, // NORMAL_MALL
+          type: MallType.NORMAL_MALL,
           index: 0,
           bet: this.gameInfoAck.mall.priceOdd * bet,
         };
@@ -106,8 +97,11 @@ export default class JiliApi extends EventEmitter {
         responseType: 'arraybuffer',
       });
 
-      const body = Buffer.from(response.data);
-      const { gaiaResponseData: spinAckByte } = await this.decryptResponseBuffer(body);
+      const body = response.data;
+      const { gaiaResponseData: spinAckByte } = await decryptResponseBuffer(
+        response.data,
+        this.jiliSpider.token
+      );
 
       if (spinAckByte.length === 0) {
         throw new Error('spinAckByte is empty');
@@ -124,7 +118,11 @@ export default class JiliApi extends EventEmitter {
     }
   }
 
-  async requestGameInfo(): Promise<{ body: Buffer; gameInfoAck: GameInfoAck }> {
+  async requestGameInfo(): Promise<{
+    data: Buffer;
+    gaiaResponseData: Buffer;
+    gameInfoAck: GameInfoAck;
+  }> {
     const url = `${this.jiliSpider.spin}/${this.jiliSpider.name}/req`;
 
     try {
@@ -161,13 +159,14 @@ export default class JiliApi extends EventEmitter {
       });
 
       const body = Buffer.from(response.data);
-      const { gaiaResponseData } = await this.decryptResponseBuffer(body);
+      const { data, gaiaResponseData } = await decryptResponseBuffer(body, this.jiliSpider.token);
 
       const gameInfoAck = GameInfoAck.fromBinary(gaiaResponseData);
       this.gameInfoAck = gameInfoAck;
 
       return {
-        body,
+        data,
+        gaiaResponseData,
         gameInfoAck,
       };
     } catch (error: any) {
@@ -315,34 +314,5 @@ export default class JiliApi extends EventEmitter {
 
   get isConnected() {
     return this.ws !== null;
-  }
-
-  async decryptResponseBuffer(buff: Buffer): Promise<{ data: Buffer; gaiaResponseData: Buffer }> {
-    const gaiaResponse = GaiaResponse.fromBinary(buff);
-
-    if (gaiaResponse.ret === (254 as any)) {
-      throw new NeedRetryError();
-    }
-
-    if (gaiaResponse.ret !== 0) {
-      // pb.Error_success
-      throw new Error('ret not pb.Error_success');
-    }
-
-    const originData = gaiaResponse.data;
-
-    try {
-      const data = decrypted(this.jiliSpider.token, Buffer.from(originData));
-      gaiaResponse.data = data;
-    } catch (_error) {
-      console.error('buff可能无加密');
-    }
-
-    const out = GaiaResponse.toBinary(gaiaResponse);
-
-    return {
-      data: Buffer.from(out),
-      gaiaResponseData: Buffer.from(gaiaResponse.data),
-    };
   }
 }

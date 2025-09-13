@@ -1,9 +1,10 @@
 import type { SpiderData } from '../gameFrom/info.js';
 import type DatabaseManager from '../models/index.js';
-import type { GameInfoAck } from '../proto/astarte2_196.js';
+import type { GameInfoAck } from '../protoGeneral/astarte2_196.js';
 import type Config from '../utils/config.js';
 import { findValidDenominator } from '../utils/utils.js';
 import JiliApi from './jili_api.js';
+import JiliData from './jili_data.js';
 
 export default class SpiderWork {
   private db: DatabaseManager;
@@ -12,6 +13,8 @@ export default class SpiderWork {
   private spiderData: SpiderData;
 
   private jiliApi: JiliApi;
+
+  private jiliData: JiliData;
 
   constructor(options: {
     db: DatabaseManager;
@@ -22,6 +25,7 @@ export default class SpiderWork {
     this.config = options.config;
     this.spiderData = options.spiderData;
 
+    this.jiliData = new JiliData({ db: this.db, config: this.config, spiderData: this.spiderData });
     this.jiliApi = new JiliApi({ config: this.config, spiderData: this.spiderData });
   }
 
@@ -35,16 +39,10 @@ export default class SpiderWork {
       throw new Error(`未找到jiliProto数据: ${this.spiderData.name}`);
     }
 
-    const { body: _gameInfoBytes, gameInfoAck } = await this.jiliApi.requestGameInfo();
+    const { data, gaiaResponseData, gameInfoAck } = await this.jiliApi.requestGameInfo();
+    console.log('获取 gameInfoAck 成功');
 
-    // this.processor.postTask('jili', {
-    //   t: 'GameInfoType',
-    //   token: this.spiderData.token,
-    //   rsp: gameInfoBytes,
-    //   gameName: this.spiderData.name,
-    //   from: this.spiderData.from,
-    //   config: this.config,
-    // });
+    await this.jiliData.saveGameInfo(data, gaiaResponseData);
 
     await this.jiliApi.doWebSocket();
 
@@ -70,38 +68,18 @@ export default class SpiderWork {
     const isBuyBouns = this.config.betConfig.buyBouns;
     const isExtra = this.config.betConfig.extra;
     await this.spinWorker(bet, isBuyBouns, isExtra);
-
-    return this.startSpinning(gameInfoAck);
   }
 
   private async spinWorker(bet: number, isBuyBouns: boolean, isExtra: boolean): Promise<void> {
-    // if (this.processor.isStop()) {
-    //   console.log(`IsStop ${this.spiderData.name}`);
-    //   process.exit(0);
-    //   break;
-    // }
+    while (true) {
+      if (!this.jiliApi.isConnected) {
+        throw new Error('WebSocket已关闭');
+      }
 
-    if (!this.jiliApi.isConnected) {
-      throw new Error('WebSocket已关闭');
-    }
-
-    try {
-      console.log('开始spin', bet, isBuyBouns, isExtra);
-      const _spinBytes = await this.jiliApi.spin(bet, isBuyBouns, isExtra);
-      // thi_spinBytesor.postTask('jili', {
-      //   t: 'SpinType',
-      //   token: this.spiderData.token,
-      //   rsp: spinBytes,
-      //   gameName: this.spiderData.name,
-      //   from: this.spiderData.from,
-      //   config: this.config,
-      // });
-    } catch (error: any) {
-      // if (error.message === 'NeedRetryError') {
-      //   return;
-      // }
-      console.error('Spin失败:', error);
-      throw error;
+      console.log(`开始 spin - bet: ${bet} isBuyBouns: ${isBuyBouns} isExtra: ${isExtra}`);
+      const spinBuffer = await this.jiliApi.spin(bet, isBuyBouns, isExtra);
+      await this.jiliData.saveSpinData(spinBuffer);
+      console.log('saveSpinData 完成');
     }
   }
 }

@@ -112,3 +112,8 @@ export function findValidDenominator(betArray: number[]): [number, boolean] {
 export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+export function formatNumber(value: number, maxDecimals: number): number {
+  const multiplier = 10 ** maxDecimals;
+  return Math.round(value * multiplier) / multiplier;
+}

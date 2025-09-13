@@ -12,7 +12,7 @@ export interface DbConfig {
   dialect?: string;
 }
 
-export interface AppConfig {
+export interface spiderConfig {
   autoMigrate: boolean;
   form: string;
 }
@@ -39,7 +39,7 @@ export interface HuiduConfig {
 export default class Config {
   public proxy: ProxyConfig;
   public db: DbConfig;
-  public config: AppConfig;
+  public spiderConfig: spiderConfig;
   public betConfig: BetConfig;
   public awcConfig: AwcConfig;
   public huiduConfig: HuiduConfig;
@@ -54,7 +54,7 @@ export default class Config {
       dsn: '',
       dialect: '',
     };
-    this.config = {
+    this.spiderConfig = {
       autoMigrate: false,
       form: '',
     };
@@ -91,8 +91,8 @@ export default class Config {
           dialect: configData.db.type || configData.db.dialect || 'mysql',
         };
       }
-      if (configData.config) {
-        this.config = { ...this.config, ...configData.config };
+      if (configData.spiderConfig) {
+        this.spiderConfig = { ...this.spiderConfig, ...configData.spiderConfig };
       }
       if (configData.betConfig) {
         this.betConfig = { ...this.betConfig, ...configData.betConfig };

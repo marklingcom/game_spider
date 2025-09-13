@@ -5,7 +5,7 @@ import { getGameInfoFromApi, type SpiderData } from './info.js';
 export async function getGameInfo(): Promise<SpiderData> {
   let url = '';
 
-  switch (configData.config.form) {
+  switch (configData.spiderConfig.form) {
     case 'huidu':
       console.log('抓取来源 huidu');
       url = await getGameUrl(configData.huiduConfig);
@@ -28,7 +28,7 @@ export async function getGameInfo(): Promise<SpiderData> {
   if (!ret.token) {
     throw new Error('获取token失败, token为空');
   }
-  ret.from = configData.config.form;
+  ret.from = configData.spiderConfig.form;
 
   return ret;
 }
