@@ -105,6 +105,15 @@ export default class DatabaseManager {
       throw error;
     }
   }
+
+  async getTableCount(tabName: string): Promise<number> {
+    const model = this.getModel(tabName);
+    if (!model) {
+      return 0;
+    }
+    const count = await model.count();
+    return count;
+  }
 }
 
 export const dbManager = new DatabaseManager();

@@ -10,7 +10,7 @@ import {
   Request,
   SpinReq,
 } from '../protoGeneral/astarte2_196.js';
-import { getCacert } from '../utils/cacert.js';
+import { getCacert } from '../utils/cacert/cacert.js';
 import type Config from '../utils/config.js';
 import { decryptResponseBuffer } from '../utils/decrypt.js';
 
@@ -21,7 +21,7 @@ export interface WebSocketMessage {
   };
 }
 
-export default class JiliApi extends EventEmitter {
+export class JiliApi extends EventEmitter {
   private client: any;
   private jiliSpider: SpiderData;
   private ws: WebSocket | null = null;
@@ -263,7 +263,7 @@ export default class JiliApi extends EventEmitter {
 
         try {
           const jsonBytes = JSON.stringify(msg);
-          console.log('发送消息:', jsonBytes);
+          // console.log('发送消息:', jsonBytes);
           this.ws.send(jsonBytes);
         } catch (error) {
           console.log('发送失败:', error);

@@ -1,7 +1,7 @@
 import { getGameInfo } from './gameFrom/index.js';
 import { dbManager } from './models/index.js';
 import { JiliDb } from './spider/jili_db.js';
-import SpiderWork from './spider/spider.js';
+import { SpiderWork } from './spider/spider.js';
 import { configData } from './utils/config.js';
 
 async function main(): Promise<void> {
@@ -32,6 +32,7 @@ async function main(): Promise<void> {
   });
 
   await spiderWork.start();
+
   console.log('程序执行完成');
 }
 

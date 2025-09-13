@@ -1,23 +1,5 @@
 import fs from 'node:fs';
 import crypto from 'crypto';
-// @ts-expect-error
-import TelegramBot from 'node-telegram-bot-api';
-
-export function fromJson(jsonStr: string): Buffer {
-  try {
-    const decodedMap = JSON.parse(jsonStr);
-    const decodedBytes: number[] = [];
-
-    for (let i = 0; i < Object.keys(decodedMap).length; i++) {
-      decodedBytes.push(decodedMap[i.toString()]);
-    }
-
-    return Buffer.from(decodedBytes);
-  } catch (error) {
-    console.error('JSON解析失败:', error);
-    process.exit(-1);
-  }
-}
 
 export function pkcs5UnPadding(origData: Buffer): Buffer {
   const length = origData.length;
@@ -48,10 +30,6 @@ export function decrypted(token: string, gaiaResponse: Buffer): Buffer {
   }
 }
 
-export function reverseString(s: string): string {
-  return s.split('').reverse().join('');
-}
-
 export function createDirectoryIfNotExists(dir: string): void {
   try {
     if (!fs.existsSync(dir)) {
@@ -61,52 +39,6 @@ export function createDirectoryIfNotExists(dir: string): void {
   } catch (error) {
     throw new Error(`创建目录失败: ${(error as Error).message}`);
   }
-}
-
-export function bytesToJSON(data: Buffer): string {
-  const result: { [key: string]: number } = {};
-
-  for (let i = 0; i < data.length; i++) {
-    const byte = data[i];
-    if (byte !== undefined) {
-      result[i.toString()] = byte;
-    }
-  }
-
-  return JSON.stringify(result);
-}
-
-export function fileExists(filename: string): boolean {
-  try {
-    fs.accessSync(filename);
-    return true;
-  } catch (_error) {
-    return false;
-  }
-}
-
-export async function sendMessageToTelegram(message: string): Promise<void> {
-  try {
-    const botToken = '7534595370:AAEyHi8oAUJPhjI7ejIWRr7C2NtjPKQ4u3M';
-    const bot = new TelegramBot(botToken, { polling: false });
-
-    const chatId = 5682897061;
-
-    await bot.sendMessage(chatId, message);
-    console.log('Telegram消息发送成功');
-  } catch (error) {
-    console.error('Telegram消息发送失败:', error);
-    throw error;
-  }
-}
-
-export function findValidDenominator(betArray: number[]): [number, boolean] {
-  for (const bet of betArray) {
-    if (bet > 0) {
-      return [bet, true];
-    }
-  }
-  return [0, false];
 }
 
 export function sleep(ms: number): Promise<void> {

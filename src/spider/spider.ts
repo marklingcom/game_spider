@@ -1,11 +1,10 @@
 import type { SpiderData } from '../gameFrom/info.js';
 import type { GameInfoAck } from '../protoGeneral/astarte2_196.js';
 import type Config from '../utils/config.js';
-import { findValidDenominator } from '../utils/utils.js';
-import JiliApi from './jili_api.js';
+import { JiliApi } from './jili_api.js';
 import type { JiliDb } from './jili_db.js';
 
-export default class SpiderWork {
+export class SpiderWork {
   private config: Config;
 
   private spiderData: SpiderData;
@@ -27,8 +26,7 @@ export default class SpiderWork {
   }
 
   async start() {
-    // 检查jiliProto
-    await this.jiliDb.checkJiliProto(this.spiderData.name);
+    await this.jiliDb.init(this.spiderData.name);
 
     const { data, gaiaResponseData, gameInfoAck } = await this.jiliApi.requestGameInfo();
     console.log('获取 gameInfoAck 成功');
@@ -44,10 +42,19 @@ export default class SpiderWork {
     console.log('执行完成');
   }
 
+  private findValidDenominator(betArray: number[]): [number, boolean] {
+    for (const bet of betArray) {
+      if (bet > 0) {
+        return [bet, true];
+      }
+    }
+    return [0, false];
+  }
+
   private async startSpinning(gameInfoAck: GameInfoAck): Promise<void> {
     let bet = 0;
     if (this.config.betConfig.bet === 0) {
-      const [denominator, ok] = findValidDenominator(gameInfoAck.walletInfo[0]?.bet ?? []);
+      const [denominator, ok] = this.findValidDenominator(gameInfoAck.walletInfo[0]?.bet ?? []);
       if (ok) {
         bet = denominator;
       } else {
@@ -63,16 +70,16 @@ export default class SpiderWork {
   }
 
   private async spinWorker(bet: number, isBuyBouns: boolean, isExtra: boolean): Promise<void> {
+    console.log(`开始 spin - bet: ${bet} isBuyBouns: ${isBuyBouns} isExtra: ${isExtra}`);
+
     while (true) {
       if (!this.jiliApi.isConnected) {
         throw new Error('WebSocket已关闭');
       }
 
-      console.log(`开始 spin - bet: ${bet} isBuyBouns: ${isBuyBouns} isExtra: ${isExtra}`);
       const spinBuffer = await this.jiliApi.spin(bet, isBuyBouns, isExtra);
       // 保存spinData
       await this.jiliDb.saveSpinData(spinBuffer, this.spiderData);
-      console.log('saveSpinData 完成');
     }
   }
 }

@@ -30,7 +30,8 @@ export class JiliDb {
     this.config = options.config;
   }
 
-  async checkJiliProto(name: string) {
+  async init(name: string) {
+    // 检查jiliProto
     const JiliProto = this.db.jiliProto;
     const jiliProto = await JiliProto.findOne({
       where: { name },
@@ -100,7 +101,7 @@ export class JiliDb {
     const spinAckData = spinAck.decode(spinResponse.data);
 
     const jsonData = JSON.stringify(spinAckData);
-    console.log('spinResponse:', jsonData);
+    // console.log('spinResponse:', jsonData);
 
     let gameType = 0;
 
@@ -147,6 +148,18 @@ export class JiliDb {
       tabName += '_normal';
     }
 
+    const model = await this.db.ensureTableExists(tabName);
+
+    await this.initCount(tabName, isSpecial);
+
+    if (this.isComplete(isSpecial)) {
+      if (this.isAllComplete()) {
+        console.log(`${tabName} 完成所有数据抓取`);
+        process.exit(0);
+      }
+      return;
+    }
+
     const spinData: SpinDataAttributes = {
       data: Buffer.from(spinResponse.data),
       totalWin: spinResponse.totalWin || 0,
@@ -155,7 +168,6 @@ export class JiliDb {
       rate: formatNumber((spinResponse.totalWin || 0) / realBet, 6),
     };
 
-    const model = await this.db.ensureTableExists(tabName);
     await model.create({
       data: spinData.data,
       totalWin: spinData.totalWin,
@@ -163,6 +175,49 @@ export class JiliDb {
       bet: spinData.bet,
       rate: spinData.rate,
     });
+
+    if (isSpecial) {
+      this.currentSpecial++;
+    } else {
+      this.currentNormal++;
+    }
+  }
+
+  isComplete(isSpecial: boolean, isLog = true) {
+    if (isSpecial) {
+      if (isLog) {
+        console.log(`特殊数据抓取进度: ${this.currentSpecial}/${this.special}`);
+      }
+      if (this.currentSpecial > 0 && this.currentSpecial >= this.special) {
+        return true;
+      }
+    } else {
+      if (isLog) {
+        console.log(`普通数据抓取进度: ${this.currentNormal}/${this.normal}`);
+      }
+      if (this.currentNormal > 0 && this.currentNormal >= this.normal) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  isAllComplete() {
+    return this.isComplete(false, false) && this.isComplete(true, false);
+  }
+
+  async initCount(tabName: string, isSpecial: boolean) {
+    if (isSpecial) {
+      if (this.currentSpecial === 0) {
+        const count = await this.db.getTableCount(tabName);
+        this.currentSpecial = count;
+      }
+    } else {
+      if (this.currentNormal === 0) {
+        const count = await this.db.getTableCount(tabName);
+        this.currentNormal = count;
+      }
+    }
   }
 
   private pbMap: Map<string, unknown> = new Map();
