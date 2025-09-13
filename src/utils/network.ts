@@ -22,17 +22,17 @@ export function parseURL(targetURL: string): {
   };
 }
 
-export async function getRedirectURL(reqConfig: RedirectRequest): Promise<string> {
+export async function getRedirectURL(reqConfig: RedirectRequest, retry = 3): Promise<string> {
   const method = reqConfig.method || 'POST';
   const timeout = reqConfig.timeout || 30000; // 30 seconds
 
   const headers: AxiosRequestConfig['headers'] = {
     ...reqConfig.headers,
   };
-  const { host } = parseURL(reqConfig.url);
+  // const { host } = parseURL(reqConfig.url);
   // headers.Origin = origin;
   // headers.Referer = origin;
-  headers.Host = host;
+  // headers.Host = host;
 
   const config: AxiosRequestConfig = {
     method: method.toLowerCase() as any,
@@ -44,19 +44,28 @@ export async function getRedirectURL(reqConfig: RedirectRequest): Promise<string
   };
   const response = await axios(config);
 
+  let redirectURL = '';
   // 检查是否是重定向状态码
   if (response.status === 302 || response.status === 301) {
     const location = response.headers.location;
     const data = response.data;
     if (location) {
-      return location;
+      redirectURL = location;
     } else if (data) {
       const html = data;
       const locationMatch = html.match(/location\.replace\('([^']+)'\)/);
 
       if (locationMatch?.[1]) {
-        return locationMatch[1];
+        redirectURL = locationMatch[1];
       }
     }
   }
+
+  if ((!redirectURL || redirectURL === reqConfig.url) && retry > 0) {
+    const nextRetry = retry - 1;
+    console.log(`获取重定向地址失败, 重试次数: ${nextRetry}`);
+    return getRedirectURL(reqConfig, nextRetry);
+  }
+
+  return redirectURL;
 }

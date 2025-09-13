@@ -218,7 +218,6 @@ export class JiliApi extends EventEmitter {
 
     try {
       const ws = await this.connectWebSocket(wsUrl, maxRetries);
-      console.log('连接WebSocket成功');
 
       // 连接成功后发送第一个数据包
       const postData = this.jiliSpider.webSocketData;
