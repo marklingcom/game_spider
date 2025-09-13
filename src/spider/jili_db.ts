@@ -44,6 +44,7 @@ export class JiliDb {
     if (!jiliProto) {
       throw new Error(`未找到jiliProto数据: ${name}`);
     }
+    this.onStart();
   }
 
   async saveGameInfo(
@@ -159,6 +160,7 @@ export class JiliDb {
     if (this.isComplete(isSpecial)) {
       if (this.isAllComplete()) {
         console.log(`${tabName} 完成所有数据抓取`);
+        this.onStop();
         process.exit(0);
       }
       return;
@@ -305,5 +307,22 @@ export class JiliDb {
     }
 
     return count;
+  }
+
+  private startTime = Date.now();
+
+  onStart() {
+    this.startTime = Date.now();
+  }
+
+  onStop() {
+    const endTime = Date.now();
+    const duration = endTime - this.startTime;
+    const minutes = Math.floor(duration / 60000);
+    const seconds = Math.floor((duration % 60000) / 1000);
+    const milliseconds = duration % 1000;
+
+    console.log(`程序结束时间: ${new Date(endTime).toLocaleString()}`);
+    console.log(`总执行时间: ${minutes}分${seconds}秒${milliseconds}毫秒`);
   }
 }

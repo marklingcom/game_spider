@@ -3,6 +3,7 @@ import { dbManager } from './models/index.js';
 import { JiliDb } from './spider/jili_db.js';
 import { SpiderWork } from './spider/spider.js';
 import Config from './utils/config.js';
+import { sleep } from './utils/utils.js';
 
 async function main(): Promise<void> {
   const configData = new Config('./config/server.yaml');
@@ -37,17 +38,20 @@ async function main(): Promise<void> {
       await spiderWork.start();
     } catch (error) {
       console.log(`重试：第 ${i} 个账号执行失败: ${(error as Error).message}`);
+      await sleep(2000);
       run(i);
     }
   };
 
   await Promise.all(
     configData.huiduConfig.uidList.map(async (_uid, i) => {
+      await sleep(1000 * i);
       await run(i);
     })
   );
 
   console.log('程序执行完成');
+  process.exit(0);
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
