@@ -39,7 +39,7 @@ async function main(): Promise<void> {
     } catch (error) {
       console.log(`重试：第 ${i} 个账号执行失败: ${(error as Error).message}`);
       await sleep(2000);
-      run(i);
+      await run(i);
     }
   };
 
@@ -50,7 +50,7 @@ async function main(): Promise<void> {
     })
   );
 
-  console.log('程序执行完成');
+  console.log('程序执行结束');
   process.exit(0);
 }
 
