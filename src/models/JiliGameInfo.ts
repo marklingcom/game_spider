@@ -1,6 +1,6 @@
 import { DataTypes, Model, type Sequelize } from 'sequelize';
 
-export interface JiliGameInfoAttributes {
+export interface JiliInfoAttributes {
   id?: number;
   gi?: number;
   fullName?: string;
@@ -13,7 +13,7 @@ export interface JiliGameInfoAttributes {
   updateTime?: Date;
 }
 
-class JiliGameInfoModel extends Model<JiliGameInfoAttributes> implements JiliGameInfoAttributes {
+class JiliInfoModel extends Model<JiliInfoAttributes> implements JiliInfoAttributes {
   declare id: number;
   declare gi?: number;
   declare fullName?: string;
@@ -26,8 +26,8 @@ class JiliGameInfoModel extends Model<JiliGameInfoAttributes> implements JiliGam
   declare updateTime?: Date;
 }
 
-const JiliGameInfo = (sequelize: Sequelize): typeof JiliGameInfoModel => {
-  JiliGameInfoModel.init(
+export const JiliInfo = (sequelize: Sequelize): typeof JiliInfoModel => {
+  JiliInfoModel.init(
     {
       id: {
         type: DataTypes.BIGINT.UNSIGNED,
@@ -86,7 +86,5 @@ const JiliGameInfo = (sequelize: Sequelize): typeof JiliGameInfoModel => {
     }
   );
 
-  return JiliGameInfoModel;
+  return JiliInfoModel;
 };
-
-export default JiliGameInfo;

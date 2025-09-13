@@ -3,7 +3,7 @@ import path from 'node:path';
 import protobuf from 'protobufjs';
 import type { SpiderData } from '../gameFrom/info.js';
 import type DatabaseManager from '../models/index.js';
-import type { JiliGameInfoAttributes } from '../models/JiliGameInfo.js';
+import type { JiliInfoAttributes } from '../models/JiliGameInfo.js';
 import type { JiliProtoAttributes } from '../models/JiliProto.js';
 import type { SpinDataAttributes } from '../models/SpinData.js';
 import { SpinResponse } from '../protoGeneral/astarte2_196.js';
@@ -12,11 +12,9 @@ import { decryptResponseBuffer } from '../utils/decrypt.js';
 import { __protoDir } from '../utils/env.js';
 import { createDirectoryIfNotExists, formatNumber } from '../utils/utils.js';
 
-export default class JiliData {
+export class JiliDb {
   private db: DatabaseManager;
   private config: Config;
-
-  private spiderData: SpiderData;
 
   special = 20000;
   normal = 300000;
@@ -27,53 +25,66 @@ export default class JiliData {
   constructor(options: {
     db: DatabaseManager;
     config: Config;
-    spiderData: SpiderData;
   }) {
     this.db = options.db;
     this.config = options.config;
-    this.spiderData = options.spiderData;
   }
 
-  async saveGameInfo(data: Buffer, gaiaResponseData: Buffer): Promise<JiliGameInfoAttributes> {
+  async checkJiliProto(name: string) {
+    const JiliProto = this.db.jiliProto;
+    const jiliProto = await JiliProto.findOne({
+      where: { name },
+    });
+
+    if (!jiliProto) {
+      throw new Error(`未找到jiliProto数据: ${name}`);
+    }
+  }
+
+  async saveGameInfo(
+    data: Buffer,
+    gaiaResponseData: Buffer,
+    spiderData: SpiderData
+  ): Promise<JiliInfoAttributes> {
     if (!gaiaResponseData || gaiaResponseData.length === 0) {
       throw new Error('gaiaResponseData is empty');
     }
 
     const value =
-      (await this.db.getModel('JiliGameInfo').findOne({
-        where: { name: this.spiderData.name },
+      (await this.db.jiliInfo.findOne({
+        where: { name: spiderData.name },
       })) || null;
 
     const info = {
-      name: this.spiderData.name,
-      from: this.spiderData.from,
+      name: spiderData.name,
+      from: spiderData.from,
       data: gaiaResponseData,
       fullData: data,
-      gi: this.spiderData.gi,
+      gi: spiderData.gi,
     };
 
     if (!value) {
-      const gameInfo = await this.db.getModel('JiliGameInfo').create(info);
+      const gameInfo = await this.db.jiliInfo.create(info);
       return gameInfo.toJSON();
     } else {
-      await this.db.getModel('JiliGameInfo').update(info, {
-        where: { name: this.spiderData.name },
+      await this.db.jiliInfo.update(info, {
+        where: { name: spiderData.name },
       });
       return info;
     }
   }
 
-  async saveSpinData(spinBuffer: Buffer): Promise<void> {
-    const { gaiaResponseData } = await decryptResponseBuffer(spinBuffer, this.spiderData.token);
+  async saveSpinData(spinBuffer: Buffer, spiderData: SpiderData): Promise<void> {
+    const { gaiaResponseData } = await decryptResponseBuffer(spinBuffer, spiderData.token);
     if (!gaiaResponseData || gaiaResponseData.length === 0) {
       throw new Error('gaiaResponseData is empty');
     }
 
-    const gameName = this.spiderData.name;
+    const gameName = spiderData.name;
 
     const spinResponse = SpinResponse.fromBinary(gaiaResponseData);
 
-    const gameProto = await this.checkProto(gameName);
+    const gameProto = await this.checkProto(gameName, gameName);
     const spinPbName = await this.getSpinPbName(gameName);
 
     if (!spinPbName) {
@@ -139,7 +150,7 @@ export default class JiliData {
     const spinData: SpinDataAttributes = {
       data: Buffer.from(spinResponse.data),
       totalWin: spinResponse.totalWin || 0,
-      from: this.spiderData.from,
+      from: spiderData.from,
       bet: realBet,
       rate: formatNumber((spinResponse.totalWin || 0) / realBet, 6),
     };
@@ -158,7 +169,7 @@ export default class JiliData {
   private jiliProtoMap: Map<string, JiliProtoAttributes> = new Map();
 
   private async syncJiliProto(name: string): Promise<JiliProtoAttributes> {
-    const jiliProto = await this.db.getModel('JiliProto').findOne({
+    const jiliProto = await this.db.jiliProto.findOne({
       where: { name },
     });
 
@@ -171,7 +182,7 @@ export default class JiliData {
     return result;
   }
 
-  private async checkProto(name: string): Promise<protobuf.Namespace> {
+  private async checkProto(name: string, gameName: string): Promise<protobuf.Namespace> {
     if (!this.pbMap.has(name)) {
       await this.syncJiliProto(name);
     }
@@ -180,7 +191,7 @@ export default class JiliData {
     createDirectoryIfNotExists(__protoDir);
 
     // 将 proto 内容写入文件
-    const protoFilePath = path.join(__protoDir, `${this.spiderData.name}.proto`);
+    const protoFilePath = path.join(__protoDir, `${gameName}.proto`);
     writeFileSync(protoFilePath, result.data, 'utf8');
 
     // 使用 protobufjs 编译
@@ -235,35 +246,5 @@ export default class JiliData {
     }
 
     return count;
-  }
-
-  private checkCount() {
-    // const maxRecords = isSpecial ? this.special : this.normal;
-    // let count = 0;
-    // try {
-    //   const tableExists = await this.db.getDB().getQueryInterface().showAllTables();
-    //   if (tableExists.includes(tabName)) {
-    //     count = await this.db
-    //       .getDB()
-    //       .query(`SELECT COUNT(*) as count FROM ${tabName}`, {
-    //         type: QueryTypes.SELECT,
-    //       })
-    //       .then((result: unknown[]) => (result[0] as { count: number })?.count || 0);
-    //   }
-    // } catch (error) {
-    //   console.log(`统计表 ${tabName} 记录数失败:`, error);
-    //   return;
-    // }
-    // if (isSpecial) {
-    //   this.currentSpecial = count;
-    // } else {
-    //   this.currentNormal = count;
-    // }
-    // if (this.currentSpecial % 10 === 0) {
-    //   console.log(`INFO: 表 ${tabName} 当前记录数: ${this.currentSpecial}, 最大记录数: ${this.special}`);
-    // }
-    // if (this.currentSpecial >= this.special) {
-    //   console.log(`ERROR: 表 ${tabName} 记录数 ${this.currentSpecial} 超过最大限制 ${this.special}，程序停止`);
-    // } else {
   }
 }

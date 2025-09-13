@@ -22,7 +22,7 @@ class JiliProtoModel extends Model<JiliProtoAttributes> implements JiliProtoAttr
   declare updateTime?: Date;
 }
 
-const JiliProto = (sequelize: Sequelize): typeof JiliProtoModel => {
+export const JiliProto = (sequelize: Sequelize): typeof JiliProtoModel => {
   JiliProtoModel.init(
     {
       id: {
@@ -75,5 +75,3 @@ const JiliProto = (sequelize: Sequelize): typeof JiliProtoModel => {
 
   return JiliProtoModel;
 };
-
-export default JiliProto;

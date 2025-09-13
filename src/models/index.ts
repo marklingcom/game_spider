@@ -1,18 +1,12 @@
 import { type Model, type ModelStatic, Sequelize } from 'sequelize';
 import type { DbConfig } from '../utils/config.js';
-import JiliGameInfo from './JiliGameInfo.js';
-import JiliProto from './JiliProto.js';
-import SpinData from './SpinData.js';
-
-export interface Models {
-  SpinData: ModelStatic<Model>;
-  JiliGameInfo: ModelStatic<Model>;
-  JiliProto: ModelStatic<Model>;
-}
+import { JiliInfo } from './JiliGameInfo.js';
+import { JiliProto } from './JiliProto.js';
+import { SpinData } from './SpinData.js';
 
 export default class DatabaseManager {
   private sequelize: Sequelize | null = null;
-  private models: Models = {} as Models;
+  private models = new Map<string, ModelStatic<Model>>();
 
   async initDB(db: DbConfig): Promise<Sequelize> {
     try {
@@ -24,6 +18,7 @@ export default class DatabaseManager {
 
       const [, username, password, host, port, database] = dsnMatch;
 
+      console.log('连接数据库...');
       this.sequelize = new Sequelize(database!, username!, password!, {
         host: host!,
         port: parseInt(port!, 10),
@@ -40,15 +35,23 @@ export default class DatabaseManager {
       await this.sequelize.authenticate();
       console.log('数据库连接成功');
 
-      this.models.SpinData = SpinData(this.sequelize);
-      this.models.JiliGameInfo = JiliGameInfo(this.sequelize);
-      this.models.JiliProto = JiliProto(this.sequelize);
+      this.models.set('SpinData', SpinData(this.sequelize));
+      this.models.set('JiliInfo', JiliInfo(this.sequelize));
+      this.models.set('JiliProto', JiliProto(this.sequelize));
 
       return this.sequelize;
     } catch (error) {
       console.error('数据库连接失败:', error);
       throw error;
     }
+  }
+
+  get jiliInfo() {
+    return this.getModel('JiliInfo')!;
+  }
+
+  get jiliProto() {
+    return this.getModel('JiliProto')!;
   }
 
   async sync(force: boolean = false): Promise<void> {
@@ -60,18 +63,22 @@ export default class DatabaseManager {
     console.log('数据库同步完成');
   }
 
-  getModel(name: keyof Models): ModelStatic<Model> {
-    return this.models[name];
+  getModel(name: string): ModelStatic<Model> {
+    var model = this.models.get(name);
+    if (!model) {
+      throw new Error(`模型不存在: ${name}`);
+    }
+    return model;
   }
 
   getDB(): Sequelize | null {
     return this.sequelize;
   }
 
-  async ensureTableExists(tabName: string): Promise<any> {
+  async ensureTableExists(tabName: string): Promise<ModelStatic<Model>> {
     try {
-      if (this.models[tabName as keyof Models]) {
-        return this.models[tabName as keyof Models];
+      if (this.models.has(tabName)) {
+        return this.models.get(tabName);
       }
 
       if (!this.sequelize) {
@@ -79,21 +86,19 @@ export default class DatabaseManager {
       }
 
       const tables = await this.sequelize.getQueryInterface().showAllTables();
+      const SpinDataModel = this.getModel('SpinData');
       if (!tables.includes(tabName)) {
-        const model = this.getModel('SpinData');
-        const attributes = model.getAttributes();
-
+        const attributes = SpinDataModel.getAttributes();
         await this.sequelize.getQueryInterface().createTable(tabName, attributes);
         console.log(`Created table: ${tabName}`);
       }
 
-      const model = this.getModel('SpinData');
-      const tableModel = this.sequelize.define(tabName, model.getAttributes(), {
+      const tableModel = this.sequelize.define(tabName, SpinDataModel.getAttributes(), {
         tableName: tabName,
         timestamps: false,
       });
 
-      (this.models as any)[tabName] = tableModel;
+      this.models.set(tabName, tableModel);
       return tableModel;
     } catch (error) {
       console.error(`Failed to ensure table exists: ${tabName}`, error);

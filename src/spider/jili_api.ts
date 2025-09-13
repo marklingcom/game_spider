@@ -25,6 +25,7 @@ export default class JiliApi extends EventEmitter {
   private client: any;
   private jiliSpider: SpiderData;
   private ws: WebSocket | null = null;
+
   gameInfoAck: GameInfoAck | null = null;
 
   constructor(options: {

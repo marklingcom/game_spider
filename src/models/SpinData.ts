@@ -22,7 +22,7 @@ export class SpinDataModel extends Model<SpinDataAttributes> implements SpinData
   declare createTime?: Date;
 }
 
-const SpinData = (sequelize: Sequelize): typeof SpinDataModel => {
+export const SpinData = (sequelize: Sequelize): typeof SpinDataModel => {
   SpinDataModel.init(
     {
       id: {
@@ -71,5 +71,3 @@ const SpinData = (sequelize: Sequelize): typeof SpinDataModel => {
 
   return SpinDataModel;
 };
-
-export default SpinData;

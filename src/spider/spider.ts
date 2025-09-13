@@ -1,48 +1,40 @@
 import type { SpiderData } from '../gameFrom/info.js';
-import type DatabaseManager from '../models/index.js';
 import type { GameInfoAck } from '../protoGeneral/astarte2_196.js';
 import type Config from '../utils/config.js';
 import { findValidDenominator } from '../utils/utils.js';
 import JiliApi from './jili_api.js';
-import JiliData from './jili_data.js';
+import type { JiliDb } from './jili_db.js';
 
 export default class SpiderWork {
-  private db: DatabaseManager;
   private config: Config;
 
   private spiderData: SpiderData;
 
   private jiliApi: JiliApi;
 
-  private jiliData: JiliData;
+  private jiliDb: JiliDb;
 
   constructor(options: {
-    db: DatabaseManager;
     config: Config;
     spiderData: SpiderData;
+    jiliDb: JiliDb;
   }) {
-    this.db = options.db;
     this.config = options.config;
     this.spiderData = options.spiderData;
+    this.jiliDb = options.jiliDb;
 
-    this.jiliData = new JiliData({ db: this.db, config: this.config, spiderData: this.spiderData });
     this.jiliApi = new JiliApi({ config: this.config, spiderData: this.spiderData });
   }
 
   async start() {
-    const JiliProto = this.db.getModel('JiliProto');
-    const jiliProto = await JiliProto.findOne({
-      where: { name: this.spiderData.name },
-    });
-
-    if (!jiliProto) {
-      throw new Error(`未找到jiliProto数据: ${this.spiderData.name}`);
-    }
+    // 检查jiliProto
+    await this.jiliDb.checkJiliProto(this.spiderData.name);
 
     const { data, gaiaResponseData, gameInfoAck } = await this.jiliApi.requestGameInfo();
     console.log('获取 gameInfoAck 成功');
 
-    await this.jiliData.saveGameInfo(data, gaiaResponseData);
+    // 保存gameInfo
+    await this.jiliDb.saveGameInfo(data, gaiaResponseData, this.spiderData);
 
     await this.jiliApi.doWebSocket();
 
@@ -78,7 +70,8 @@ export default class SpiderWork {
 
       console.log(`开始 spin - bet: ${bet} isBuyBouns: ${isBuyBouns} isExtra: ${isExtra}`);
       const spinBuffer = await this.jiliApi.spin(bet, isBuyBouns, isExtra);
-      await this.jiliData.saveSpinData(spinBuffer);
+      // 保存spinData
+      await this.jiliDb.saveSpinData(spinBuffer, this.spiderData);
       console.log('saveSpinData 完成');
     }
   }
