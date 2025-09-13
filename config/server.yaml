@@ -17,7 +17,7 @@ betConfig:
   extra: false
 
 awcConfig:
-  gameName: "Money Coming 2"
+  gameName: "Golden Joker"
 
 huiduConfig:
   coin: 100000
