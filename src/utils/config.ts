@@ -15,6 +15,7 @@ export interface DbConfig {
 export interface spiderConfig {
   autoMigrate: boolean;
   form: string;
+  hasSpecial: boolean;
 }
 
 export interface BetConfig {
@@ -29,7 +30,6 @@ export interface AwcConfig {
 }
 
 export interface HuiduConfig {
-  uid: number;
   coin: number;
   gameUid: string;
   companyId: number;
@@ -61,6 +61,7 @@ export default class Config {
     this.spiderConfig = {
       autoMigrate: false,
       form: '',
+      hasSpecial: false,
     };
     this.betConfig = {
       bet: 0,
@@ -72,7 +73,6 @@ export default class Config {
       gameName: '',
     };
     this.huiduConfig = {
-      uid: 0,
       coin: 0,
       gameUid: '',
       companyId: 0,

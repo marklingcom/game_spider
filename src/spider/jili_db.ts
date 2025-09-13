@@ -16,7 +16,7 @@ export class JiliDb {
   private db: DatabaseManager;
   private config: Config;
 
-  special = 20000;
+  special = 0;
   normal = 300000;
 
   currentSpecial = 0;
@@ -28,6 +28,10 @@ export class JiliDb {
   }) {
     this.db = options.db;
     this.config = options.config;
+
+    if (this.config.spiderConfig.hasSpecial) {
+      this.special = 2000;
+    }
   }
 
   async init(name: string) {
@@ -188,14 +192,14 @@ export class JiliDb {
       if (isLog) {
         console.log(`特殊数据抓取进度: ${this.currentSpecial}/${this.special}`);
       }
-      if (this.currentSpecial > 0 && this.currentSpecial >= this.special) {
+      if (this.currentSpecial >= this.special) {
         return true;
       }
     } else {
       if (isLog) {
         console.log(`普通数据抓取进度: ${this.currentNormal}/${this.normal}`);
       }
-      if (this.currentNormal > 0 && this.currentNormal >= this.normal) {
+      if (this.currentNormal >= this.normal) {
         return true;
       }
     }

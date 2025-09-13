@@ -9,6 +9,7 @@ db:
 spiderConfig:
   autoMigrate: false
   form: "huidu"
+  hasSpecial: false
 
 betConfig:
   # bet: 50
@@ -21,7 +22,6 @@ awcConfig:
 huiduConfig:
   coin: 100000
   # uid: 1641530
-  uid: 7632856
   # game_uid: b4a3e54cabeecd94ebbd1cc217a5b069
   # gameUid: b4a3e54cabeecd94ebbd1cc217a5b069
   gameUid: f301fe0b22d1540b1f215d282b20c642

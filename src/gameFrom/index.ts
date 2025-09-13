@@ -2,13 +2,13 @@ import type Config from '../utils/config.js';
 import { getGameUrl } from './huidu.js';
 import { getGameInfoFromApi, type SpiderData } from './info.js';
 
-export async function getGameInfo(configData: Config): Promise<SpiderData> {
+export async function getGameInfo(configData: Config, index = 0): Promise<SpiderData> {
   let url = '';
 
   switch (configData.spiderConfig.form) {
     case 'huidu':
       console.log('抓取来源 huidu');
-      url = await getGameUrl(configData.huiduConfig);
+      url = await getGameUrl(configData.huiduConfig, index);
       break;
     case 'awc':
       console.log('抓取来源 awc');

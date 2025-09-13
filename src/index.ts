@@ -23,15 +23,29 @@ async function main(): Promise<void> {
 
   const jiliDb = new JiliDb({ db: dbManager, config: configData });
 
-  const gameInfo = await getGameInfo(configData);
-  // console.log('游戏信息获取完成', gameInfo);
-  const spiderWork = new SpiderWork({
-    config: configData,
-    spiderData: gameInfo,
-    jiliDb,
-  });
+  const run = async (i: number) => {
+    try {
+      const uid = configData.huiduConfig.uidList[i];
+      console.log(`开始执行第 ${i} 个账号: ${uid}`);
+      const gameInfo = await getGameInfo(configData, i);
+      const spiderWork = new SpiderWork({
+        config: configData,
+        spiderData: gameInfo,
+        jiliDb,
+      });
 
-  await spiderWork.start();
+      await spiderWork.start();
+    } catch (error) {
+      console.log(`重试：第 ${i} 个账号执行失败: ${(error as Error).message}`);
+      run(i);
+    }
+  };
+
+  await Promise.all(
+    configData.huiduConfig.uidList.map(async (_uid, i) => {
+      await run(i);
+    })
+  );
 
   console.log('程序执行完成');
 }

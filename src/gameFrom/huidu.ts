@@ -14,9 +14,9 @@ interface HuiduResponse {
   };
 }
 
-export async function getGameUrl(huiDuConfig: HuiduConfig): Promise<string> {
+export async function getGameUrl(huiDuConfig: HuiduConfig, index: number): Promise<string> {
   const requestData = {
-    uid: huiDuConfig.uid,
+    uid: huiDuConfig.uidList[index],
     coin: huiDuConfig.coin,
     game_uid: huiDuConfig.gameUid,
     company_id: huiDuConfig.companyId,
