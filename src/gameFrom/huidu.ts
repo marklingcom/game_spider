@@ -1,6 +1,6 @@
 import axios from 'axios';
 import type { HuiduConfig } from '../utils/config.js';
-import { getHuiduHeaders, getRedirectURL } from '../utils/network.js';
+import { getRedirectURL } from '../utils/network.js';
 
 const GAME_API_URL = 'https://bw.yobao.xyz/api/bwGame/getLaunchUrl';
 const TIMEOUT = 30000; // 30 seconds in milliseconds
@@ -42,12 +42,11 @@ export async function getGameUrl(huiDuConfig: HuiduConfig): Promise<string> {
     throw new Error('游戏启动 URL 为空');
   }
 
+  console.log('重定向 url:', redirectURL);
   const gameUrl = await getRedirectURL({
     url: redirectURL,
     method: 'GET',
-    headers: getHuiduHeaders(),
   });
 
-  console.log('成功获取游戏 URL:', gameUrl);
   return gameUrl;
 }

@@ -1,8 +1,8 @@
-import { configData } from '../utils/config.js';
+import type Config from '../utils/config.js';
 import { getGameUrl } from './huidu.js';
 import { getGameInfoFromApi, type SpiderData } from './info.js';
 
-export async function getGameInfo(): Promise<SpiderData> {
+export async function getGameInfo(configData: Config): Promise<SpiderData> {
   let url = '';
 
   switch (configData.spiderConfig.form) {
@@ -21,6 +21,7 @@ export async function getGameInfo(): Promise<SpiderData> {
     throw new Error('获取游戏URL失败: URL为空');
   }
 
+  console.log('成功获取游戏 URL:', url);
   const ret = await getGameInfoFromApi(url);
   if (!ret) {
     throw new Error('返回结果为空');

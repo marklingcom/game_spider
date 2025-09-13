@@ -2,6 +2,7 @@ import { join } from 'node:path';
 import axios from 'axios';
 import protobuf from 'protobufjs';
 import { __protoGeneralDir } from '../utils/env';
+import { parseURL } from '../utils/network';
 
 export interface SpiderData {
   token: string;
@@ -88,11 +89,6 @@ interface JiliGameParams {
   origin: string;
 }
 
-function getOriginFromURL(url: string): string {
-  const urlObj = new URL(url);
-  return `${urlObj.protocol}//${urlObj.host}`;
-}
-
 export function parseJiliGameUrl(gameUrl: string): JiliGameParams | null {
   try {
     const url = new URL(gameUrl);
@@ -109,7 +105,7 @@ export function parseJiliGameUrl(gameUrl: string): JiliGameParams | null {
       gs: params.get('gs') || '',
       legalLang: params.get('legalLang') || '',
       gameName: '',
-      origin: getOriginFromURL(gameUrl),
+      origin: parseURL(gameUrl).origin,
     };
 
     const pathParts = url.pathname.split('/').filter((part) => part.length > 0);

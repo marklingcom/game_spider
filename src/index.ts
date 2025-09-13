@@ -2,10 +2,10 @@ import { getGameInfo } from './gameFrom/index.js';
 import { dbManager } from './models/index.js';
 import { JiliDb } from './spider/jili_db.js';
 import { SpiderWork } from './spider/spider.js';
-import { configData } from './utils/config.js';
+import Config from './utils/config.js';
 
 async function main(): Promise<void> {
-  configData.loadConfig('./config/server.yaml');
+  const configData = new Config('./config/server.yaml');
   console.log('配置文件加载成功');
 
   await dbManager.initDB(configData.db);
@@ -23,7 +23,7 @@ async function main(): Promise<void> {
 
   const jiliDb = new JiliDb({ db: dbManager, config: configData });
 
-  const gameInfo = await getGameInfo();
+  const gameInfo = await getGameInfo(configData);
   // console.log('游戏信息获取完成', gameInfo);
   const spiderWork = new SpiderWork({
     config: configData,

@@ -85,7 +85,7 @@ export class JiliDb {
 
     const spinResponse = SpinResponse.fromBinary(gaiaResponseData);
 
-    const gameProto = await this.checkProto(gameName, gameName);
+    const gameProto = await this.getProto(gameName, gameName);
     const spinPbName = await this.getSpinPbName(gameName);
 
     if (!spinPbName) {
@@ -237,7 +237,7 @@ export class JiliDb {
     return result;
   }
 
-  private async checkProto(name: string, gameName: string): Promise<protobuf.Namespace> {
+  private async getProto(name: string, gameName: string): Promise<protobuf.Namespace> {
     if (!this.pbMap.has(name)) {
       await this.syncJiliProto(name);
     }

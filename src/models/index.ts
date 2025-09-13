@@ -18,7 +18,7 @@ export default class DatabaseManager {
 
       const [, username, password, host, port, database] = dsnMatch;
 
-      console.log('连接数据库...');
+      console.log('连接数据库中...');
       this.sequelize = new Sequelize(database!, username!, password!, {
         host: host!,
         port: parseInt(port!, 10),

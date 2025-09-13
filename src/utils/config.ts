@@ -44,7 +44,11 @@ export default class Config {
   public awcConfig: AwcConfig;
   public huiduConfig: HuiduConfig;
 
-  constructor() {
+  private configPath: string;
+
+  constructor(configPath: string) {
+    this.configPath = configPath;
+
     this.proxy = {
       enable: false,
       server: '',
@@ -74,9 +78,11 @@ export default class Config {
       companyId: 0,
       uidList: [],
     };
+
+    this.loadConfig(this.configPath);
   }
 
-  loadConfig(path: string): Config {
+  private loadConfig(path: string): Config {
     try {
       const data = fs.readFileSync(path, 'utf8');
       const configData = yaml.parse(data) as any;
@@ -112,5 +118,3 @@ export default class Config {
     }
   }
 }
-
-export const configData = new Config();
