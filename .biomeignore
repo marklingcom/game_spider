@@ -1,2 +1,2 @@
-src/proto/**/*.ts
-dist/**/*
+src/protoGeneral/**
+dist/**

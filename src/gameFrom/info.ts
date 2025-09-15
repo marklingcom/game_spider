@@ -1,8 +1,8 @@
 import { join } from 'node:path';
 import axios from 'axios';
 import protobuf from 'protobufjs';
-import { __protoGeneralDir } from '../utils/env';
-import { parseURL } from '../utils/network';
+import { __protoGeneralDir } from '../utils/env.js';
+import { parseURL } from '../utils/network.js';
 
 export interface SpiderData {
   token: string;

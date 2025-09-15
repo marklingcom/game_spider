@@ -7,14 +7,8 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": [
-      "src/**/*.ts",
-      "src/**/*.js",
-      "src/**/*.json",
-      "*.ts",
-      "*.js",
-      "*.json"
-    ]
+    "includes": ["src/**/*.ts", "src/**/*.js", "src/**/*.json", "*.ts", "*.js", "*.json"],
+    "experimentalScannerIgnores": ["dist/**"]
   },
   "formatter": {
     "enabled": true,
