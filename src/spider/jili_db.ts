@@ -157,8 +157,8 @@ export class JiliDb {
 
     await this.initCount(tabName, isSpecial);
 
-    if (this.isComplete(isSpecial)) {
-      if (this.isAllComplete()) {
+    if (this.isComplete(tabName, isSpecial)) {
+      if (this.isAllComplete(tabName)) {
         console.log(`${tabName} 完成所有数据抓取`);
         this.onStop();
         process.exit(0);
@@ -189,17 +189,17 @@ export class JiliDb {
     }
   }
 
-  isComplete(isSpecial: boolean, isLog = true) {
+  isComplete(tabName: string, isSpecial: boolean, isLog = true) {
     if (isSpecial) {
       if (isLog) {
-        console.log(`特殊数据抓取进度: ${this.currentSpecial}/${this.special}`);
+        console.log(`表 ${tabName} 抓取进度: ${this.currentSpecial}/${this.special}`);
       }
       if (this.currentSpecial >= this.special) {
         return true;
       }
     } else {
       if (isLog) {
-        console.log(`普通数据抓取进度: ${this.currentNormal}/${this.normal}`);
+        console.log(`表 ${tabName} 抓取进度: ${this.currentNormal}/${this.normal}`);
       }
       if (this.currentNormal >= this.normal) {
         return true;
@@ -208,8 +208,8 @@ export class JiliDb {
     return false;
   }
 
-  isAllComplete() {
-    return this.isComplete(false, false) && this.isComplete(true, false);
+  isAllComplete(tabName: string) {
+    return this.isComplete(tabName, false) && this.isComplete(tabName, true);
   }
 
   async initCount(tabName: string, isSpecial: boolean) {
