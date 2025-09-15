@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package cjProto;
+
+// 列数据结构
+message Column {
+  repeated int32 Col = 1;
+}
+
+// 奖励数据
+message AwardData {
+  int32 Symbol = 1;      // 符号
+  int32 Count = 2;       // 数量
+  int32 LineNum = 3;     // 线号
+  double Win = 4;        // 获胜金额
+  repeated int32 Pos = 5; // 位置数组
+}
+
+// 组合阶段信息
+message ComboStageInfo {
+  repeated Column ComboStageSymbol = 1;  // 组合阶段符号
+  double ComboMult = 2;                  // 组合倍数
+  double ComboStageWin = 3;              // 组合阶段获胜金额
+  repeated AwardData AwardDataVec = 4;   // 奖励数据数组
+  repeated Column FillSymbols = 5;       // 填充符号
+  bool NeedEliminate = 6;                // 是否需要消除
+  repeated Column Eliminate = 7;         // 消除数据
+  bool IsMain = 8;                       // 是否主要
+  bool MaxFlag = 9;                      // 最大标志
+}
+
+// 回合信息
+message RoundInfo {
+  repeated ComboStageInfo ComboStageData = 1; // 组合阶段数据
+  double RoundWin = 2;                        // 回合获胜金额
+  int32 ScatterCount = 3;                     // 散布符号数量
+  int32 FreeRemainRound = 4;                  // 剩余免费回合数
+  int32 FreeTotalRound = 5;                   // 免费回合总数
+  int32 AddRounds = 6;                        // 额外回合数
+  int32 AwardTypeFlag = 7;                    // 奖励类型标志
+  bool MaxFlag = 8;                           // 最大标志
+}
+
+// 旋转响应
+message SpinAck {
+  repeated RoundInfo RoundQueue = 1;  // 回合队列
+  double FreeTotalWin = 2;            // 免费游戏总获胜金额
+  int32 BuyType = 3;                  // 购买类型
+  double TotalWin = 4;                // 总获胜金额
+  int32 AckType = 5;                  // 响应类型
+  double RTP = 6;                     // 返回玩家百分比
+  int32 LID = 7;                      // 语言ID
+  int32 RID = 8;                      // 房间ID
+}

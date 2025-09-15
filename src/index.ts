@@ -24,8 +24,9 @@ async function main(): Promise<void> {
 
   const jiliDb = new JiliDb({ db: dbManager, config: configData });
 
-  const run = async (i: number) => {
+  const run = async (i: number, time: number = 1000 * i) => {
     try {
+      await sleep(time);
       const uid = configData.huiduConfig.uidList[i];
       console.log(`开始执行第 ${i} 个账号: ${uid}`);
       const gameInfo = await getGameInfo(configData, i);
@@ -38,14 +39,13 @@ async function main(): Promise<void> {
       await spiderWork.start();
     } catch (error) {
       console.log(`重试：第 ${i} 个账号执行失败: ${(error as Error).message}`);
-      await sleep(2000);
-      await run(i);
+      // 固定2000ms重试
+      await run(i, 2000);
     }
   };
 
   await Promise.all(
     configData.huiduConfig.uidList.map(async (_uid, i) => {
-      await sleep(1000 * i);
       await run(i);
     })
   );
