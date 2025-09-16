@@ -9,6 +9,7 @@ import type { SpinDataAttributes } from '../../models/SpinData.js';
 import { SpinResponse } from '../../protoGeneral/astarte2_196.js';
 import type Config from '../../utils/config.js';
 import { __protoDir } from '../../utils/env.js';
+import { telegramService } from '../../utils/telegram.js';
 import { createDirectoryIfNotExists, formatNumber } from '../../utils/utils.js';
 import { decryptResponseBuffer } from './jili_utils.js';
 
@@ -21,6 +22,8 @@ export class JiliDb {
 
   currentSpecial = 0;
   currentNormal = 0;
+
+  private lastSpecialProgress = 0;
 
   constructor(options: {
     db: DatabaseManager;
@@ -160,6 +163,7 @@ export class JiliDb {
     if (this.isComplete(tabName, isSpecial)) {
       if (this.isAllComplete(tabName)) {
         console.log(`${tabName} 完成所有数据抓取`);
+        telegramService.sendSuccess(`${tabName} 完成所有数据抓取`);
         this.onStop();
         process.exit(0);
       }
@@ -189,18 +193,32 @@ export class JiliDb {
     }
   }
 
+  onNotify(tabName: string, current: number, total: number, threshold = 5) {
+    const progress = Math.floor((current / total) * 100);
+    if (progress >= this.lastSpecialProgress + threshold) {
+      this.lastSpecialProgress = progress;
+      telegramService.sendInfo(`表 ${tabName} 抓取进度: ${progress}% (${current}/${total})`);
+    }
+  }
+
   isComplete(tabName: string, isSpecial: boolean, isLog = true) {
     if (isSpecial) {
       if (isLog) {
         console.log(`表 ${tabName} 抓取进度: ${this.currentSpecial}/${this.special}`);
+
+        this.onNotify(tabName, this.currentSpecial, this.special);
       }
+
       if (this.currentSpecial >= this.special) {
         return true;
       }
     } else {
       if (isLog) {
         console.log(`表 ${tabName} 抓取进度: ${this.currentNormal}/${this.normal}`);
+
+        this.onNotify(tabName, this.currentNormal, this.normal);
       }
+
       if (this.currentNormal >= this.normal) {
         return true;
       }

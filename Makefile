@@ -16,3 +16,6 @@ convert-yaml: ## 转换 YAML 文件为 JSON
 
 convert-yaml-custom: ## 转换自定义 YAML 文件 (用法: make convert-yaml-custom INPUT=file.yaml OUTPUT=output.json)
 	cd scripts && node convert-yaml-to-json.js $(INPUT) $(OUTPUT)
+
+test-telegram: ## 测试 Telegram 机器人
+	tsx src/examples/telegram-example.ts

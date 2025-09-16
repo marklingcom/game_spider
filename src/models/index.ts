@@ -1,5 +1,6 @@
 import { type Model, type ModelStatic, Sequelize } from 'sequelize';
-import type { DbConfig } from '../utils/config.js';
+import type { ServerConfig } from '../utils/config.js';
+import { telegramService } from '../utils/telegram.js';
 import { JiliInfo } from './JiliGameInfo.js';
 import { JiliProto } from './JiliProto.js';
 import { SpinData } from './SpinData.js';
@@ -8,7 +9,7 @@ export default class DatabaseManager {
   private sequelize: Sequelize | null = null;
   private models = new Map<string, ModelStatic<Model>>();
 
-  async initDB(db: DbConfig): Promise<Sequelize> {
+  async initDB(db: ServerConfig['db']): Promise<Sequelize> {
     try {
       // 解析 DSN 字符串
       const dsnMatch = db.dsn.match(/^([^:]+):([^@]+)@tcp\(([^:]+):(\d+)\)\/([^?]+)/);
@@ -91,6 +92,7 @@ export default class DatabaseManager {
         const attributes = SpinDataModel.getAttributes();
         await this.sequelize.getQueryInterface().createTable(tabName, attributes);
         console.log(`Created table: ${tabName}`);
+        telegramService.sendInfo(`创建表: ${tabName}`);
       }
 
       const tableModel = this.sequelize.define(tabName, SpinDataModel.getAttributes(), {

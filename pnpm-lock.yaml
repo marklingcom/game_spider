@@ -66,6 +66,9 @@ importers:
       '@types/node':
         specifier: ^24.3.1
         version: 24.3.1
+      '@types/node-telegram-bot-api':
+        specifier: ^0.64.11
+        version: 0.64.11
       '@types/ws':
         specifier: ^8.18.1
         version: 8.18.1
@@ -347,6 +350,9 @@ packages:
   '@protobufjs/utf8@1.1.0':
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
 
+  '@types/caseless@0.12.5':
+    resolution: {integrity: sha512-hWtVTC2q7hc7xZ/RLbxapMvDMgUnDvKvMOpKal4DrMyfGBUfB1oKaZlIRr6mJL+If3bAP6sV/QneGzF6tJjZDg==}
+
   '@types/cheerio@1.0.0':
     resolution: {integrity: sha512-zAaImHWoh5RY2CLgU2mvg3bl2k3F65B0N5yphuII3ythFLPmJhL7sj1RDu6gSxcgqHlETbr/lhA2OBY+WF1fXQ==}
     deprecated: This is a stub types definition. cheerio provides its own type definitions, so you do not need this installed.
@@ -363,11 +369,20 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
+  '@types/node-telegram-bot-api@0.64.11':
+    resolution: {integrity: sha512-htUhp3/Zt6cB8crxVUNKWIOLPFdEF+P8StznbWGJXDgENfBtporBQZ8HJQG1/dx41uBRkJLaXH+xeRGNh6vCjg==}
+
   '@types/node@24.3.1':
     resolution: {integrity: sha512-3vXmQDXy+woz+gnrTvuvNrPzekOi+Ds0ReMxw0LzBiK3a+1k0kQn9f2NWk+lgD4rJehFUmYy2gMhJ2ZI+7YP9g==}
 
   '@types/qs@6.14.0':
     resolution: {integrity: sha512-eOunJqu0K1923aExK6y8p6fsihYEn/BYuQ4g0CxAAgFc4b/ZLN4CrsRZ55srTdqoiLzU2B2evC+apEIxprEzkQ==}
+
+  '@types/request@2.48.13':
+    resolution: {integrity: sha512-FGJ6udDNUCjd19pp0Q3iTiDkwhYup7J8hpMW9c4k53NrccQFFWKRho6hvtPPEhnXWKvukfwAlB6DbDz4yhH5Gg==}
+
+  '@types/tough-cookie@4.0.5':
+    resolution: {integrity: sha512-/Ad8+nIOV7Rl++6f1BdKxFSMgmoqEoYbHRpPcx3JEfv8VRsQe9Z4mCXeJBzxs7mbHY/XOZZuXlRNfhpVPbs6ZA==}
 
   '@types/validator@13.15.3':
     resolution: {integrity: sha512-7bcUmDyS6PN3EuD9SlGGOxM77F8WLVsrwkxyWxKnxzmXoequ6c7741QBrANq6htVRGOITJ7z72mTP6Z4XyuG+Q==}
@@ -638,6 +653,10 @@ packages:
 
   form-data@2.3.3:
     resolution: {integrity: sha512-1lLKB2Mu3aGP1Q/2eCOx0fNbRMe7XdwktwOruhfqqd0rIJWwN4Dh+E3hrPSlDCXnSR7UtZ1N38rVXm+6+MEhJQ==}
+    engines: {node: '>= 0.12'}
+
+  form-data@2.5.5:
+    resolution: {integrity: sha512-jqdObeR2rxZZbPSGL+3VckHMYtu+f9//KXBsVny6JSX/pa38Fy+bGjuG8eW/H6USNQWhLi8Num++cU2yOCNz4A==}
     engines: {node: '>= 0.12'}
 
   form-data@4.0.4:
@@ -1521,6 +1540,8 @@ snapshots:
 
   '@protobufjs/utf8@1.1.0': {}
 
+  '@types/caseless@0.12.5': {}
+
   '@types/cheerio@1.0.0':
     dependencies:
       cheerio: 1.1.2
@@ -1537,11 +1558,25 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
+  '@types/node-telegram-bot-api@0.64.11':
+    dependencies:
+      '@types/node': 24.3.1
+      '@types/request': 2.48.13
+
   '@types/node@24.3.1':
     dependencies:
       undici-types: 7.10.0
 
   '@types/qs@6.14.0': {}
+
+  '@types/request@2.48.13':
+    dependencies:
+      '@types/caseless': 0.12.5
+      '@types/node': 24.3.1
+      '@types/tough-cookie': 4.0.5
+      form-data: 2.5.5
+
+  '@types/tough-cookie@4.0.5': {}
 
   '@types/validator@13.15.3': {}
 
@@ -1916,6 +1951,15 @@ snapshots:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       mime-types: 2.1.35
+
+  form-data@2.5.5:
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      es-set-tostringtag: 2.1.0
+      hasown: 2.0.2
+      mime-types: 2.1.35
+      safe-buffer: 5.2.1
 
   form-data@4.0.4:
     dependencies:

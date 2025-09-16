@@ -2,7 +2,7 @@ import type Config from '../utils/config.js';
 import { getGameUrl } from './huidu.js';
 import { getGameInfoFromApi, type SpiderData } from './info.js';
 
-export async function getGameInfo(config: Config, index = 0): Promise<SpiderData> {
+export async function getGameInfo(config: Config, uid: number): Promise<SpiderData> {
   let url = '';
   const form = config.serverConfig.spiderConfig.form;
 
@@ -10,7 +10,7 @@ export async function getGameInfo(config: Config, index = 0): Promise<SpiderData
     case 'huidu':
       console.log('抓取来源 huidu');
       url = await getGameUrl({
-        uid: config.serverConfig.huiduConfig.uidList[index],
+        uid,
         coin: config.serverConfig.huiduConfig.coin,
         gameUid: config.currentGameConfig.huiduConfig.gameUid,
         companyId: config.currentGameConfig.huiduConfig.companyId,

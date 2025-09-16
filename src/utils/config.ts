@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { merge } from 'lodash-es';
 import yaml from 'yaml';
 
-interface ServerConfig {
+export interface ServerConfig {
   proxy: {
     enable: boolean;
     server: string;
@@ -25,7 +25,17 @@ interface ServerConfig {
   };
   huiduConfig: {
     coin: number;
-    uidList: number[];
+    key: string;
+    uidList1: number[];
+    uidList2: number[];
+    uidList3: number[];
+    uidList4: number[];
+  };
+  telegram: {
+    enable: boolean;
+    botToken: string;
+    chatId: string;
+    machine: string;
   };
 }
 
@@ -47,40 +57,48 @@ export default class Config {
   private jiliSlotConfigPath = './config/JILI-SLOT.json';
   private huiduConfigPath = './config/jili-huidu.json';
 
-  serverConfig: ServerConfig;
+  serverConfig: ServerConfig = {
+    proxy: {
+      enable: false,
+      server: '',
+    },
+    db: {
+      type: '',
+      dsn: '',
+      dialect: '',
+    },
+    spiderConfig: {
+      autoMigrate: false,
+      form: '',
+    },
+    betConfig: {
+      bet: 0,
+      buyBouns: false,
+      extra: false,
+      hasSpecial: true,
+      gameName: '',
+    },
+    huiduConfig: {
+      coin: 0,
+      key: 'uidList1',
+      uidList1: [],
+      uidList2: [],
+      uidList3: [],
+      uidList4: [],
+    },
+    telegram: {
+      enable: false,
+      botToken: '',
+      chatId: '',
+      machine: 'local',
+    },
+  };
 
   jiliSlotConfig: JiliSlotConfig[];
 
   huiduConfig: HuiduConfig[];
 
   constructor() {
-    this.serverConfig = {
-      proxy: {
-        enable: false,
-        server: '',
-      },
-      db: {
-        type: '',
-        dsn: '',
-        dialect: '',
-      },
-      spiderConfig: {
-        autoMigrate: false,
-        form: '',
-      },
-      betConfig: {
-        bet: 0,
-        buyBouns: false,
-        extra: false,
-        hasSpecial: true,
-        gameName: '',
-      },
-      huiduConfig: {
-        coin: 0,
-        uidList: [],
-      },
-    };
-
     this.loadConfig();
   }
 
@@ -102,37 +120,16 @@ export default class Config {
     };
   }
 
+  get huiduUidList() {
+    const key = this.serverConfig.huiduConfig.key;
+    return this.serverConfig.huiduConfig[key as keyof ServerConfig['huiduConfig']] as number[];
+  }
+
   private loadConfig(): Config {
     try {
-      const defaultConfig: ServerConfig = {
-        proxy: {
-          enable: false,
-          server: '',
-        },
-        db: {
-          type: 'mysql',
-          dsn: '',
-        },
-        spiderConfig: {
-          autoMigrate: false,
-          form: '',
-        },
-        betConfig: {
-          bet: 0,
-          buyBouns: false,
-          extra: false,
-          hasSpecial: false,
-          gameName: '',
-        },
-        huiduConfig: {
-          coin: 0,
-          uidList: [],
-        },
-      };
-
       const serverStr = fs.readFileSync(this.configPath, 'utf8');
       const serverConfigData = yaml.parse(serverStr) as Partial<ServerConfig>;
-      this.serverConfig = merge(defaultConfig, serverConfigData);
+      this.serverConfig = merge(this.serverConfig, serverConfigData);
 
       const jiliSlotData = fs.readFileSync(this.jiliSlotConfigPath, 'utf8');
       const jiliSlotConfigData = JSON.parse(jiliSlotData) as JiliSlotConfig[];
