@@ -1,12 +1,4 @@
-import axios, { type AxiosRequestConfig } from 'axios';
-
-export interface RedirectRequest {
-  url: string;
-  method: string;
-  body?: string;
-  headers?: AxiosRequestConfig['headers'];
-  timeout?: number;
-}
+import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios';
 
 export function parseURL(targetURL: string): {
   protocol: string;
@@ -22,36 +14,15 @@ export function parseURL(targetURL: string): {
   };
 }
 
-export async function getRedirectURL(reqConfig: RedirectRequest, retry = 3): Promise<string> {
-  const method = reqConfig.method || 'POST';
-  const timeout = reqConfig.timeout || 30000; // 30 seconds
-
-  const headers: AxiosRequestConfig['headers'] = {
-    ...reqConfig.headers,
-  };
-  // const { host } = parseURL(reqConfig.url);
-  // headers.Origin = origin;
-  // headers.Referer = origin;
-  // headers.Host = host;
-
-  const config: AxiosRequestConfig = {
-    method: method.toLowerCase() as any,
-    url: reqConfig.url,
-    timeout: timeout,
-    maxRedirects: 0, // 禁用自动重定向
-    validateStatus: (status) => status >= 200 && status < 400,
-    headers,
-  };
-  const response = await axios(config);
-
+export function parseRedirectResponse(response: AxiosResponse): string {
   let redirectURL = '';
   // 检查是否是重定向状态码
   if (response.status === 302 || response.status === 301) {
-    const location = response.headers.location;
+    redirectURL = response.headers.location;
+  }
+  if (!redirectURL && response.status === 200) {
     const data = response.data;
-    if (location) {
-      redirectURL = location;
-    } else if (data) {
+    if (data) {
       const html = data;
       const locationMatch = html.match(/location\.replace\('([^']+)'\)/);
 
@@ -60,6 +31,27 @@ export async function getRedirectURL(reqConfig: RedirectRequest, retry = 3): Pro
       }
     }
   }
+  return redirectURL;
+}
+
+export async function getRedirectURL(reqConfig: AxiosRequestConfig, retry = 3): Promise<string> {
+  const method = reqConfig.method || 'POST';
+
+  // const { host } = parseURL(reqConfig.url);
+  // headers.Origin = origin;
+  // headers.Referer = origin;
+  // headers.Host = host;
+
+  const config: AxiosRequestConfig = {
+    timeout: 30000,
+    ...reqConfig,
+    method: method.toLowerCase() as any,
+    maxRedirects: 0, // 禁用自动重定向
+    validateStatus: (status) => status >= 200 && status < 400,
+  };
+  const response = await axios(config);
+
+  const redirectURL = parseRedirectResponse(response);
 
   if ((!redirectURL || redirectURL === reqConfig.url) && retry > 0) {
     const nextRetry = retry - 1;
@@ -68,4 +60,14 @@ export async function getRedirectURL(reqConfig: RedirectRequest, retry = 3): Pro
   }
 
   return redirectURL;
+}
+
+export async function getUrlHtmlContent(url: string): Promise<string> {
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error('获取HTML内容失败:', error);
+    throw error;
+  }
 }

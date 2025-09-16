@@ -1,16 +1,16 @@
 import { writeFileSync } from 'node:fs';
 import path from 'node:path';
 import protobuf from 'protobufjs';
-import type { SpiderData } from '../gameFrom/info.js';
-import type DatabaseManager from '../models/index.js';
-import type { JiliInfoAttributes } from '../models/JiliGameInfo.js';
-import type { JiliProtoAttributes } from '../models/JiliProto.js';
-import type { SpinDataAttributes } from '../models/SpinData.js';
-import { SpinResponse } from '../protoGeneral/astarte2_196.js';
-import type Config from '../utils/config.js';
-import { decryptResponseBuffer } from '../utils/decrypt.js';
-import { __protoDir } from '../utils/env.js';
-import { createDirectoryIfNotExists, formatNumber } from '../utils/utils.js';
+import type { SpiderData } from '../../gameFrom/info.js';
+import type DatabaseManager from '../../models/index.js';
+import type { JiliInfoAttributes } from '../../models/JiliGameInfo.js';
+import type { JiliProtoAttributes } from '../../models/JiliProto.js';
+import type { SpinDataAttributes } from '../../models/SpinData.js';
+import { SpinResponse } from '../../protoGeneral/astarte2_196.js';
+import type Config from '../../utils/config.js';
+import { __protoDir } from '../../utils/env.js';
+import { createDirectoryIfNotExists, formatNumber } from '../../utils/utils.js';
+import { decryptResponseBuffer } from './jili_utils.js';
 
 export class JiliDb {
   private db: DatabaseManager;

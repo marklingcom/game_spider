@@ -1,0 +1,782 @@
+[
+  {
+    "fullName": "Lucky Jaguar",
+    "gi": 421,
+    "name": "lj",
+    "uuid": "JILI-SLOT-115"
+  },
+  {
+    "fullName": "Gold Rush",
+    "gi": 137,
+    "name": "ge",
+    "uuid": "JILI-SLOT-057"
+  },
+  {
+    "fullName": "Magic Lamp",
+    "gi": 108,
+    "name": "mw3",
+    "uuid": "JILI-SLOT-046"
+  },
+  {
+    "fullName": "Win Drop",
+    "gi": 179,
+    "name": "179",
+    "uuid": "JILI-SLOT-061"
+  },
+  {
+    "fullName": "3 LUCKY LION",
+    "gi": 463,
+    "name": "tll",
+    "uuid": "JILI-SLOT-140"
+  },
+  {
+    "fullName": "Crazy Hunter",
+    "gi": 92,
+    "name": "shooting3",
+    "uuid": "JILI-SLOT-045"
+  },
+  {
+    "fullName": "Lucky Tiger",
+    "gi": 558,
+    "name": "lt",
+    "uuid": "JILI-SLOT-144"
+  },
+  {
+    "fullName": "Money Coming Expand Bets",
+    "gi": 302,
+    "name": "mcp",
+    "uuid": "JILI-SLOT-107"
+  },
+  {
+    "fullName": "Joker Coins",
+    "gi": 529,
+    "name": "jc",
+    "uuid": "JILI-SLOT-137"
+  },
+  {
+    "fullName": "Lion 2 Dance",
+    "gi": null,
+    "name": "_Macross",
+    "uuid": "JILI-SLOT-139"
+  },
+  {
+    "fullName": "Sweet Magic",
+    "gi": 394,
+    "name": "smg",
+    "uuid": "JILI-SLOT-150"
+  },
+  {
+    "fullName": "Crystal 777 DELUXE",
+    "gi": 447,
+    "name": "c7d",
+    "uuid": "JILI-SLOT-128"
+  },
+  {
+    "fullName": "Party Night",
+    "gi": 76,
+    "name": "nightclub",
+    "uuid": "JILI-SLOT-044"
+  },
+  {
+    "fullName": "Legacy of Egypt",
+    "gi": 180,
+    "name": "loe",
+    "uuid": "JILI-SLOT-105"
+  },
+  {
+    "fullName": "Thor X",
+    "gi": 130,
+    "name": "thor",
+    "uuid": "JILI-SLOT-052"
+  },
+  {
+    "fullName": "Treasure Quest",
+    "gi": 307,
+    "name": "tsq",
+    "uuid": "JILI-SLOT-114"
+  },
+  {
+    "fullName": "Golden Bank 2",
+    "gi": 378,
+    "name": "cbt2",
+    "uuid": "JILI-SLOT-116"
+  },
+  {
+    "fullName": "Medusa",
+    "gi": 101,
+    "name": "ms",
+    "uuid": "JILI-SLOT-050"
+  },
+  {
+    "fullName": "3 Coin Treasures",
+    "gi": 399,
+    "name": "tct",
+    "uuid": "JILI-SLOT-101"
+  },
+  {
+    "fullName": "Cricket King 18",
+    "gi": 225,
+    "name": "ctk",
+    "uuid": "JILI-SLOT-078"
+  },
+  {
+    "fullName": "Elf Bingo",
+    "gi": 172,
+    "name": "lbingo",
+    "uuid": "JILI-SLOT-081"
+  },
+  {
+    "fullName": "Devil Fire",
+    "gi": 193,
+    "name": "df",
+    "uuid": "JILI-SLOT-085"
+  },
+  {
+    "fullName": "Pirate Queen",
+    "gi": 164,
+    "name": "pirate",
+    "uuid": "JILI-SLOT-073"
+  },
+  {
+    "fullName": "Bangla Beauty",
+    "gi": 238,
+    "name": "bby",
+    "uuid": "JILI-SLOT-086"
+  },
+  {
+    "fullName": "Mayan Empire",
+    "gi": 135,
+    "name": "me",
+    "uuid": "JILI-SLOT-058"
+  },
+  {
+    "fullName": "Money Coming 2",
+    "gi": 543,
+    "name": "mcp2",
+    "uuid": "JILI-SLOT-146"
+  },
+  {
+    "fullName": "Charge Buffalo Ascent",
+    "gi": 259,
+    "name": "bfs2",
+    "uuid": "JILI-SLOT-093"
+  },
+  {
+    "fullName": "TWIN WINS",
+    "gi": 106,
+    "name": "twinwins",
+    "uuid": "JILI-SLOT-047"
+  },
+  {
+    "fullName": "Aztec Priestess",
+    "gi": 209,
+    "name": "ap",
+    "uuid": "JILI-SLOT-083"
+  },
+  {
+    "fullName": "Pirate Queen 2",
+    "gi": 461,
+    "name": "pirate2",
+    "uuid": "JILI-SLOT-135"
+  },
+  {
+    "fullName": "Sweet Land",
+    "gi": 198,
+    "name": "sl",
+    "uuid": "JILI-SLOT-079"
+  },
+  {
+    "fullName": "Super Ace Deluxe",
+    "gi": 403,
+    "name": "fullhouse3",
+    "uuid": "JILI-SLOT-102"
+  },
+  {
+    "fullName": "Fortune Gems 3",
+    "gi": 300,
+    "name": "fg3",
+    "uuid": "JILI-SLOT-096"
+  },
+  {
+    "fullName": "Coin Tree",
+    "gi": 392,
+    "name": "cnt",
+    "uuid": "JILI-SLOT-125"
+  },
+  {
+    "fullName": "Golden Empire 2",
+    "gi": 424,
+    "name": "ge2",
+    "uuid": "JILI-SLOT-143"
+  },
+  {
+    "fullName": "Jungle King",
+    "gi": 16,
+    "name": "kk2",
+    "uuid": "JILI-SLOT-028"
+  },
+  {
+    "fullName": "Zeus",
+    "gi": 252,
+    "name": "zeus",
+    "uuid": "JILI-SLOT-097"
+  },
+  {
+    "fullName": "Coin Infinity",
+    "gi": 458,
+    "name": "coininfinity",
+    "uuid": "JILI-SLOT-122"
+  },
+  {
+    "fullName": "Book of Gold",
+    "gi": 87,
+    "name": "bog",
+    "uuid": "JILI-SLOT-053"
+  },
+  {
+    "fullName": "Shōgun",
+    "gi": 376,
+    "name": "samurai",
+    "uuid": "JILI-SLOT-110"
+  },
+  {
+    "fullName": "Night City",
+    "gi": 37,
+    "name": "sweetheart5",
+    "uuid": "JILI-SLOT-090"
+  },
+  {
+    "fullName": "Fortune Gems 2",
+    "gi": 223,
+    "name": "fgp",
+    "uuid": "JILI-SLOT-076"
+  },
+  {
+    "fullName": "Golden Temple",
+    "gi": 191,
+    "name": "petra",
+    "uuid": "JILI-SLOT-080"
+  },
+  {
+    "fullName": "Golden Queen",
+    "gi": 58,
+    "name": "gq",
+    "uuid": "JILI-SLOT-030"
+  },
+  {
+    "fullName": "Golden Joker",
+    "gi": 183,
+    "name": "gj",
+    "uuid": "JILI-SLOT-074"
+  },
+  {
+    "fullName": "Arena Fighter",
+    "gi": 228,
+    "name": "afr",
+    "uuid": "JILI-SLOT-092"
+  },
+  {
+    "fullName": "Potion Wizard",
+    "gi": 299,
+    "name": "pw",
+    "uuid": "JILI-SLOT-098"
+  },
+  {
+    "fullName": "World Cup",
+    "gi": 146,
+    "name": "fb",
+    "uuid": "JILI-SLOT-063"
+  },
+  {
+    "fullName": "Crazy777 2",
+    "gi": 504,
+    "name": "cz72",
+    "uuid": "JILI-SLOT-149"
+  },
+  {
+    "fullName": "3 Coin Treasures 2 ",
+    "gi": 472,
+    "name": "tct2",
+    "uuid": "JILI-SLOT-134"
+  },
+  {
+    "fullName": "Fruity Wheel",
+    "gi": 422,
+    "name": "lwc",
+    "uuid": "JILI-SLOT-111"
+  },
+  {
+    "fullName": "Money Coming",
+    "gi": 51,
+    "name": "mc",
+    "uuid": "JILI-SLOT-029"
+  },
+  {
+    "fullName": "Fortune Gems",
+    "gi": 109,
+    "name": "fg",
+    "uuid": "JILI-SLOT-043"
+  },
+  {
+    "fullName": "Roma X Deluxe",
+    "gi": 517,
+    "name": "rxmw",
+    "uuid": "JILI-SLOT-124"
+  },
+  {
+    "fullName": "3 Coin Wild Horse",
+    "gi": 485,
+    "name": "cc",
+    "uuid": "JILI-SLOT-126"
+  },
+  {
+    "fullName": "Fortune Monkey",
+    "gi": 303,
+    "name": "mp2",
+    "uuid": "JILI-SLOT-087"
+  },
+  {
+    "fullName": "Pharaoh Treasure",
+    "gi": 85,
+    "name": "mw",
+    "uuid": "JILI-SLOT-038"
+  },
+  {
+    "fullName": "Nightfall Hunting",
+    "gi": 324,
+    "name": "ed",
+    "uuid": "JILI-SLOT-113"
+  },
+  {
+    "fullName": "Lucky Doggy",
+    "gi": 374,
+    "name": "ww",
+    "uuid": "JILI-SLOT-117"
+  },
+  {
+    "fullName": "Boxing King",
+    "gi": 77,
+    "name": "bk",
+    "uuid": "JILI-SLOT-031"
+  },
+  {
+    "fullName": "The Pig House",
+    "gi": 263,
+    "name": "tph",
+    "uuid": "JILI-SLOT-103"
+  },
+  {
+    "fullName": "Alibaba",
+    "gi": 110,
+    "name": "ali",
+    "uuid": "JILI-SLOT-049"
+  },
+  {
+    "fullName": "Wild Ace",
+    "gi": 181,
+    "name": "wa",
+    "uuid": "JILI-SLOT-075"
+  },
+  {
+    "fullName": "RomaX",
+    "gi": 102,
+    "name": "rs2",
+    "uuid": "JILI-SLOT-040"
+  },
+  {
+    "fullName": "Money Pot",
+    "gi": 379,
+    "name": "mpt",
+    "uuid": "JILI-SLOT-112"
+  },
+  {
+    "fullName": "Witches Night",
+    "gi": 226,
+    "name": "witch",
+    "uuid": "JILI-SLOT-095"
+  },
+  {
+    "fullName": "JILI CAISHEN",
+    "gi": 144,
+    "name": "cai",
+    "uuid": "JILI-SLOT-060"
+  },
+  {
+    "fullName": "Agent Ace",
+    "gi": 115,
+    "name": "aa",
+    "uuid": "JILI-SLOT-048"
+  },
+  {
+    "fullName": "Fortune Coins",
+    "gi": 523,
+    "name": "rc",
+    "uuid": "JILI-SLOT-129"
+  },
+  {
+    "fullName": "Dabanggg",
+    "gi": 239,
+    "name": "dbg",
+    "uuid": "JILI-SLOT-088"
+  },
+  {
+    "fullName": "Crazy Hunter 2",
+    "gi": 420,
+    "name": "420",
+    "uuid": "JILI-SLOT-099"
+  },
+  {
+    "fullName": "Samba",
+    "gi": 136,
+    "name": "samba",
+    "uuid": "JILI-SLOT-070"
+  },
+  {
+    "fullName": "Lucky Coming",
+    "gi": 91,
+    "name": "ifff",
+    "uuid": "JILI-SLOT-037"
+  },
+  {
+    "fullName": "Jackpot Joker",
+    "gi": 301,
+    "name": "jpj",
+    "uuid": "JILI-SLOT-100"
+  },
+  {
+    "fullName": "3 Pot Dragons",
+    "gi": 372,
+    "name": "dts",
+    "uuid": "JILI-SLOT-106"
+  },
+  {
+    "fullName": "Party Star",
+    "gi": 240,
+    "name": "ps",
+    "uuid": "JILI-SLOT-104"
+  },
+  {
+    "fullName": "Super Ace Joker",
+    "gi": 409,
+    "name": "saj",
+    "uuid": "JILI-SLOT-118"
+  },
+  {
+    "fullName": "Safari Mystery",
+    "gi": 377,
+    "name": "sm",
+    "uuid": "JILI-SLOT-123"
+  },
+  {
+    "fullName": "Super Rich",
+    "gi": 100,
+    "name": "sr",
+    "uuid": "JILI-SLOT-041"
+  },
+  {
+    "fullName": "Sin City",
+    "gi": 171,
+    "name": "sc",
+    "uuid": "JILI-SLOT-089"
+  },
+  {
+    "fullName": "Bonus Hunter",
+    "gi": 142,
+    "name": "bh",
+    "uuid": "JILI-SLOT-062"
+  },
+  {
+    "fullName": "Mega Ace",
+    "gi": 134,
+    "name": "mw4",
+    "uuid": "JILI-SLOT-051"
+  },
+  {
+    "fullName": "Devil Fire 2",
+    "gi": 258,
+    "name": "dl",
+    "uuid": "JILI-SLOT-094"
+  },
+  {
+    "fullName": "Trial of Phoenix",
+    "gi": 208,
+    "name": "phoenix",
+    "uuid": "JILI-SLOT-084"
+  },
+  {
+    "fullName": "Super Ace 2",
+    "gi": 542,
+    "name": "fullhouse5",
+    "uuid": "JILI-SLOT-130"
+  },
+  {
+    "fullName": "3 Charge Buffalo",
+    "gi": 460,
+    "name": "tcb",
+    "uuid": "JILI-SLOT-131"
+  },
+  {
+    "fullName": "Master Tiger",
+    "gi": 176,
+    "name": "cny",
+    "uuid": "JILI-SLOT-077"
+  },
+  {
+    "fullName": "Bone Fortune",
+    "gi": 126,
+    "name": "dotd",
+    "uuid": "JILI-SLOT-059"
+  },
+  {
+    "fullName": "Gallina Vince",
+    "gi": 534,
+    "name": "mmg",
+    "uuid": "JILI-SLOT-141"
+  },
+  {
+    "fullName": "10 Sparkling Crown",
+    "gi": 526,
+    "name": "crown",
+    "uuid": "JILI-SLOT-133"
+  },
+  {
+    "fullName": "Bikini Lady",
+    "gi": 423,
+    "name": "bikini",
+    "uuid": "JILI-SLOT-127"
+  },
+  {
+    "fullName": "Circus Joker 4096",
+    "gi": 518,
+    "name": "cj",
+    "uuid": "JILI-SLOT-136"
+  },
+  {
+    "fullName": "40 Sparkling Crown",
+    "gi": 589,
+    "name": "crown40",
+    "uuid": "JILI-SLOT-145"
+  },
+  {
+    "fullName": "Cricket Sah 75",
+    "gi": 230,
+    "name": "cts",
+    "uuid": "JILI-SLOT-082"
+  },
+  {
+    "fullName": "Poseidon",
+    "gi": 375,
+    "name": "psd",
+    "uuid": "JILI-SLOT-121"
+  },
+  {
+    "fullName": "Secret Treasure",
+    "gi": 78,
+    "name": "ag2",
+    "uuid": "JILI-SLOT-039"
+  },
+  {
+    "fullName": "Egypt's Glow",
+    "gi": 264,
+    "name": "eg",
+    "uuid": "JILI-SLOT-108"
+  },
+  {
+    "fullName": "King Arthur",
+    "gi": 214,
+    "name": "ka",
+    "uuid": "JILI-SLOT-091"
+  },
+  {
+    "fullName": "Clover Coins 4x4 ",
+    "gi": 590,
+    "name": "cc4x4",
+    "uuid": "JILI-SLOT-148"
+  },
+  {
+    "fullName": "Crazy Pusher",
+    "gi": 153,
+    "name": "153",
+    "uuid": "JILI-SLOT-054"
+  },
+  {
+    "fullName": "Golden Empire",
+    "gi": 103,
+    "name": "mw2",
+    "uuid": "JILI-SLOT-042"
+  },
+  {
+    "fullName": "Neko Fortune",
+    "gi": 145,
+    "name": "ln",
+    "uuid": "JILI-SLOT-071"
+  },
+  {
+    "fullName": "Wild Racer",
+    "gi": 166,
+    "name": "utaxi",
+    "uuid": "JILI-SLOT-072"
+  },
+  {
+    "fullName": "Happy Taxi",
+    "gi": 116,
+    "name": "taxi",
+    "uuid": "JILI-SLOT-056"
+  },
+  {
+    "fullName": "3 Lucky Piggy",
+    "gi": 400,
+    "name": "tlp",
+    "uuid": "JILI-SLOT-109"
+  },
+  {
+    "fullName": "Fa Fa Fa",
+    "gi": 21,
+    "name": "ols",
+    "uuid": "JILI-SLOT-009"
+  },
+  {
+    "fullName": "Lucky Ball",
+    "gi": 13,
+    "name": "wondershow",
+    "uuid": "JILI-SLOT-006"
+  },
+  {
+    "fullName": "Hawaii Beauty",
+    "gi": 26,
+    "name": "sweetheart3",
+    "uuid": "JILI-SLOT-012"
+  },
+  {
+    "fullName": "Charge Buffalo",
+    "gi": 47,
+    "name": "bfs",
+    "uuid": "JILI-SLOT-026"
+  },
+  {
+    "fullName": "Fortune Tree",
+    "gi": 6,
+    "name": "luckytree",
+    "uuid": "JILI-SLOT-005"
+  },
+  {
+    "fullName": "Crazy FaFaFa",
+    "gi": 40,
+    "name": "ols3",
+    "uuid": "JILI-SLOT-017"
+  },
+  {
+    "fullName": "Golden Bank",
+    "gi": 45,
+    "name": "cbt",
+    "uuid": "JILI-SLOT-023"
+  },
+  {
+    "fullName": "God Of Martial",
+    "gi": 4,
+    "name": "tks",
+    "uuid": "JILI-SLOT-010"
+  },
+  {
+    "fullName": "War Of Dragons",
+    "gi": 9,
+    "name": "fd",
+    "uuid": "JILI-SLOT-004"
+  },
+  {
+    "fullName": "Bubble Beauty",
+    "gi": 30,
+    "name": "sweetheart4",
+    "uuid": "JILI-SLOT-015"
+  },
+  {
+    "fullName": "XiYangYang",
+    "gi": 43,
+    "name": "xiyangyang",
+    "uuid": "JILI-SLOT-018"
+  },
+  {
+    "fullName": "Chin Shi Huang",
+    "gi": 2,
+    "name": "csh",
+    "uuid": "JILI-SLOT-003"
+  },
+  {
+    "fullName": "Hyper Burst",
+    "gi": 14,
+    "name": "starburst",
+    "uuid": "JILI-SLOT-007"
+  },
+  {
+    "fullName": "Crazy777",
+    "gi": 35,
+    "name": "ols2",
+    "uuid": "JILI-SLOT-014"
+  },
+  {
+    "fullName": "SevenSevenSeven",
+    "gi": 27,
+    "name": "sss",
+    "uuid": "JILI-SLOT-013"
+  },
+  {
+    "fullName": "Lucky Goldbricks",
+    "gi": 48,
+    "name": "luckygoldbricks",
+    "uuid": "JILI-SLOT-024"
+  },
+  {
+    "fullName": "FortunePig",
+    "gi": 33,
+    "name": "pp",
+    "uuid": "JILI-SLOT-019"
+  },
+  {
+    "fullName": "Dragon Treasure",
+    "gi": 46,
+    "name": "bs",
+    "uuid": "JILI-SLOT-025"
+  },
+  {
+    "fullName": "Hot Chilli",
+    "gi": 5,
+    "name": "chilli",
+    "uuid": "JILI-SLOT-002"
+  },
+  {
+    "fullName": "Shanghai Beauty",
+    "gi": 17,
+    "name": "sweetheart",
+    "uuid": "JILI-SLOT-008"
+  },
+  {
+    "fullName": "Fengshen",
+    "gi": 38,
+    "name": "fs",
+    "uuid": "JILI-SLOT-022"
+  },
+  {
+    "fullName": "Candy Baby",
+    "gi": 23,
+    "name": "gem3",
+    "uuid": "JILI-SLOT-020"
+  },
+  {
+    "fullName": "Diamond Party",
+    "gi": 44,
+    "name": "fivestar",
+    "uuid": "JILI-SLOT-021"
+  },
+  {
+    "fullName": "Bao boon chin",
+    "gi": 36,
+    "name": "bbc",
+    "uuid": "JILI-SLOT-016"
+  },
+  {
+    "fullName": "Super Ace",
+    "gi": 49,
+    "name": "fullhouse",
+    "uuid": "JILI-SLOT-027"
+  }
+]

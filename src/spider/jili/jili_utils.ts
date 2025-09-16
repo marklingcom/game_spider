@@ -1,5 +1,5 @@
-import { GaiaResponse } from '../protoGeneral/astarte2_196.js';
-import { decrypted } from './utils.js';
+import { GaiaResponse } from '../../protoGeneral/astarte2_196.js';
+import { decrypted } from '../../utils/utils.js';
 
 export async function decryptResponseBuffer(
   buff: Buffer,

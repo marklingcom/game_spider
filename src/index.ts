@@ -1,6 +1,6 @@
 import { getGameInfo } from './gameFrom/index.js';
 import { dbManager } from './models/index.js';
-import { JiliDb } from './spider/jili_db.js';
+import { JiliDb } from './spider/jili/jili_db.js';
 import { SpiderWork } from './spider/spider.js';
 import Config from './utils/config.js';
 import { sleep } from './utils/utils.js';

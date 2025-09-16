@@ -24,4 +24,21 @@ sudo systemctl start docker
 docker --version
 docker compose version
 
+# ================================================
 
+# 1. 更新系统
+sudo apt update && sudo apt upgrade -y
+
+# 2. 添加 NodeSource 仓库（Node.js 22）
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+
+# 3. 安装 Node.js 和 npm
+sudo apt install -y nodejs
+
+# 4. 验证
+node -v
+npm -v
+
+# 5. 安装 pnpm
+npm i -g pnpm
+pnpm -v

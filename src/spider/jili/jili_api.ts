@@ -1,7 +1,7 @@
 import { EventEmitter } from 'node:events';
 import axios, { type AxiosProxyConfig, type AxiosRequestConfig } from 'axios';
 import WebSocket from 'ws';
-import type { SpiderData } from '../gameFrom/info.js';
+import type { SpiderData } from '../../gameFrom/info.js';
 import {
   type Browser,
   GameInfoAck,
@@ -9,10 +9,10 @@ import {
   MallType,
   Request,
   SpinReq,
-} from '../protoGeneral/astarte2_196.js';
-import { getCacert } from '../utils/cacert/cacert.js';
-import type Config from '../utils/config.js';
-import { decryptResponseBuffer } from '../utils/decrypt.js';
+} from '../../protoGeneral/astarte2_196.js';
+import { getCacert } from '../../utils/cacert/cacert.js';
+import type Config from '../../utils/config.js';
+import { decryptResponseBuffer } from './jili_utils.js';
 
 export interface WebSocketMessage {
   cmdType: number;

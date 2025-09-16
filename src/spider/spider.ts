@@ -1,8 +1,8 @@
 import type { SpiderData } from '../gameFrom/info.js';
 import type { GameInfoAck } from '../protoGeneral/astarte2_196.js';
 import type Config from '../utils/config.js';
-import { JiliApi } from './jili_api.js';
-import type { JiliDb } from './jili_db.js';
+import { JiliApi } from './jili/jili_api.js';
+import type { JiliDb } from './jili/jili_db.js';
 
 export class SpiderWork {
   private config: Config;

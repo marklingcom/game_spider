@@ -2,7 +2,7 @@ import { join } from 'node:path';
 import axios from 'axios';
 import protobuf from 'protobufjs';
 import { __protoGeneralDir } from '../utils/env.js';
-import { parseURL } from '../utils/network.js';
+import { parseJiliGameUrl } from '../utils/url.js';
 
 export interface SpiderData {
   token: string;
@@ -75,51 +75,6 @@ interface JiliResponse {
   time: number;
 }
 
-interface JiliGameParams {
-  ssoKey: string;
-  lang: string;
-  apiId: string;
-  be: string;
-  domainGs: string;
-  domainPlatform: string;
-  gameID: string;
-  gs: string;
-  legalLang: string;
-  gameName: string;
-  origin: string;
-}
-
-export function parseJiliGameUrl(gameUrl: string): JiliGameParams | null {
-  try {
-    const url = new URL(gameUrl);
-    const params = url.searchParams;
-
-    const gameParams: JiliGameParams = {
-      ssoKey: params.get('ssoKey') || '',
-      lang: params.get('lang') || '',
-      apiId: params.get('apiId') || '',
-      be: params.get('be') || '',
-      domainGs: params.get('domain_gs') || '',
-      domainPlatform: params.get('domain_platform') || '',
-      gameID: params.get('gameID') || '',
-      gs: params.get('gs') || '',
-      legalLang: params.get('legalLang') || '',
-      gameName: '',
-      origin: parseURL(gameUrl).origin,
-    };
-
-    const pathParts = url.pathname.split('/').filter((part) => part.length > 0);
-    if (pathParts.length > 0) {
-      gameParams.gameName = pathParts[0] || '';
-    }
-
-    return gameParams;
-  } catch (error) {
-    console.error('解析URL失败:', error);
-    return null;
-  }
-}
-
 export async function generateWebSocketData(
   gameId: string,
   apiId: string,
@@ -186,9 +141,6 @@ export async function getGameInfoFromApi(gameUrl: string): Promise<SpiderData> {
     };
 
     const params = parseJiliGameUrl(gameUrl);
-    if (!params) {
-      throw new Error('解析游戏URL参数失败');
-    }
 
     ret.name = params.gameName;
     ret.gi = parseInt(params.gameID, 10);

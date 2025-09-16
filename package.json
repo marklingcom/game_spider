@@ -7,6 +7,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsx watch src/index.ts",
+    "test": "tsx watch src/test.ts",
     "start": "node dist/index.js",
     "clean": "rm -rf dist",
     "proto": "npx protoc --plugin=./node_modules/.bin/protoc-gen-ts --ts_out=src/protoGeneral --proto_path=src/protoGeneral src/protoGeneral/*.proto",
@@ -22,6 +23,7 @@
   "license": "ISC",
   "dependencies": {
     "@protobuf-ts/runtime": "^2.11.1",
+    "@types/qs": "^6.14.0",
     "axios": "^1.12.0",
     "cheerio": "^1.1.2",
     "crypto": "^1.0.1",
@@ -29,6 +31,7 @@
     "node-telegram-bot-api": "^0.66.0",
     "playwright": "^1.55.0",
     "protobufjs": "^7.5.4",
+    "qs": "^6.14.0",
     "sequelize": "^6.37.7",
     "ws": "^8.18.3",
     "yaml": "^2.8.1"
