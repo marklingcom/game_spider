@@ -10,3 +10,9 @@ convert-awc: ## 转换 AWC 游戏数据
 
 convert-awc-custom: ## 转换自定义 AWC 数据 (用法: make convert-awc-custom INPUT=file.json OUTPUT=output.json)
 	cd scripts && node convert-awc-data.js $(INPUT) $(OUTPUT)
+
+convert-yaml: ## 转换 YAML 文件为 JSON
+	cd scripts && node convert-yaml-to-json.js
+
+convert-yaml-custom: ## 转换自定义 YAML 文件 (用法: make convert-yaml-custom INPUT=file.yaml OUTPUT=output.json)
+	cd scripts && node convert-yaml-to-json.js $(INPUT) $(OUTPUT)

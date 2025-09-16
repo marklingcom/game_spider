@@ -11,9 +11,9 @@
   "[javascript]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
-  "[json]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
+  // "[json]": {
+  //   "editor.defaultFormatter": "biomejs.biome"
+  // },
   "typescript.preferences.importModuleSpecifier": "relative",
   "typescript.suggest.autoImports": true
 }

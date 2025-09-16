@@ -9,14 +9,12 @@ db:
 spiderConfig:
   autoMigrate: false
   form: "huidu"
-  hasSpecial: false
 
 betConfig:
   # bet: 50
   buyBouns: false
   extra: true
-
-awcConfig:
+  hasSpecial: true
   gameName: "Golden Joker"
 
 huiduConfig:
@@ -24,8 +22,7 @@ huiduConfig:
   # uid: 1641530
   # game_uid: b4a3e54cabeecd94ebbd1cc217a5b069
   # gameUid: b4a3e54cabeecd94ebbd1cc217a5b069
-  gameUid: f301fe0b22d1540b1f215d282b20c642
-  companyId: 1
+  # gameUid: f301fe0b22d1540b1f215d282b20c642
   uidList:
     - 1641530
     # 第一批

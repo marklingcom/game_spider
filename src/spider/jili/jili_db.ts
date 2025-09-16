@@ -29,7 +29,7 @@ export class JiliDb {
     this.db = options.db;
     this.config = options.config;
 
-    if (this.config.spiderConfig.hasSpecial) {
+    if (this.config.betConfig.hasSpecial) {
       this.special = 2000;
     }
   }
