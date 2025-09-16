@@ -1,10 +1,15 @@
+import { EventEmitter } from 'node:events';
 import type { SpiderData } from '../gameFrom/info.js';
 import type { GameInfoAck } from '../protoGeneral/astarte2_196.js';
 import type Config from '../utils/config.js';
 import { JiliApi } from './jili/jili_api.js';
 import type { JiliDb } from './jili/jili_db.js';
 
-export class SpiderWork {
+export enum SpiderWorkEvent {
+  SPIN_SAVE = 'spinSave',
+}
+
+export class SpiderWork extends EventEmitter {
   private config: Config;
 
   private spiderData: SpiderData;
@@ -18,6 +23,8 @@ export class SpiderWork {
     spiderData: SpiderData;
     jiliDb: JiliDb;
   }) {
+    super();
+
     this.config = options.config;
     this.spiderData = options.spiderData;
     this.jiliDb = options.jiliDb;
@@ -80,6 +87,8 @@ export class SpiderWork {
       const spinBuffer = await this.jiliApi.spin(bet, isBuyBouns, isExtra);
       // 保存spinData
       await this.jiliDb.saveSpinData(spinBuffer, this.spiderData);
+
+      this.emit(SpiderWorkEvent.SPIN_SAVE, spinBuffer);
     }
   }
 }

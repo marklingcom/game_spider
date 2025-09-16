@@ -1,7 +1,7 @@
 import { getGameInfo } from './gameFrom/index.js';
 import { dbManager } from './models/index.js';
 import { JiliDb } from './spider/jili/jili_db.js';
-import { SpiderWork } from './spider/spider.js';
+import { SpiderWork, SpiderWorkEvent } from './spider/spider.js';
 import { config } from './utils/config.js';
 import { telegramService } from './utils/telegram.js';
 import { sleep } from './utils/utils.js';
@@ -32,12 +32,20 @@ total: 总共${config.huiduUidList.length}个账号
 `
   );
 
+  let spinCount = 0;
+
+  const onSpinCountNotify = () => {
+    telegramService.sendInfo(`当前抓取账号数量: ${spinCount}`);
+  };
+
   const jiliDb = new JiliDb({ db: dbManager, config });
 
-  const run = async (i: number, time: number = 500 * i) => {
+  const run = async (i: number, time: number = 1000 * i) => {
+    let isSpinSave = false;
     try {
       await sleep(time);
       const uid = config.huiduUidList[i];
+      console.log(`开始执行第 ${i} 个账号: ${uid}`);
       const gameInfo = await getGameInfo(config, uid);
       const spiderWork = new SpiderWork({
         config,
@@ -45,13 +53,20 @@ total: 总共${config.huiduUidList.length}个账号
         jiliDb,
       });
 
-      console.log(`开始执行第 ${i} 个账号: ${uid}`);
-      telegramService.sendInfo(`开始执行第 ${i} 个账号: ${uid}`);
+      spiderWork.once(SpiderWorkEvent.SPIN_SAVE, () => {
+        isSpinSave = true;
+        spinCount++;
+        onSpinCountNotify();
+      });
+
       await spiderWork.start();
     } catch (error) {
+      if (isSpinSave) {
+        spinCount--;
+        onSpinCountNotify();
+      }
       const errorMessage = (error as Error).message;
       console.log(`重试：第 ${i} 个账号执行失败: ${errorMessage}`);
-      telegramService.sendError(`重试：第 ${i} 个账号执行失败: ${errorMessage}`);
       // 固定2000ms重试
       await run(i, 2000);
     }
