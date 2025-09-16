@@ -20,18 +20,19 @@ betConfig:
   bet: 0
   buyBouns: false
   extra: false
-  hasSpecial: false
-  gameName: "Money Coming 2"
+  hasSpecial: true
+  gameName: "Boxing King"
 
 huiduConfig:
   coin: 100000
-  key: "uidList1"
+  key: "uidList0"
   # uid: 1641530
   # game_uid: b4a3e54cabeecd94ebbd1cc217a5b069
   # gameUid: b4a3e54cabeecd94ebbd1cc217a5b069
   # gameUid: f301fe0b22d1540b1f215d282b20c642
+  uidList0:
+    - 1641530
   uidList1:
-    # - 1641530
     # 第一批
     # =======20=========
     - 7632856

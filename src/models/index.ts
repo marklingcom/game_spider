@@ -93,6 +93,8 @@ export default class DatabaseManager {
         await this.sequelize.getQueryInterface().createTable(tabName, attributes);
         console.log(`Created table: ${tabName}`);
         telegramService.sendInfo(`创建表: ${tabName}`);
+      } else {
+        await this.fixTableIdAutoIncrement(tabName);
       }
 
       const tableModel = this.sequelize.define(tabName, SpinDataModel.getAttributes(), {
@@ -115,6 +117,36 @@ export default class DatabaseManager {
     }
     const count = await model.count();
     return count;
+  }
+
+  async fixTableIdAutoIncrement(tabName: string): Promise<void> {
+    if (!this.sequelize) {
+      throw new Error('数据库未初始化');
+    }
+
+    try {
+      const queryInterface = this.sequelize.getQueryInterface();
+      const tableDescription = await queryInterface.describeTable(tabName);
+
+      if (tableDescription.id && !tableDescription.id.autoIncrement) {
+        console.log(`修复表 ${tabName} 的 id 字段自增属性...`);
+
+        const { DataTypes } = await import('sequelize');
+        await queryInterface.changeColumn(tabName, 'id', {
+          type: DataTypes.BIGINT.UNSIGNED,
+          primaryKey: true,
+          autoIncrement: true,
+        });
+
+        console.log(`表 ${tabName} 的 id 字段自增属性修复完成`);
+        telegramService.sendInfo(`修复表 ${tabName} 的 id 字段自增属性`);
+      } else {
+        console.log(`表 ${tabName} 的 id 字段已经是自增的`);
+      }
+    } catch (error) {
+      console.error(`修复表 ${tabName} 失败:`, error);
+      throw error;
+    }
   }
 }
 

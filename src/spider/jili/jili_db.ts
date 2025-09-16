@@ -35,6 +35,7 @@ export class JiliDb {
     if (this.config.serverConfig.betConfig.hasSpecial) {
       this.special = 2000;
     }
+    this.onStart();
   }
 
   async init(name: string) {
@@ -47,7 +48,6 @@ export class JiliDb {
     if (!jiliProto) {
       throw new Error(`未找到jiliProto数据: ${name}`);
     }
-    this.onStart();
   }
 
   async saveGameInfo(
@@ -163,7 +163,7 @@ export class JiliDb {
     if (this.isComplete(tabName, isSpecial)) {
       if (this.isAllComplete(tabName)) {
         console.log(`${tabName} 完成所有数据抓取`);
-        telegramService.sendSuccess(`${tabName} 完成所有数据抓取`);
+        await telegramService.sendSuccess(`${tabName} 完成所有数据抓取`);
         this.onStop();
         process.exit(0);
       }
