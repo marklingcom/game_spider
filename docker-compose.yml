@@ -1,6 +1,9 @@
 services:
-  jili-spider:
-    build: .
+  app:
+    build:
+      context: .
+      no_cache: true
+    image: jili-spider:latest
     container_name: jili-spider
     volumes:
       - ./config:/app/config
