@@ -7,7 +7,7 @@ services:
     container_name: jili-spider
     volumes:
       - ./config:/app/config
-    restart: unless-stopped
+    restart: on-failure
     networks:
       - jili-spider-network
     # depends_on:

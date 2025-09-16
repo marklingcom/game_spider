@@ -34,7 +34,7 @@ total: 总共${config.huiduUidList.length}个账号
 
   const jiliDb = new JiliDb({ db: dbManager, config });
 
-  const run = async (i: number, time: number = 100 * i) => {
+  const run = async (i: number, time: number = 500 * i) => {
     try {
       await sleep(time);
       const uid = config.huiduUidList[i];
