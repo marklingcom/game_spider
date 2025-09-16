@@ -39,8 +39,8 @@ export class JiliApi extends EventEmitter {
       timeout: 30000,
     };
 
-    if (options.config.proxy.enable) {
-      const [host, portStr] = options.config.proxy.server.split(':');
+    if (options.config.serverConfig.proxy.enable) {
+      const [host, portStr] = options.config.serverConfig.proxy.server.split(':');
       config.proxy = {
         host: host || 'localhost',
         port: parseInt(portStr || '8080', 10),

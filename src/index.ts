@@ -2,16 +2,15 @@ import { getGameInfo } from './gameFrom/index.js';
 import { dbManager } from './models/index.js';
 import { JiliDb } from './spider/jili/jili_db.js';
 import { SpiderWork } from './spider/spider.js';
-import Config from './utils/config.js';
+import { config } from './utils/config.js';
 import { sleep } from './utils/utils.js';
 
 async function main(): Promise<void> {
-  const configData = new Config('./config/server.yaml');
   console.log('配置文件加载成功');
 
-  await dbManager.initDB(configData.db);
+  await dbManager.initDB(config.serverConfig.db);
 
-  if (configData.spiderConfig.autoMigrate) {
+  if (config.serverConfig.spiderConfig.autoMigrate) {
     console.log('🔄 运行数据库迁移...');
     try {
       await dbManager.sync(false);
@@ -22,16 +21,16 @@ async function main(): Promise<void> {
     }
   }
 
-  const jiliDb = new JiliDb({ db: dbManager, config: configData });
+  const jiliDb = new JiliDb({ db: dbManager, config });
 
   const run = async (i: number, time: number = 1000 * i) => {
     try {
       await sleep(time);
-      const uid = configData.huiduConfig.uidList[i];
+      const uid = config.serverConfig.huiduConfig.uidList[i];
       console.log(`开始执行第 ${i} 个账号: ${uid}`);
-      const gameInfo = await getGameInfo(configData, i);
+      const gameInfo = await getGameInfo(config, i);
       const spiderWork = new SpiderWork({
-        config: configData,
+        config,
         spiderData: gameInfo,
         jiliDb,
       });
@@ -45,7 +44,7 @@ async function main(): Promise<void> {
   };
 
   await Promise.all(
-    configData.huiduConfig.uidList.map(async (_uid, i) => {
+    config.serverConfig.huiduConfig.uidList.map(async (_uid, i) => {
       await run(i);
     })
   );

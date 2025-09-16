@@ -1,116 +1,152 @@
 import fs from 'node:fs';
+import { merge } from 'lodash-es';
 import yaml from 'yaml';
 
-export interface ProxyConfig {
-  enable: boolean;
-  server: string;
+interface ServerConfig {
+  proxy: {
+    enable: boolean;
+    server: string;
+  };
+  db: {
+    type: string;
+    dsn: string;
+    dialect?: string;
+  };
+  spiderConfig: {
+    autoMigrate: boolean;
+    form: string;
+  };
+  betConfig: {
+    bet: number;
+    buyBouns: boolean;
+    extra: boolean;
+    hasSpecial: boolean;
+    gameName: string;
+  };
+  huiduConfig: {
+    coin: number;
+    uidList: number[];
+  };
 }
 
-export interface DbConfig {
-  type: string;
-  dsn: string;
-  dialect?: string;
+interface JiliSlotConfig {
+  fullName: string;
+  gi: number;
+  name: string;
+  uuid: string;
 }
 
-export interface spiderConfig {
-  autoMigrate: boolean;
-  form: string;
-}
-
-export interface BetConfig {
-  bet: number;
-  buyBouns: boolean;
-  extra: boolean;
-  hasSpecial: boolean;
-  gameName: string;
-}
-
-export interface AwcConfig {
-  gameName: string;
-}
-
-export interface HuiduConfig {
-  coin: number;
-  uidList: number[];
+interface HuiduConfig {
+  fullName: string;
+  companyId: number;
+  gameUid: string;
 }
 
 export default class Config {
-  public proxy: ProxyConfig;
-  public db: DbConfig;
-  public spiderConfig: spiderConfig;
-  public betConfig: BetConfig;
-  public awcConfig: AwcConfig;
-  public huiduConfig: HuiduConfig;
+  private configPath = './config/server.yaml';
+  private jiliSlotConfigPath = './config/JILI-SLOT.json';
+  private huiduConfigPath = './config/jili-huidu.json';
 
-  private configPath: string;
+  serverConfig: ServerConfig;
 
-  constructor(configPath: string) {
-    this.configPath = configPath;
+  jiliSlotConfig: JiliSlotConfig[];
 
-    this.proxy = {
-      enable: false,
-      server: '',
-    };
-    this.db = {
-      type: '',
-      dsn: '',
-      dialect: '',
-    };
-    this.spiderConfig = {
-      autoMigrate: false,
-      form: '',
-    };
-    this.betConfig = {
-      bet: 0,
-      buyBouns: false,
-      extra: false,
-      hasSpecial: true,
-      gameName: '',
-    };
-    this.awcConfig = {
-      gameName: '',
-    };
-    this.huiduConfig = {
-      coin: 0,
-      uidList: [],
+  huiduConfig: HuiduConfig[];
+
+  constructor() {
+    this.serverConfig = {
+      proxy: {
+        enable: false,
+        server: '',
+      },
+      db: {
+        type: '',
+        dsn: '',
+        dialect: '',
+      },
+      spiderConfig: {
+        autoMigrate: false,
+        form: '',
+      },
+      betConfig: {
+        bet: 0,
+        buyBouns: false,
+        extra: false,
+        hasSpecial: true,
+        gameName: '',
+      },
+      huiduConfig: {
+        coin: 0,
+        uidList: [],
+      },
     };
 
-    this.loadConfig(this.configPath);
+    this.loadConfig();
   }
 
-  private loadConfig(path: string): Config {
-    try {
-      const data = fs.readFileSync(path, 'utf8');
-      const configData = yaml.parse(data) as any;
+  get currentGameConfig() {
+    const gameName = this.serverConfig.betConfig.gameName;
+    const jiliSlotConfig = this.jiliSlotConfig.find((item) => item.fullName === gameName);
+    if (!jiliSlotConfig) {
+      throw new Error(`游戏 ${gameName} 的 jiliSlotConfig 不存在`);
+    }
 
-      if (configData.proxy) {
-        this.proxy = { ...this.proxy, ...configData.proxy };
-      }
-      if (configData.db) {
-        this.db = {
-          ...this.db,
-          ...configData.db,
-          dialect: configData.db.type || configData.db.dialect || 'mysql',
-        };
-      }
-      if (configData.spiderConfig) {
-        this.spiderConfig = { ...this.spiderConfig, ...configData.spiderConfig };
-      }
-      if (configData.betConfig) {
-        this.betConfig = { ...this.betConfig, ...configData.betConfig };
-      }
-      if (configData.awcConfig) {
-        this.awcConfig = { ...this.awcConfig, ...configData.awcConfig };
-      }
-      if (configData.huiduConfig) {
-        this.huiduConfig = {
-          ...this.huiduConfig,
-          ...configData.huiduConfig,
-        };
-      }
+    const huiduConfig = this.huiduConfig.find((item) => item.fullName === gameName);
+    if (!huiduConfig) {
+      throw new Error(`游戏 ${gameName} 的 huiduConfig 不存在`);
+    }
+
+    return {
+      jiliSlotConfig,
+      huiduConfig,
+    };
+  }
+
+  private loadConfig(): Config {
+    try {
+      const defaultConfig: ServerConfig = {
+        proxy: {
+          enable: false,
+          server: '',
+        },
+        db: {
+          type: 'mysql',
+          dsn: '',
+        },
+        spiderConfig: {
+          autoMigrate: false,
+          form: '',
+        },
+        betConfig: {
+          bet: 0,
+          buyBouns: false,
+          extra: false,
+          hasSpecial: false,
+          gameName: '',
+        },
+        huiduConfig: {
+          coin: 0,
+          uidList: [],
+        },
+      };
+
+      const serverStr = fs.readFileSync(this.configPath, 'utf8');
+      const serverConfigData = yaml.parse(serverStr) as Partial<ServerConfig>;
+      this.serverConfig = merge(defaultConfig, serverConfigData);
+
+      const jiliSlotData = fs.readFileSync(this.jiliSlotConfigPath, 'utf8');
+      const jiliSlotConfigData = JSON.parse(jiliSlotData) as JiliSlotConfig[];
+      this.jiliSlotConfig = jiliSlotConfigData;
+
+      const huiduData = fs.readFileSync(this.huiduConfigPath, 'utf8');
+      const huiduConfigData = JSON.parse(huiduData) as HuiduConfig[];
+      this.huiduConfig = huiduConfigData;
+
       return this;
     } catch (error) {
       throw new Error(`配置文件加载失败: ${(error as Error).message}`);
     }
   }
 }
+
+export const config = new Config();

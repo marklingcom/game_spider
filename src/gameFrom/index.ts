@@ -2,13 +2,19 @@ import type Config from '../utils/config.js';
 import { getGameUrl } from './huidu.js';
 import { getGameInfoFromApi, type SpiderData } from './info.js';
 
-export async function getGameInfo(configData: Config, index = 0): Promise<SpiderData> {
+export async function getGameInfo(config: Config, index = 0): Promise<SpiderData> {
   let url = '';
+  const form = config.serverConfig.spiderConfig.form;
 
-  switch (configData.spiderConfig.form) {
+  switch (form) {
     case 'huidu':
       console.log('抓取来源 huidu');
-      url = await getGameUrl(configData.huiduConfig, index);
+      url = await getGameUrl({
+        uid: config.serverConfig.huiduConfig.uidList[index],
+        coin: config.serverConfig.huiduConfig.coin,
+        gameUid: config.currentGameConfig.huiduConfig.gameUid,
+        companyId: config.currentGameConfig.huiduConfig.companyId,
+      });
       break;
     case 'awc':
       console.log('抓取来源 awc');
@@ -29,7 +35,7 @@ export async function getGameInfo(configData: Config, index = 0): Promise<Spider
   if (!ret.token) {
     throw new Error('获取token失败, token为空');
   }
-  ret.from = configData.spiderConfig.form;
+  ret.from = form;
 
   return ret;
 }

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import type { HuiduConfig } from '../utils/config.js';
 import { getRedirectURL } from '../utils/network.js';
 
 const GAME_API_URL = 'https://bw.yobao.xyz/api/bwGame/getLaunchUrl';
@@ -14,9 +13,16 @@ interface HuiduResponse {
   };
 }
 
-export async function getGameUrl(huiDuConfig: HuiduConfig, index: number): Promise<string> {
+interface HuiduConfig {
+  uid: number;
+  coin: number;
+  gameUid: string;
+  companyId: number;
+}
+
+export async function getGameUrl(huiDuConfig: HuiduConfig): Promise<string> {
   const requestData = {
-    uid: huiDuConfig.uidList[index],
+    uid: huiDuConfig.uid,
     coin: huiDuConfig.coin,
     game_uid: huiDuConfig.gameUid,
     company_id: huiDuConfig.companyId,

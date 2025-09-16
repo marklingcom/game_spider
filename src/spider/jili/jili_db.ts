@@ -29,7 +29,7 @@ export class JiliDb {
     this.db = options.db;
     this.config = options.config;
 
-    if (this.config.betConfig.hasSpecial) {
+    if (this.config.serverConfig.betConfig.hasSpecial) {
       this.special = 2000;
     }
   }
@@ -136,8 +136,8 @@ export class JiliDb {
     const realBet = spinResponse.realBet || 0;
     let tabName = `jili_spin_${gameName}`;
 
-    if (this.config.betConfig.bet !== 0) {
-      tabName += `_${Math.floor(this.config.betConfig.bet)}`;
+    if (this.config.serverConfig.betConfig.bet !== 0) {
+      tabName += `_${Math.floor(this.config.serverConfig.betConfig.bet)}`;
     }
 
     if (spinResponse.spinReq?.mall) {
@@ -209,7 +209,7 @@ export class JiliDb {
   }
 
   isAllComplete(tabName: string) {
-    return this.isComplete(tabName, false) && this.isComplete(tabName, true);
+    return this.isComplete(tabName, false) && this.isComplete(tabName, false);
   }
 
   async initCount(tabName: string, isSpecial: boolean) {

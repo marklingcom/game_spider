@@ -53,7 +53,7 @@ export class SpiderWork {
 
   private async startSpinning(gameInfoAck: GameInfoAck): Promise<void> {
     let bet = 0;
-    if (this.config.betConfig.bet === 0) {
+    if (this.config.serverConfig.betConfig.bet === 0) {
       const [denominator, ok] = this.findValidDenominator(gameInfoAck.walletInfo[0]?.bet ?? []);
       if (ok) {
         bet = denominator;
@@ -61,11 +61,11 @@ export class SpiderWork {
         bet = gameInfoAck.walletInfo[0]?.bet[0] ?? 0;
       }
     } else {
-      bet = this.config.betConfig.bet;
+      bet = this.config.serverConfig.betConfig.bet;
     }
 
-    const isBuyBouns = this.config.betConfig.buyBouns;
-    const isExtra = this.config.betConfig.extra;
+    const isBuyBouns = this.config.serverConfig.betConfig.buyBouns;
+    const isExtra = this.config.serverConfig.betConfig.extra;
     await this.spinWorker(bet, isBuyBouns, isExtra);
   }
 

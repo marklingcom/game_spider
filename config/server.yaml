@@ -13,8 +13,8 @@ spiderConfig:
 betConfig:
   # bet: 50
   buyBouns: false
-  extra: true
-  hasSpecial: true
+  extra: false
+  hasSpecial: false
   gameName: "Golden Joker"
 
 huiduConfig:
