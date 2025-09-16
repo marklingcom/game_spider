@@ -17,11 +17,11 @@ export class JiliDb {
   private db: DatabaseManager;
   private config: Config;
 
-  special = 0;
+  special = 3000;
   normal = 300000;
 
-  currentSpecial = 0;
-  currentNormal = 0;
+  currentSpecial = this.special;
+  currentNormal = this.normal;
 
   private lastSpecialProgress = 0;
 
@@ -32,9 +32,6 @@ export class JiliDb {
     this.db = options.db;
     this.config = options.config;
 
-    if (this.config.serverConfig.betConfig.hasSpecial) {
-      this.special = 2000;
-    }
     this.onStart();
   }
 
@@ -161,7 +158,7 @@ export class JiliDb {
     await this.initCount(tabName, isSpecial);
 
     if (this.isComplete(tabName, isSpecial)) {
-      if (this.isAllComplete(tabName)) {
+      if (this.isStop) {
         console.log(`${tabName} 完成所有数据抓取`);
         await telegramService.sendSuccess(`${tabName} 完成所有数据抓取`);
         this.onStop();
@@ -202,44 +199,41 @@ export class JiliDb {
   }
 
   isComplete(tabName: string, isSpecial: boolean, isLog = true) {
+    let current = this.currentNormal;
+    let total = this.normal;
     if (isSpecial) {
-      if (isLog) {
-        console.log(`表 ${tabName} 抓取进度: ${this.currentSpecial}/${this.special}`);
+      current = this.currentSpecial;
+      total = this.special;
+    }
+    if (isLog) {
+      console.log(`表 ${tabName} 抓取进度: ${current}/${total}`);
 
-        this.onNotify(tabName, this.currentSpecial, this.special);
-      }
+      this.onNotify(tabName, current, total);
+    }
 
-      if (this.currentSpecial >= this.special) {
-        return true;
-      }
-    } else {
-      if (isLog) {
-        console.log(`表 ${tabName} 抓取进度: ${this.currentNormal}/${this.normal}`);
-
-        this.onNotify(tabName, this.currentNormal, this.normal);
-      }
-
-      if (this.currentNormal >= this.normal) {
-        return true;
-      }
+    if (current >= total) {
+      telegramService.sendSuccess(`表 ${tabName} 完成所有数据抓取`);
+      return true;
     }
     return false;
   }
 
-  isAllComplete(tabName: string) {
-    return this.isComplete(tabName, false) && this.isComplete(tabName, false);
+  get isStop() {
+    return this.currentSpecial >= this.special && this.currentNormal >= this.normal;
   }
 
   async initCount(tabName: string, isSpecial: boolean) {
     if (isSpecial) {
-      if (this.currentSpecial === 0) {
+      if (this.currentSpecial === this.special) {
         const count = await this.db.getTableCount(tabName);
         this.currentSpecial = count;
+        this.onNotify(tabName, this.currentSpecial, this.special);
       }
     } else {
-      if (this.currentNormal === 0) {
+      if (this.currentNormal === this.normal) {
         const count = await this.db.getTableCount(tabName);
         this.currentNormal = count;
+        this.onNotify(tabName, this.currentNormal, this.normal);
       }
     }
   }

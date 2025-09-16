@@ -22,12 +22,12 @@ async function main(): Promise<void> {
     }
   }
 
-  const { gameName, bet, buyBouns, extra, hasSpecial } = config.serverConfig.betConfig;
+  const { gameName, bet, buyBouns, extra } = config.serverConfig.betConfig;
 
   telegramService.sendInfo(
     `开始执行抓取任务: ${gameName}
 form: ${config.serverConfig.spiderConfig.form}
-bet: ${bet} buyBouns: ${buyBouns} extra: ${extra} hasSpecial: ${hasSpecial}
+bet: ${bet} buyBouns: ${buyBouns} extra: ${extra}
 total: 总共${config.huiduUidList.length}个账号
 `
   );

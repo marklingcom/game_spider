@@ -20,7 +20,6 @@ betConfig:
   bet: 0
   buyBouns: false
   extra: false
-  hasSpecial: true
   gameName: "Boxing King"
 
 huiduConfig:

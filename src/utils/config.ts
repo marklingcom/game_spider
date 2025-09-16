@@ -20,7 +20,6 @@ export interface ServerConfig {
     bet: number;
     buyBouns: boolean;
     extra: boolean;
-    hasSpecial: boolean;
     gameName: string;
   };
   huiduConfig: {
@@ -75,7 +74,6 @@ export default class Config {
       bet: 0,
       buyBouns: false,
       extra: false,
-      hasSpecial: true,
       gameName: '',
     },
     huiduConfig: {
