@@ -212,7 +212,6 @@ export class JiliDb {
     }
 
     if (current >= total) {
-      telegramService.sendSuccess(`表 ${tabName} 完成所有数据抓取`);
       return true;
     }
     return false;
