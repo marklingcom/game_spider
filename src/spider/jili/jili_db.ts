@@ -192,10 +192,12 @@ export class JiliDb {
   }
 
   onNotify(tabName: string, current: number, total: number, threshold = 5) {
-    const progress = Math.floor((current / total) * 100);
+    const progress = (current / total) * 100;
     if (this.lastSpecialProgress === 0 || progress >= this.lastSpecialProgress + threshold) {
       this.lastSpecialProgress = progress;
-      telegramService.sendSuccess(`表 ${tabName} 抓取进度: ${progress}% (${current}/${total})`);
+      telegramService.sendSuccess(
+        `表 ${tabName} 抓取进度: ${Math.floor(progress)}% (${current}/${total})`
+      );
     }
   }
 
