@@ -65,9 +65,9 @@ export class TelegramService {
         item.reject(error);
       }
 
-      if (this.messageQueue.length > 0) {
-        await sleep(this.delayMs);
-      }
+      // if (this.messageQueue.length > 0) {
+      await sleep(this.delayMs);
+      // }
     }
 
     this.isProcessing = false;
