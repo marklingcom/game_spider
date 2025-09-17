@@ -335,8 +335,10 @@ export class JiliDb {
     this.startTime = Date.now();
 
     telegramService.on(TelegramEventName.PROCESS, (reply) => {
-      const message = `normal表 ${this.normalTabName} 抓取进度: ${this.normalTabName ? this.currentNormal : 0}/${this.normal}
-special表 ${this.specialTabName} 抓取进度: ${this.specialTabName ? this.currentSpecial : 0}/${this.special}`;
+      const message = `当前进度：
+normal表 ${this.normalTabName} 抓取进度: ${this.normalTabName ? this.currentNormal : 0}/${this.normal}
+special表 ${this.specialTabName} 抓取进度: ${this.specialTabName ? this.currentSpecial : 0}/${this.special}
+`;
       reply(message);
     });
   }
