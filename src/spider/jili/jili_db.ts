@@ -3,7 +3,7 @@ import path from 'node:path';
 import protobuf from 'protobufjs';
 import type { SpiderData } from '../../gameFrom/info.js';
 import type DatabaseManager from '../../models/index.js';
-import type { JiliInfoAttributes } from '../../models/JiliGameInfo.js';
+import type { JiliInfoAttributes } from '../../models/JiliInfo.js';
 import type { JiliProtoAttributes } from '../../models/JiliProto.js';
 import type { SpinDataAttributes } from '../../models/SpinData.js';
 import { SpinResponse } from '../../protoGeneral/astarte2_196.js';
@@ -63,6 +63,7 @@ export class JiliDb {
 
     const info = {
       name: spiderData.name,
+      fullName: this.config.currentJiliGame.jiliConfig.fullName,
       from: spiderData.from,
       data: gaiaResponseData,
       fullData: data,

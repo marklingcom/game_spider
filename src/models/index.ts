@@ -1,7 +1,7 @@
 import { type Model, type ModelStatic, Sequelize } from 'sequelize';
 import type { ServerConfig } from '../utils/config.js';
 import { telegramService } from '../utils/telegram.js';
-import { JiliInfo } from './JiliGameInfo.js';
+import { JiliInfo } from './JiliInfo.js';
 import { JiliProto } from './JiliProto.js';
 import { SpinData } from './SpinData.js';
 

@@ -12,8 +12,8 @@ export async function getGameInfo(config: Config, uid: number): Promise<SpiderDa
       url = await getGameUrl({
         uid,
         coin: config.serverConfig.huiduConfig.coin,
-        gameUid: config.currentGameConfig.huiduConfig.gameUid,
-        companyId: config.currentGameConfig.huiduConfig.companyId,
+        gameUid: config.currentJiliGame.huiduConfig.gameUid,
+        companyId: config.currentJiliGame.huiduConfig.companyId,
       });
       break;
     case 'awc':

@@ -92,28 +92,28 @@ export default class Config {
     },
   };
 
-  jiliSlotConfig: JiliSlotConfig[];
+  jiliSlotList: JiliSlotConfig[];
 
-  huiduConfig: HuiduConfig[];
+  huiduConfigList: HuiduConfig[];
 
   constructor() {
     this.loadConfig();
   }
 
-  get currentGameConfig() {
+  get currentJiliGame() {
     const gameName = this.serverConfig.betConfig.gameName;
-    const jiliSlotConfig = this.jiliSlotConfig.find((item) => item.fullName === gameName);
-    if (!jiliSlotConfig) {
+    const jiliConfig = this.jiliSlotList.find((item) => item.fullName === gameName);
+    if (!jiliConfig) {
       throw new Error(`游戏 ${gameName} 的 jiliSlotConfig 不存在`);
     }
 
-    const huiduConfig = this.huiduConfig.find((item) => item.fullName === gameName);
+    const huiduConfig = this.huiduConfigList.find((item) => item.fullName === gameName);
     if (!huiduConfig) {
       throw new Error(`游戏 ${gameName} 的 huiduConfig 不存在`);
     }
 
     return {
-      jiliSlotConfig,
+      jiliConfig,
       huiduConfig,
     };
   }
@@ -131,11 +131,11 @@ export default class Config {
 
       const jiliSlotData = fs.readFileSync(this.jiliSlotConfigPath, 'utf8');
       const jiliSlotConfigData = JSON.parse(jiliSlotData) as JiliSlotConfig[];
-      this.jiliSlotConfig = jiliSlotConfigData;
+      this.jiliSlotList = jiliSlotConfigData;
 
       const huiduData = fs.readFileSync(this.huiduConfigPath, 'utf8');
       const huiduConfigData = JSON.parse(huiduData) as HuiduConfig[];
-      this.huiduConfig = huiduConfigData;
+      this.huiduConfigList = huiduConfigData;
 
       return this;
     } catch (error) {
