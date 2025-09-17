@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package sssProto;
+
+// Column message definition
+message Column {
+    repeated int32 Col = 1;
+}
+
+// Award data structure
+message AwardData {
+    int32 AwardSymbol = 1;
+    int32 AwardLine = 2;
+    double AwardMoney = 3;
+}
+
+// Bonus round data
+message BonusRoundData {
+    repeated Column Plate = 1;
+    repeated AwardData AwardDataList = 2;
+    double RoundWin = 3;
+    bool IsJP = 4;
+}
+
+// Bonus acknowledgment data
+message BonusAckData {
+    repeated BonusRoundData RoundData = 1;
+    double BonusWin = 2;
+}
+
+// JP (Jackpot) information
+message JPInfo {
+    repeated double Fronts = 1;
+}
+
+// Main acknowledgment information
+message AckInfo {
+    repeated Column MainPlate = 1;
+    repeated AwardData AwardDataList = 2;
+    int32 AwardTypeFlag = 3;
+    repeated BonusAckData Bonus = 4;
+    double MainWin = 5;
+    double BonusTotalWin = 6;
+    double TotalWin = 7;
+    repeated double JPWin = 8;
+    JPInfo JPInfo = 9;
+    int32 PuzzleWeightNum = 10;
+}
+
+// Spin acknowledgment message
+message SpinAck {
+    AckInfo PlateInfo = 1;
+    double TotalWin = 2;
+    string ShowIndex = 3;
+    double NowMoney = 4;
+    int32 AckType = 5;
+    double RTP = 6;
+}
+
+// JP information request
+message JPInfoReq {
+    int32 Currency = 1;
+}
+
+// Game information data
+message GameInfoData {
+    bool ShowExtra = 1;
+    repeated double Mul = 2;
+    repeated double JPOdds = 3;
+    repeated double JPBase = 4;
+}

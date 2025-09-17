@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package customProto;
+
+enum Symbol {
+    Wild = 0;
+    Symbol1 = 1;
+    Symbol2 = 2;
+    Symbol3 = 3;
+    Symbol4 = 4;
+    Symbol5 = 5;
+    Symbol6 = 6;
+    Symbol7 = 7;
+    Symbol8 = 8;
+    Symbol9 = 9;
+    Symbol10 = 10;
+    Symbol11 = 11;
+    Symbol12 = 12;
+    Symbol13 = 13;
+    Symbol14 = 14;
+    Bonus = 15;
+    GetCoin = 16;
+    WildCoin = 17;
+    CollectCoin = 18;
+    Coin = 19;
+    Treasure = 20;
+    AddCoin = 21;
+    CollectCoinBonus = 22;
+    DoubleCoin = 23;
+    ToLast = 24;
+    CountDown = 25;
+    EmptySymbol = 26;
+}
+
+enum TreasureType {
+    TreasureClosed = 0;
+    TreasureGen = 1;
+    TreasureAdd = 2;
+    TreasureDouble = 3;
+    TreasureCollect = 4;
+}
+
+message RoundResult {
+    MainPlate main = 1;
+    repeated BonusPlate bonus = 2;
+    double totalWin = 3;
+}
+
+message MainPlate {
+    repeated Column column = 1;
+    repeated Cell specialSymbol = 2;
+    repeated Reward reward = 3;
+}
+
+message Reward {
+    repeated Cell cell = 1;
+    double win = 2;
+    Symbol winSymbol = 3;
+    int32 line = 4;
+}
+
+message Column {
+    repeated Cell row = 1;
+}
+
+message Cell {
+    Symbol symbol = 1;
+    double coin = 2;
+    Symbol afterSymbol = 3;
+    double afterCoin = 4;
+    TreasureInfo treasure = 5;
+    int32 row = 6;
+    int32 col = 7;
+    double rate = 8;
+    double treasureRate = 9;
+}
+
+message BonusPlate {
+    repeated Column now = 1;
+    repeated Cell specialSymbol = 2;
+}
+
+message TreasureInfo {
+    int32 countDown = 1;
+    TreasureType type = 2;
+}

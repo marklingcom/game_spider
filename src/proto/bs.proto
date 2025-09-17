@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package bsProto;
+
+message Track {
+  repeated int32 Row = 1;
+}
+
+message SingleBall {
+  int32 CrashBall = 1;
+  double BallWin = 2;
+  int32 BallPos = 3;
+}
+
+message SinglePlate {
+  int32 NowBall = 1;
+  int32 NowBallLevel = 2;
+  int32 NowBallLevelCount = 3;
+  repeated Track BallTrack = 4;
+  int32 NewSide = 5;
+  repeated SingleBall CrushList = 6;
+  double SingleWin = 7;
+}
+
+message SingleFree {
+  SinglePlate FreePlate = 1;
+  double NowCountMul = 2;
+  int32 AwardType = 3;
+  double NowMoney = 4;
+}
+
+message FreeData {
+  SinglePlate FreeFisrt = 1;
+  repeated SingleFree FreeQueue = 2;
+  int32 FreeCount = 3;
+  double FreeMul = 4;
+  double FreeTotalWin = 5;
+}
+
+message ChainMul {
+  repeated double TrackMul = 1;
+}
+
+message ChainData {
+  repeated int32 TrackCount = 1;
+  repeated ChainMul TrackMul = 2;
+  double ChainWin = 3;
+}
+
+message EliteData {
+  double BallMul = 1;
+  double EliteMul = 2;
+}
+
+message SpinAck {
+  SinglePlate MainPlate = 1;
+  FreeData FreeInfo = 2;
+  ChainData ChainInfo = 3;
+  EliteData EliteInfo = 4;
+  repeated int32 UpgradeInfo = 5;
+  repeated int32 DoraInfo = 6;
+  repeated int32 SpecialInfo = 7;
+  int32 NowSoul = 8;
+  int32 GetSoul = 9;
+  int32 SoulChange = 10;
+  double TotalWin = 11;
+  int32 AwardType = 12;
+  string ShowIndex = 13;
+  double NowMoney = 14;
+  int32 AckType = 15;
+  double RTP = 16;
+  int32 LID = 17;
+  int32 RID = 18;
+}
+
+message FreeGameCounting {
+  repeated int32 BCount = 1;
+  repeated double CountMul = 2;
+}
+
+message GameInfoAck {
+  int32 NowBall = 1;
+  int32 NowBallLevel = 2;
+  repeated Track NowBallTrack = 3;
+  int32 NowSoulMode = 4;
+  double NowLockBet = 5;
+  FreeGameCounting FreeCounting = 6;
+  repeated double BallMulList = 7;
+  int32 NewbieCount = 8;
+  int32 NewbieLimit = 9;
+}
+
+message StateInfo {
+  int32 BallNow = 1;
+  repeated Track BallTrack = 2;
+  int32 BallNowTime = 3;
+  int32 BallNowLevel = 4;
+  int32 SoulMode = 5;
+  double LockBet = 6;
+  repeated int32 BallNoFalltime = 7;
+  repeated int32 BallMustCount = 8;
+}

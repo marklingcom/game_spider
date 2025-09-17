@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package customProto;
+
+enum Symbol {
+  Wild = 0;
+  Symbol1 = 1;
+  Symbol2 = 2;
+  Symbol3 = 3;
+  Symbol4 = 4;
+  Symbol5 = 5;
+  Symbol6 = 6;
+  Symbol7 = 7;
+}
+
+message Block {
+  uint32 row = 1;
+  uint32 column = 2;
+}
+
+message Row {
+  repeated int32 row = 1;  // Note: These should be Symbol enum values
+}
+
+message Plate {
+  message AwardReel {
+    uint32 line = 1;
+    repeated Block block = 2;
+    double win = 3;
+    uint32 dir = 4;
+    Symbol symbol = 5;
+  }
+
+  repeated Row column = 1;
+  repeated AwardReel award = 2;
+  double win = 3;
+  bool isBonus = 4;
+}
+
+message ExtraInfo {
+  uint32 hyperCount = 1;
+  double hyperBonus = 2;
+  double hyperBet = 3;
+}
+
+message AllPlate {
+  repeated Plate plate = 1;
+  ExtraInfo extraInfo = 2;
+  ExtraInfo nowExtraInfo = 3;
+}

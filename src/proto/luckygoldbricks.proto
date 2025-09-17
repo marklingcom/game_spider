@@ -1,0 +1,115 @@
+syntax = "proto3";
+
+package customProto;
+
+enum Symbol {
+  Wild = 0;
+  Bonus = 1;
+  Symbol1 = 2;
+  Symbol2 = 3;
+  Symbol3 = 4;
+  Symbol4 = 5;
+  Symbol5 = 6;
+  Symbol6 = 7;
+  Mix7 = 8;
+  MixBar = 9;
+}
+
+message Block {
+  uint32 row = 1;
+  uint32 column = 2;
+}
+
+message Plate {
+  repeated ColumnData column = 1;
+  double win = 2;
+  BonusInfo gold = 3;
+  double goldWin = 4;
+  JpInfo Jp = 5;
+}
+
+message BonusInfo {
+  double barWin = 1;
+  int64 count = 2;
+  repeated double gold = 3;
+}
+
+message AllPlate {
+  repeated Plate plate = 1;
+  repeated JpCurrency jp = 2;
+}
+
+message ColumnData {
+  repeated Cell row = 1;
+}
+
+message Cell {
+  Symbol symbol = 1;
+  bool isConnect = 2;
+}
+
+enum JpType {
+  None = 0;
+  Super = 1;
+  Mega = 2;
+  Grand = 3;
+}
+
+message JpCurrency {
+  int32 currency = 1;
+  repeated JpInfo info = 2;
+}
+
+message JpInfo {
+  JpType type = 1;
+  double value = 2;
+}
+
+enum JpType {
+  None = 0;
+  Super = 1;
+  Mega = 2;
+  Grand = 3;
+}
+
+enum AckType {
+  syncJP = 0;
+}
+
+enum Error {
+  success = 0;
+  unknown = 1;
+}
+
+message BonusInfo {
+  double barWin = 1;
+  int64 count = 2;
+  repeated double gold = 3;
+}
+
+message AllPlate {
+  repeated Plate plate = 1;
+  repeated JpCurrency jp = 2;
+}
+
+message ColumnData {
+  repeated Cell row = 1;
+}
+
+message JpReq {
+}
+
+message JpResp {
+  repeated JpCurrency jp = 2;
+}
+
+message CustomReq {
+  AckType ack = 1;
+  bytes req = 2;
+}
+
+message CustomResp {
+  AckType ack = 1;
+  bytes response = 2;
+  Error error = 3;
+}

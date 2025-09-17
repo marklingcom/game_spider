@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package mcProto;
+
+message PlateInfoDetail {
+    repeated int32 PlateSymbol = 1;
+    repeated int32 Order = 2;
+    double PlateWin = 3;
+}
+
+message SpinAck {
+    double WheelWin = 1;
+    double PlateWin = 2;
+    bool IsNearWin = 3;
+    repeated PlateInfoDetail PlateInfo = 4;
+    double TotalWin = 5;
+    int32 AwardTypeFlag = 6;
+    string ShowIndex = 7;
+    double NowMoney = 8;
+    int32 AckType = 9;
+    double RTP = 10;
+    bool IsBonus = 11;
+}
+
+message Wheel {
+    repeated double money = 1;
+}
+
+message GameInfoData {
+    repeated Wheel WheelList = 1;
+}

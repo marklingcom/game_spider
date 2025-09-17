@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package fdProto;
+
+message Grid {
+  int32 Column = 1;
+  int32 Row = 2;
+}
+
+message AwardData {
+  bool IsLine = 1;
+  bool IsWild = 2;
+  int32 Symbol = 3;
+  repeated Grid AwardGrid = 4;
+  double AwardMoney = 5;
+  double AwardCombo = 6;
+  int32 AwardCount = 7;
+}
+
+message Column {
+  repeated int32 Row = 1;
+}
+
+message PData {
+  repeated Column PlateShow = 1;
+  int32 AwardTypeFlag = 2;
+  repeated AwardData AwardDataList = 3;
+  double WinMoney = 4;
+  double FreeTotalAward = 5;
+  int32 FreeCount = 6;
+}
+
+message SpinAck {
+  PData PlateInfo = 1;
+  repeated PData FreePlateInfo = 2;
+  bool IsFree = 3;
+  double TotalWin = 4;
+  int32 AwardType = 5;
+  string ShowIndex = 6;
+  double NowMoney = 7;
+  int32 AckType = 8;
+  double RTP = 9;
+  int32 LID = 10;
+  int32 RID = 11;
+}
+
+message FreeReq {
+  int32 FreeType = 1;
+}
+
+message StateInfo {
+  bool IsinFree = 1;
+  bool NeedchooseFree = 2;
+  int32 FreeGameType = 3;
+  int32 FreeRoundCount = 4;
+  int32 FreeGameCount = 5;
+  double FreeTotalAward = 6;
+}
+
+message RoundRecord {
+  int64 RoundIndex = 1;
+  double MGBet = 2;
+}

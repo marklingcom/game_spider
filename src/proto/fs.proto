@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package customProto;
+
+enum Symbol {
+    Wild = 0;
+    Bonus = 1;
+    Symbol1 = 2;
+    Symbol2 = 3;
+    Symbol3 = 4;
+    Symbol4 = 5;
+    Symbol5 = 6;
+    Symbol6 = 7;
+    Symbol7 = 8;
+    Symbol8 = 9;
+    Symbol9 = 10;
+}
+
+message Block {
+    uint32 row = 1;
+    uint32 column = 2;
+}
+
+message Cell {
+    Symbol symbol = 1;
+    uint32 row = 2;
+    uint32 column = 3;
+}
+
+message AwardReel {
+    Symbol symbol = 1;
+    repeated Block block = 2;
+    double win = 3;
+    uint32 bonus = 4;
+    uint32 maxLen = 5;
+}
+
+message Combo {
+    repeated Cell change = 1;
+    repeated AwardReel award = 2;
+    double win = 3;
+}
+
+message ColumnData {
+    repeated Symbol row = 1;
+}
+
+message Plate {
+    repeated ColumnData column = 1;
+    repeated Cell change = 2;
+    repeated Combo combo = 3;
+    double win = 4;
+    double bonusWin = 5;
+    bool isBonus = 6;
+    uint32 bonusRate = 7;
+}
+
+message AllPlate {
+    repeated Plate plate = 1;
+    Plate finalPlate = 2;
+}

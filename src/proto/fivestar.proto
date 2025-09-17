@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package customProto;
+
+enum Symbol {
+  Scatter = 0;
+  Symbol1 = 1;
+  Symbol2 = 2;
+  Symbol3 = 3;
+  Symbol4 = 4;
+  Symbol5 = 5;
+  Symbol6 = 6;
+  Symbol7 = 7;
+  Wild = 8;
+}
+
+message Block {
+  uint32 row = 1;
+  uint32 column = 2;
+}
+
+message AwardReel {
+  uint32 line = 1;
+  repeated Block block = 2;
+  double win = 3;
+  uint32 dir = 4;
+  Symbol symbol = 5;
+}
+
+message Plate {
+  repeated Row column = 1;
+  repeated AwardReel award = 2;
+  double win = 3;
+  bool isBonus = 4;
+  double diamondBonus = 5;
+  uint32 diamondCount = 6;
+  uint32 diamondStamp = 7;
+  uint32 awardStamp = 8;
+}
+
+message Row {
+  repeated Symbol row = 1;
+}
+
+message AllPlate {
+  repeated Plate plate = 1;
+}
+
+message ColumnData {
+  repeated Symbol row = 1;
+}

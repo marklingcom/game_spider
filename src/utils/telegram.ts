@@ -1,3 +1,4 @@
+import { debounce } from 'lodash-es';
 import TelegramBot from 'node-telegram-bot-api';
 import { config } from './config.js';
 
@@ -36,7 +37,7 @@ export class TelegramService {
     }
   }
 
-  async sendMessage(message: string): Promise<boolean> {
+  private debouncedSendMessage = debounce(async (message: string): Promise<boolean> => {
     if (!this.isEnabled || !this.bot) {
       console.log('Telegram 机器人未启用，跳过发送消息');
       return false;
@@ -54,6 +55,10 @@ export class TelegramService {
       console.error('Telegram 消息发送失败:', error);
       return false;
     }
+  }, 500);
+
+  async sendMessage(message: string): Promise<boolean> {
+    return this.debouncedSendMessage(message);
   }
 
   async sendFormattedMessage(

@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package cz72Proto;
+
+// 奖励数据结构
+message AwardData {
+  int32 Symbol = 1;   // 图标ID
+  int32 Count = 2;    // 出现数量
+  int32 Line = 3;     // 中奖线索引
+  double Win = 4;     // 奖金
+  double Mult = 5;    // 倍率
+  int32 Award = 6;    // 奖励类型
+}
+
+// 单局回合信息
+message RoundInfo {
+  repeated int32 PlateSymbol = 1;         // 牌面符号数组
+  repeated AwardData AwardDataVec = 2;    // 奖励详情列表
+  int32 AwardTypeFlag = 3;                // 奖励类型标记
+  int32 RespinNowRound = 4;               // 当前重转轮次
+  double RespinTotalMult = 5;             // 重转总倍率
+  double RoundWin = 6;                     // 本局中奖金额
+  bool MaxFlag = 7;                        // 是否最大值标记
+  double RespinMult = 8;                   // 重转倍率
+}
+
+// spin 响应
+message SpinAck {
+  repeated RoundInfo RoundQueue = 1;      // 回合队列
+  double TotalWin = 2;                     // 总中奖金额
+  double RTP = 3;                          // RTP
+  double Bet = 4;                          // 下注金额
+}
+
+// 游戏额外信息
+message GameInfoData {
+  bool ShowExtra = 1;                      // 是否显示额外信息
+  repeated double Mul = 2;                 // 倍率列表
+  repeated double Odds = 3;                // 赔率列表
+}

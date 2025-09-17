@@ -119,7 +119,7 @@ export default class DatabaseManager {
     return count;
   }
 
-  async fixTableIdAutoIncrement(tabName: string): Promise<void> {
+  async fixTableIdAutoIncrement(tabName: string) {
     if (!this.sequelize) {
       throw new Error('数据库未初始化');
     }

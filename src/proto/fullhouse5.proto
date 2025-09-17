@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package customProto;
+
+// 符号类型，老虎机中用到的各种图标
+enum Symbol {
+  SmallGhost = 0;
+  Bonus = 1;
+  Symbol1 = 2;
+  Symbol2 = 3;
+  Symbol3 = 4;
+  Symbol4 = 5;
+  Symbol5 = 6;
+  Symbol6 = 7;
+  Symbol7 = 8;
+  Symbol8 = 9;
+  BigGhost = 10;
+}
+
+// 单个格子的数据
+message Cell {
+  Symbol symbol = 1;  // 符号
+  bool isGold = 2;    // 是否是金色符号
+  int32 row = 3;      // 行
+  int32 column = 4;   // 列
+  int32 count = 5;    // 连线数量或叠加数量
+}
+
+// 一列的数据
+message ColumnData {
+  repeated Cell row = 1;  // 当前列的所有行
+}
+
+// 奖励转轴信息
+message AwardReel {
+  Symbol symbol = 1;      // 奖励符号
+  uint32 totalCount = 2;  // 总数量
+  uint32 maxColumn = 3;   // 最大列数
+  double win = 4;         // 奖励金额
+}
+
+// 连线组合
+message Combo {
+  repeated Cell change = 1;       // 普通变化格子
+  repeated Cell ghostChange = 2;  // 幽灵变化格子
+  repeated AwardReel award = 3;   // 奖励转轴信息
+  double win = 4;                  // 当前组合的中奖金额
+}
+
+// 单个盘面
+message Plate {
+  repeated ColumnData column = 1; // 每列的数据
+  repeated Combo combo = 2;       // 当前盘面产生的组合
+  double win = 3;                  // 当前盘面的总中奖金额
+}
+
+// 所有盘面集合
+message AllPlate {
+  repeated Plate plate = 1;  // 所有盘面
+  double win = 2;            // 总中奖金额
+}

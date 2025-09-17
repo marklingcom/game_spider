@@ -1,0 +1,29 @@
+protos:
+  # - name: cz72
+  #   gi: 504
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  # - name: mcp
+  #   gi: 302
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  # - name: mcp2
+  #   gi: 543
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  # - name: cj
+  #   gi: 518
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name:
+  # - name: sss
+  #   gi: 27
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  # - name: wa
+  #   gi: 181
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  - name: mw4
+    gi: 134
+    spin_pb_name: SpinAck
+    game_info_pb_name: GameInfoData

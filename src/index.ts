@@ -83,9 +83,7 @@ total: 总共${config.huiduUidList.length}个账号
   process.exit(0);
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch((error) => {
-    console.error('未捕获的错误:', error);
-    process.exit(1);
-  });
-}
+main().catch((error) => {
+  console.error('未捕获的错误:', error);
+  process.exit(1);
+});
