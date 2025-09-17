@@ -39,7 +39,7 @@ total: 总共${config.huiduUidList.length}个账号
 
   const onSpinCountNotify = debounce(() => {
     telegramService.sendInfo(`当前抓取账号数量: ${spinCount}`);
-  }, 2000);
+  }, 3000);
 
   const jiliDb = new JiliDb({ db: dbManager, config });
 
@@ -67,7 +67,7 @@ total: 总共${config.huiduUidList.length}个账号
       const errorMessage = `重试：第 ${i} 个账号执行失败: ${error.message}`;
       if (isSpinSave) {
         spinCount--;
-        onSpinCountNotify();
+        // onSpinCountNotify();
         telegramService.sendError(errorMessage);
       }
       console.log(errorMessage);
