@@ -1,3 +1,4 @@
+import { debounce } from 'lodash-es';
 import { getGameInfo } from './gameFrom/index.js';
 import { dbManager } from './models/index.js';
 import { JiliDb } from './spider/jili/jili_db.js';
@@ -36,9 +37,9 @@ total: 总共${config.huiduUidList.length}个账号
 
   let spinCount = 0;
 
-  const onSpinCountNotify = () => {
+  const onSpinCountNotify = debounce(() => {
     telegramService.sendInfo(`当前抓取账号数量: ${spinCount}`);
-  };
+  }, 1000);
 
   const jiliDb = new JiliDb({ db: dbManager, config });
 
