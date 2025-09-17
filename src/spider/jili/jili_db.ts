@@ -9,7 +9,7 @@ import type { SpinDataAttributes } from '../../models/SpinData.js';
 import { SpinResponse } from '../../protoGeneral/astarte2_196.js';
 import type Config from '../../utils/config.js';
 import { __protoDir } from '../../utils/env.js';
-import { telegramService } from '../../utils/telegram.js';
+import { TelegramEventName, telegramService } from '../../utils/telegram.js';
 import { createDirectoryIfNotExists, formatNumber } from '../../utils/utils.js';
 import { decryptResponseBuffer } from './jili_utils.js';
 
@@ -22,6 +22,10 @@ export class JiliDb {
 
   currentSpecial = this.special;
   currentNormal = this.normal;
+
+  specialTabName = '';
+
+  normalTabName = '';
 
   private lastSpecialProgress = 0;
 
@@ -229,12 +233,14 @@ export class JiliDb {
       if (this.currentSpecial === this.special) {
         const count = await this.db.getTableCount(tabName);
         this.currentSpecial = count;
+        this.specialTabName = tabName;
         this.onNotify(tabName, this.currentSpecial, this.special);
       }
     } else {
       if (this.currentNormal === this.normal) {
         const count = await this.db.getTableCount(tabName);
         this.currentNormal = count;
+        this.normalTabName = tabName;
         this.onNotify(tabName, this.currentNormal, this.normal);
       }
     }
@@ -327,6 +333,12 @@ export class JiliDb {
 
   onStart() {
     this.startTime = Date.now();
+
+    telegramService.on(TelegramEventName.PROCESS, (reply) => {
+      const message = `normal表 ${this.normalTabName} 抓取进度: ${this.normalTabName ? this.currentNormal : 0}/${this.normal}
+special表 ${this.specialTabName} 抓取进度: ${this.specialTabName ? this.currentSpecial : 0}/${this.special}`;
+      reply(message);
+    });
   }
 
   onStop() {
