@@ -63,12 +63,13 @@ total: 总共${config.huiduUidList.length}个账号
 
       await spiderWork.start();
     } catch (error) {
+      const errorMessage = `重试：第 ${i} 个账号执行失败: ${error.message}`;
       if (isSpinSave) {
         spinCount--;
         onSpinCountNotify();
+        telegramService.sendError(errorMessage);
       }
-      const errorMessage = (error as Error).message;
-      console.log(`重试：第 ${i} 个账号执行失败: ${errorMessage}`);
+      console.log(errorMessage);
       // 固定2000ms重试
       await run(i, 2000);
     }
