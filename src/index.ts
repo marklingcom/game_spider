@@ -24,7 +24,7 @@ async function main(): Promise<void> {
 
   const { gameName, bet, buyBouns, extra } = config.serverConfig.betConfig;
 
-  telegramService.sendInfo(
+  telegramService.sendSuccess(
     `开始执行抓取任务: ${gameName}
 form: ${config.serverConfig.spiderConfig.form}
 bet: ${bet}
