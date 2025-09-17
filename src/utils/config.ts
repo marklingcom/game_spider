@@ -52,9 +52,9 @@ interface HuiduConfig {
 }
 
 export default class Config {
-  private configPath = './config/server.yaml';
-  private jiliSlotConfigPath = './config/JILI-SLOT.json';
-  private huiduConfigPath = './config/jili-huidu.json';
+  private serverConfigPath = './config/server.yaml';
+  private jiliSlotListPath = './config/JILI-SLOT.json';
+  private huiduConfigListPath = './config/jili-huidu.json';
 
   serverConfig: ServerConfig = {
     proxy: {
@@ -125,16 +125,16 @@ export default class Config {
 
   private loadConfig(): Config {
     try {
-      const serverStr = fs.readFileSync(this.configPath, 'utf8');
-      const serverConfigData = yaml.parse(serverStr) as Partial<ServerConfig>;
+      const serverConfigStr = fs.readFileSync(this.serverConfigPath, 'utf8');
+      const serverConfigData = yaml.parse(serverConfigStr) as Partial<ServerConfig>;
       this.serverConfig = merge(this.serverConfig, serverConfigData);
 
-      const jiliSlotData = fs.readFileSync(this.jiliSlotConfigPath, 'utf8');
-      const jiliSlotConfigData = JSON.parse(jiliSlotData) as JiliSlotConfig[];
-      this.jiliSlotList = jiliSlotConfigData;
+      const jiliSlotStr = fs.readFileSync(this.jiliSlotListPath, 'utf8');
+      const jiliSlotData = JSON.parse(jiliSlotStr) as JiliSlotConfig[];
+      this.jiliSlotList = jiliSlotData;
 
-      const huiduData = fs.readFileSync(this.huiduConfigPath, 'utf8');
-      const huiduConfigData = JSON.parse(huiduData) as HuiduConfig[];
+      const huiduConfigStr = fs.readFileSync(this.huiduConfigListPath, 'utf8');
+      const huiduConfigData = JSON.parse(huiduConfigStr) as HuiduConfig[];
       this.huiduConfigList = huiduConfigData;
 
       return this;

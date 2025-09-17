@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package mcpProto;
+
+// 单个格子符号数据
+message SinglePlate {
+  // 牌面符号数组
+  repeated int32 Symbol = 1;
+}
+
+// 转盘的倍率数据
+message Wheel {
+  // 倍率数组
+  repeated double Mul = 1;
+}
+
+// 游戏基础信息
+message GameInfoData {
+  // 转盘列表
+  repeated Wheel WheelList = 7;
+
+  // 所有下注列表
+  repeated double AllBetList = 8;
+}
+
+// Spin 响应
+message SpinAck {
+  // 牌面符号
+  repeated SinglePlate PlateSymbol = 1;
+
+  // 主游戏赢得金额
+  double MainWin = 2;
+
+  // 重转赢得金额
+  double ReSpinWin = 3;
+
+  // 轮盘赢得金额
+  double WheelWin = 4;
+
+  // 总赢得金额
+  double TotalWin = 5;
+
+  // 显示索引
+  string ShowIndex = 6;
+
+  // 当前余额
+  double NowMoney = 7;
+
+  // 响应类型
+  int32 AckType = 8;
+
+  // RTP 值
+  double RTP = 9;
+
+  // 显示类型
+  int32 ShowType = 10;
+}

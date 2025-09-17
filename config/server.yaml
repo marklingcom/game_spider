@@ -17,10 +17,10 @@ telegram:
   machine: "local"
 
 betConfig:
-  bet: 0
+  bet: 1
   buyBouns: false
   extra: false
-  gameName: "Boxing King"
+  gameName: "Money Coming Expand Bets"
 
 huiduConfig:
   coin: 100000
