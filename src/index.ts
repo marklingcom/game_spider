@@ -39,7 +39,7 @@ total: 总共${config.huiduUidList.length}个账号
 
   const onSpinCountNotify = debounce(() => {
     telegramService.sendInfo(`当前抓取账号数量: ${spinCount}`);
-  }, 1000);
+  }, 2000);
 
   const jiliDb = new JiliDb({ db: dbManager, config });
 
