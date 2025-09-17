@@ -64,13 +64,16 @@ total: 总共${config.huiduUidList.length}个账号
 
       await spiderWork.start();
     } catch (error) {
-      const errorMessage = `重试：第 ${i} 个账号执行失败: ${error.message}`;
+      const errorMessage = `重试：第 ${i} 个账号执行失败: ${(error as Error).message}`;
+      const stackTrace = (error as Error).stack || '无堆栈信息';
+
       if (isSpinSave) {
         spinCount--;
         // onSpinCountNotify();
-        telegramService.sendError(errorMessage);
+        telegramService.sendError(errorMessage, `堆栈信息:\n${stackTrace}`);
       }
       console.log(errorMessage);
+      console.log('堆栈信息:', stackTrace);
       // 固定2000ms重试
       await run(i, 2000);
     }
