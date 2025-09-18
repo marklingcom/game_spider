@@ -1,0 +1,682 @@
+[
+  {
+    "fullName": "Ganesha Fortune",
+    "companyId": "3",
+    "gameUid": "c4b57c6dcfac5c8a31b9174523103c8c"
+  },
+  {
+    "fullName": "Treasures of Aztec",
+    "companyId": "3",
+    "gameUid": "2fa9a84d096d6ff0bab53f81b79876c8"
+  },
+  {
+    "fullName": "Lucky Neko",
+    "companyId": "3",
+    "gameUid": "e1b4c6b95746d519228744771f15fe4b"
+  },
+  {
+    "fullName": "Wild Bounty Showdown",
+    "companyId": "3",
+    "gameUid": "c98bb64436826fe9a2c62955ff70cba9"
+  },
+  {
+    "fullName": "Ganesha Gold",
+    "companyId": "3",
+    "gameUid": "8dcea650a5a4d96530a77e6df8f61923"
+  },
+  {
+    "fullName": "Fortune Ox",
+    "companyId": "3",
+    "gameUid": "8db4eb6d781f915eebab2a26133db0e9"
+  },
+  {
+    "fullName": "Fortune Rabbit",
+    "companyId": "3",
+    "gameUid": "e175cdd3215a02f5539cc8354a149b75"
+  },
+  {
+    "fullName": "Dragon Hatch 2",
+    "companyId": "3",
+    "gameUid": "910f25689073d17680be453d7ed90ce2"
+  },
+  {
+    "fullName": "Dragon Hatch",
+    "companyId": "3",
+    "gameUid": "4afef91d3addb9ce5107abaf3342b9a5"
+  },
+  {
+    "fullName": "Queen of Bounty",
+    "companyId": "3",
+    "gameUid": "83a6890cf84e4c5a6bacf96d5355d472"
+  },
+  {
+    "fullName": "Fortune Tiger",
+    "companyId": "3",
+    "gameUid": "9a8482565ce343ad3ea7fc4bc42cb043"
+  },
+  {
+    "fullName": "Double Fortune",
+    "companyId": "3",
+    "gameUid": "3810e528e0abb8ce1cd7ddc2ece005c0"
+  },
+  {
+    "fullName": "Buffalo Win",
+    "companyId": "3",
+    "gameUid": "2818a7add6e10b2ec5f938d7ae0efb04"
+  },
+  {
+    "fullName": "Jungle Delight",
+    "companyId": "3",
+    "gameUid": "232e8e0c74f9bb16ab676e5ed49d72b4"
+  },
+  {
+    "fullName": "Fortune Dragon",
+    "companyId": "3",
+    "gameUid": "c5435a8a73707a3a8bb4fe8baaaef3d2"
+  },
+  {
+    "fullName": "Anubis Wrath",
+    "companyId": "3",
+    "gameUid": "c268154a85669eea35aa46387834ac76"
+  },
+  {
+    "fullName": "Dreams of Macau",
+    "companyId": "3",
+    "gameUid": "0ef82ebe6f819619f53b83e218b9452c"
+  },
+  {
+    "fullName": "Mahjong Ways",
+    "companyId": "3",
+    "gameUid": "1189baca156e1bbbecc3b26651a63565"
+  },
+  {
+    "fullName": "Mahjong Ways 2",
+    "companyId": "3",
+    "gameUid": "ba2adf72179e1ead9e3dae8f0a7d4c07"
+  },
+  {
+    "fullName": "Leprechaun Riches",
+    "companyId": "3",
+    "gameUid": "fb2a2ac51303c0a0801dbe6a72d936f7"
+  },
+  {
+    "fullName": "Captain's Bounty",
+    "companyId": "3",
+    "gameUid": "cd29b9906a852ce26b53b6d6d81037d4"
+  },
+  {
+    "fullName": "Wild Bandito",
+    "companyId": "3",
+    "gameUid": "95fc290bb05c07b5aad1a054eba4dcc4"
+  },
+  {
+    "fullName": "Ways of the Qilin",
+    "companyId": "3",
+    "gameUid": "fedfca553a97a791a3a41c4f1e3bff58"
+  },
+  {
+    "fullName": "The Great Icescape",
+    "companyId": "3",
+    "gameUid": "99f07ed2226f37e22570325fc1c078f2"
+  },
+  {
+    "fullName": "Caishen Wins",
+    "companyId": "3",
+    "gameUid": "82a810ba99a5fb3e23fc514afebd6314"
+  },
+  {
+    "fullName": "Prosperity Fortune Tree",
+    "companyId": "3",
+    "gameUid": "0da0fda6981138234f03cb665984c07e"
+  },
+  {
+    "fullName": "Diner Delights",
+    "companyId": "3",
+    "gameUid": "7e6298970ad1c3c983e495be86833dee"
+  },
+  {
+    "fullName": "Egypt's Book of Mystery",
+    "companyId": "3",
+    "gameUid": "1babfc499be7bc670f11695e8668b59d"
+  },
+  {
+    "fullName": "Phoenix Rises",
+    "companyId": "3",
+    "gameUid": "21c55c4cd28bb1ebf465fcfaf413477c"
+  },
+  {
+    "fullName": "Wild Fireworks",
+    "companyId": "3",
+    "gameUid": "fb8888b2dec33fe9d28996376580b410"
+  },
+  {
+    "fullName": "Thai River Wonders",
+    "companyId": "3",
+    "gameUid": "fcc6918b79eddf49984d4f5f650c8ded"
+  },
+  {
+    "fullName": "Bali Vacation",
+    "companyId": "3",
+    "gameUid": "c79544b2cf7a3326c85f6ab5bdf53d25"
+  },
+  {
+    "fullName": "Crypto Gold",
+    "companyId": "3",
+    "gameUid": "b1e11902cecf38023f2916569c32040a"
+  },
+  {
+    "fullName": "Jurassic Kingdom",
+    "companyId": "3",
+    "gameUid": "4eef5090166a6889956a630321713366"
+  },
+  {
+    "fullName": "Cocktail Nights",
+    "companyId": "3",
+    "gameUid": "5bea5667515cb7a31f6f07dc3caa13b1"
+  },
+  {
+    "fullName": "Speed Winner",
+    "companyId": "3",
+    "gameUid": "386a9d8e184d9bc7c7aca32a8a5db686"
+  },
+  {
+    "fullName": "Legend of Perseus",
+    "companyId": "3",
+    "gameUid": "6e37f6e1b6042c2147866c4d86206979"
+  },
+  {
+    "fullName": "Honey Trap of Diao Chan",
+    "companyId": "3",
+    "gameUid": "cd0cc7e653b42133d57145d5505d4e96"
+  },
+  {
+    "fullName": "Fortune Gods",
+    "companyId": "3",
+    "gameUid": "d3aad7ca1486eb3f145e2c43f38b559c"
+  },
+  {
+    "fullName": "Win Win Won",
+    "companyId": "3",
+    "gameUid": "43862cc768882dff441a60b26dcec1c0"
+  },
+  {
+    "fullName": "Medusa II",
+    "companyId": "3",
+    "gameUid": "1c6d773d6a616d74e2573343a5dcecc3"
+  },
+  {
+    "fullName": "Tree of Fortune",
+    "companyId": "3",
+    "gameUid": "e7d7e8396619459db2c178ed72f81049"
+  },
+  {
+    "fullName": "Medusa",
+    "companyId": "3",
+    "gameUid": "dcc55631d793ad44be98d21c99f7e361"
+  },
+  {
+    "fullName": "Plushie Frenzy",
+    "companyId": "3",
+    "gameUid": "b34c5e632cdc53fc67f1a5eec5758af7"
+  },
+  {
+    "fullName": "Gem Saviour",
+    "companyId": "3",
+    "gameUid": "9e795df6bdf093a144e714fd35afbb7a"
+  },
+  {
+    "fullName": "Hood vs Wolf",
+    "companyId": "3",
+    "gameUid": "222ce90a04a2246eecd5216454f9792f"
+  },
+  {
+    "fullName": "Hotpot",
+    "companyId": "3",
+    "gameUid": "2fea77daa52fd607ed0abe816e4dc7c7"
+  },
+  {
+    "fullName": "Dragon Legend",
+    "companyId": "3",
+    "gameUid": "b990b58ed9e1aa341b3164f49bcb1517"
+  },
+  {
+    "fullName": "Mr. Hallow-Win",
+    "companyId": "3",
+    "gameUid": "12e94577c713a431ef7765394bb9be2f"
+  },
+  {
+    "fullName": "Legend of Hou Yi",
+    "companyId": "3",
+    "gameUid": "1ed6fe92243975f73c944342119a1336"
+  },
+  {
+    "fullName": "Prosperity Lion",
+    "companyId": "3",
+    "gameUid": "1fcb23fa9fac3ca32e20adfe90028de3"
+  },
+  {
+    "fullName": "Hip Hop Panda",
+    "companyId": "3",
+    "gameUid": "5fdbd55ac67eea146b93939ee060cd54"
+  },
+  {
+    "fullName": "Santa's Gift Rush",
+    "companyId": "3",
+    "gameUid": "864edc20e589a738c632f8a49a2e02a3"
+  },
+  {
+    "fullName": "Baccarat Deluxe",
+    "companyId": "3",
+    "gameUid": "22c3b8df172b40ac24a7e9c909e0e50e"
+  },
+  {
+    "fullName": "Gem Saviour Sword",
+    "companyId": "3",
+    "gameUid": "4bbb563e9cf0211a3433beeebe70f35b"
+  },
+  {
+    "fullName": "Piggy Gold",
+    "companyId": "3",
+    "gameUid": "a9d874dd5305212b09845fc88f72e02d"
+  },
+  {
+    "fullName": "Symbols of Egypt",
+    "companyId": "3",
+    "gameUid": "0c7c636333c3c0807d2da26e1f0c8cd1"
+  },
+  {
+    "fullName": "Emperor's Favour",
+    "companyId": "3",
+    "gameUid": "12766ca09f503fec11f391199fce5e24"
+  },
+  {
+    "fullName": "Journey to the Wealth",
+    "companyId": "3",
+    "gameUid": "139f7ae7151a8bd388511bd8b7ce0c40"
+  },
+  {
+    "fullName": "Flirting Scholar",
+    "companyId": "3",
+    "gameUid": "0c884fde76cbc187f2797c4f76532220"
+  },
+  {
+    "fullName": "Ninja vs Samurai",
+    "companyId": "3",
+    "gameUid": "2eb712d4bb30e4594032ebf1464618b1"
+  },
+  {
+    "fullName": "Muay Thai Champion",
+    "companyId": "3",
+    "gameUid": "82127ece1232c6762c81fedb73c99756"
+  },
+  {
+    "fullName": "Dragon Tiger Luck",
+    "companyId": "3",
+    "gameUid": "3d3dd6e2fd819832528108e0af197c43"
+  },
+  {
+    "fullName": "Fortune Mouse",
+    "companyId": "3",
+    "gameUid": "8e5a4dd7da06fb68165d13f8bcd06328"
+  },
+  {
+    "fullName": "Reel Love",
+    "companyId": "3",
+    "gameUid": "813138051d990c0c21fb78015b14cbef"
+  },
+  {
+    "fullName": "Gem Saviour Conquest",
+    "companyId": "3",
+    "gameUid": "07d9e7940f430557447cb19692ae4409"
+  },
+  {
+    "fullName": "Shaolin Soccer",
+    "companyId": "3",
+    "gameUid": "da483088a7f719026e93ba95c5547a8c"
+  },
+  {
+    "fullName": "Candy Burst",
+    "companyId": "3",
+    "gameUid": "27237d7e8d9b183c92fa9f6ab9832edc"
+  },
+  {
+    "fullName": "Bikini Paradise",
+    "companyId": "3",
+    "gameUid": "18f7f3fdda3e951989731b7204572a8f"
+  },
+  {
+    "fullName": "Genie's 3 Wishes",
+    "companyId": "3",
+    "gameUid": "16e34863dada5465919b289f83c494a1"
+  },
+  {
+    "fullName": "Circus Delight",
+    "companyId": "3",
+    "gameUid": "5a11d239f4368b4ec21d31e5979d85cf"
+  },
+  {
+    "fullName": "Secrets of Cleopatra",
+    "companyId": "3",
+    "gameUid": "7028ed373d5bffeeb22fa90c4066bd9e"
+  },
+  {
+    "fullName": "Vampire's Charm",
+    "companyId": "3",
+    "gameUid": "8912f36ea0ca97fc6911fc21b3be6f6a"
+  },
+  {
+    "fullName": "Jewels of Prosperity",
+    "companyId": "3",
+    "gameUid": "f55a666db274fcf210dd69801ae7e87a"
+  },
+  {
+    "fullName": "Jack Frost's Winter",
+    "companyId": "3",
+    "gameUid": "0a8772ad753cfce2c03c0599ad60c74c"
+  },
+  {
+    "fullName": "Galactic Gems",
+    "companyId": "3",
+    "gameUid": "5d26d9ec03d3bc031e49abd5b0ffbdda"
+  },
+  {
+    "fullName": "Guardians of Ice and Fire",
+    "companyId": "3",
+    "gameUid": "4e2f6b7602035730e0e8ee89675a417c"
+  },
+  {
+    "fullName": "Opera Dynasty",
+    "companyId": "3",
+    "gameUid": "c9ec6bce856aafad85f7de5405f7b1c3"
+  },
+  {
+    "fullName": "Majestic Treasures",
+    "companyId": "3",
+    "gameUid": "894240c0ef08d5c2e29b231013e1514d"
+  },
+  {
+    "fullName": "Candy Bonanza",
+    "companyId": "3",
+    "gameUid": "bbe2320adc5c506e7e56a2d24d96a252"
+  },
+  {
+    "fullName": "Heist Stakes",
+    "companyId": "3",
+    "gameUid": "a4a67f1259cabed59e338e30149ceb0f"
+  },
+  {
+    "fullName": "Rise of Apollo",
+    "companyId": "3",
+    "gameUid": "3da7ee034052b8cb90c6ca060652ded4"
+  },
+  {
+    "fullName": "Mermaid Riches",
+    "companyId": "3",
+    "gameUid": "a9d7a5af417a94caf554170e6b345e57"
+  },
+  {
+    "fullName": "Raider Jane's Crypt of Fortune",
+    "companyId": "3",
+    "gameUid": "24d8e1dbc5cface0907f5a21ecd56753"
+  },
+  {
+    "fullName": "Supermarket Spree",
+    "companyId": "3",
+    "gameUid": "7ef03497fc0b21c34b137e85b1e409cd"
+  },
+  {
+    "fullName": "Legendary Monkey King",
+    "companyId": "3",
+    "gameUid": "5cdeba2ab48d6ba345b1a4de8e2776b5"
+  },
+  {
+    "fullName": "Spirited Wonders",
+    "companyId": "3",
+    "gameUid": "87a05c81af5635bed41765bfd076ee15"
+  },
+  {
+    "fullName": "Emoji Riches",
+    "companyId": "3",
+    "gameUid": "101ca3ff83b149dcf3439309e9b32142"
+  },
+  {
+    "fullName": "Mask Carnival",
+    "companyId": "3",
+    "gameUid": "adf297c2666c69b3abc3b61618d593b8"
+  },
+  {
+    "fullName": "Oriental Prosperity",
+    "companyId": "3",
+    "gameUid": "23b43b58e11aadb1f27fd05ba41e9819"
+  },
+  {
+    "fullName": "Garuda Gems",
+    "companyId": "3",
+    "gameUid": "aa609892f551de2053e92427dc4ae17f"
+  },
+  {
+    "fullName": "Destiny of Sun & Moon",
+    "companyId": "3",
+    "gameUid": "617ca04ffcffbc543a1a30cacdac98fa"
+  },
+  {
+    "fullName": "Butterfly Blossom",
+    "companyId": "3",
+    "gameUid": "116989bb267a72035bd01818c5496126"
+  },
+  {
+    "fullName": "Rooster Rumble",
+    "companyId": "3",
+    "gameUid": "5c371d9fca6109c954de93ac7986c5db"
+  },
+  {
+    "fullName": "The Queen's Banquet",
+    "companyId": "3",
+    "gameUid": "1b317b5f8bf2ca0cc609307810407426"
+  },
+  {
+    "fullName": "Battleground Royale",
+    "companyId": "3",
+    "gameUid": "e9f92f6edc2dac2d08bc345ee036260c"
+  },
+  {
+    "fullName": "Win Win Fish Prawn Crab",
+    "companyId": "3",
+    "gameUid": "9b344f0b2a9bda427684be60597d2fc6"
+  },
+  {
+    "fullName": "Lucky Piggy",
+    "companyId": "3",
+    "gameUid": "66fadac68ed45e23def86c06cc811820"
+  },
+  {
+    "fullName": "Wild Coaster",
+    "companyId": "3",
+    "gameUid": "a06f1a154698243bf2484853d38e5fbb"
+  },
+  {
+    "fullName": "Totem Wonders",
+    "companyId": "3",
+    "gameUid": "a03c6e7a918132b50f9caa297df1752d"
+  },
+  {
+    "fullName": "Alchemy Gold",
+    "companyId": "3",
+    "gameUid": "9860c865264dcacad1ef37176cdefc1a"
+  },
+  {
+    "fullName": "Asgardian Rising",
+    "companyId": "3",
+    "gameUid": "08d92dc2ca14f42c681b44297386d600"
+  },
+  {
+    "fullName": "Midas Fortune",
+    "companyId": "3",
+    "gameUid": "a2fd6b0cadc8fefccfb0d063b1f81d85"
+  },
+  {
+    "fullName": "Rave Party Fever",
+    "companyId": "3",
+    "gameUid": "901aa1b709a937f6a04baddb98a8d1d3"
+  },
+  {
+    "fullName": "Hawaiian Tiki",
+    "companyId": "3",
+    "gameUid": "35d6743ae5d73a3359f143cbb44ede09"
+  },
+  {
+    "fullName": "Bakery Bonanza",
+    "companyId": "3",
+    "gameUid": "d0fe7aa2f7ed5778190b1e60d94e6773"
+  },
+  {
+    "fullName": "Songkran Splash",
+    "companyId": "3",
+    "gameUid": "894b1c7609629cf9b3d127d9dbaa372c"
+  },
+  {
+    "fullName": "Mystical Spirits",
+    "companyId": "3",
+    "gameUid": "3b2d4d1ae24b1c3ad29556a6cf875f11"
+  },
+  {
+    "fullName": "Super Golf Drive",
+    "companyId": "3",
+    "gameUid": "d37dde2adb52e0ea708c0ccd6877b1b3"
+  },
+  {
+    "fullName": "Lucky Clover Lady",
+    "companyId": "3",
+    "gameUid": "288f290554746bb32322a79b96ecdcbb"
+  },
+  {
+    "fullName": "Fruity Candy",
+    "companyId": "3",
+    "gameUid": "9f2c89ae5b7c0894c9ee9e223e3fd9d8"
+  },
+  {
+    "fullName": "Cruise Royale",
+    "companyId": "3",
+    "gameUid": "8489d662ccc07a2e9677729f76e26ae8"
+  },
+  {
+    "fullName": "Safari Wilds",
+    "companyId": "3",
+    "gameUid": "97c6f05ef6a0a34cad10d5e00edc909c"
+  },
+  {
+    "fullName": "Gladiator's Glory",
+    "companyId": "3",
+    "gameUid": "2454dc7cfdc651b7318950453bc3f617"
+  },
+  {
+    "fullName": "Ninja Racoon Frenzy",
+    "companyId": "3",
+    "gameUid": "6d1937d2e7f87306333443c99ac2c03f"
+  },
+  {
+    "fullName": "Ultimate Striker",
+    "companyId": "3",
+    "gameUid": "4415d83cd9c74299814c1473db83bf7f"
+  },
+  {
+    "fullName": "Wild Heist Cashout",
+    "companyId": "3",
+    "gameUid": "028bd89b2120e880bcf1968c37277460"
+  },
+  {
+    "fullName": "Forge of Wealth",
+    "companyId": "3",
+    "gameUid": "f8ec50fc2ef996e6c182fd2fe59a16fa"
+  },
+  {
+    "fullName": "Mafia Mayhem",
+    "companyId": "3",
+    "gameUid": "c7b3016c70a06ddbb2355a3aee4179d0"
+  },
+  {
+    "fullName": "Werewolf Hunt",
+    "companyId": "3",
+    "gameUid": "2ac70bee7b47c172381e55f7e644d92e"
+  },
+  {
+    "fullName": "Tsar Treasures",
+    "companyId": "3",
+    "gameUid": "1eb6a959aadf0491f4a648762d8d262a"
+  },
+  {
+    "fullName": "Gemstones Gold",
+    "companyId": "3",
+    "gameUid": "877c9b2ec1c5e0505129315948f9bbfa"
+  },
+  {
+    "fullName": "Cash Mania",
+    "companyId": "3",
+    "gameUid": "c8bbb41367b3971ed3467c2f0c2627a4"
+  },
+  {
+    "fullName": "Wild Ape #3258",
+    "companyId": "3",
+    "gameUid": "9b93cb0dc46d847864c87ed42a3428bb"
+  },
+  {
+    "fullName": "Pinata Wins",
+    "companyId": "3",
+    "gameUid": "f08cc025e23ee049b570517867c74be0"
+  },
+  {
+    "fullName": "Mystic Potion",
+    "companyId": "3",
+    "gameUid": "e61bde75d590e943d2c5c6d432b29b46"
+  },
+  {
+    "fullName": "Chicky Run",
+    "companyId": "3",
+    "gameUid": "c3e600005f72f1d1cabe758e206daf57"
+  },
+  {
+    "fullName": "Zombie Outbreak",
+    "companyId": "3",
+    "gameUid": "83b6eceea77859c14426b05480b96c34"
+  },
+  {
+    "fullName": "Futebol Fever",
+    "companyId": "3",
+    "gameUid": "314afef87ff2974867234ac317b37f4c"
+  },
+  {
+    "fullName": "Shark Bounty",
+    "companyId": "3",
+    "gameUid": "42cf824884f8ecdaf39862c9a15bf1f1"
+  },
+  {
+    "fullName": "Yakuza Honor",
+    "companyId": "3",
+    "gameUid": "e4772d4ef1de4217915c678d0d1722a8"
+  },
+  {
+    "fullName": "Wings of Iguazu",
+    "companyId": "3",
+    "gameUid": "6ae667b26f908e5ebe8976ca334fd472"
+  },
+  {
+    "fullName": "Three Crazy Piggies",
+    "companyId": "3",
+    "gameUid": "a197ff914cb04283a02da3b65d8ba705"
+  },
+  {
+    "fullName": "Oishi Delights",
+    "companyId": "3",
+    "gameUid": "5af319aeb42d316100789fa1670ed869"
+  },
+  {
+    "fullName": "Museum Mystery",
+    "companyId": "3",
+    "gameUid": "cb3400447555dbb09ec2fb222e5ae083"
+  },
+  {
+    "fullName": "Rio Fantasia",
+    "companyId": "3",
+    "gameUid": "dc242e2abfe13435226e9dbe8865c2ed"
+  }
+]
