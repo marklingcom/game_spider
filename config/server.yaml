@@ -17,7 +17,7 @@ telegram:
   machine: "local"
 
 betConfig:
-  bet: 5
+  bet: 0.1
   buyBouns: false
   extra: false
   gameName: "Money Coming Expand Bets"

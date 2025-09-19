@@ -142,7 +142,8 @@ export class JiliDb {
     let tabName = `jili_spin_${gameName}`;
 
     if (this.config.serverConfig.betConfig.bet !== 0) {
-      tabName += `_${Math.floor(this.config.serverConfig.betConfig.bet)}`;
+      const betName = this.config.serverConfig.betConfig.bet.toString().replace('.', 'p');
+      tabName += `_${betName}`;
     }
 
     if (spinResponse.spinReq?.mall) {
