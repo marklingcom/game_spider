@@ -1,6 +1,7 @@
 import EventEmitter from 'node:events';
 import TelegramBot from 'node-telegram-bot-api';
 import { config } from './config.js';
+import { isProd } from './env.js';
 import { sleep } from './utils.js';
 
 interface MessageQueueItem {
@@ -70,7 +71,7 @@ export class TelegramService extends EventEmitter {
   private initialize(): void {
     const telegramConfig = config.serverConfig.telegram;
 
-    if (!telegramConfig.enable) {
+    if (!isProd || !telegramConfig.enable) {
       console.log('Telegram 机器人未启用');
       return;
     }

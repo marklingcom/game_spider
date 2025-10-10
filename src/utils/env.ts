@@ -10,3 +10,5 @@ export const __cwd = process.cwd();
 export const __protoDir = `${__cwd}/src/proto`;
 
 export const __protoGeneralDir = `${__cwd}/src/protoGeneral`;
+
+export const isProd = process.env.NODE_ENV === 'production';

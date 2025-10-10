@@ -17,11 +17,18 @@ export class JiliDb {
   private db: DatabaseManager;
   private config: Config;
 
-  special = 3000;
+  get special() {
+    const isBuyBouns = this.config?.serverConfig?.betConfig?.buyBouns;
+    if (isBuyBouns) {
+      return 5000;
+    }
+    return 3000;
+  }
+
   normal = 300000;
 
-  currentSpecial = this.special;
-  currentNormal = this.normal;
+  currentSpecial = 0;
+  currentNormal = 0;
 
   specialTabName = '';
 
@@ -35,6 +42,8 @@ export class JiliDb {
   }) {
     this.db = options.db;
     this.config = options.config;
+    this.currentSpecial = this.special;
+    this.currentNormal = this.normal;
 
     this.onStart();
   }
@@ -138,7 +147,7 @@ export class JiliDb {
       }
     }
 
-    const realBet = spinResponse.realBet || 0;
+    const realBet = spinResponse.realBet || spinResponse.spinReq.bet || 0;
     let tabName = `jili_spin_${gameName}`;
 
     if (this.config.serverConfig.betConfig.bet !== 0) {
