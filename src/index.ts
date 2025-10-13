@@ -46,9 +46,9 @@ total: 总共${config.huiduUidList.length}个账号
 
   const run = async (i: number, time: number = 1000 * i) => {
     let isSpinSave = false;
+    const uid = config.huiduUidList[i];
     try {
       await sleep(time);
-      const uid = config.huiduUidList[i];
       console.log(`开始执行第 ${i} 个账号: ${uid}`);
       const gameInfo = await getGameInfo(config, uid);
       const spiderWork = new SpiderWork({
@@ -65,19 +65,20 @@ total: 总共${config.huiduUidList.length}个账号
 
       await spiderWork.start();
     } catch (error) {
-      const errorMessage = `重试：第 ${i} 个账号执行失败: ${(error as Error).message}`;
+      const errorMessage = `❌ 第 ${i} 个账号 ${uid} 执行失败: ${(error as Error).message}`;
       const stackTrace = (error as Error).stack || '无堆栈信息';
 
       if (error instanceof Ret254Error) {
-        console.log(`第 ${i} 个账号遇到 ret 254 错误`);
-        telegramService.sendWarning(`第 ${i} 个账号遇到 ret 254 错误：接口请求太频繁`);
+        const message = `❌ 第 ${i} 个账号 ${uid} 遇到 ret 254 错误：接口请求太频繁`;
+        console.log(message);
+        telegramService.sendWarning(message);
+        return;
       }
 
       if (error instanceof Ret305Error) {
-        console.log(`第 ${i} 个账号遇到 ret 305 错误，跳过此账号`);
-        telegramService.sendWarning(
-          `第 ${i} 个账号遇到 ret 305 错误，已跳过：账号没钱了，请充值!!!`
-        );
+        const message = `❌ 第 ${i} 个账号 ${uid} 遇到 ret 305 错误，已跳过：账号没钱了，请充值!!!`;
+        console.log(message);
+        telegramService.sendWarning(message);
         return;
       }
 
