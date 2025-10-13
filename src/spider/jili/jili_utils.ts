@@ -1,5 +1,5 @@
 import { GaiaResponse } from '../../protoGeneral/astarte2_196.js';
-import { Ret254Error, Ret305Error } from '../../utils/errors.js';
+import { RetError } from '../../utils/errors.js';
 import { decrypted } from '../../utils/utils.js';
 
 export async function decryptResponseBuffer(
@@ -9,17 +9,9 @@ export async function decryptResponseBuffer(
   const gaiaResponse = GaiaResponse.fromBinary(buff);
 
   var ret = gaiaResponse.ret as number;
-  if (ret === 254) {
-    throw new Ret254Error();
-  }
-
-  if (ret === 305) {
-    throw new Ret305Error();
-  }
-
   if (ret !== 0) {
     // pb.Error_success
-    throw new Error('ret not pb.Error_success');
+    throw new RetError(ret);
   }
 
   const originData = gaiaResponse.data;
@@ -27,8 +19,10 @@ export async function decryptResponseBuffer(
   try {
     const data = decrypted(token, Buffer.from(originData));
     gaiaResponse.data = data;
-  } catch (_error) {
+  } catch (error) {
     console.error('buff可能无加密');
+    error.message = 'buff可能无加密, 解密失败';
+    throw error;
   }
 
   const out = GaiaResponse.toBinary(gaiaResponse);

@@ -4,7 +4,7 @@ import { dbManager } from './models/index.js';
 import { JiliDb } from './spider/jili/jili_db.js';
 import { SpiderWork, SpiderWorkEvent } from './spider/spider.js';
 import { config } from './utils/config.js';
-import { Ret254Error, Ret305Error } from './utils/errors.js';
+import { RetError } from './utils/errors.js';
 import { telegramService } from './utils/telegram.js';
 import { sleep } from './utils/utils.js';
 
@@ -65,30 +65,27 @@ total: 总共${config.huiduUidList.length}个账号
 
       await spiderWork.start();
     } catch (error) {
-      const errorMessage = `❌ 第 ${i} 个账号 ${uid} 执行失败: ${(error as Error).message}`;
+      let errorMessage = `❌ 第 ${i} 个账号 ${uid} 执行失败: ${(error as Error).message}`;
       const stackTrace = (error as Error).stack || '无堆栈信息';
 
-      if (error instanceof Ret254Error) {
-        const message = `❌ 第 ${i} 个账号 ${uid} 遇到 ret 254 错误：接口请求太频繁`;
-        console.log(message);
-        telegramService.sendWarning(message);
-        return;
-      }
-
-      if (error instanceof Ret305Error) {
-        const message = `❌ 第 ${i} 个账号 ${uid} 遇到 ret 305 错误，已跳过：账号没钱了，请充值!!!`;
-        console.log(message);
-        telegramService.sendWarning(message);
-        return;
+      if (error instanceof RetError) {
+        if (error.retCode === 254) {
+          errorMessage = `❌ 第 ${i} 个账号 ${uid} 遇到 ret 254 错误：接口请求太频繁`;
+        } else if (error.retCode === 305) {
+          errorMessage = `❌ 第 ${i} 个账号 ${uid} 遇到 ret 305 错误，已跳过：账号没钱了，请充值!!!`;
+          telegramService.sendError(errorMessage);
+          return;
+        } else {
+          errorMessage = `❌ 第 ${i} 个账号 ${uid} 遇到 ret ${error.retCode} 错误`;
+        }
       }
 
       if (isSpinSave) {
         spinCount--;
-        // onSpinCountNotify();
-        telegramService.sendError(errorMessage, `堆栈信息:\n${stackTrace}`);
       }
       console.log(errorMessage);
       console.log('堆栈信息:', stackTrace);
+      telegramService.sendError(`开始重试: ${errorMessage}`, `堆栈信息:\n${stackTrace}`);
       // 固定2000ms重试
       await run(i, 2000);
     }
