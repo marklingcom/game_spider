@@ -179,7 +179,7 @@ export class JiliDb {
         this.onStop();
         setTimeout(() => {
           process.exit(0);
-        }, 1000);
+        }, 0);
       }
       return;
     }
