@@ -37,6 +37,7 @@ total: 总共${config.huiduUidList.length}个账号
   );
 
   let spinCount = 0;
+  const noMoneyAccounts: number[] = [];
 
   const onSpinCountNotify = debounce(() => {
     telegramService.sendInfo(`当前抓取账号数量: ${spinCount}`);
@@ -72,7 +73,8 @@ total: 总共${config.huiduUidList.length}个账号
         if (error.retCode === 254) {
           errorMessage = `第 ${i} 个账号 ${uid} 遇到 ret 254 错误：接口请求太频繁`;
         } else if (error.retCode === 305) {
-          errorMessage = `第 ${i} 个账号 ${uid} 遇到 ret 305 错误，已跳过：账号没钱了，请充值!!!`;
+          noMoneyAccounts.push(uid);
+          errorMessage = `第 ${i} 个账号 ${uid} 遇到 ret 305 错误，已跳过：账号没钱了，请充值!!! (当前没钱账号: ${noMoneyAccounts.length}个)`;
           telegramService.sendError(errorMessage);
           return;
         } else {
@@ -96,6 +98,14 @@ total: 总共${config.huiduUidList.length}个账号
       await run(i);
     })
   );
+
+  if (noMoneyAccounts.length > 0) {
+    console.log('\n💰 没钱需要充值的账号列表:');
+    console.log(noMoneyAccounts.join(', '));
+    telegramService.sendWarning(
+      `💰 没钱需要充值的账号 (${noMoneyAccounts.length}个): ${noMoneyAccounts.join(', ')}`
+    );
+  }
 
   console.log('程序执行结束');
   process.exit(0);
