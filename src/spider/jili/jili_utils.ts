@@ -1,4 +1,5 @@
 import { GaiaResponse } from '../../protoGeneral/astarte2_196.js';
+import { Ret254Error, Ret305Error } from '../../utils/errors.js';
 import { decrypted } from '../../utils/utils.js';
 
 export async function decryptResponseBuffer(
@@ -9,7 +10,11 @@ export async function decryptResponseBuffer(
 
   var ret = gaiaResponse.ret as number;
   if (ret === 254) {
-    throw new Error('ret is 254');
+    throw new Ret254Error();
+  }
+
+  if (ret === 305) {
+    throw new Ret305Error();
   }
 
   if (ret !== 0) {

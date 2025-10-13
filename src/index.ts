@@ -4,6 +4,7 @@ import { dbManager } from './models/index.js';
 import { JiliDb } from './spider/jili/jili_db.js';
 import { SpiderWork, SpiderWorkEvent } from './spider/spider.js';
 import { config } from './utils/config.js';
+import { Ret254Error, Ret305Error } from './utils/errors.js';
 import { telegramService } from './utils/telegram.js';
 import { sleep } from './utils/utils.js';
 
@@ -66,6 +67,19 @@ total: 总共${config.huiduUidList.length}个账号
     } catch (error) {
       const errorMessage = `重试：第 ${i} 个账号执行失败: ${(error as Error).message}`;
       const stackTrace = (error as Error).stack || '无堆栈信息';
+
+      if (error instanceof Ret254Error) {
+        console.log(`第 ${i} 个账号遇到 ret 254 错误`);
+        telegramService.sendWarning(`第 ${i} 个账号遇到 ret 254 错误：接口请求太频繁`);
+      }
+
+      if (error instanceof Ret305Error) {
+        console.log(`第 ${i} 个账号遇到 ret 305 错误，跳过此账号`);
+        telegramService.sendWarning(
+          `第 ${i} 个账号遇到 ret 305 错误，已跳过：账号没钱了，请充值!!!`
+        );
+        return;
+      }
 
       if (isSpinSave) {
         spinCount--;
