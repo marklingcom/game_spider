@@ -65,18 +65,18 @@ total: 总共${config.huiduUidList.length}个账号
 
       await spiderWork.start();
     } catch (error) {
-      let errorMessage = `❌ 第 ${i} 个账号 ${uid} 执行失败: ${(error as Error).message}`;
+      let errorMessage = `第 ${i} 个账号 ${uid} 执行失败: ${(error as Error).message}`;
       const stackTrace = (error as Error).stack || '无堆栈信息';
 
       if (error instanceof RetError) {
         if (error.retCode === 254) {
-          errorMessage = `❌ 第 ${i} 个账号 ${uid} 遇到 ret 254 错误：接口请求太频繁`;
+          errorMessage = `第 ${i} 个账号 ${uid} 遇到 ret 254 错误：接口请求太频繁`;
         } else if (error.retCode === 305) {
-          errorMessage = `❌ 第 ${i} 个账号 ${uid} 遇到 ret 305 错误，已跳过：账号没钱了，请充值!!!`;
+          errorMessage = `第 ${i} 个账号 ${uid} 遇到 ret 305 错误，已跳过：账号没钱了，请充值!!!`;
           telegramService.sendError(errorMessage);
           return;
         } else {
-          errorMessage = `❌ 第 ${i} 个账号 ${uid} 遇到 ret ${error.retCode} 错误`;
+          errorMessage = `第 ${i} 个账号 ${uid} 遇到 ret ${error.retCode} 错误`;
         }
       }
 
