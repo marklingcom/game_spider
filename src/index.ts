@@ -43,6 +43,12 @@ total: 总共${config.huiduUidList.length}个账号
     telegramService.sendInfo(`当前抓取账号数量: ${spinCount}`);
   }, 3000);
 
+  const onNoMoneyAccountsNotify = debounce(() => {
+    telegramService.sendWarning(
+      `💰 没钱需要充值的账号 (${noMoneyAccounts.length}个): ${noMoneyAccounts.join(', ')}`
+    );
+  }, 3000);
+
   const jiliDb = new JiliDb({ db: dbManager, config });
 
   const run = async (i: number, time: number = 1000 * i) => {
@@ -76,6 +82,7 @@ total: 总共${config.huiduUidList.length}个账号
           noMoneyAccounts.push(uid);
           errorMessage = `第 ${i} 个账号 ${uid} 遇到 ret 305 错误，已跳过：账号没钱了，请充值!!! (当前没钱账号: ${noMoneyAccounts.length}个)`;
           telegramService.sendError(errorMessage);
+          onNoMoneyAccountsNotify();
           return;
         } else {
           errorMessage = `第 ${i} 个账号 ${uid} 遇到 ret ${error.retCode} 错误`;
@@ -98,14 +105,6 @@ total: 总共${config.huiduUidList.length}个账号
       await run(i);
     })
   );
-
-  if (noMoneyAccounts.length > 0) {
-    console.log('\n💰 没钱需要充值的账号列表:');
-    console.log(noMoneyAccounts.join(', '));
-    telegramService.sendWarning(
-      `💰 没钱需要充值的账号 (${noMoneyAccounts.length}个): ${noMoneyAccounts.join(', ')}`
-    );
-  }
 
   console.log('程序执行结束');
   process.exit(0);
