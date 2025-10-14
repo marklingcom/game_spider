@@ -155,14 +155,18 @@ export class JiliDb {
       tabName += `_${betName}`;
     }
 
+    var isBuy = false;
+    var isExtra = false;
     if (spinResponse.spinReq?.mall) {
       tabName += '_buy';
+      isBuy = true;
     } else if (spinResponse.spinReq?.extraSpin) {
       tabName += '_extra';
+      isExtra = true;
     }
 
     const isSpecial = gameType === 1;
-    if (isSpecial) {
+    if (isSpecial || isBuy) {
       tabName += '_special';
     } else {
       tabName += '_normal';

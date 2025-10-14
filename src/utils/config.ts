@@ -25,10 +25,12 @@ export interface ServerConfig {
   huiduConfig: {
     coin: number;
     key: string;
+    maxCount: number;
+    noMoneyAccounts: number[];
+    uidList0: number[];
+    uidListTest: number[];
     uidList1: number[];
     uidList2: number[];
-    uidList3: number[];
-    uidList4: number[];
   };
   telegram: {
     enable: boolean;
@@ -66,6 +68,12 @@ export default class Config {
       dsn: '',
       dialect: '',
     },
+    telegram: {
+      enable: false,
+      botToken: '',
+      chatId: '',
+      machine: 'local',
+    },
     spiderConfig: {
       autoMigrate: false,
       form: '',
@@ -79,16 +87,12 @@ export default class Config {
     huiduConfig: {
       coin: 0,
       key: 'uidList1',
+      maxCount: 10,
+      uidList0: [],
+      uidListTest: [],
+      noMoneyAccounts: [],
       uidList1: [],
       uidList2: [],
-      uidList3: [],
-      uidList4: [],
-    },
-    telegram: {
-      enable: false,
-      botToken: '',
-      chatId: '',
-      machine: 'local',
     },
   };
 
@@ -121,6 +125,24 @@ export default class Config {
   get huiduUidList() {
     const key = this.serverConfig.huiduConfig.key;
     return this.serverConfig.huiduConfig[key as keyof ServerConfig['huiduConfig']] as number[];
+  }
+
+  updateServerConfig(updates: Partial<ServerConfig>): void {
+    this.serverConfig = merge(this.serverConfig, updates);
+    const yamlStr = yaml.stringify(this.serverConfig);
+    fs.writeFileSync(this.serverConfigPath, yamlStr, 'utf8');
+  }
+
+  updateNoMoneyAccounts(list: number[]): void {
+    const noMoneyAccounts = [
+      ...new Set([...this.serverConfig.huiduConfig.noMoneyAccounts, ...list]),
+    ];
+    this.updateServerConfig({
+      huiduConfig: {
+        ...this.serverConfig.huiduConfig,
+        noMoneyAccounts,
+      },
+    });
   }
 
   private loadConfig(): Config {

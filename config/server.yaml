@@ -1,36 +1,34 @@
 proxy:
   enable: false
   server: http://127.0.0.1:7890
-
 db:
   type: mysql
   dsn: root:m9KxXa7j@tcp(sss.cpigame.com:13306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
-
-spiderConfig:
-  autoMigrate: false
-  form: "huidu"
-
+  dialect: ""
 telegram:
   enable: true
-  botToken: "7562408962:AAGYI_b79AhEjscuTBPsQ6s3U2e_SNEs8x0"
+  botToken: 7562408962:AAGYI_b79AhEjscuTBPsQ6s3U2e_SNEs8x0
   chatId: "-4923815416"
-  machine: "local"
-
+  machine: local
+spiderConfig:
+  autoMigrate: false
+  form: huidu
 betConfig:
-  bet: 1000
-  buyBouns: false
+  bet: 0
+  buyBouns: true
   extra: false
-  gameName: "Money Coming Expand Bets"
-
+  gameName: Mega Ace
 huiduConfig:
   coin: 100000
-  key: "uidList0"
-  # uid: 1641530
-  # game_uid: b4a3e54cabeecd94ebbd1cc217a5b069
-  # gameUid: b4a3e54cabeecd94ebbd1cc217a5b069
-  # gameUid: f301fe0b22d1540b1f215d282b20c642
+  key: uidList0
+  maxCount: 10
   uidList0:
     - 1641530
+  uidListTest:
+    - 7633004
+  noMoneyAccounts:
+    - 7633335
+    - 7633004
   uidList1:
     - 7632856
     - 7633004
@@ -62,7 +60,6 @@ huiduConfig:
     - 7655386
     - 7655392
     - 7655406
-  uidList2:
     - 7655419
     - 7655436
     - 7655446
@@ -93,7 +90,7 @@ huiduConfig:
     - 7664074
     - 7664091
     - 7664109
-  uidList3:
+  uidList2:
     - 7656873
     - 7656921
     - 7656940
@@ -124,7 +121,6 @@ huiduConfig:
     - 7663451
     - 7663463
     - 7663477
-  uidList4:
     - 7663499
     - 7663511
     - 7663538

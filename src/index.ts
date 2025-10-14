@@ -25,6 +25,9 @@ async function main(): Promise<void> {
   }
 
   const { gameName, bet, buyBouns, extra } = config.serverConfig.betConfig;
+  const maxCount = config.serverConfig.huiduConfig.maxCount;
+  const currentUidList = [...config.huiduUidList];
+  const noMoneyAccounts = [...config.serverConfig.huiduConfig.noMoneyAccounts];
 
   telegramService.sendSuccess(
     `开始执行抓取任务: ${gameName}
@@ -32,31 +35,46 @@ form: ${config.serverConfig.spiderConfig.form}
 bet: ${bet}
 buyBouns: ${buyBouns}
 extra: ${extra}
-total: 总共${config.huiduUidList.length}个账号
+maxCount: ${maxCount}
+total: 总共${currentUidList.length}个账号
 `
   );
 
   let spinCount = 0;
-  const noMoneyAccounts: number[] = [];
+  let processedCount = 0;
+  let currentIndex = 0;
 
   const onSpinCountNotify = debounce(() => {
-    telegramService.sendInfo(`当前抓取账号数量: ${spinCount}`);
+    const msg = `当前抓取账号数量: ${spinCount}`;
+    console.log(msg);
+    telegramService.sendInfo(msg);
   }, 3000);
 
   const onNoMoneyAccountsNotify = debounce(() => {
-    telegramService.sendWarning(
-      `💰 没钱需要充值的账号 (${noMoneyAccounts.length}个): ${noMoneyAccounts.join(', ')}`
-    );
+    const msg = `💰 没钱需要充值的账号 (${noMoneyAccounts.length}个): ${noMoneyAccounts.join(', ')}`;
+    console.log(msg);
+    telegramService.sendWarning(msg);
   }, 3000);
 
   const jiliDb = new JiliDb({ db: dbManager, config });
 
-  const run = async (i: number, time: number = 1000 * i) => {
+  const getNextAvailableUid = (): number | null => {
+    while (currentIndex < currentUidList.length) {
+      const uid = currentUidList[currentIndex];
+      if (!noMoneyAccounts.includes(uid)) {
+        currentIndex++;
+        return uid;
+      }
+      currentIndex++;
+    }
+    return null;
+  };
+
+  const run = async (uid: number, time: number = 1000) => {
     let isSpinSave = false;
-    const uid = config.huiduUidList[i];
     try {
       await sleep(time);
-      console.log(`开始执行第 ${i} 个账号: ${uid}`);
+      console.log(`开始执行账号: ${uid}`);
       const gameInfo = await getGameInfo(config, uid);
       const spiderWork = new SpiderWork({
         config,
@@ -71,21 +89,34 @@ total: 总共${config.huiduUidList.length}个账号
       });
 
       await spiderWork.start();
+      processedCount++;
     } catch (error) {
-      let errorMessage = `第 ${i} 个账号 ${uid} 执行失败: ${(error as Error).message}`;
+      let errorMessage = `账号 ${uid} 执行失败: ${(error as Error).message}`;
       const stackTrace = (error as Error).stack || '无堆栈信息';
 
       if (error instanceof RetError) {
         if (error.retCode === 254) {
-          errorMessage = `第 ${i} 个账号 ${uid} 遇到 ret 254 错误：接口请求太频繁`;
+          errorMessage = `账号 ${uid} 遇到 ret 254 错误：接口请求太频繁`;
         } else if (error.retCode === 305) {
-          noMoneyAccounts.push(uid);
-          errorMessage = `第 ${i} 个账号 ${uid} 遇到 ret 305 错误，已跳过：账号没钱了，请充值!!! (当前没钱账号: ${noMoneyAccounts.length}个)`;
+          if (!noMoneyAccounts.includes(uid)) {
+            noMoneyAccounts.push(uid);
+            config.updateNoMoneyAccounts(noMoneyAccounts);
+          }
+          errorMessage = `账号 ${uid} 遇到 ret 305 错误，已跳过：账号没钱了，请充值!!! (当前没钱账号: ${noMoneyAccounts.length}个)`;
+          console.log(errorMessage);
           telegramService.sendError(errorMessage);
           onNoMoneyAccountsNotify();
+
+          const nextUid = getNextAvailableUid();
+          if (nextUid) {
+            const msg = `替换账号: ${uid} -> ${nextUid}`;
+            console.log(msg);
+            telegramService.sendInfo(msg);
+            await run(nextUid, 1000);
+          }
           return;
         } else {
-          errorMessage = `第 ${i} 个账号 ${uid} 遇到 ret ${error.retCode} 错误`;
+          errorMessage = `账号 ${uid} 遇到 ret ${error.retCode} 错误`;
         }
       }
 
@@ -95,18 +126,37 @@ total: 总共${config.huiduUidList.length}个账号
       console.log(errorMessage);
       console.log('堆栈信息:', stackTrace);
       telegramService.sendError(`开始重试: ${errorMessage}`, `堆栈信息:\n${stackTrace}`);
-      // 固定2000ms重试
-      await run(i, 2000);
+      await run(uid, 2000);
     }
   };
 
-  await Promise.all(
-    config.huiduUidList.map(async (_uid, i) => {
-      await run(i);
-    })
-  );
+  const startProcessing = async () => {
+    const uidsToProcess: number[] = [];
 
-  console.log('程序执行结束');
+    for (let i = 0; i < maxCount; i++) {
+      const uid = getNextAvailableUid();
+      if (uid) {
+        uidsToProcess.push(uid);
+      } else {
+        break;
+      }
+    }
+
+    if (uidsToProcess.length === 0) {
+      console.log('没有可用账号，程序结束');
+      return;
+    }
+
+    await Promise.all(
+      uidsToProcess.map(async (uid, i) => {
+        await run(uid, 1000 * i);
+      })
+    );
+  };
+
+  await startProcessing();
+
+  console.log(`程序执行结束，共处理 ${processedCount} 个账号`);
   process.exit(0);
 }
 
