@@ -17,7 +17,7 @@ betConfig:
   bet: 0
   buyBouns: true
   extra: false
-  gameName: Mega Ace
+  gameName: Wild Ace
 huiduConfig:
   coin: 100000
   key: uidList0
@@ -49,6 +49,10 @@ huiduConfig:
     - 7655375
     - 7655306
     - 7633544
+    - 7655386
+    - 7633167
+    - 7655392
+    - 7655354
   uidList1:
     - 7632856
     - 7633004
