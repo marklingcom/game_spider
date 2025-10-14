@@ -216,6 +216,12 @@
     "uuid": "JILI-SLOT-028"
   },
   {
+    "fullName": "Safari King",
+    "gi": 408,
+    "name": "sk",
+    "uuid": "JILI-SLOT-154"
+  },
+  {
     "fullName": "Zeus",
     "gi": 252,
     "name": "zeus",
@@ -354,6 +360,12 @@
     "uuid": "JILI-SLOT-117"
   },
   {
+    "fullName": "Rapid Gems 777 ",
+    "gi": 448,
+    "name": "rg7",
+    "uuid": "JILI-SLOT-152"
+  },
+  {
     "fullName": "Boxing King",
     "gi": 77,
     "name": "bk",
@@ -402,10 +414,22 @@
     "uuid": "JILI-SLOT-060"
   },
   {
+    "fullName": "Jackpot Joker FEVER",
+    "gi": 605,
+    "name": "jpjf",
+    "uuid": "JILI-SLOT-153"
+  },
+  {
     "fullName": "Agent Ace",
     "gi": 115,
     "name": "aa",
     "uuid": "JILI-SLOT-048"
+  },
+  {
+    "fullName": "Fortune Hook Boom",
+    "gi": 594,
+    "name": "fhb",
+    "uuid": "JILI-SLOT-156"
   },
   {
     "fullName": "Fortune Coins",
@@ -526,6 +550,12 @@
     "gi": 126,
     "name": "dotd",
     "uuid": "JILI-SLOT-059"
+  },
+  {
+    "fullName": "ROMA X 10000",
+    "gi": 637,
+    "name": "rx10000",
+    "uuid": "JILI-SLOT-155"
   },
   {
     "fullName": "Gallina Vince",
