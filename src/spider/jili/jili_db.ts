@@ -165,8 +165,8 @@ export class JiliDb {
       isExtra = true;
     }
 
-    const isSpecial = gameType === 1;
-    if (isSpecial || isBuy) {
+    const isSpecial = gameType === 1 || isBuy;
+    if (isSpecial) {
       tabName += '_special';
     } else {
       tabName += '_normal';
