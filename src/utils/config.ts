@@ -56,7 +56,7 @@ interface HuiduConfig {
 export default class Config {
   private serverConfigPath = './config/server.yaml';
   private jiliSlotListPath = './config/awc-JILI-SLOT.json';
-  private huiduConfigListPath = './config/jili-huidu.json';
+  private huiduConfigListPath = './config/huidu-jili.json';
 
   serverConfig: ServerConfig = {
     proxy: {
