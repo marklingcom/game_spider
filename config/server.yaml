@@ -15,18 +15,19 @@ spiderConfig:
   form: huidu
 betConfig:
   bet: 0
-  buyBouns: false
+  buyBouns: true
   extra: false
-  gameName: Jungle King
+  gameName: Super Ace 2
 huiduConfig:
   coin: 100000
-  key: uidList0
+  key: uidList1
   maxCount: 5
   uidList0:
     - 1641530
   uidListTest:
     - 7633004
-  noMoneyAccounts: []
+  noMoneyAccounts:
+    - 1641530
   uidList1:
     - 7655419
     - 7655446
