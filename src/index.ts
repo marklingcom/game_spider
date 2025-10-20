@@ -25,9 +25,12 @@ async function main(): Promise<void> {
   }
 
   const { gameName, bet, buyBouns, extra } = config.serverConfig.betConfig;
-  const maxCount = config.serverConfig.huiduConfig.maxCount;
   const currentUidList = [...config.huiduUidList];
   const noMoneyAccounts = [...config.serverConfig.huiduConfig.noMoneyAccounts];
+  var maxCount = config.serverConfig.huiduConfig.maxCount || 0;
+  if (maxCount <= 0) {
+    maxCount = currentUidList.length;
+  }
 
   telegramService.sendSuccess(
     `开始执行抓取任务: ${gameName}

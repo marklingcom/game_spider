@@ -87,7 +87,7 @@ export default class Config {
     huiduConfig: {
       coin: 0,
       key: 'uidList1',
-      maxCount: 10,
+      maxCount: 0,
       uidList0: [],
       uidListTest: [],
       noMoneyAccounts: [],
