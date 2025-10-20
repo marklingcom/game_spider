@@ -15,13 +15,13 @@ spiderConfig:
   form: huidu
 betConfig:
   bet: 0
-  buyBouns: true
+  buyBouns: false
   extra: false
-  gameName: Boxing King
+  gameName: Circus Joker 4096
 huiduConfig:
   coin: 100000
   key: uidList1
-  # maxCount: 5
+  maxCount: 10
   uidList0:
     - 1641530
   uidListTest:
