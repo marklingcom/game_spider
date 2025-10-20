@@ -2,6 +2,7 @@ import { EventEmitter } from 'node:events';
 import type { SpiderData } from '../gameFrom/info.js';
 import type { GameInfoAck } from '../protoGeneral/astarte2_196.js';
 import type Config from '../utils/config.js';
+import { telegramService } from '../utils/telegram.js';
 import { JiliApi } from './jili/jili_api.js';
 import type { JiliDb } from './jili/jili_db.js';
 
@@ -89,6 +90,13 @@ export class SpiderWork extends EventEmitter {
       await this.jiliDb.saveSpinData(spinBuffer, this.spiderData);
 
       this.emit(SpiderWorkEvent.SPIN_SAVE, spinBuffer);
+
+      if (this.jiliDb.isStop) {
+        const msg = '数据库已停止，停止spin';
+        console.log(msg);
+        telegramService.sendInfo(msg);
+        break;
+      }
     }
   }
 }

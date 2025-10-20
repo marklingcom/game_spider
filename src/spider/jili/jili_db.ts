@@ -181,9 +181,9 @@ export class JiliDb {
         console.log(`${tabName} 完成所有数据抓取`);
         await telegramService.sendSuccess(`${tabName} 完成所有数据抓取`);
         this.onStop();
-        setTimeout(() => {
-          process.exit(0);
-        }, 0);
+        // setTimeout(() => {
+        //   process.exit(0);
+        // }, 0);
       }
       return;
     }

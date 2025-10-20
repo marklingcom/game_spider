@@ -17,7 +17,7 @@ betConfig:
   bet: 0
   buyBouns: true
   extra: false
-  gameName: Super Ace 2
+  gameName: Boxing King
 huiduConfig:
   coin: 100000
   key: uidList1

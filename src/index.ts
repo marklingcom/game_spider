@@ -6,7 +6,7 @@ import { SpiderWork, SpiderWorkEvent } from './spider/spider.js';
 import { config } from './utils/config.js';
 import { RetError } from './utils/errors.js';
 import { telegramService } from './utils/telegram.js';
-import { sleep } from './utils/utils.js';
+import { sleep, sleepForever } from './utils/utils.js';
 
 async function main(): Promise<void> {
   console.log('配置文件加载成功');
@@ -156,7 +156,11 @@ total: 总共${currentUidList.length}个账号
 
   await startProcessing();
 
-  console.log(`程序执行结束，共处理 ${processedCount} 个账号`);
+  const msg = `程序执行结束，共处理 ${processedCount} 个账号`;
+  console.log(msg);
+  telegramService.sendSuccess(msg);
+
+  await sleepForever();
   process.exit(0);
 }
 
