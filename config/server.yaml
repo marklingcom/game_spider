@@ -17,7 +17,7 @@ betConfig:
   bet: 0
   buyBouns: false
   extra: false
-  gameName: Circus Joker 4096
+  gameName: Legacy of Egypt
 huiduConfig:
   coin: 100000
   key: uidList1

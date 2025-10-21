@@ -6,7 +6,7 @@ import { SpiderWork, SpiderWorkEvent } from './spider/spider.js';
 import { config } from './utils/config.js';
 import { RetError } from './utils/errors.js';
 import { telegramService } from './utils/telegram.js';
-import { sleep, sleepForever } from './utils/utils.js';
+import { sleep } from './utils/utils.js';
 
 async function main(): Promise<void> {
   console.log('配置文件加载成功');
@@ -28,8 +28,9 @@ async function main(): Promise<void> {
   const currentUidList = [...config.huiduUidList];
   const noMoneyAccounts = [...config.serverConfig.huiduConfig.noMoneyAccounts];
   var maxCount = config.serverConfig.huiduConfig.maxCount || 0;
+  const totalCount = currentUidList.length;
   if (maxCount <= 0) {
-    maxCount = currentUidList.length;
+    maxCount = totalCount;
   }
 
   telegramService.sendSuccess(
@@ -39,16 +40,15 @@ bet: ${bet}
 buyBouns: ${buyBouns}
 extra: ${extra}
 maxCount: ${maxCount}
-total: 总共${currentUidList.length}个账号
+total: 总共${totalCount}个账号
 `
   );
 
   let spinCount = 0;
-  let processedCount = 0;
   let currentIndex = 0;
 
   const onSpinCountNotify = debounce(() => {
-    const msg = `当前抓取账号数量: ${spinCount}`;
+    const msg = `当前抓取账号数量: ${spinCount}/${totalCount}`;
     console.log(msg);
     telegramService.sendInfo(msg);
   }, 3000);
@@ -92,7 +92,6 @@ total: 总共${currentUidList.length}个账号
       });
 
       await spiderWork.start();
-      processedCount++;
     } catch (error) {
       let errorMessage = `账号 ${uid} 执行失败: ${(error as Error).message}`;
       const stackTrace = (error as Error).stack || '无堆栈信息';
@@ -159,11 +158,11 @@ total: 总共${currentUidList.length}个账号
 
   await startProcessing();
 
-  const msg = `程序执行结束，共处理 ${processedCount} 个账号`;
+  const msg = `程序执行结束`;
   console.log(msg);
   telegramService.sendSuccess(msg);
 
-  await sleepForever();
+  // await sleepForever();
   process.exit(0);
 }
 
