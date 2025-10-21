@@ -17,7 +17,7 @@ betConfig:
   bet: 0
   buyBouns: false
   extra: false
-  gameName: Legacy of Egypt
+  gameName: Golden Bank
 huiduConfig:
   coin: 100000
   key: uidList1

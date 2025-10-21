@@ -48,7 +48,7 @@ total: 总共${totalCount}个账号
   let currentIndex = 0;
 
   const onSpinCountNotify = debounce(() => {
-    const msg = `当前抓取账号数量: ${spinCount}/${totalCount}`;
+    const msg = `当前抓取账号数量: ${totalCount}`;
     console.log(msg);
     telegramService.sendInfo(msg);
   }, 3000);
