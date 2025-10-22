@@ -10,6 +10,7 @@
     "test": "tsx watch src/test.ts",
     "test-awc": "tsx watch src/gameFrom/awc_test.ts",
     "start": "NODE_ENV=production node dist/index.js",
+    "start-dev": "NODE_ENV=production npm run dev",
     "clean": "rm -rf dist",
     "proto-sync": "tsx scripts/proto-sync.ts",
     "proto-import": "tsx scripts/proto-import.ts",
