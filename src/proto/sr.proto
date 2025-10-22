@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package srProto;
+
+message SpinAck {
+  int32 Award = 1;              // 奖励
+  double TotalWin = 2;          // 总赢取金额
+  repeated int32 PlateSymbol = 3; // 转盘符号数组
+  string ShowIndex = 5;         // 显示索引
+  double NowMoney = 6;          // 当前余额
+  int32 AckType = 7;            // 返回类型
+  double RTP = 8;               // 实际 RTP（返还率）
+}

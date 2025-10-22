@@ -23,7 +23,15 @@ protos:
   #   gi: 181
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  - name: mw4
-    gi: 134
+  # - name: mw4
+  #   gi: 134
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  # - name: ifff
+  #   gi: 134
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name:
+  - name: sr
+    gi: 100
     spin_pb_name: SpinAck
-    game_info_pb_name: GameInfoData
+    game_info_pb_name:

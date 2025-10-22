@@ -17,7 +17,7 @@ betConfig:
   bet: 0
   buyBouns: false
   extra: false
-  gameName: Golden Bank
+  gameName: Super Rich
 huiduConfig:
   coin: 100000
   key: uidList1
