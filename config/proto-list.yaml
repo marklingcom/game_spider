@@ -31,7 +31,11 @@ protos:
   #   gi: 134
   #   spin_pb_name: SpinAck
   #   game_info_pb_name:
-  - name: sr
-    gi: 100
+  # - name: sr
+  #   gi: 100
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name:
+  - name: mp2
+    gi: 303
     spin_pb_name: SpinAck
     game_info_pb_name:

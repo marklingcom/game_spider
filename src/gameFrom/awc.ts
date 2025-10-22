@@ -116,7 +116,7 @@ export class AWC {
     }
   }
 
-  async onLogin(): Promise<string> {
+  async getLoginFormUrl(): Promise<string> {
     const apiURL = 'https://demoap.awcinfo.club/demo/wallet/login';
     const formData = new URLSearchParams({
       currency: 'INR',
@@ -134,7 +134,12 @@ export class AWC {
     if (!result.url) {
       throw new Error(`登录获取 URL 失败: ${JSON.stringify(response.data)}`);
     }
-    const loginFormUrl = result.url;
+    console.log('登录获取 URL:', result.url);
+    return result.url;
+  }
+
+  async onLogin(): Promise<string> {
+    const loginFormUrl = await this.getLoginFormUrl();
     const htmlContent = await getUrlHtmlContent(loginFormUrl);
     const loginFormData = await this.parseLoginHtml(htmlContent);
 

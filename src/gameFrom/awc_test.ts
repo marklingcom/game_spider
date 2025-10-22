@@ -9,10 +9,12 @@ async function main() {
 
     // console.log('开始生成游戏信息...');
     // await awc.genGameInfo();
+    const loginFormUrl = await awc.getLoginFormUrl();
+    console.log('获取到的登录表单URL:', loginFormUrl);
 
-    console.log('开始获取游戏URL...');
-    const gameUrl = await awc.getGameUrlForGameName('Money Coming 2');
-    console.log('获取到的游戏URL:', gameUrl);
+    // console.log('开始获取游戏URL...');
+    // const gameUrl = await awc.getGameUrlForGameName('Money Coming 2');
+    // console.log('获取到的游戏URL:', gameUrl);
 
     console.log('测试完成！');
   } catch (error) {

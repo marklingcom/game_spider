@@ -8,6 +8,7 @@
     "build": "tsc",
     "dev": "tsx watch src/index.ts",
     "test": "tsx watch src/test.ts",
+    "test-awc": "tsx watch src/gameFrom/awc_test.ts",
     "start": "NODE_ENV=production node dist/index.js",
     "clean": "rm -rf dist",
     "proto-sync": "tsx scripts/proto-sync.ts",
