@@ -55,7 +55,19 @@ protos:
   #   gi: 209
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  - name: ali
-    gi: 110
-    spin_pb_name: SpinAck
-    game_info_pb_name: GameInfoData
+  # - name: ali
+  #   gi: 110
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  # - name: loe
+  #   gi: 180
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  # - name: bog
+  #   gi: 87
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  # - name: ap
+  #   gi: 209
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
