@@ -79,3 +79,7 @@ protos:
     gi: 379
     spin_pb_name: SpinAck
     game_info_pb_name: GameInfoData
+  - name: luckytree
+    gi: 6
+    spin_pb_name: SpinAck
+    game_info_pb_name:
