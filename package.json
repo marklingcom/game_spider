@@ -14,6 +14,7 @@
     "start-dev": "NODE_ENV=production npm run dev",
     "start-server": "NODE_ENV=production node dist/server.js",
     "clean": "rm -rf dist",
+    "config-sync": "tsx scripts/config-sync.ts",
     "proto-sync": "tsx scripts/proto-sync.ts",
     "proto-import": "tsx scripts/proto-import.ts",
     "proto-check": "tsx scripts/proto-check.ts",

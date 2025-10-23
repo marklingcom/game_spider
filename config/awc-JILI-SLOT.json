@@ -288,6 +288,12 @@
     "uuid": "JILI-SLOT-098"
   },
   {
+    "fullName": "Cash Coin",
+    "gi": 583,
+    "name": "cashcoin",
+    "uuid": "JILI-SLOT-157"
+  },
+  {
     "fullName": "World Cup",
     "gi": 146,
     "name": "fb",
