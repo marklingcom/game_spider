@@ -95,7 +95,7 @@ async function checkDataTables() {
         const tableDescription = await queryInterface.describeTable(tableName);
 
         if (tableDescription.rate) {
-          // await checkRateIndex(queryInterface, tableName);
+          await checkRateIndex(queryInterface, tableName);
           // await updateRatePrecision(queryInterface, tableName);
           await checkIdPrimaryKey(queryInterface, tableName, tableDescription);
         } else {
