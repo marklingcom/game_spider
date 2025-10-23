@@ -66,6 +66,12 @@ export const SpinData = (sequelize: Sequelize): typeof SpinDataModel => {
       sequelize,
       tableName: 'spin_data',
       timestamps: false,
+      indexes: [
+        {
+          name: 'rate_idx',
+          fields: ['rate'],
+        },
+      ],
     }
   );
 
