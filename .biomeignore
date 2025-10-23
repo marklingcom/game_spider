@@ -1,2 +1,4 @@
 src/protoGeneral/**
 dist/**
+
+proto/**

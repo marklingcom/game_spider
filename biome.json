@@ -19,7 +19,8 @@
       "scripts/**/*.json"
     ],
     "experimentalScannerIgnores": [
-      "dist/**"
+      "dist/**",
+      "proto/**"
     ]
   },
   "formatter": {
