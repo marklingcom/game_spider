@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package dfProto;
+
+// 列数据 - 整数数组
+message Column {
+    repeated int32 Col = 1 [packed = true];
+}
+
+// 奖励数据
+message AwardData {
+    int32 Symbol = 1;        // 符号
+    int32 Count = 2;         // 数量
+    int32 Line = 3;          // 线
+    double Win = 4;          // 赢得金额
+    double Mult = 5;         // 倍数
+}
+
+// 回合信息
+message RoundInfo {
+    repeated Column PlateSymbol = 1;           // 盘面符号
+    repeated AwardData AwardDataVec = 2;       // 奖励数据向量
+    int32 AwardTypeFlag = 3;                   // 奖励类型标志
+    int32 FreeType = 4;                        // 免费类型
+    int32 FreeRemainRound = 5;                 // 剩余免费回合
+    double Mult = 6;                           // 倍数
+    double RoundWin = 7;                       // 回合赢得
+    int32 FreeTotalRound = 8;                  // 免费总回合数
+    int32 FreeNowRound = 9;                    // 当前免费回合
+    bool MaxFlag = 10;                         // 最大标志
+}
+
+// 旋转响应
+message SpinAck {
+    repeated RoundInfo RoundQueue = 1;         // 回合队列
+    double FreeTotalWin = 2;                   // 免费回合总赢
+    double TotalWin = 3;                       // 总赢
+    bool Extra = 4;                            // 额外标志
+    string ShowIndex = 5;                      // 显示索引
+    double NowMoney = 6;                       // 当前金额
+    int32 AckType = 7;                         // 响应类型
+    double RTP = 8;                            // RTP(回报玩家百分比)
+    double Bet = 9;                            // 下注金额
+}
+
+// 游戏信息数据
+message GameInfoData {
+    bool ShowExtra = 1;                        // 显示额外信息
+    repeated double Mul = 2 [packed = true];   // 倍数数组
+    repeated double JPOdds = 3 [packed = true]; // 大奖赔率 (Jackpot Odds)
+}

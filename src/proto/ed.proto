@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package edProto;
+
+// 列数据 - 整数数组（这里用Row表示行数据）
+message Column {
+    repeated int32 Row = 1 [packed = true];
+}
+
+// 奖励数据
+message AwardData {
+    int32 Symbol = 1;        // 符号
+    int32 Count = 2;         // 数量
+    int32 Line = 3;          // 线
+    double Win = 4;          // 赢得金额
+}
+
+// 回合信息
+message RoundInfo {
+    repeated Column PlateSymbol = 1;           // 盘面符号
+    repeated AwardData AwardDataVec = 2;       // 奖励数据向量
+    int32 AwardTypeFlag = 3;                   // 奖励类型标志
+    int32 FreeRemainRound = 4;                 // 剩余免费回合
+    int32 FreeNowRound = 5;                    // 当前免费回合
+    int32 FreeTotalRound = 6;                  // 免费总回合数
+    int32 AddRound = 7;                        // 增加回合数
+    double RoundWin = 8;                       // 回合赢得
+    double TotalMult = 9;                      // 总倍数
+    repeated int32 WildExpandTimes = 10 [packed = true];  // 百搭扩展次数
+    bool MaxFlag = 11;                         // 最大标志
+    repeated Column PlateSymbolChanged = 12;   // 变化后的盘面符号
+}
+
+// 旋转响应
+message SpinAck {
+    repeated RoundInfo RoundQueue = 1;         // 回合队列
+    double FreeTotalWin = 2;                   // 免费回合总赢
+    double TotalWin = 3;                       // 总赢
+    string ShowIndex = 4;                      // 显示索引
+    double NowMoney = 5;                       // 当前金额
+    int32 AckType = 6;                         // 响应类型
+    double Bet = 7;                            // 下注金额
+    double RTP = 8;                            // RTP(回报玩家百分比)
+}
+
+// 游戏信息数据
+message GameInfoData {
+    bool ShowExtra = 1;                        // 显示额外信息
+    repeated double Mul = 2 [packed = true];   // 倍数数组
+}

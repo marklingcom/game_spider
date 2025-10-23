@@ -123,25 +123,24 @@ async function main() {
         } catch (error) {
           console.log(`  ❌ 更新记录失败: ${error}`);
           errorCount++;
-          continue;
         }
       }
+    }
 
-      console.log(`\n${'='.repeat(60)}`);
-      console.log('📊 导入结果总结:');
-      console.log('='.repeat(60));
-      console.log(`✅ 成功处理: ${successCount} 个`);
-      console.log(`❌ 处理失败: ${errorCount} 个`);
-      console.log(`📋 总计配置: ${importList.protos.length} 个`);
-      console.log('='.repeat(60));
+    console.log(`\n${'='.repeat(60)}`);
+    console.log('📊 导入结果总结:');
+    console.log('='.repeat(60));
+    console.log(`✅ 成功处理: ${successCount} 个`);
+    console.log(`❌ 处理失败: ${errorCount} 个`);
+    console.log(`📋 总计配置: ${importList.protos.length} 个`);
+    console.log('='.repeat(60));
 
-      if (errorCount > 0) {
-        console.log('\n⚠️  有部分记录处理失败，请检查错误日志');
-        process.exit(1);
-      } else {
-        console.log('\n🎉 所有proto配置导入成功!');
-        process.exit(0);
-      }
+    if (errorCount > 0) {
+      console.log('\n⚠️  有部分记录处理失败，请检查错误日志');
+      process.exit(1);
+    } else {
+      console.log('\n🎉 所有proto配置导入成功!');
+      process.exit(0);
     }
   } catch (error) {
     console.error('导入失败:', error);

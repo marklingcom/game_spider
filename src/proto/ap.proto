@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package apProto;
+
+// 网格位置
+message Grid {
+    int32 Col = 1;          // 列
+    int32 Row = 2;          // 行
+}
+
+// 符号信息（带附加属性）
+message MSymbol {
+    int32 Symbol = 1;       // 符号ID
+    int32 Length = 2;       // 长度
+    int32 Energy = 3;       // 能量值
+    bool Framed = 4;        // 是否有框
+}
+
+// 列信息（包含多个符号）
+message MColumn {
+    repeated MSymbol MColumn = 1;   // 列中的符号数组
+}
+
+// 神秘列信息
+message MysColumn {
+    int32 Column = 1;       // 列索引
+    int32 Type = 2;         // 类型
+}
+
+// 奖励数据
+message AwardData {
+    int32 Symbol = 1;               // 符号
+    int32 Count = 2;                // 数量
+    int32 LineNum = 3;              // 线号
+    double Win = 4;                 // 赢得金额
+    repeated Grid GridVec = 5;      // 获奖位置网格数组
+}
+
+// 连击阶段信息
+message ComboStageInfo {
+    repeated MColumn ComboStageSymbol = 1;      // 连击阶段符号
+    double ComboStageWin = 2;                   // 连击阶段赢得
+    double ComboStageMult = 3;                  // 连击阶段倍数
+    repeated AwardData AwardDataVec = 4;        // 奖励数据向量
+    repeated MColumn FillSymbols = 5;           // 填充符号
+    repeated MColumn ChangeSymbols = 6;         // 变化符号
+}
+
+// 回合信息
+message RoundInfo {
+    repeated ComboStageInfo ComboStageData = 1; // 连击阶段数据
+    double RoundWin = 2;                        // 回合赢得
+    int32 AwardTypeFlag = 3;                    // 奖励类型标志
+    int32 FreeRemainRound = 4;                  // 剩余免费回合
+    repeated MysColumn MysteryColumns = 5;      // 神秘列
+    int32 ScatterCount = 6;                     // Scatter符号数量
+}
+
+// 旋转响应
+message SpinAck {
+    repeated RoundInfo RoundQueue = 1;          // 回合队列
+    double FreeTotalWin = 2;                    // 免费回合总赢
+    double TotalWin = 3;                        // 总赢
+    int64 LogIndex = 4;                         // 日志索引
+    string ShowIndex = 5;                       // 显示索引
+    double NowMoney = 6;                        // 当前金额
+    int32 AckType = 7;                          // 响应类型
+    double RTP = 8;                             // RTP(回报玩家百分比)
+    double Bet = 9;                             // 下注金额
+}
+
+// 游戏信息数据
+message GameInfoData {
+    bool ShowExtra = 1;                         // 显示额外信息
+    repeated double Mul = 2 [packed = true];    // 倍数数组
+}

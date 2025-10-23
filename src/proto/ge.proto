@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package geProto;
+
+// 列数据 - 整数数组
+message Column {
+    repeated int32 Col = 1 [packed = true];
+}
+
+// 列数据 - 浮点数组
+message ColumnFloat {
+    repeated double Col = 1 [packed = true];
+}
+
+// 奖励数据
+message AwardData {
+    int32 Symbol = 1;        // 符号
+    int32 Count = 2;         // 数量
+    int32 Line = 3;          // 线
+    double Win = 4;          // 赢得金额
+    int32 Position = 5;      // 位置
+}
+
+// 回合信息
+message RoundInfo {
+    repeated Column PlateSymbol = 1;           // 盘面符号
+    repeated ColumnFloat PlateSymbolNum = 2;   // 盘面符号数量
+    repeated ColumnFloat MultPlate = 3;        // 倍数盘面
+    repeated AwardData AwardDataVec = 4;       // 奖励数据向量
+    int32 AwardTypeFlag = 5;                   // 奖励类型标志
+    int32 Free2Base = 6;                       // 免费转基础
+    int32 FreeRemainRound = 7;                 // 剩余免费回合
+    double RoundWin = 8;                       // 回合赢得
+    int32 PlusRound = 9;                       // 额外回合
+    int32 CountRound = 10;                     // 计数回合
+    bool MaxFlag = 11;                         // 最大标志
+}
+
+// 旋转响应
+message SpinAck {
+    repeated RoundInfo RoundQueue = 1;         // 回合队列
+    double Free1TotalWin = 2;                  // 免费1总赢
+    double Free2TotalWin = 3;                  // 免费2总赢
+    double TotalWin = 4;                       // 总赢
+    string ShowIndex = 5;                      // 显示索引
+    double NowMoney = 6;                       // 当前金额
+    int32 AckType = 7;                         // 响应类型
+    bool Extra = 8;                            // 额外标志
+    repeated int32 FreeRounds = 9 [packed = true];  // 免费回合
+    double RTP = 10;                           // RTP(回报玩家百分比)
+    int32 LID = 11;                            // LID
+    int32 RID = 12;                            // RID
+}
+
+// 游戏信息响应
+message GameInfoAck {
+    repeated double Mul = 1 [packed = true];            // 倍数
+    repeated double FakeBonusOdds = 2 [packed = true];  // 假奖金赔率
+}
