@@ -18,6 +18,7 @@
     "proto-import": "tsx scripts/proto-import.ts",
     "proto-check": "tsx scripts/proto-check.ts",
     "proto-gen": "npx protoc --plugin=./node_modules/.bin/protoc-gen-ts --ts_out=src/protoGeneral --proto_path=src/protoGeneral src/protoGeneral/*.proto",
+    "db-check": "tsx scripts/db_check.ts",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "lint": "biome lint .",
