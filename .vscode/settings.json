@@ -15,5 +15,8 @@
   //   "editor.defaultFormatter": "biomejs.biome"
   // },
   "typescript.preferences.importModuleSpecifier": "relative",
-  "typescript.suggest.autoImports": true
+  "typescript.suggest.autoImports": true,
+  "files.associations": {
+    "**/proto/**/*.js": "plaintext"
+  },
 }
