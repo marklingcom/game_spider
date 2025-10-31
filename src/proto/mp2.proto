@@ -1,8 +1,9 @@
 syntax = "proto3";
+
 package mp2Proto;
 
 message Column {
-  // 未显示在你贴的部分中
+  repeated int32 Row = 1;
 }
 
 message Single {
@@ -28,4 +29,8 @@ message SpinAck {
   double RTP = 12;
   int32 LID = 13;
   int32 RID = 14;
+}
+
+message GameInfoAck {
+  repeated double Mul = 6;
 }

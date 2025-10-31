@@ -17,7 +17,7 @@ betConfig:
   bet: 0
   buyBouns: false
   extra: false
-  gameName: Ali Baba
+  gameName: 3 Coin Treasures
 huiduConfig:
   coin: 100000
   key: uidList1

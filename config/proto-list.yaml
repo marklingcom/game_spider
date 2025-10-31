@@ -35,10 +35,10 @@ protos:
   #   gi: 100
   #   spin_pb_name: SpinAck
   #   game_info_pb_name:
-  # - name: mp2
-  #   gi: 303
-  #   spin_pb_name: SpinAck
-  #   game_info_pb_name:
+  - name: mp2
+    gi: 303
+    spin_pb_name: SpinAck
+    game_info_pb_name: GameInfoAck
   # - name: ge
   #   gi: 137
   #   spin_pb_name: SpinAck
@@ -75,11 +75,11 @@ protos:
   #   gi: 259
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  - name: mpt
-    gi: 379
-    spin_pb_name: SpinAck
-    game_info_pb_name: GameInfoData
-  - name: luckytree
-    gi: 6
-    spin_pb_name: SpinAck
-    game_info_pb_name:
+  # - name: mpt
+  #   gi: 379
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  # - name: luckytree
+  #   gi: 6
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name:
