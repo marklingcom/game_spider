@@ -312,6 +312,12 @@
     "uuid": "JILI-SLOT-134"
   },
   {
+    "fullName": "3 Mummy Treasures",
+    "gi": 596,
+    "name": "mm",
+    "uuid": "JILI-SLOT-159"
+  },
+  {
     "fullName": "Fruity Wheel",
     "gi": 422,
     "name": "lwc",
@@ -384,7 +390,7 @@
     "uuid": "JILI-SLOT-103"
   },
   {
-    "fullName": "Alibaba",
+    "fullName": "Ali Baba",
     "gi": 110,
     "name": "ali",
     "uuid": "JILI-SLOT-049"
@@ -592,6 +598,12 @@
     "gi": 589,
     "name": "crown40",
     "uuid": "JILI-SLOT-145"
+  },
+  {
+    "fullName": "Super Ace Speed",
+    "gi": 539,
+    "name": "sas",
+    "uuid": "JILI-SLOT-142"
   },
   {
     "fullName": "Cricket Sah 75",
