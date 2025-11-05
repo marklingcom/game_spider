@@ -17,7 +17,8 @@ betConfig:
   bet: 0
   buyBouns: false
   extra: false
-  gameName: Golden Bank
+  special: true
+  gameName: Ali Baba
 huiduConfig:
   coin: 100000
   key: uidList1

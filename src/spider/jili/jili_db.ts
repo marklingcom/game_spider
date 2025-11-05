@@ -42,8 +42,8 @@ export class JiliDb {
   }) {
     this.db = options.db;
     this.config = options.config;
-    this.currentSpecial = this.special;
-    this.currentNormal = this.normal;
+    // this.currentSpecial = this.special;
+    // this.currentNormal = this.normal;
 
     this.onStart();
   }
@@ -176,6 +176,11 @@ export class JiliDb {
 
     await this.initCount(tabName, isSpecial);
 
+    // 如果配置抓取特殊模式，并且当前不是特殊模式，则不抓取数据
+    if (this.config.serverConfig.betConfig.special && !isSpecial) {
+      return;
+    }
+
     if (this.isComplete(tabName, isSpecial)) {
       if (this.isStop) {
         console.log(`${tabName} 完成所有数据抓取`);
@@ -244,16 +249,22 @@ export class JiliDb {
     return this.currentSpecial >= this.special && this.currentNormal >= this.normal;
   }
 
+  isIsSpecial = false;
+
+  isInitNormal = false;
+
   async initCount(tabName: string, isSpecial: boolean) {
     if (isSpecial) {
-      if (this.currentSpecial === this.special) {
+      if (!this.isIsSpecial) {
+        this.isIsSpecial = true;
         const count = await this.db.getTableCount(tabName);
         this.currentSpecial = count;
         this.specialTabName = tabName;
         this.onNotify(tabName, this.currentSpecial, this.special);
       }
     } else {
-      if (this.currentNormal === this.normal) {
+      if (!this.isInitNormal) {
+        this.isInitNormal = true;
         const count = await this.db.getTableCount(tabName);
         this.currentNormal = count;
         this.normalTabName = tabName;

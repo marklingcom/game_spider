@@ -24,7 +24,7 @@ async function main(): Promise<void> {
     }
   }
 
-  const { gameName, bet, buyBouns, extra } = config.serverConfig.betConfig;
+  const { gameName, bet, buyBouns, extra, special } = config.serverConfig.betConfig;
   const currentUidList = [...config.huiduUidList];
   const noMoneyAccounts = [...config.serverConfig.huiduConfig.noMoneyAccounts];
   var maxCount = config.serverConfig.huiduConfig.maxCount || 0;
@@ -39,6 +39,7 @@ form: ${config.serverConfig.spiderConfig.form}
 bet: ${bet}
 buyBouns: ${buyBouns}
 extra: ${extra}
+special: ${special}
 maxCount: ${maxCount}
 total: 总共${totalCount}个账号
 `
