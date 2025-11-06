@@ -17,8 +17,8 @@ betConfig:
   bet: 0
   buyBouns: false
   extra: false
-  special: true
-  gameName: Ali Baba
+  special: false
+  gameName: Fortune Tree
 huiduConfig:
   coin: 100000
   key: uidList1

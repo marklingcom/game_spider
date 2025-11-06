@@ -2,6 +2,10 @@ syntax = "proto3";
 
 package luckytreeProto;
 
+message Column {
+  repeated int32 Row = 1;
+}
+
 message Award {
   int32 AwardTypeFlag = 1;
   int32 AwardSymbol = 2;
@@ -65,8 +69,4 @@ message SpinAck {
   int32 LID = 10;
   int32 RID = 11;
   bool MaxFlag = 12;
-}
-
-message Column {
-  repeated int32 Row = 1;
 }
