@@ -18,7 +18,7 @@ betConfig:
   buyBouns: false
   extra: false
   special: false
-  gameName: Fortune Tree
+  gameName: Devil Fire
 huiduConfig:
   coin: 100000
   key: uidList1
