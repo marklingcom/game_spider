@@ -97,7 +97,7 @@ async function checkDataTables() {
         if (tableDescription.rate) {
           await checkRateIndex(queryInterface, tableName);
           // await updateRatePrecision(queryInterface, tableName);
-          await checkIdPrimaryKey(queryInterface, tableName, tableDescription);
+          // await checkIdPrimaryKey(queryInterface, tableName, tableDescription);
         } else {
           console.log(`⚠️ 表 ${tableName} 不包含 rate 字段，跳过`);
         }
