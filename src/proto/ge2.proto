@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package ge2Proto;
+
+message MSymbol {
+  int32 Symbol = 1;
+  int32 Length = 2;
+  int32 Energy = 3;
+  bool Framed = 4;
+}
+
+message MColumn {
+  repeated MSymbol MColumn = 1;
+}
+
+message Grid {
+  int32 Col = 1;
+  int32 Row = 2;
+}
+
+message AwardData {
+  int32 Symbol = 1;
+  int32 Count = 2;
+  int32 LineNum = 3;
+  double Win = 4;
+  repeated Grid GridVec = 5;
+}
+
+message ComboStageInfo {
+  repeated MColumn ComboStageSymbol = 1;
+  repeated MColumn ComboStageSymbolLog = 2;
+  double ComboStageWin = 3;
+  double ComboStageMult = 4;
+  repeated Grid BonusEffectedPos = 5;
+  repeated AwardData AwardDataVec = 6;
+  repeated MColumn FillSymbols = 7;
+  repeated MColumn ChangeSymbols = 8;
+  bool MaxFlag = 9;
+}
+
+message RoundInfo {
+  repeated ComboStageInfo ComboStageData = 1;
+  double RoundWin = 2;
+  int32 AwardTypeFlag = 3;
+  int32 FreeRemainRound = 4;
+  int32 FreeNowRound = 5;
+  int32 FreeTotalRound = 6;
+  int32 AddRound = 7;
+  repeated Grid KeepPos = 8;
+  int32 ScatterCount = 9;
+  bool MaxFlag = 10;
+  repeated Grid KeptWildPos = 11;
+}
+
+message SpinAck {
+  repeated RoundInfo RoundQueue = 1;
+  double FreeTotalWin = 2;
+  double TotalWin = 3;
+  int64 LogIndex = 4;
+  string ShowIndex = 5;
+  double NowMoney = 6;
+  int32 AckType = 7;
+  double RTP = 8;
+}
+
+message GameInfoData {
+  bool ShowExtra = 1;
+  repeated double Mul = 2;
+}
