@@ -19,4 +19,24 @@
   "files.associations": {
     "**/proto/**/*.js": "plaintext"
   },
+  "search.exclude": {
+    "**/.git": true,
+    "**/.vite": true,
+    "**/.happypack": true,
+    "**/.next": true,
+    "**/node_modules": true,
+    "**/build": true,
+    "**/backup": true,
+    "**/dist": true,
+    "**/static": true,
+    "**/android/app/build": true,
+    "**/package-lock.json": true,
+    "**/__tests__": true,
+    "*.map": true,
+    "**/pnpm-lock.yaml": true,
+    "**/yarn.lock": true,
+    "CHANGELOG.md": true,
+    "**/.fvm": true,
+    "**/proto": true,
+  },
 }
