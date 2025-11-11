@@ -22,7 +22,7 @@ betConfig:
 huiduConfig:
   coin: 100000
   key: uidList1
-  maxCount: 1
+  maxCount: 10
   uidList0:
     - 1641530
   uidListTest:
