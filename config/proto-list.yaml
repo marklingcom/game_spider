@@ -71,10 +71,10 @@ protos:
   #   gi: 209
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  - name: bfs2
-    gi: 259
-    spin_pb_name: SpinAck
-    game_info_pb_name: GameInfoData
+  # - name: bfs2
+  #   gi: 259
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
   # - name: mpt
   #   gi: 379
   #   spin_pb_name: SpinAck
@@ -83,3 +83,7 @@ protos:
   #   gi: 6
   #   spin_pb_name: SpinAck
   #   game_info_pb_name:
+  - name: dl
+    gi: 258
+    spin_pb_name: SpinAck
+    game_info_pb_name:

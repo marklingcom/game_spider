@@ -25,7 +25,13 @@ export class JiliDb {
     return 3000;
   }
 
-  normal = 300000;
+  get normal() {
+    const isBuyBouns = this.config?.serverConfig?.betConfig?.buyBouns;
+    if (isBuyBouns) {
+      return 0;
+    }
+    return 300000;
+  }
 
   currentSpecial = 0;
   currentNormal = 0;

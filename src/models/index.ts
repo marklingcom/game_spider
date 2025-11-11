@@ -88,9 +88,21 @@ export default class DatabaseManager {
 
       const tables = await this.sequelize.getQueryInterface().showAllTables();
       const SpinDataModel = this.getModel('SpinData');
+      const queryInterface = this.sequelize.getQueryInterface();
       if (!tables.includes(tabName)) {
         const attributes = SpinDataModel.getAttributes();
-        await this.sequelize.getQueryInterface().createTable(tabName, attributes);
+        await queryInterface.createTable(tabName, attributes);
+        // 添加索引
+        const indexes = (SpinDataModel as any).options?.indexes || [];
+        for (const idx of indexes) {
+          if (idx.fields && idx.fields.length > 0) {
+            const indexName = idx.name ? `${tabName}_${idx.name}` : undefined;
+            await queryInterface.addIndex(tabName, idx.fields, {
+              name: indexName,
+              unique: idx.unique,
+            });
+          }
+        }
         console.log(`Created table: ${tabName}`);
         telegramService.sendInfo(`创建表: ${tabName}`);
       } else {

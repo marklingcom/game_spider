@@ -18,11 +18,11 @@ betConfig:
   buyBouns: false
   extra: false
   special: false
-  gameName: Devil Fire
+  gameName: Devil Fire 2
 huiduConfig:
   coin: 100000
   key: uidList1
-  maxCount: 10
+  maxCount: 1
   uidList0:
     - 1641530
   uidListTest:
