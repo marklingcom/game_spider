@@ -87,7 +87,7 @@ export class SpiderWork extends EventEmitter {
 
       const spinBuffer = await this.jiliApi.spin(bet, isBuyBouns, isExtra);
       // 保存spinData
-      await this.jiliDb.saveSpinData(spinBuffer, this.spiderData);
+      await this.jiliDb.saveGaiaResponseData(spinBuffer, this.spiderData);
 
       this.emit(SpiderWorkEvent.SPIN_SAVE, spinBuffer);
 

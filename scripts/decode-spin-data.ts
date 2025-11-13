@@ -6,7 +6,7 @@ import { config } from '../src/utils/config.js';
 import { __protoDir } from '../src/utils/env.js';
 import { createDirectoryIfNotExists } from '../src/utils/utils.js';
 
-async function decodeSpinData(name: string, tableName?: string, limit?: number) {
+async function decodeSpinData(name: string, tableName?: string, id?: number) {
   try {
     console.log(`🔍 开始处理游戏: ${name}`);
 
@@ -58,7 +58,11 @@ async function decodeSpinData(name: string, tableName?: string, limit?: number) 
     console.log(`✅ Proto 加载成功`);
 
     const targetTableName = tableName || 'spin_data';
-    console.log(`📊 从表 ${targetTableName} 读取数据...`);
+    if (id) {
+      console.log(`📊 从表 ${targetTableName} 查询 ID 为 ${id} 的记录...`);
+    } else {
+      console.log(`📊 从表 ${targetTableName} 读取数据...`);
+    }
 
     const SpinDataModel = dbManager.getModel('SpinData');
     if (!SpinDataModel) {
@@ -67,15 +71,16 @@ async function decodeSpinData(name: string, tableName?: string, limit?: number) 
 
     const queryOptions: {
       attributes: string[];
-      order: [string, string][];
-      limit?: number;
+      order?: [string, string][];
+      where?: { id: number };
     } = {
       attributes: ['id', 'data', 'totalWin', 'bet', 'rate', 'from', 'createTime'],
-      order: [['id', 'DESC']],
     };
 
-    if (limit) {
-      queryOptions.limit = limit;
+    if (id) {
+      queryOptions.where = { id };
+    } else {
+      queryOptions.order = [['id', 'DESC']];
     }
 
     let spinDataList: unknown[];
@@ -152,26 +157,29 @@ async function decodeSpinData(name: string, tableName?: string, limit?: number) 
 }
 
 async function main() {
-  const args = process.argv.slice(2);
+  // const args = process.argv.slice(2);
 
-  if (args.length === 0) {
-    console.log('用法: tsx scripts/decode-spin-data.ts <name> [tableName] [limit]');
-    console.log('  name: 游戏名称（必需）');
-    console.log('  tableName: 表名（可选，默认为 spin_data）');
-    console.log('  limit: 限制读取的记录数（可选）');
-    process.exit(1);
-  }
+  // if (args.length === 0) {
+  //   console.log('用法: tsx scripts/decode-spin-data.ts <name> [tableName] [id]');
+  //   console.log('  name: 游戏名称（必需）');
+  //   console.log('  tableName: 表名（可选，默认为 spin_data）');
+  //   console.log('  id: 记录 ID（可选，指定则只查询该 ID 的记录）');
+  //   process.exit(1);
+  // }
 
-  const name = args[0];
-  const tableName = args[1];
-  const limit = args[2] ? parseInt(args[2], 10) : undefined;
+  // const name = args[0];
+  // const tableName = args[1];
+  // const id = args[2] ? parseInt(args[2], 10) : undefined;
 
-  if (Number.isNaN(limit as number) && limit !== undefined) {
-    console.error('❌ limit 必须是数字');
-    process.exit(1);
-  }
+  // if (Number.isNaN(id as number) && id !== undefined) {
+  //   console.error('❌ id 必须是数字');
+  //   process.exit(1);
+  // }
+  const name = 'ge';
+  const tableName = 'jili_spin_ge_normal';
+  const id = 58984;
 
-  await decodeSpinData(name, tableName, limit);
+  await decodeSpinData(name, tableName, id);
   process.exit(0);
 }
 

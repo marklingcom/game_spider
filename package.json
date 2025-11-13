@@ -25,7 +25,9 @@
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
     "check": "biome check .",
-    "check:fix": "biome check --write ."
+    "check:fix": "biome check --write .",
+    "decode-data": "tsx scripts/decode-spin-data.ts",
+    "re-data": "tsx scripts/re-spin-data.ts"
   },
   "keywords": [],
   "author": "",

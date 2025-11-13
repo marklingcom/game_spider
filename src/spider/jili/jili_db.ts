@@ -13,34 +13,55 @@ import { TelegramEventName, telegramService } from '../../utils/telegram.js';
 import { createDirectoryIfNotExists, formatNumber } from '../../utils/utils.js';
 import { decryptResponseBuffer } from './jili_utils.js';
 
+export enum SpinDataType {
+  normal = 0,
+  special = 1,
+}
+
+class SpinDataState {
+  current: number = 0;
+  tabName: string = '';
+  isInit: boolean = false;
+  lastProgress = 0;
+
+  private config: Config;
+  private type: SpinDataType;
+
+  constructor(config: Config, type: SpinDataType) {
+    this.config = config;
+    this.type = type;
+  }
+
+  get isSpecial(): boolean {
+    return this.type === SpinDataType.special;
+  }
+
+  get isNormal(): boolean {
+    return this.type === SpinDataType.normal;
+  }
+
+  get total(): number {
+    const isBuyBouns = this.config?.serverConfig?.betConfig?.buyBouns;
+    if (this.isSpecial) {
+      if (isBuyBouns) {
+        return 5000;
+      }
+      return 3000;
+    } else {
+      if (isBuyBouns) {
+        return 0;
+      }
+      return 300000;
+    }
+  }
+}
+
 export class JiliDb {
   private db: DatabaseManager;
   private config: Config;
 
-  get special() {
-    const isBuyBouns = this.config?.serverConfig?.betConfig?.buyBouns;
-    if (isBuyBouns) {
-      return 5000;
-    }
-    return 3000;
-  }
-
-  get normal() {
-    const isBuyBouns = this.config?.serverConfig?.betConfig?.buyBouns;
-    if (isBuyBouns) {
-      return 0;
-    }
-    return 300000;
-  }
-
-  currentSpecial = 0;
-  currentNormal = 0;
-
-  specialTabName = '';
-
-  normalTabName = '';
-
-  private lastSpecialProgress = 0;
+  private specialState: SpinDataState;
+  private normalState: SpinDataState;
 
   constructor(options: {
     db: DatabaseManager;
@@ -48,8 +69,8 @@ export class JiliDb {
   }) {
     this.db = options.db;
     this.config = options.config;
-    // this.currentSpecial = this.special;
-    // this.currentNormal = this.normal;
+    this.specialState = new SpinDataState(this.config, SpinDataType.special);
+    this.normalState = new SpinDataState(this.config, SpinDataType.normal);
 
     this.onStart();
   }
@@ -100,15 +121,18 @@ export class JiliDb {
     }
   }
 
-  async saveSpinData(spinBuffer: Buffer, spiderData: SpiderData): Promise<void> {
+  async saveGaiaResponseData(spinBuffer: Buffer, spiderData: SpiderData): Promise<void> {
     const { gaiaResponseData } = await decryptResponseBuffer(spinBuffer, spiderData.token);
     if (!gaiaResponseData || gaiaResponseData.length === 0) {
       throw new Error('gaiaResponseData is empty');
     }
-
-    const gameName = spiderData.name;
-
     const spinResponse = SpinResponse.fromBinary(gaiaResponseData);
+
+    return this.saveSpinData(spinResponse, spiderData);
+  }
+
+  async saveSpinData(spinResponse: SpinResponse, spiderData: SpiderData): Promise<void> {
+    const gameName = spiderData.name;
 
     const gameProto = await this.getProto(gameName, gameName);
     const spinPbName = await this.getSpinPbName(gameName);
@@ -126,10 +150,8 @@ export class JiliDb {
     const spinAckData = spinAck.decode(spinResponse.data);
 
     const jsonData = JSON.stringify(spinAckData);
-    // console.log('spinResponse:', jsonData);
 
-    let gameType = 0;
-
+    let spinDataType = SpinDataType.normal;
     if (spinPbName === 'AllPlate') {
       const spinData = JSON.parse(jsonData);
       const plates = spinData.plate || [];
@@ -139,17 +161,18 @@ export class JiliDb {
           const plate = plates[i];
           const onesCount = this.countOnesInPlate(plate);
           if (onesCount >= 3) {
-            gameType = 1;
+            spinDataType = SpinDataType.special;
             break;
           }
         }
       }
     } else {
-      const freeTotalWinRegex = /"FreeTotalWin"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
+      const freeTotalWinRegex =
+        /"(FreeTotalWin|Free1TotalWin|Free2TotalWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
       const matches = jsonData.match(freeTotalWinRegex);
 
       if (matches && matches.length > 0) {
-        gameType = 1;
+        spinDataType = SpinDataType.special;
       }
     }
 
@@ -171,7 +194,7 @@ export class JiliDb {
       isExtra = true;
     }
 
-    const isSpecial = gameType === 1 || isBuy;
+    const isSpecial = spinDataType === SpinDataType.special || isBuy;
     if (isSpecial) {
       tabName += '_special';
     } else {
@@ -216,16 +239,19 @@ export class JiliDb {
     });
 
     if (isSpecial) {
-      this.currentSpecial++;
+      this.specialState.current++;
     } else {
-      this.currentNormal++;
+      this.normalState.current++;
     }
   }
 
-  onNotify(tabName: string, current: number, total: number, threshold = 5) {
+  onNotify(tabName: string, current: number, total: number, isSpecial: boolean, threshold = 5) {
     const progress = (current / total) * 100;
-    if (this.lastSpecialProgress === 0 || progress >= this.lastSpecialProgress + threshold) {
-      this.lastSpecialProgress = progress;
+    const state = this.getState(isSpecial);
+    const lastProgress = state.lastProgress || 0;
+
+    if (lastProgress === 0 || progress >= lastProgress + threshold) {
+      state.lastProgress = progress;
       telegramService.sendSuccess(
         `表 ${tabName} 抓取进度: ${Math.floor(progress)}% (${current}/${total})`
       );
@@ -233,16 +259,14 @@ export class JiliDb {
   }
 
   isComplete(tabName: string, isSpecial: boolean, isLog = true) {
-    let current = this.currentNormal;
-    let total = this.normal;
-    if (isSpecial) {
-      current = this.currentSpecial;
-      total = this.special;
-    }
+    const state = this.getState(isSpecial);
+    const current = state.current;
+    const total = state.total;
+
     if (isLog) {
       console.log(`表 ${tabName} 抓取进度: ${current}/${total}`);
 
-      this.onNotify(tabName, current, total);
+      this.onNotify(tabName, current, total, isSpecial);
     }
 
     if (current >= total) {
@@ -252,30 +276,25 @@ export class JiliDb {
   }
 
   get isStop() {
-    return this.currentSpecial >= this.special && this.currentNormal >= this.normal;
+    return (
+      this.specialState.current >= this.specialState.total &&
+      this.normalState.current >= this.normalState.total
+    );
   }
 
-  isIsSpecial = false;
-
-  isInitNormal = false;
+  getState(isSpecial: boolean): SpinDataState {
+    return isSpecial ? this.specialState : this.normalState;
+  }
 
   async initCount(tabName: string, isSpecial: boolean) {
-    if (isSpecial) {
-      if (!this.isIsSpecial) {
-        this.isIsSpecial = true;
-        const count = await this.db.getTableCount(tabName);
-        this.currentSpecial = count;
-        this.specialTabName = tabName;
-        this.onNotify(tabName, this.currentSpecial, this.special);
-      }
-    } else {
-      if (!this.isInitNormal) {
-        this.isInitNormal = true;
-        const count = await this.db.getTableCount(tabName);
-        this.currentNormal = count;
-        this.normalTabName = tabName;
-        this.onNotify(tabName, this.currentNormal, this.normal);
-      }
+    const state = this.getState(isSpecial);
+
+    if (!state.isInit) {
+      state.isInit = true;
+      const count = await this.db.getTableCount(tabName);
+      state.current = count;
+      state.tabName = tabName;
+      this.onNotify(tabName, state.current, state.total, isSpecial);
     }
   }
 
@@ -367,12 +386,17 @@ export class JiliDb {
   onStart() {
     this.startTime = Date.now();
 
-    telegramService.on(TelegramEventName.PROCESS, (reply) => {
+    const onProcessMessage = () => {
       const message = `当前进度：
-normal表 ${this.normalTabName} 抓取进度: ${this.normalTabName ? this.currentNormal : 0}/${this.normal}
-special表 ${this.specialTabName} 抓取进度: ${this.specialTabName ? this.currentSpecial : 0}/${this.special}
+normal表 ${this.normalState.tabName} 抓取进度: ${this.normalState.tabName ? this.normalState.current : 0}/${this.normalState.total}
+special表 ${this.specialState.tabName} 抓取进度: ${this.specialState.tabName ? this.specialState.current : 0}/${this.specialState.total}
 `;
-      reply(message);
+      return message;
+    };
+
+    telegramService.sendSuccess(onProcessMessage());
+    telegramService.on(TelegramEventName.PROCESS, (reply) => {
+      reply(onProcessMessage());
     });
   }
 

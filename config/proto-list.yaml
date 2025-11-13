@@ -95,7 +95,11 @@ protos:
   #   gi: 517
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  - name: ctk
-    gi: 225
+  # - name: ctk
+  #   gi: 225
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  - name: zeus
+    gi: 252
     spin_pb_name: SpinAck
-    game_info_pb_name: GameInfoData
+    game_info_pb_name:

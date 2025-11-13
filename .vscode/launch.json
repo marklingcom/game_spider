@@ -29,6 +29,32 @@
         "<node_internals>/**"
       ],
       "type": "node"
-    }
+    },
+    {
+      "name": "decode-data",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "decode-data"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
+    {
+      "name": "re-data",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "re-data"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
   ]
 }
