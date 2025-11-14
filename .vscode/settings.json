@@ -37,6 +37,6 @@
     "**/yarn.lock": true,
     "CHANGELOG.md": true,
     "**/.fvm": true,
-    "**/proto": true,
+    "proto": true,
   },
 }

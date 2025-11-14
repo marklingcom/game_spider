@@ -19,7 +19,7 @@ betConfig:
   extra: false
   special: false
   # gameName: Golden Empire 2
-  gameName: Gold Rush
+  gameName: Golden Bank
 huiduConfig:
   coin: 100000
   key: uidList1

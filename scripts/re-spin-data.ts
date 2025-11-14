@@ -75,7 +75,7 @@ async function reSpinData(tableName: string) {
     console.log(`📊 处理表: ${tableName}\n`);
 
     const tableModel = await dbManager.ensureTableExists(tableName);
-    const pageSize = 100;
+    const pageSize = 500;
     const offset = 0;
     let errorCount = 0;
     let totalProcessed = 0;
@@ -209,7 +209,9 @@ async function reSpinData(tableName: string) {
 }
 
 async function main() {
-  await reSpinData('jili_spin_ge_normal-backup');
+  // await reSpinData('jili_spin_ge_normal-backup');
+  // await reSpinData('jili_spin_ge_extra_normal-backup');
+  await reSpinData('jili_spin_cbt_normal-backup');
   process.exit(0);
 }
 
