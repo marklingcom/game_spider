@@ -18,8 +18,7 @@ betConfig:
   buyBouns: false
   extra: false
   special: false
-  # gameName: Golden Empire 2
-  gameName: Golden Bank
+  gameName: Golden Queen
 huiduConfig:
   coin: 100000
   key: uidList1
