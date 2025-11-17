@@ -40,7 +40,6 @@ bet: ${bet}
 buyBouns: ${buyBouns}
 extra: ${extra}
 special: ${special}
-// maxCount: ${maxCount}
 total: 总共${totalCount}个账号
 `
   );
