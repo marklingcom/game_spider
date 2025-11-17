@@ -253,7 +253,7 @@ export class JiliDb {
     }
   }
 
-  onNotify(tabName: string, current: number, total: number, isSpecial: boolean, threshold = 5) {
+  onNotify(tabName: string, current: number, total: number, isSpecial: boolean, threshold = 3) {
     const progress = (current / total) * 100;
     const state = this.getState(isSpecial);
     const lastProgress = state.lastProgress || 0;
