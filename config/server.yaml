@@ -18,11 +18,11 @@ betConfig:
   buyBouns: false
   extra: false
   special: false
-  gameName: Golden Queen
+  gameName: Golden Bank 2
 huiduConfig:
   coin: 100000
   key: uidList1
-  maxCount: 8
+  maxCount: 6
   uidList0:
     - 1641530
   uidListTest:
