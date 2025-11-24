@@ -131,7 +131,11 @@ protos:
   #   gi: 461
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  - name: bh
-    gi: 142
+  # - name: bh
+  #   gi: 142
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name:
+  - name: c7d
+    gi: 447
     spin_pb_name: SpinAck
-    game_info_pb_name:
+    game_info_pb_name: GameInfoData
