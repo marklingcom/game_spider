@@ -102,7 +102,7 @@
   {
     "fullName": "Fengshen",
     "companyId": 1,
-    "gameUid": "09699fd0de13edbb6c4a194d7494640b"
+    "gameUid": "09699fd0de13edbb6c4a194d7494640d"
   },
   {
     "fullName": "SevenSevenSeven",
@@ -490,7 +490,7 @@
     "gameUid": "bfde2986a4eb3a5a559ac8a8c64df461"
   },
   {
-    "fullName": "Egypt's Glow",
+    "fullName": "Egypt’s Glow",
     "companyId": 1,
     "gameUid": "ddac017cb273a590b7aa0e1ad6a52bef"
   },
@@ -563,5 +563,630 @@
     "fullName": "Bikini Lady",
     "companyId": 1,
     "gameUid": "702565a827764d10e470a0f76398a978"
+  },
+  {
+    "name": "Money Coming",
+    "companyId": 1,
+    "gameUid": "db249defce63610fccabfa829a405232"
+  },
+  {
+    "name": "Fortune Gems",
+    "companyId": 1,
+    "gameUid": "a990de177577a2e6a889aaac5f57b429"
+  },
+  {
+    "name": "Fortune Gems 2",
+    "companyId": 1,
+    "gameUid": "664fba4da609ee82b78820b1f570f4ad"
+  },
+  {
+    "name": "Super Ace",
+    "companyId": 1,
+    "gameUid": "bdfb23c974a2517198c5443adeea77a8"
+  },
+  {
+    "name": "Charge Buffalo",
+    "companyId": 1,
+    "gameUid": "984615c9385c42b3dad0db4a9ef89070"
+  },
+  {
+    "name": "Golden Empire",
+    "companyId": 1,
+    "gameUid": "490096198e28f770a3f85adb6ee49e0f"
+  },
+  {
+    "name": "Super Ace Deluxe",
+    "companyId": 1,
+    "gameUid": "80aad2a10ae6a95068b50160d6c78897"
+  },
+  {
+    "name": "Fortune Gems 3",
+    "companyId": 1,
+    "gameUid": "63927e939636f45e9d6d0b3717b3b1c1"
+  },
+  {
+    "name": "Boxing King",
+    "companyId": 1,
+    "gameUid": "981f5f9675002fbeaaf24c4128b938d7"
+  },
+  {
+    "name": "Mega Ace",
+    "companyId": 1,
+    "gameUid": "eba92b1d3abd5f0d37dfbe112abdf0e2"
+  },
+  {
+    "name": "Ali Baba",
+    "companyId": 1,
+    "gameUid": "cc686634b4f953754b306317799f1f39"
+  },
+  {
+    "name": "Wild Ace",
+    "companyId": 1,
+    "gameUid": "9a3b65e2ae5343df349356d548f3fc4b"
+  },
+  {
+    "name": "Crazy Hunter",
+    "companyId": 1,
+    "gameUid": "69082f28fcd46cbfd10ce7a0051f24b6"
+  },
+  {
+    "name": "Charge Buffalo Ascent",
+    "companyId": 1,
+    "gameUid": "28bc4a33c985ddce6acd92422626b76f"
+  },
+  {
+    "name": "RomaX",
+    "companyId": 1,
+    "gameUid": "e5ff8e72418fcc608d72ea21cc65fb70"
+  },
+  {
+    "name": "Money Pot",
+    "companyId": 1,
+    "gameUid": "a5acbbb7ae534d303f67cb447dc8723d"
+  },
+  {
+    "name": "3 Coin Treasures",
+    "companyId": 1,
+    "gameUid": "69c1b4586b5060eefcb45bb479f03437"
+  },
+  {
+    "name": "Aztec Priestess",
+    "companyId": 1,
+    "gameUid": "6acff19b2d911a8c695ba24371964807"
+  },
+  {
+    "name": "Golden Bank",
+    "companyId": 1,
+    "gameUid": "c3f86b78938eab1b7f34159d98796e88"
+  },
+  {
+    "name": "Devil Fire",
+    "companyId": 1,
+    "gameUid": "1b4c5865131b4967513c1ee90cba4472"
+  },
+  {
+    "name": "Fengshen",
+    "companyId": 1,
+    "gameUid": "09699fd0de13edbb6c4a194d7494640b"
+  },
+  {
+    "name": "SevenSevenSeven",
+    "companyId": 1,
+    "gameUid": "61d46add6841aad4758288d68015eca6"
+  },
+  {
+    "name": "Golden Joker",
+    "companyId": 1,
+    "gameUid": "f301fe0b22d1540b1f215d282b20c642"
+  },
+  {
+    "name": "Poseidon",
+    "companyId": 1,
+    "gameUid": "50a1bcbc2ef4a5f761e0e4d338a41699"
+  },
+  {
+    "name": "Jungle King",
+    "companyId": 1,
+    "gameUid": "4db0ec24ff55a685573c888efed47d7f"
+  },
+  {
+    "name": "Fortune Monkey",
+    "companyId": 1,
+    "gameUid": "add95fc40f1ef0d56f5716ce45a56946"
+  },
+  {
+    "name": "Bubble Beauty",
+    "companyId": 1,
+    "gameUid": "a78d2ed972aab8ba06181cc43c54a425"
+  },
+  {
+    "name": "JILI CAISHEN",
+    "companyId": 1,
+    "gameUid": "11e330c2b23f106815f3b726d04e4316"
+  },
+  {
+    "name": "Pharaoh Treasure",
+    "companyId": 1,
+    "gameUid": "c7a69ab382bd1ff0e6eb65b90a793bdd"
+  },
+  {
+    "name": "Party Night",
+    "companyId": 1,
+    "gameUid": "d505541d522aa5ca01fc5e97cfcf2116"
+  },
+  {
+    "name": "Gold Rush",
+    "companyId": 1,
+    "gameUid": "2a5d731e0fd60f52873a24ece11f2c0b"
+  },
+  {
+    "name": "3 Lucky Piggy",
+    "companyId": 1,
+    "gameUid": "e09d4c9612ea540bc0afabf76e4f9148"
+  },
+  {
+    "name": "Super Rich",
+    "companyId": 1,
+    "gameUid": "b92f491a63ac84b106b056e9d46d35c5"
+  },
+  {
+    "name": "Night City",
+    "companyId": 1,
+    "gameUid": "78e29705f7c6084114f46a0aeeea1372"
+  },
+  {
+    "name": "Secret Treasure",
+    "companyId": 1,
+    "gameUid": "1d1f267e3a078ade8e5ccd56582ac94f"
+  },
+  {
+    "name": "Golden Temple",
+    "companyId": 1,
+    "gameUid": "976c5497256c020ac012005f6bb166ad"
+  },
+  {
+    "name": "Pirate Queen",
+    "companyId": 1,
+    "gameUid": "70999d5bcf2a1d1f1fb8c82e357317f4"
+  },
+  {
+    "name": "FortunePig",
+    "companyId": 1,
+    "gameUid": "8488c76ee2afb8077fbd7eec62721215"
+  },
+  {
+    "name": "Lucky Coming",
+    "companyId": 1,
+    "gameUid": "ba858ec8e3b5e2b4da0d16b3a2330ca7"
+  },
+  {
+    "name": "Dragon Treasure",
+    "companyId": 1,
+    "gameUid": "c6955c14f6c28a6c2a0c28274fec7520"
+  },
+  {
+    "name": "Fa Fa Fa",
+    "companyId": 1,
+    "gameUid": "54c41adcf43fdb6d385e38bc09cd77ca"
+  },
+  {
+    "name": "Mayan Empire",
+    "companyId": 1,
+    "gameUid": "5c2383ef253f9c36dacec4b463d61622"
+  },
+  {
+    "name": "Fortune Tree",
+    "companyId": 1,
+    "gameUid": "6a7e156ceec5c581cd6b9251854fe504"
+  },
+  {
+    "name": "Book of Gold",
+    "companyId": 1,
+    "gameUid": "6b283c434fd44250d83b7c2420f164f9"
+  },
+  {
+    "name": "3 Pot Dragons",
+    "companyId": 1,
+    "gameUid": "921dce2d616e5d0577135bb2d9214946"
+  },
+  {
+    "name": "Hot Chilli",
+    "companyId": 1,
+    "gameUid": "c845960c81d27d7880a636424e53964d"
+  },
+  {
+    "name": "Bonus Hunter",
+    "companyId": 1,
+    "gameUid": "39775cdc4170e56c5f768bdee8b4fa00"
+  },
+  {
+    "name": "War Of Dragons",
+    "companyId": 1,
+    "gameUid": "4b1d7ffaf9f66e6152ea93a6d0e4215b"
+  },
+  {
+    "name": "Bangla Beauty",
+    "companyId": 1,
+    "gameUid": "6b60d159f0939a45f7b4c88a9b57499a"
+  },
+  {
+    "name": "God Of Martial",
+    "companyId": 1,
+    "gameUid": "21ef8a7ddd39836979170a2e7584e333"
+  },
+  {
+    "name": "Lucky Goldbricks",
+    "companyId": 1,
+    "gameUid": "d84ef530121953240116e3b2e93f6af4"
+  },
+  {
+    "name": "Sweet Land",
+    "companyId": 1,
+    "gameUid": "91250a55f75a3c67ed134b99bf587225"
+  },
+  {
+    "name": "Cricket King 18",
+    "companyId": 1,
+    "gameUid": "dcf220f4e3ecca0278911a55e6f11c77"
+  },
+  {
+    "name": "Neko Fortune",
+    "companyId": 1,
+    "gameUid": "9a391758f755cb30ff973e08b2df6089"
+  },
+  {
+    "name": "Crazy FaFaFa",
+    "companyId": 1,
+    "gameUid": "a57a8d5176b54d4c825bd1eee8ab34df"
+  },
+  {
+    "name": "Crazy777",
+    "companyId": 1,
+    "gameUid": "8c62471fd4e28c084a61811a3958f7a1"
+  },
+  {
+    "name": "Chin Shi Huang",
+    "companyId": 1,
+    "gameUid": "24da72b49b0dd0e5cbef9579d09d8981"
+  },
+  {
+    "name": "Gem Party",
+    "companyId": 1,
+    "gameUid": "756cf3c73a323b4bfec8d14864e3fada"
+  },
+  {
+    "name": "Lucky Ball",
+    "companyId": 1,
+    "gameUid": "893669898cd25d9da589a384f1d004df"
+  },
+  {
+    "name": "Hyper Burst",
+    "companyId": 1,
+    "gameUid": "a47b17970036b37c1347484cf6956920"
+  },
+  {
+    "name": "Shanghai Beauty",
+    "companyId": 1,
+    "gameUid": "795d0cae623cbf34d7f1aa93bbcded28"
+  },
+  {
+    "name": "Candy Baby",
+    "companyId": 1,
+    "gameUid": "2cc3b68cbcfacac2f7ef2fe19abc3c22"
+  },
+  {
+    "name": "Hawaii Beauty",
+    "companyId": 1,
+    "gameUid": "6409b758471b6df30c6b137b49f4d92e"
+  },
+  {
+    "name": "Bao boon chin",
+    "companyId": 1,
+    "gameUid": "8c4ebb3dc5dcf7b7fe6a26d5aadd2c3d"
+  },
+  {
+    "name": "XiYangYang",
+    "companyId": 1,
+    "gameUid": "5a962d0e31e0d4c0798db5f331327e4f"
+  },
+  {
+    "name": "DiamondParty",
+    "companyId": 1,
+    "gameUid": "48d598e922e8c60643218ccda302af08"
+  },
+  {
+    "name": "Golden Queen",
+    "companyId": 1,
+    "gameUid": "8de99455c2f23f6827666fd798eb80ef"
+  },
+  {
+    "name": "Monkey Party",
+    "companyId": 1,
+    "gameUid": "fd369a4a7486ff303beea267ec5c8eff"
+  },
+  {
+    "name": "Magic Lamp",
+    "companyId": 1,
+    "gameUid": "582a58791928760c28ec4cef3392a49f"
+  },
+  {
+    "name": "Agent Ace",
+    "companyId": 1,
+    "gameUid": "8a4b4929e796fda657a2d38264346509"
+  },
+  {
+    "name": "TWIN WINS",
+    "companyId": 1,
+    "gameUid": "c74b3cbda5d16f77523e41c25104e602"
+  },
+  {
+    "name": "Medusa",
+    "companyId": 1,
+    "gameUid": "2c17b7c4e2ce5b8bebf4bd10e3e958d7"
+  },
+  {
+    "name": "Thor X",
+    "companyId": 1,
+    "gameUid": "7e6aa773fa802aaa9cb1f2fac464736e"
+  },
+  {
+    "name": "Happy Taxi",
+    "companyId": 1,
+    "gameUid": "1ed896aae4bdc78c984021307b1dd177"
+  },
+  {
+    "name": "Crazy Pusher",
+    "companyId": 1,
+    "gameUid": "00d92d5cec10cf85623938222a6c2bb6"
+  },
+  {
+    "name": "Bone Fortune",
+    "companyId": 1,
+    "gameUid": "aab3048abc6a88e0759679fbe26e6a8d"
+  },
+  {
+    "name": "World Cup",
+    "companyId": 1,
+    "gameUid": "28374b7ad7c91838a46404f1df046e5a"
+  },
+  {
+    "name": "Samba",
+    "companyId": 1,
+    "gameUid": "6d35789b2f419c1db3926350d57c58d8"
+  },
+  {
+    "name": "Wild Racer",
+    "companyId": 1,
+    "gameUid": "2f0c5f96cda3c6e16b3929dd6103df8e"
+  },
+  {
+    "name": "Master Tiger",
+    "companyId": 1,
+    "gameUid": "d2b48fe98ac2956eeefd2bc4f7e0335a"
+  },
+  {
+    "name": "Elf Bingo",
+    "companyId": 1,
+    "gameUid": "5cec2b309a8845b38f8e9b4e6d649ea2"
+  },
+  {
+    "name": "Cricket Sah 75",
+    "companyId": 1,
+    "gameUid": "6720a0ce1d06648ff390fbea832798a9"
+  },
+  {
+    "name": "Dabanggg",
+    "companyId": 1,
+    "gameUid": "5404a45b06826911c3537fdf935c281f"
+  },
+  {
+    "name": "Sin City",
+    "companyId": 1,
+    "gameUid": "830cac2f5da6cc1fb91cfae04b85b1e2"
+  },
+  {
+    "name": "King Arthur",
+    "companyId": 1,
+    "gameUid": "fafab1a17a237d0fc0e50c20d2c2bf4c"
+  },
+  {
+    "name": "Witches Night",
+    "companyId": 1,
+    "gameUid": "82c5c404cf4c0790deb42a2b5653533c"
+  },
+  {
+    "name": "Nightfall Hunting",
+    "companyId": 1,
+    "gameUid": "ced5e3de03293fc6fb111298a504cfeb"
+  },
+  {
+    "name": "Shōgun",
+    "companyId": 1,
+    "gameUid": "68724804a3cd30c749e460256b462f00"
+  },
+  {
+    "name": "Devil Fire 2",
+    "companyId": 1,
+    "gameUid": "0426ba674c9dd29de6fa023afcf0640d"
+  },
+  {
+    "name": "Legacy of Egypt",
+    "companyId": 1,
+    "gameUid": "1310248a5eab24b4bf113a6e0ee7962a"
+  },
+  {
+    "name": "Lucky Jaguar",
+    "companyId": 1,
+    "gameUid": "731e642b1fee94725e7313f3dfba8f45"
+  },
+  {
+    "name": "Jackpot Joker",
+    "companyId": 1,
+    "gameUid": "7ed860eef313538545ff7aa2b9290cf9"
+  },
+  {
+    "name": "Arena Fighter",
+    "companyId": 1,
+    "gameUid": "71468f38b1fa17379231d50635990c31"
+  },
+  {
+    "name": "Trial of Phoenix",
+    "companyId": 1,
+    "gameUid": "d11ea63b63ec615ae6df589f0b0d53e1"
+  },
+  {
+    "name": "Zeus",
+    "companyId": 1,
+    "gameUid": "4e7c9f4fbe9b5137f21ebd485a9cfa5c"
+  },
+  {
+    "name": "Potion Wizard",
+    "companyId": 1,
+    "gameUid": "fba154365cdf8fad07565cf93bae3521"
+  },
+  {
+    "name": "Money Coming Expand Bets",
+    "companyId": 1,
+    "gameUid": "3a557646c3abb12201c0b8810a8c0966"
+  },
+  {
+    "name": "Party Star",
+    "companyId": 1,
+    "gameUid": "bfde2986a4eb3a5a559ac8a8c64df461"
+  },
+  {
+    "name": "Egypt’s Glow",
+    "companyId": 1,
+    "gameUid": "ddac017cb273a590b7aa0e1ad6a52bef"
+  },
+  {
+    "name": "Golden Bank 2",
+    "companyId": 1,
+    "gameUid": "3a72a27c8851be5a396f51a19654c7c3"
+  },
+  {
+    "name": "Fruity Wheel",
+    "companyId": 1,
+    "gameUid": "921cf987632d65b5e41ab5dffe16d95a"
+  },
+  {
+    "name": "Treasure Quest",
+    "companyId": 1,
+    "gameUid": "6bb74b0a57a66850b79ab5c93864cac3"
+  },
+  {
+    "name": "Coin Tree",
+    "companyId": 1,
+    "gameUid": "ca72a7ad1ca4fa2cdc9a1c49c8bb3332"
+  },
+  {
+    "name": "Super Ace Joker",
+    "companyId": 1,
+    "gameUid": "29c66f73e3916b8eb18c2bf78886927d"
+  },
+  {
+    "name": "Pirate Queen 2",
+    "companyId": 1,
+    "gameUid": "4702eb871271aa62ef3f3d78f5d968c1"
+  },
+  {
+    "name": "Roma X Deluxe",
+    "companyId": 1,
+    "gameUid": "b4fe8cea772a7643551a12de806472e8"
+  },
+  {
+    "name": "3 LUCKY LION",
+    "companyId": 1,
+    "gameUid": "7af6be9d29bb593fa0f6516b14b02103"
+  },
+  {
+    "name": "Fortune Coins",
+    "companyId": 1,
+    "gameUid": "d6d14943efe13dd3bcf1428d0f702024"
+  },
+  {
+    "name": "Golden Empire 2",
+    "companyId": 1,
+    "gameUid": "8cbb88bc0bc1f7be4379cf75abc6095f"
+  },
+  {
+    "name": "Super Ace 2",
+    "companyId": 1,
+    "gameUid": "083a2fbb35612d3f7925acedece5904f"
+  },
+  {
+    "name": "Money Coming 2",
+    "companyId": 1,
+    "gameUid": "b4a3e54cabeecd94ebbd1cc217a5b069"
+  },
+  {
+    "name": "Circus Joker 4096",
+    "companyId": 1,
+    "gameUid": "1ab23c1fda76ec10778b458fac552e37"
+  },
+  {
+    "name": "Bikini Lady",
+    "companyId": 1,
+    "gameUid": "702565a827764d10e470a0f76398a978"
+  },
+  {
+    "name": "Fortune Hook",
+    "companyId": 1,
+    "gameUid": "abcdefghijklmnopqrstuvwxyzabcde0"
+  },
+  {
+    "name": "Rapid Gems 777",
+    "companyId": 1,
+    "gameUid": "abcdefghijklmnopqrstuvwxyzabcde1"
+  },
+  {
+    "name": "Boxing King Title Match",
+    "companyId": 1,
+    "gameUid": "abcdefghijklmnopqrstuvwxyzabcde2"
+  },
+  {
+    "name": "Money Pot Deluxe",
+    "companyId": 1,
+    "gameUid": "abcdefghijklmnopqrstuvwxyzabcde3"
+  },
+  {
+    "name": "SUPER MAHJONG",
+    "companyId": 1,
+    "gameUid": "abcdefghijklmnopqrstuvwxyzabcde4"
+  },
+  {
+    "name": "Crazy777 2",
+    "companyId": 1,
+    "gameUid": "c7a3c072d2330f0eb602ccc6016cff4b"
+  },
+  {
+    "name": "Crystal 777 DELUXE",
+    "companyId": 1,
+    "gameUid": "ee14a5ddeadf31a98419bd20cc88da85"
+  },
+  {
+    "name": "3 Coin Treasures 2",
+    "companyId": 1,
+    "gameUid": "7b4308e95fa25021bae874f9e128c8c3"
+  },
+  {
+    "name": "3 Charge Buffalo",
+    "companyId": 1,
+    "gameUid": "3ea8ed5f8ba2239e6cd49366afb743f8"
+  },
+  {
+    "name": "3 Rich pigies",
+    "companyId": 1,
+    "gameUid": "472f684f667e272e0ccc7ac1529170ca"
+  },
+  {
+    "name": "Joker Coins",
+    "companyId": 1,
+    "gameUid": "25d960a93c7a78c6c46619acce6d032e"
+  },
+  {
+    "name": "Cash Coin",
+    "companyId": 1,
+    "gameUid": "fe942e56d8f33522e4084e8e3aaa3523"
   }
 ]
