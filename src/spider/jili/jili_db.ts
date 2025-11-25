@@ -174,7 +174,7 @@ export class JiliDb {
       if (matches && matches.length > 0) {
         spinDataType = SpinDataType.special;
       } else {
-        if (['cbt', 'cbt2'].includes(spiderData.name)) {
+        if (['cbt', 'cbt2', 'rc'].includes(spiderData.name)) {
           const bonusTotalWinRegex = /"(BonusTotalWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
           const matches = jsonData.match(bonusTotalWinRegex);
           if (matches && matches.length > 0) {
