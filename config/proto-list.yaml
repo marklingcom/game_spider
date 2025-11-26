@@ -143,11 +143,15 @@ protos:
   #   gi: 448
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  - name: cashcoin
-    gi: 583
+  # - name: cashcoin
+  #   gi: 583
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  # - name: rc
+  #   gi: 523
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name:
+  - name: sl
+    gi: 198
     spin_pb_name: SpinAck
     game_info_pb_name: GameInfoData
-  - name: rc
-    gi: 523
-    spin_pb_name: SpinAck
-    game_info_pb_name:

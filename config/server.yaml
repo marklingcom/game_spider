@@ -18,7 +18,7 @@ betConfig:
   buyBouns: false
   extra: false
   special: false
-  gameName: Fortune Coins
+  gameName: Sweet Land
 huiduConfig:
   coin: 100000
   key: uidList1
