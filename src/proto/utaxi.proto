@@ -1,0 +1,214 @@
+syntax = "proto3";
+
+package utaxiProto;
+
+message ColumnFloat {
+  repeated double Col = 1;
+}
+
+message Column {
+  repeated int32 Col = 1;
+}
+
+message AwardData {
+  int32 Symbol = 1;
+  int32 Count = 2;
+  int32 Line = 3;
+  double Win = 4;
+  double Mult = 5;
+}
+
+message RoundInfo {
+  repeated Column PlateSymbol = 1;
+  repeated ColumnFloat PlateSymbolNum = 2;
+  repeated AwardData AwardDataVec = 3;
+  int32 AwardTypeFlag = 4;
+  int32 FreeRemainRound = 5;
+  int32 FreeLevel = 6;
+  int32 FreeWildCount = 7;
+  double RoundWin = 8;
+  bool MaxFlag = 9;
+}
+
+message SpinAck {
+  repeated RoundInfo RoundQueue = 1;
+  double FreeTotalWin = 2;
+  double TotalWin = 3;
+  string ShowIndex = 4;
+  double NowMoney = 5;
+  int32 AckType = 6;
+}
+
+message GameInfoAck {
+  repeated WalletInfo WalletInfo = 1;
+  int32 ArcadeNo = 2;
+  bool CanIntoArcade = 3;
+  bool Test = 4;
+  PreferRoundShow Prefer = 5;
+  int32 FreeSpinRemain = 6;
+}
+
+message GameReqData {
+  int32 aid = 1;
+  int32 apiid = 2;
+  string token = 3;
+  bytes encode = 4;
+  SpinReq spin = 5;
+  CheckMallReq checkMall = 6;
+}
+
+message SpinReq {
+  double Bet = 1;
+  int32 Extra = 2;
+  int32 Currency = 3;
+  int32 TestMode = 4;
+  int32 MallID = 5;
+  double MallBet = 6;
+  int32 VipLv = 7;
+  int32 Free = 8;
+  int32 Trial = 9;
+  int32 Level = 10;
+}
+
+message CheckMallReq {
+  int32 Currency = 1;
+}
+
+message ResData {
+  int32 ret = 1;
+  int32 type = 2;
+  string token = 3;
+  string msg = 4;
+  InfoData data = 5;
+}
+
+message InfoData {
+  bytes encode = 1;
+  SpinAllData spinAll = 2;
+  GameInfoAck gameInfo = 3;
+  CheckMallAck checkMall = 4;
+  LoginDataAck loginData = 5;
+  HeartAck heart = 6;
+  ExchangeAck exchange = 7;
+  LastSpinAck lastSpin = 8;
+}
+
+message SpinAllData {
+  SpinAck info = 1;
+  ServiceData serviceInfo = 2;
+  bytes serviceProto = 3;
+}
+
+message ServiceData {
+  uint32 missionReward = 1;
+  int32 jpType = 2;
+  double jpWin = 3;
+  double fullJpWin = 4;
+  int32 trialfinish = 5;
+  int32 trialaward = 6;
+  int32 freeremain = 7;
+}
+
+message WalletInfo {
+  int32 currencyNumber = 1;
+  string currencyName = 2;
+  string currencySymbol = 3;
+  double coin = 4;
+  repeated double bet = 5;
+  double unit = 6;
+  double ratio = 7;
+  double rate = 8;
+  double upper = 9;
+  double lower = 10;
+  int32 cycle = 11;
+  int32 decimal = 12;
+}
+
+message PreferRoundShow {
+  int32 BaseRound = 1;
+  int32 SigmaRound = 2;
+  double CV = 3;
+  double HR = 4;
+  double MGR = 5;
+  int32 Range = 6;
+  int32 Show = 7;
+}
+
+message CheckMallAck {
+  repeated GameMallSetting Settings = 1;
+  int32 Show = 2;
+}
+
+message GameMallSetting {
+  int32 GameID = 1;
+  int32 APIID = 2;
+  int32 AlterID = 3;
+  int32 DescType = 4;
+  int32 DescRounds = 5;
+  double MaxBet = 6;
+  double PriceOdd = 7;
+  bool ForSale = 8;
+  repeated double BetVec = 9;
+  int32 ReelNo = 10;
+  int32 BetNo = 11;
+  bool Event = 12;
+}
+
+message LoginDataAck {
+  int32 result = 1;
+  int32 aid = 2;
+}
+
+message LoginDataReq {
+  string Token = 1;
+  int32 Source = 2;
+  string OSType = 3;
+  string OSVersion = 4;
+  string Browser = 5;
+  string BrowserVersion = 6;
+  int32 BrowserTag = 7;
+  string Machine = 8;
+  int32 Width = 9;
+  int32 Height = 10;
+  double Ratio = 11;
+  string Language = 12;
+  int32 Cheat = 13;
+}
+
+message LogoutReq {
+  int32 aid = 1;
+}
+
+message HeartAck {
+  int32 state = 1;
+  string message = 2;
+}
+
+message ExchangeReq {
+  int32 aid = 1;
+  string token = 2;
+  string stamp = 3;
+}
+
+message ExchangeAck {
+  repeated Wallet wallet = 1;
+  string stamp = 2;
+}
+
+message Wallet {
+  double coin = 1;
+  int32 currencyNumber = 2;
+  double ratio = 3;
+  double rate = 4;
+  double unit = 5;
+}
+
+message LastReq {
+  int32 aid = 1;
+  string token = 2;
+}
+
+message LastSpinAck {
+  int32 result = 1;
+  SpinAck lastSpin = 2;
+}

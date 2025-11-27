@@ -159,11 +159,15 @@ protos:
   #   gi: 171
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  - name: samba
-    gi: 136
+  # - name: samba
+  #   gi: 136
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoAck
+  # - name: cny
+  #   gi: 176
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoAck
+  - name: dotd
+    gi: 126
     spin_pb_name: SpinAck
-    game_info_pb_name: GameInfoAck
-  - name: cny
-    gi: 176
-    spin_pb_name: SpinAck
-    game_info_pb_name: GameInfoAck
+    game_info_pb_name: GameInfoData
