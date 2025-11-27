@@ -249,6 +249,7 @@ export class JiliDb {
       from: spinData.from,
       bet: spinData.bet,
       rate: spinData.rate,
+      compress: spinData.compress,
     });
 
     if (isSpecial) {
