@@ -8,7 +8,11 @@ import type { JiliProtoAttributes } from '../../models/JiliProto.js';
 import type { SpinDataAttributes } from '../../models/SpinData.js';
 import { SpinResponse } from '../../protoGeneral/astarte2_196.js';
 import type Config from '../../utils/config.js';
-import { CompressTypeMap, compressDataWithThreshold } from '../../utils/data_compress.js';
+import {
+  CompressType,
+  CompressTypeMap,
+  compressDataWithThreshold,
+} from '../../utils/data_compress.js';
 import { __protoDir } from '../../utils/env.js';
 import { TelegramEventName, telegramService } from '../../utils/telegram.js';
 import { createDirectoryIfNotExists, formatNumber } from '../../utils/utils.js';
@@ -236,7 +240,7 @@ export class JiliDb {
       compressConfig,
       Buffer.from(spinResponse.data)
     );
-    const isCompress = compressType !== compressConfig;
+    const isCompress = compressType !== CompressType.None;
     const message = `${isCompress ? '✅ 压缩成功' : '⚠️ 跳过压缩'}，压缩率: ${compressionRate.toFixed(2)}%，阈值: ${threshold.toFixed(2)}%，压缩方式: ${CompressTypeMap[compressType]}`;
     // telegramService.sendInfo(message);
     console.log(message);
