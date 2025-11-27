@@ -11,12 +11,13 @@ import { createDirectoryIfNotExists } from './utils.js';
 
 export interface SpinDataRecord {
   id: number;
-  data?: Buffer | unknown;
-  totalWin?: number;
-  bet?: number;
-  rate?: number;
-  from?: string;
-  createTime?: Date;
+  data: Buffer;
+  totalWin: number;
+  bet: number;
+  rate: number;
+  from: string;
+  createTime: Date;
+  compress?: number;
 }
 
 export interface QueryOptions {

@@ -56,6 +56,48 @@ export async function changeCompressType(
   return compressData(toCompressType, decompressedData);
 }
 
+function getMinCompressionRate(dataSize: number): number {
+  if (dataSize < 5 * 1024) {
+    return 25;
+  } else if (dataSize < 50 * 1024) {
+    return 15;
+  } else {
+    return 10;
+  }
+}
+
+export async function compressDataWithThreshold(
+  compressType: CompressType,
+  data: Buffer,
+  minCompressionRate?: number
+): Promise<{
+  data: Buffer;
+  compressType: CompressType;
+  compressionRate: number;
+  threshold: number;
+}> {
+  if (compressType === CompressType.None) {
+    return { data, compressType: CompressType.None, compressionRate: 0, threshold: 0 };
+  }
+
+  const originalSize = data.length;
+  const compressed = await compressData(compressType, data);
+  const compressedSize = compressed.length;
+  const compressionRate = (1 - compressedSize / originalSize) * 100;
+
+  if (compressedSize >= originalSize) {
+    return { data, compressType: CompressType.None, compressionRate, threshold: 0 };
+  }
+
+  const threshold = minCompressionRate ?? getMinCompressionRate(originalSize);
+
+  if (compressionRate < threshold) {
+    return { data, compressType: CompressType.None, compressionRate, threshold };
+  }
+
+  return { data: compressed, compressType, compressionRate, threshold };
+}
+
 async function decompressDataBrotli(data: Buffer): Promise<Buffer> {
   return brotliDecompressAsync(data);
 }

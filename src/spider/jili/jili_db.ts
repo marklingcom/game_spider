@@ -8,7 +8,7 @@ import type { JiliProtoAttributes } from '../../models/JiliProto.js';
 import type { SpinDataAttributes } from '../../models/SpinData.js';
 import { SpinResponse } from '../../protoGeneral/astarte2_196.js';
 import type Config from '../../utils/config.js';
-import { compressData } from '../../utils/data_compress.js';
+import { compressDataWithThreshold } from '../../utils/data_compress.js';
 import { __protoDir } from '../../utils/env.js';
 import { TelegramEventName, telegramService } from '../../utils/telegram.js';
 import { createDirectoryIfNotExists, formatNumber } from '../../utils/utils.js';
@@ -231,8 +231,16 @@ export class JiliDb {
       return;
     }
 
-    const compress = this.config.serverConfig.spiderConfig.compress;
-    const data = await compressData(compress, Buffer.from(spinResponse.data));
+    const compressConfig = this.config.serverConfig.spiderConfig.compress;
+    const { data, compressType, compressionRate, threshold } = await compressDataWithThreshold(
+      compressConfig,
+      Buffer.from(spinResponse.data)
+    );
+    if (compressType !== compressConfig) {
+      telegramService.sendInfo(
+        `跳过压缩，压缩率: ${compressionRate.toFixed(2)}%，阈值: ${threshold.toFixed(2)}%`
+      );
+    }
 
     const spinData: SpinDataAttributes = {
       data,
@@ -240,17 +248,10 @@ export class JiliDb {
       from: spiderData.from,
       bet: realBet,
       rate: formatNumber((spinResponse.totalWin || 0) / realBet, 6),
-      compress,
+      compress: compressType,
     };
 
-    await model.create({
-      data: spinData.data,
-      totalWin: spinData.totalWin,
-      from: spinData.from,
-      bet: spinData.bet,
-      rate: spinData.rate,
-      compress: spinData.compress,
-    });
+    await model.create({ ...spinData });
 
     if (isSpecial) {
       this.specialState.current++;
