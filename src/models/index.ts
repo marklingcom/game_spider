@@ -8,6 +8,7 @@ import { SpinData } from './SpinData.js';
 export default class DatabaseManager {
   private sequelize: Sequelize | null = null;
   private models = new Map<string, ModelStatic<Model>>();
+  private pendingTableCreations = new Map<string, Promise<ModelStatic<Model>>>();
 
   async initDB(db: ServerConfig['db']): Promise<Sequelize> {
     try {
@@ -77,49 +78,59 @@ export default class DatabaseManager {
   }
 
   async ensureTableExists(tabName: string): Promise<ModelStatic<Model>> {
-    try {
-      if (this.models.has(tabName)) {
-        return this.models.get(tabName);
-      }
-
-      if (!this.sequelize) {
-        throw new Error('数据库未初始化');
-      }
-
-      const tables = await this.sequelize.getQueryInterface().showAllTables();
-      const SpinDataModel = this.getModel('SpinData');
-      const queryInterface = this.sequelize.getQueryInterface();
-      if (!tables.includes(tabName)) {
-        const attributes = SpinDataModel.getAttributes();
-        await queryInterface.createTable(tabName, attributes);
-        // 添加索引
-        const indexes = (SpinDataModel as any).options?.indexes || [];
-        for (const idx of indexes) {
-          if (idx.fields && idx.fields.length > 0) {
-            const indexName = idx.name ? `${tabName}_${idx.name}` : undefined;
-            await queryInterface.addIndex(tabName, idx.fields, {
-              name: indexName,
-              unique: idx.unique,
-            });
-          }
-        }
-        console.log(`Created table: ${tabName}`);
-        telegramService.sendInfo(`创建表: ${tabName}`);
-      } else {
-        await this.fixTableIdAutoIncrement(tabName);
-      }
-
-      const tableModel = this.sequelize.define(tabName, SpinDataModel.getAttributes(), {
-        tableName: tabName,
-        timestamps: false,
-      });
-
-      this.models.set(tabName, tableModel);
-      return tableModel;
-    } catch (error) {
-      console.error(`Failed to ensure table exists: ${tabName}`, error);
-      throw error;
+    if (this.models.has(tabName)) {
+      return this.models.get(tabName);
     }
+
+    if (this.pendingTableCreations.has(tabName)) {
+      return this.pendingTableCreations.get(tabName);
+    }
+
+    const promise = (async () => {
+      try {
+        if (!this.sequelize) {
+          throw new Error('数据库未初始化');
+        }
+
+        const tables = await this.sequelize.getQueryInterface().showAllTables();
+        const SpinDataModel = this.getModel('SpinData');
+        const queryInterface = this.sequelize.getQueryInterface();
+        if (!tables.includes(tabName)) {
+          const attributes = SpinDataModel.getAttributes();
+          await queryInterface.createTable(tabName, attributes);
+          const indexes = (SpinDataModel as any).options?.indexes || [];
+          for (const idx of indexes) {
+            if (idx.fields && idx.fields.length > 0) {
+              const indexName = idx.name ? `${tabName}_${idx.name}` : undefined;
+              await queryInterface.addIndex(tabName, idx.fields, {
+                name: indexName,
+                unique: idx.unique,
+              });
+            }
+          }
+          console.log(`Created table: ${tabName}`);
+          telegramService.sendInfo(`创建表: ${tabName}`);
+        } else {
+          await this.fixTableIdAutoIncrement(tabName);
+        }
+
+        const tableModel = this.sequelize.define(tabName, SpinDataModel.getAttributes(), {
+          tableName: tabName,
+          timestamps: false,
+        });
+
+        this.models.set(tabName, tableModel);
+        return tableModel;
+      } catch (error) {
+        console.error(`Failed to ensure table exists: ${tabName}`, error);
+        throw error;
+      } finally {
+        this.pendingTableCreations.delete(tabName);
+      }
+    })();
+
+    this.pendingTableCreations.set(tabName, promise);
+    return promise;
   }
 
   async getTableCount(tabName: string): Promise<number> {
