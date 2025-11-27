@@ -236,11 +236,10 @@ export class JiliDb {
       compressConfig,
       Buffer.from(spinResponse.data)
     );
-    if (compressType !== compressConfig) {
-      const message = `跳过压缩，压缩率: ${compressionRate.toFixed(2)}%，阈值: ${threshold.toFixed(2)}%`;
-      // telegramService.sendInfo(message);
-      console.log(message);
-    }
+    const isCompress = compressType !== compressConfig;
+    const message = `${isCompress ? '✅ 压缩成功' : '⚠️ 跳过压缩'}，压缩率: ${compressionRate.toFixed(2)}%，阈值: ${threshold.toFixed(2)}%，压缩方式: ${compressType}`;
+    // telegramService.sendInfo(message);
+    console.log(message);
 
     const spinData: SpinDataAttributes = {
       data,
