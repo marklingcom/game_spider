@@ -36,6 +36,7 @@ async function main(): Promise<void> {
   telegramService.sendSuccess(
     `开始执行抓取任务: ${gameName}
 form: ${config.serverConfig.spiderConfig.form}
+compress: ${config.serverConfig.spiderConfig.compress}
 bet: ${bet}
 buyBouns: ${buyBouns}
 extra: ${extra}

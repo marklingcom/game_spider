@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import { merge } from 'lodash-es';
 import yaml from 'yaml';
+import { CompressType } from './data_compress.js';
 
 export interface ServerConfig {
   proxy: {
@@ -15,6 +16,7 @@ export interface ServerConfig {
   spiderConfig: {
     autoMigrate: boolean;
     form: string;
+    compress: CompressType;
   };
   betConfig: {
     bet: number;
@@ -78,6 +80,7 @@ export default class Config {
     spiderConfig: {
       autoMigrate: false,
       form: '',
+      compress: CompressType.None,
     },
     betConfig: {
       bet: 0,

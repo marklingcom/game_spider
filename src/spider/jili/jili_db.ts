@@ -8,6 +8,7 @@ import type { JiliProtoAttributes } from '../../models/JiliProto.js';
 import type { SpinDataAttributes } from '../../models/SpinData.js';
 import { SpinResponse } from '../../protoGeneral/astarte2_196.js';
 import type Config from '../../utils/config.js';
+import { compressData } from '../../utils/data_compress.js';
 import { __protoDir } from '../../utils/env.js';
 import { TelegramEventName, telegramService } from '../../utils/telegram.js';
 import { createDirectoryIfNotExists, formatNumber } from '../../utils/utils.js';
@@ -230,12 +231,16 @@ export class JiliDb {
       return;
     }
 
+    const compress = this.config.serverConfig.spiderConfig.compress;
+    const data = await compressData(compress, Buffer.from(spinResponse.data));
+
     const spinData: SpinDataAttributes = {
-      data: Buffer.from(spinResponse.data),
+      data,
       totalWin: spinResponse.totalWin || 0,
       from: spiderData.from,
       bet: realBet,
       rate: formatNumber((spinResponse.totalWin || 0) / realBet, 6),
+      compress,
     };
 
     await model.create({
