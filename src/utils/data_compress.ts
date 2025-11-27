@@ -14,6 +14,13 @@ export enum CompressType {
   Zstd = 3,
 }
 
+export const CompressTypeMap = {
+  [CompressType.None]: 'None',
+  [CompressType.Brotli]: 'Brotli',
+  [CompressType.Gzip]: 'Gzip',
+  [CompressType.Zstd]: 'Zstd',
+};
+
 export async function compressData(compressType: CompressType, data: Buffer): Promise<Buffer> {
   switch (compressType) {
     case CompressType.None:
