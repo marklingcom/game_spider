@@ -186,6 +186,13 @@ export class JiliDb {
             spinDataType = SpinDataType.special;
           }
         }
+        if (['bbc'].includes(spiderData.name)) {
+          const bonusTotalWinRegex = /"(FGWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
+          const matches = jsonData.match(bonusTotalWinRegex);
+          if (matches && matches.length > 0) {
+            spinDataType = SpinDataType.special;
+          }
+        }
       }
     }
 

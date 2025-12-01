@@ -2,12 +2,12 @@ syntax = "proto3";
 
 package utaxiProto;
 
-message ColumnFloat {
-  repeated double Col = 1;
-}
-
 message Column {
   repeated int32 Col = 1;
+}
+
+message ColumnFloat {
+  repeated double Col = 1;
 }
 
 message AwardData {
@@ -39,6 +39,31 @@ message SpinAck {
   int32 AckType = 6;
 }
 
+message WalletInfo {
+  int32 currencyNumber = 1;
+  string currencyName = 2;
+  string currencySymbol = 3;
+  double coin = 4;
+  repeated double bet = 5;
+  double unit = 6;
+  double ratio = 7;
+  double rate = 8;
+  double upper = 9;
+  double lower = 10;
+  int32 cycle = 11;
+  int32 decimal = 12;
+}
+
+message PreferRoundShow {
+  int32 BaseRound = 1;
+  int32 SigmaRound = 2;
+  double CV = 3;
+  double HR = 4;
+  double MGR = 5;
+  int32 Range = 6;
+  int32 Show = 7;
+}
+
 message GameInfoAck {
   repeated WalletInfo WalletInfo = 1;
   int32 ArcadeNo = 2;
@@ -46,15 +71,6 @@ message GameInfoAck {
   bool Test = 4;
   PreferRoundShow Prefer = 5;
   int32 FreeSpinRemain = 6;
-}
-
-message GameReqData {
-  int32 aid = 1;
-  int32 apiid = 2;
-  string token = 3;
-  bytes encode = 4;
-  SpinReq spin = 5;
-  CheckMallReq checkMall = 6;
 }
 
 message SpinReq {
@@ -72,6 +88,15 @@ message SpinReq {
 
 message CheckMallReq {
   int32 Currency = 1;
+}
+
+message GameReqData {
+  int32 aid = 1;
+  int32 apiid = 2;
+  string token = 3;
+  bytes encode = 4;
+  SpinReq spin = 5;
+  CheckMallReq checkMall = 6;
 }
 
 message ResData {
@@ -109,36 +134,6 @@ message ServiceData {
   int32 freeremain = 7;
 }
 
-message WalletInfo {
-  int32 currencyNumber = 1;
-  string currencyName = 2;
-  string currencySymbol = 3;
-  double coin = 4;
-  repeated double bet = 5;
-  double unit = 6;
-  double ratio = 7;
-  double rate = 8;
-  double upper = 9;
-  double lower = 10;
-  int32 cycle = 11;
-  int32 decimal = 12;
-}
-
-message PreferRoundShow {
-  int32 BaseRound = 1;
-  int32 SigmaRound = 2;
-  double CV = 3;
-  double HR = 4;
-  double MGR = 5;
-  int32 Range = 6;
-  int32 Show = 7;
-}
-
-message CheckMallAck {
-  repeated GameMallSetting Settings = 1;
-  int32 Show = 2;
-}
-
 message GameMallSetting {
   int32 GameID = 1;
   int32 APIID = 2;
@@ -152,6 +147,11 @@ message GameMallSetting {
   int32 ReelNo = 10;
   int32 BetNo = 11;
   bool Event = 12;
+}
+
+message CheckMallAck {
+  repeated GameMallSetting Settings = 1;
+  int32 Show = 2;
 }
 
 message LoginDataAck {
@@ -190,17 +190,17 @@ message ExchangeReq {
   string stamp = 3;
 }
 
-message ExchangeAck {
-  repeated Wallet wallet = 1;
-  string stamp = 2;
-}
-
 message Wallet {
   double coin = 1;
   int32 currencyNumber = 2;
   double ratio = 3;
   double rate = 4;
   double unit = 5;
+}
+
+message ExchangeAck {
+  repeated Wallet wallet = 1;
+  string stamp = 2;
 }
 
 message LastReq {

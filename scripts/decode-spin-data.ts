@@ -200,10 +200,12 @@ async function decodeSpinData(tableInfo: TableInfo, id?: number) {
 }
 
 async function main() {
-  const name = 'cny';
-  const tableName = 'jili_spin_cny_normal';
+  // const name = 'bbc';
+  const tableName = 'jili_spin_bbc_normal';
   // const tableName = 'jili_spin_cny_special';
-  const id = 1;
+  const id = 9;
+  const tableNameList = tableName.split('_');
+  const name = tableNameList[2];
 
   await decodeSpinData({ gameName: name, tableName: tableName }, id);
   process.exit(0);
