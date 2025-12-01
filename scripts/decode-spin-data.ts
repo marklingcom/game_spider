@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import { dbManager } from '../src/models/index.js';
 import { CompressType, compressData, decompressData } from '../src/utils/data_compress.js';
 import { SpinDataReader, type TableInfo } from '../src/utils/spin-data-reader.js';
+import { getTableGameName } from '../src/utils/table.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -204,10 +205,8 @@ async function main() {
   const tableName = 'jili_spin_bbc_normal';
   // const tableName = 'jili_spin_cny_special';
   const id = 1;
-  const tableNameList = tableName.split('_');
-  const name = tableNameList[2];
-
-  await decodeSpinData({ gameName: name, tableName: tableName }, id);
+  const gameName = getTableGameName(tableName);
+  await decodeSpinData({ gameName, tableName: tableName }, id);
   process.exit(0);
 }
 

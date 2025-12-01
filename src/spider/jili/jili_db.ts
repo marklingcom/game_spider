@@ -1,5 +1,6 @@
 import { writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { isNil } from 'lodash-es';
 import protobuf from 'protobufjs';
 import type { SpiderData } from '../../gameFrom/info.js';
 import type DatabaseManager from '../../models/index.js';
@@ -136,7 +137,11 @@ export class JiliDb {
     return this.saveSpinData(spinResponse, spiderData);
   }
 
-  async saveSpinData(spinResponse: SpinResponse, spiderData: SpiderData): Promise<void> {
+  async saveSpinData(
+    spinResponse: SpinResponse,
+    spiderData: SpiderData,
+    compress?: CompressType
+  ): Promise<void> {
     const gameName = spiderData.name;
 
     const gameProto = await this.getProto(gameName, gameName);
@@ -243,14 +248,22 @@ export class JiliDb {
     }
 
     const compressConfig = this.config.serverConfig.spiderConfig.compress;
-    const { data, compressType, compressionRate, threshold } = await compressDataWithThreshold(
-      compressConfig,
-      Buffer.from(spinResponse.data)
-    );
-    const isCompress = compressType !== CompressType.None;
-    const message = `${isCompress ? '✅ 压缩成功' : '⚠️ 跳过压缩'}，压缩率: ${compressionRate.toFixed(2)}%，阈值: ${threshold.toFixed(2)}%，压缩方式: ${CompressTypeMap[compressType]}`;
-    // telegramService.sendInfo(message);
-    console.log(message);
+    let data = Buffer.from(spinResponse.data);
+    let compressType = compress || CompressType.None;
+    // 如果压缩方式为None，则进行压缩
+    if (isNil(compress)) {
+      const result = await compressDataWithThreshold(
+        compressConfig,
+        Buffer.from(spinResponse.data)
+      );
+      compressType = result.compressType;
+      data = result.data as any;
+      const { compressionRate, threshold } = result;
+      const compressFlag = compressType !== CompressType.None;
+      const message = `${compressFlag ? '✅ 压缩成功' : '⚠️ 跳过压缩'}，压缩率: ${compressionRate.toFixed(2)}%，阈值: ${threshold.toFixed(2)}%，压缩方式: ${CompressTypeMap[compressType]}`;
+      // telegramService.sendInfo(message);
+      console.log(message);
+    }
 
     const spinData: SpinDataAttributes = {
       data,

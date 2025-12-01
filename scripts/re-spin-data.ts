@@ -3,7 +3,9 @@ import { dbManager } from '../src/models/index.js';
 import { MallType, type SpinResponse } from '../src/protoGeneral/astarte2_196.js';
 import { JiliDb } from '../src/spider/jili/jili_db.js';
 import { config } from '../src/utils/config.js';
+import { CompressType, decompressData } from '../src/utils/data_compress.js';
 import { SpinDataReader, type TableInfo } from '../src/utils/spin-data-reader.js';
+import { getTableGameName } from '../src/utils/table.js';
 
 async function reSpinData(tableInfo: TableInfo) {
   try {
@@ -49,13 +51,10 @@ async function reSpinData(tableInfo: TableInfo) {
           errorCount++;
           continue;
         }
-
-        const dataBuffer = reader.convertToBuffer(recordData.data);
-
-        if (dataBuffer.length === 0) {
-          errorCount++;
-          continue;
-        }
+        const dataBuffer = await decompressData(
+          recordData.compress || CompressType.None,
+          Buffer.from(recordData.data)
+        );
 
         try {
           const totalWin = recordData.totalWin || 0;
@@ -130,9 +129,11 @@ async function reSpinData(tableInfo: TableInfo) {
 async function main() {
   // await reSpinData('jili_spin_ge_normal-backup');
   // await reSpinData('jili_spin_ge_extra_normal-backup');
+  const tableName = 'jili_spin_bbc_normal_backup';
+  const gameName = getTableGameName(tableName);
   await reSpinData({
-    gameName: 'cbt',
-    tableName: 'jili_spin_cbt_normal-backup',
+    gameName,
+    tableName,
   });
   process.exit(0);
 }
