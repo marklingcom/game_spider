@@ -203,7 +203,7 @@ async function main() {
   // const name = 'bbc';
   const tableName = 'jili_spin_bbc_normal';
   // const tableName = 'jili_spin_cny_special';
-  const id = 9;
+  const id = 1;
   const tableNameList = tableName.split('_');
   const name = tableNameList[2];
 
