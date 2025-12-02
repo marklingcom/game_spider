@@ -2,14 +2,19 @@ import type { SpiderData } from '../src/gameFrom/info.js';
 import { dbManager } from '../src/models/index.js';
 import { MallType, type SpinResponse } from '../src/protoGeneral/astarte2_196.js';
 import { JiliDb } from '../src/spider/jili/jili_db.js';
-import { config } from '../src/utils/config.js';
+import { config, type ServerConfig } from '../src/utils/config.js';
 import { CompressType, decompressData } from '../src/utils/data_compress.js';
-import { SpinDataReader, type TableInfo } from '../src/utils/spin-data-reader.js';
-import { getTableGameName } from '../src/utils/table.js';
+import { SpinDataReader } from '../src/utils/spin-data-reader.js';
+import { getFullGameName, getTableGameName } from '../src/utils/table.js';
 
-async function reSpinData(tableInfo: TableInfo) {
+async function reSpinData(
+  tableName: string,
+  betConfig: ServerConfig['betConfig'],
+  options: { pageSize: number; concurrency: number }
+) {
   try {
     console.log('🔍 开始重新保存数据');
+    config.updateBetConfig(betConfig);
 
     await dbManager.initDB(config.serverConfig.db);
     console.log('✅ 成功连接到数据库');
@@ -18,11 +23,14 @@ async function reSpinData(tableInfo: TableInfo) {
     if (!gameName) {
       throw new Error('配置中未找到 gameName');
     }
-
     const name = config.currentJiliGame.jiliConfig.name;
-    console.log(`📋 游戏名称: ${gameName} (${name})`);
 
-    const reader = new SpinDataReader(tableInfo);
+    console.log(`📋 游戏名: ${gameName} (${name}) 表名: ${tableName}`);
+
+    const reader = new SpinDataReader({
+      gameName: name,
+      tableName,
+    });
     await reader.init();
     console.log(`✅ Proto 加载成功`);
 
@@ -32,31 +40,31 @@ async function reSpinData(tableInfo: TableInfo) {
     const jiliDb = new JiliDb({ db: dbManager, config });
     await jiliDb.init(name);
 
-    console.log(`📊 处理表: ${tableInfo.tableName}\n`);
+    console.log(`📊 处理表: ${tableName}\n`);
 
     const tableModel = await reader.getTableModel();
-    const pageSize = 500;
+    const { pageSize, concurrency } = options;
     let errorCount = 0;
     let totalProcessed = 0;
 
     const result = await reader.readTableDataPaginated(pageSize, async (records, offset) => {
       if (offset === 0) {
-        console.log(`📦 开始处理数据（每批 ${pageSize} 条）\n`);
+        console.log(`📦 开始处理数据（每批 ${pageSize} 条，并发数: ${concurrency}）\n`);
       }
 
-      for (const recordData of records) {
+      const processRecord = async (recordData: (typeof records)[0]) => {
         const oldId = recordData.id;
 
         if (!recordData.data) {
-          errorCount++;
-          continue;
+          return { success: false, id: oldId };
         }
-        const dataBuffer = await decompressData(
-          recordData.compress || CompressType.None,
-          Buffer.from(recordData.data)
-        );
 
         try {
+          const dataBuffer = await decompressData(
+            recordData.compress || CompressType.None,
+            Buffer.from(recordData.data)
+          );
+
           const totalWin = recordData.totalWin || 0;
           const bet = recordData.bet || 0;
           const from = recordData.from || '';
@@ -99,12 +107,30 @@ async function reSpinData(tableInfo: TableInfo) {
             await oldRecord.destroy();
           }
 
-          totalProcessed++;
+          return { success: true, id: oldId };
         } catch (error) {
           const errorMessage = error instanceof Error ? error.message : String(error);
           console.error(` ❌ 处理记录 ${oldId} 失败:`, errorMessage);
-          errorCount++;
+          return { success: false, id: oldId };
         }
+      };
+
+      for (let i = 0; i < records.length; i += concurrency) {
+        const batch = records.slice(i, i + concurrency);
+        const results = await Promise.allSettled(batch.map(processRecord));
+
+        for (const result of results) {
+          if (result.status === 'fulfilled') {
+            if (result.value.success) {
+              totalProcessed++;
+            } else {
+              errorCount++;
+            }
+          } else {
+            errorCount++;
+          }
+        }
+
         console.log(`✅ 处理完成: ${totalProcessed} 条, 错误: ${errorCount} 条`);
       }
     });
@@ -127,14 +153,27 @@ async function reSpinData(tableInfo: TableInfo) {
 }
 
 async function main() {
-  // await reSpinData('jili_spin_ge_normal-backup');
-  // await reSpinData('jili_spin_ge_extra_normal-backup');
   const tableName = 'jili_spin_bbc_normal_backup';
-  const gameName = getTableGameName(tableName);
-  await reSpinData({
-    gameName,
+  const name = getTableGameName(tableName);
+  const fullName = getFullGameName(name);
+  if (!fullName) {
+    console.error(`❌ 游戏 ${name} 不存在`);
+    process.exit(1);
+  }
+  await reSpinData(
     tableName,
-  });
+    {
+      gameName: fullName,
+      bet: 0,
+      buyBouns: false,
+      extra: false,
+      special: false,
+    },
+    {
+      pageSize: 1000,
+      concurrency: 100,
+    }
+  );
   process.exit(0);
 }
 

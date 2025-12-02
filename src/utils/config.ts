@@ -169,6 +169,15 @@ export default class Config {
       throw new Error(`配置文件加载失败: ${(error as Error).message}`);
     }
   }
+
+  updateBetConfig(updates: Partial<ServerConfig['betConfig']>): void {
+    this.updateServerConfig({
+      betConfig: {
+        ...this.serverConfig.betConfig,
+        ...updates,
+      },
+    });
+  }
 }
 
 export const config = new Config();
