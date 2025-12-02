@@ -155,11 +155,6 @@ protos:
   #   gi: 198
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  # - name: sc
-  #   gi: 171
-  #   spin_pb_name: SpinAck
-  #   game_info_pb_name: GameInfoData
-  # - name: samba
   #   gi: 136
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoAck
@@ -175,7 +170,11 @@ protos:
   #   gi: 171
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoAck
-  - name: sweetheart
-    gi: 17
-    spin_pb_name: AllPlate
-    game_info_pb_name:
+  # - name: sweetheart
+  #   gi: 17
+  #   spin_pb_name: AllPlate
+  #   game_info_pb_name:
+  - name: sc
+    gi: 171
+    spin_pb_name: SpinAck
+    game_info_pb_name: GameInfoData
