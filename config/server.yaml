@@ -19,7 +19,7 @@ betConfig:
   buyBouns: false
   extra: false
   special: false
-  gameName: Bao boon chin
+  gameName: Shanghai Beauty
 huiduConfig:
   coin: 100000
   key: uidList1
