@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package customProto;
 
+// 符号枚举定义
 enum Symbol {
   Wild = 0;
   Bonus = 1;
@@ -16,30 +17,35 @@ enum Symbol {
   Symbol9 = 10;
 }
 
+// 区块位置信息
 message Block {
   uint32 row = 1;
   uint32 column = 2;
 }
 
+// 列数据，包含符号和奖金信息
 message ColumnData {
   repeated Symbol row = 1;
   repeated double bonus = 2;
 }
 
-message Plate {
-  message AwardReel {
-    uint32 line = 1;
-    repeated Block block = 2;
-    double win = 3;
-  }
+// 奖励连线信息
+message Plate_AwardReel {
+  uint32 line = 1;
+  repeated Block block = 2;
+  double win = 3;
+}
 
+// 盘面信息
+message Plate {
   repeated ColumnData column = 1;
-  repeated AwardReel award = 2;
+  repeated Plate_AwardReel award = 2;
   double win = 3;
   uint32 ballCount = 4;
   double bonusWin = 5;
 }
 
+// 所有盘面信息
 message AllPlate {
   repeated Plate plate = 1;
 }

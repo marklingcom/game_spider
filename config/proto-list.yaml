@@ -171,7 +171,11 @@ protos:
   #   gi: 126
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  - name: bbc
-    gi: 171
-    spin_pb_name: SpinAck
-    game_info_pb_name: GameInfoAck
+  # - name: bbc
+  #   gi: 171
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoAck
+  - name: sweetheart
+    gi: 17
+    spin_pb_name: AllPlate
+    game_info_pb_name:
