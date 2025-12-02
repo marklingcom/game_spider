@@ -19,7 +19,7 @@ betConfig:
   buyBouns: false
   extra: false
   special: false
-  gameName: Bao boon chin
+  gameName: Sin City
 huiduConfig:
   coin: 100000
   key: uidList1
