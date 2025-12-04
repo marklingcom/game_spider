@@ -20,7 +20,7 @@ betConfig:
   buyBouns: false
   extra: false
   special: false
-  gameName: Samba
+  gameName: Magic Lamp
 huiduConfig:
   coin: 100000
   key: uidList1
