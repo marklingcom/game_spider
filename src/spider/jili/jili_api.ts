@@ -79,7 +79,7 @@ export class JiliApi extends EventEmitter {
 
       if (isExtra) {
         // 额外旋转倍率1.5倍
-        spinReqData.bet *= 1.5;
+        // spinReqData.bet *= 1.5;
         spinReqData.extraSpin = {
           index: 0,
         };

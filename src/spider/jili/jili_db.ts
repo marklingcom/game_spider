@@ -272,12 +272,13 @@ export class JiliDb {
       console.log(message);
     }
 
+    const saveBet = isExtra ? realBet * 1.5 : realBet;
     const spinData: SpinDataAttributes = {
       data,
       totalWin: spinResponse.totalWin || 0,
       from: spiderData.from,
-      bet: realBet,
-      rate: formatNumber((spinResponse.totalWin || 0) / realBet, 6),
+      bet: saveBet,
+      rate: formatNumber((spinResponse.totalWin || 0) / saveBet, 6),
       compress: compressType,
     };
 
