@@ -178,7 +178,11 @@ protos:
   #   gi: 171
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  - name: samba
-    gi: 136
+  # - name: samba
+  #   gi: 136
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoAck
+  - name: mw3
+    gi: 108
     spin_pb_name: SpinAck
-    game_info_pb_name: GameInfoAck
+    game_info_pb_name: GameInfoData
