@@ -20,7 +20,7 @@ betConfig:
   buyBouns: false
   extra: false
   special: false
-  gameName: Rapid Gems 777
+  gameName: Neko Fortune
 huiduConfig:
   coin: 100000
   key: uidList1
