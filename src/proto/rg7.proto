@@ -2,6 +2,12 @@ syntax = "proto3";
 
 package rg7proto;
 
+// 列数据
+message Column {
+  repeated int32 Col = 1;
+}
+
+// 奖励数据
 message AwardData {
   int32 Symbol = 1;
   int32 Count = 2;
@@ -10,15 +16,13 @@ message AwardData {
   double Win = 5;
 }
 
-message Column {
-  repeated int32 Col = 1;
-}
-
+// 单个盘面
 message SinglePlate {
   repeated Column PlateSymbol = 1;
   double Win = 3;
 }
 
+// 回合信息
 message RoundInfo {
   repeated SinglePlate PlateVec = 1;
   int32 SwitchResult = 2;
@@ -32,6 +36,7 @@ message RoundInfo {
   repeated AwardData AwardDataVec = 10;
 }
 
+// 旋转响应
 message SpinAck {
   repeated RoundInfo RoundQueue = 1;
   double TotalWin = 2;
@@ -39,6 +44,7 @@ message SpinAck {
   double Bet = 4;
 }
 
+// 游戏信息数据
 message GameInfoData {
   bool ShowExtra = 1;
   repeated double Mul = 2;

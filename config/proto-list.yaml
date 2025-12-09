@@ -182,7 +182,11 @@ protos:
   #   gi: 136
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoAck
-  - name: mw3
-    gi: 108
+  # - name: mw3
+  #   gi: 108
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  - name: rg7
+    gi: 448
     spin_pb_name: SpinAck
     game_info_pb_name: GameInfoData
