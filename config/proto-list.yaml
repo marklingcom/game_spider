@@ -190,7 +190,11 @@ protos:
   #   gi: 448
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  - name: ln
-    gi: 145
+  # - name: ln
+  #   gi: 145
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  - name: eg
+    gi: 264
     spin_pb_name: SpinAck
-    game_info_pb_name: GameInfoData
+    game_info_pb_name:

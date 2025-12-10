@@ -20,7 +20,7 @@ betConfig:
   buyBouns: false
   extra: false
   special: false
-  gameName: Neko Fortune
+  gameName: Egypt's Glow
 huiduConfig:
   coin: 100000
   key: uidList1
