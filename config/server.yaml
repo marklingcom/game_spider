@@ -20,7 +20,7 @@ betConfig:
   buyBouns: false
   extra: false
   special: false
-  gameName: Egypt's Glow
+  gameName: Party Star
 huiduConfig:
   coin: 100000
   key: uidList1
