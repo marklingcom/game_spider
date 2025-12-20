@@ -202,7 +202,11 @@ protos:
   #   gi: 240
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  - name: csh
-    gi: 2
+  # - name: csh
+  #   gi: 2
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name:
+  - name: utaxi
+    gi: 166
     spin_pb_name: SpinAck
-    game_info_pb_name:
+    game_info_pb_name: GameInfoAck
