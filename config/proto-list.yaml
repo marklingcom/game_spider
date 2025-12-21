@@ -230,7 +230,11 @@ protos:
   #   gi: 38
   #   spin_pb_name: AllPlate
   #   game_info_pb_name:
-  - name: sweetheart5
-    gi: 37
-    spin_pb_name: AllPlate
-    game_info_pb_name:
+  # - name: sweetheart5
+  #   gi: 37
+  #   spin_pb_name: AllPlate
+  #   game_info_pb_name:
+  # - name: ols
+  #   gi: 21
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name:
