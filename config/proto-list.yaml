@@ -210,7 +210,15 @@ protos:
   #   gi: 166
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoAck
-  - name: tsq
-    gi: 307
+  # - name: tsq
+  #   gi: 307
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name:
+  - name: phoenix
+    gi: 208
+    spin_pb_name: SpinAck
+    game_info_pb_name: GameInfoData
+  - name: witch
+    gi: 226
     spin_pb_name: SpinAck
     game_info_pb_name:
