@@ -238,3 +238,7 @@ protos:
   #   gi: 21
   #   spin_pb_name: SpinAck
   #   game_info_pb_name:
+  - name: chilli
+    gi: 5
+    spin_pb_name: SpinAck
+    game_info_pb_name:

@@ -20,7 +20,7 @@ betConfig:
   buyBouns: false
   extra: false
   special: false
-  gameName: Treasure Quest
+  gameName: Hot Chilli
 huiduConfig:
   coin: 100000
   key: uidList1
@@ -31,6 +31,13 @@ huiduConfig:
     - 7633004
   noMoneyAccounts:
     - 1641530
+    - 7656995
+    - 7656952
+    - 7656940
+    - 7656921
+    - 7656989
+    - 7657012
+    - 7656980
   uidList1:
     - 7656873
     - 7656921

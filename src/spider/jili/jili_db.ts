@@ -178,7 +178,7 @@ export class JiliDb {
       }
     } else {
       const freeTotalWinRegex =
-        /"(FreeTotalWin|Free1TotalWin|Free2TotalWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
+        /"(FreeTotalWin|Free1TotalWin|Free2TotalWin|FreeGameWin|FGWin|BonusTotalWin|bonusWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
       const matches = jsonData.match(freeTotalWinRegex);
 
       if (matches && matches.length > 0) {
