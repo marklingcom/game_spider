@@ -242,7 +242,11 @@ protos:
   #   gi: 5
   #   spin_pb_name: SpinAck
   #   game_info_pb_name:
-  - name: bby
-    gi: 238
+  # - name: bby
+  #   gi: 238
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name:
+  - name: ols3
+    gi: 40
     spin_pb_name: SpinAck
     game_info_pb_name:
