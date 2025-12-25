@@ -2,54 +2,61 @@ syntax = "proto3";
 
 package ppProto;
 
+// ColumnF 消息 - 列数据（浮点型）
 message ColumnF {
-  repeated double RowF = 1 [packed = true];
+  repeated double RowF = 1;  // 行数据（浮点型数组）
 }
 
+// AwardData 消息 - 奖励数据
 message AwardData {
-  int32 AwardSymbol = 1;
-  int32 AwardLine = 2;
-  int32 AwardCount = 3;
-  double AwardMoney = 4;
+  int32 AwardSymbol = 1;   // 奖励符号
+  int32 AwardLine = 2;     // 奖励线路
+  int32 AwardCount = 3;    // 奖励数量
+  double AwardMoney = 4;   // 奖励金额
 }
 
-message SinglePlate {
-  repeated AwardData AwardDataList = 1;
-  repeated Column PlateSymbol = 2;
-  int32 AwardTypeFlag = 3;
-  double PlateWin = 4;
-  double LineWin = 5;
-  double JPWin = 6;
-  double LinePigMult = 7;
-  bool IsNewPig = 8;
-}
-
-message SpinAck {
-  repeated SinglePlate PlateInfo = 1;
-  repeated int32 ExpLen = 2 [packed = true];
-  repeated ColumnF WildPlate = 3;
-  bool HasRespin = 4;
-  bool HasExpand = 5;
-  JPInfo JPInfo = 10;
-  double TotalWin = 6;
-  string ShowIndex = 7;
-  double NowMoney = 8;
-  int32 AckType = 9;
-  double RTP = 11;
-  int32 LID = 12;
-  int32 RID = 13;
-}
-
-message JpReq {
-  int32 currency = 1;
-}
-
-message JPInfo {
-  repeated double Fronts = 1 [packed = true];
-  repeated double OddPrize = 2 [packed = true];
-  double BaseBet = 3;
-}
-
+// Column 消息 - 列数据（整型）
 message Column {
-  repeated int32 Row = 1 [packed = true];
+  repeated int32 Row = 1;  // 行数据（整型数组）
+}
+
+// SinglePlate 消息 - 单个盘子数据
+message SinglePlate {
+  repeated AwardData AwardDataList = 1;  // 奖励数据列表
+  repeated Column PlateSymbol = 2;       // 盘子符号
+  int32 AwardTypeFlag = 3;               // 奖励类型标志
+  double PlateWin = 4;                   // 盘子赢奖金额
+  double LineWin = 5;                    // 线路赢奖金额
+  double JPWin = 6;                      // JP赢奖金额
+  double LinePigMult = 7;                // 线路小猪倍数
+  bool IsNewPig = 8;                     // 是否新小猪
+}
+
+// JPInfo 消息 - JP信息
+message JPInfo {
+  repeated double Fronts = 1;     // 前景数据
+  repeated double OddPrize = 2;   // 奇数奖金
+  double BaseBet = 3;             // 基础投注
+}
+
+// JpReq 消息 - JP请求
+message JpReq {
+  int32 currency = 1;  // 货币类型
+}
+
+// SpinAck 消息 - 旋转响应
+message SpinAck {
+  repeated SinglePlate PlateInfo = 1;  // 盘子信息列表
+  repeated int32 ExpLen = 2;           // 扩展长度
+  repeated ColumnF WildPlate = 3;      // 野生盘子
+  bool HasRespin = 4;                  // 是否有重转
+  bool HasExpand = 5;                  // 是否有扩展
+  double TotalWin = 6;                 // 总赢奖金额
+  string ShowIndex = 7;                // 显示索引
+  double NowMoney = 8;                 // 当前金额
+  int32 AckType = 9;                   // 响应类型
+  JPInfo JPInfo = 10;                  // JP信息
+  double RTP = 11;                     // RTP值
+  int32 LID = 12;                      // 左ID
+  int32 RID = 13;                      // 右ID
 }
