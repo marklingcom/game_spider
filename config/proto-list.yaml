@@ -246,7 +246,11 @@ protos:
   #   gi: 238
   #   spin_pb_name: SpinAck
   #   game_info_pb_name:
-  - name: ols3
-    gi: 40
-    spin_pb_name: SpinAck
+  # - name: ols3
+  #   gi: 40
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name:
+  - name: fs
+    gi: 38
+    spin_pb_name: AllPlate
     game_info_pb_name:
