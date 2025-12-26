@@ -178,33 +178,33 @@ export class JiliDb {
       }
     } else {
       const freeTotalWinRegex =
-        /"(FreeTotalWin|Free1TotalWin|Free2TotalWin|FreeGameWin|FGWin|BonusTotalWin|bonusWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
+        /"(FreeTotalWin|Free1TotalWin|Free2TotalWin|FreeGameWin|FGWin|BonusTotalWin|bonusWin|FreeGamePlateInfo)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
       const matches = jsonData.match(freeTotalWinRegex);
 
       if (matches && matches.length > 0) {
         spinDataType = SpinDataType.special;
       } else {
-        if (['cbt', 'cbt2', 'rc'].includes(spiderData.name)) {
-          const bonusTotalWinRegex = /"(BonusTotalWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
-          const matches = jsonData.match(bonusTotalWinRegex);
-          if (matches && matches.length > 0) {
-            spinDataType = SpinDataType.special;
-          }
-        }
-        if (['bbc', 'csh'].includes(spiderData.name)) {
-          const bonusTotalWinRegex = /"(FGWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
-          const matches = jsonData.match(bonusTotalWinRegex);
-          if (matches && matches.length > 0) {
-            spinDataType = SpinDataType.special;
-          }
-        }
-        if (['sweetheart', 'fs'].includes(spiderData.name)) {
-          const bonusTotalWinRegex = /"(bonusWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
-          const matches = jsonData.match(bonusTotalWinRegex);
-          if (matches && matches.length > 0) {
-            spinDataType = SpinDataType.special;
-          }
-        }
+        // if (['cbt', 'cbt2', 'rc'].includes(spiderData.name)) {
+        //   const bonusTotalWinRegex = /"(BonusTotalWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
+        //   const matches = jsonData.match(bonusTotalWinRegex);
+        //   if (matches && matches.length > 0) {
+        //     spinDataType = SpinDataType.special;
+        //   }
+        // }
+        // if (['bbc', 'csh'].includes(spiderData.name)) {
+        //   const bonusTotalWinRegex = /"(FGWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
+        //   const matches = jsonData.match(bonusTotalWinRegex);
+        //   if (matches && matches.length > 0) {
+        //     spinDataType = SpinDataType.special;
+        //   }
+        // }
+        // if (['sweetheart', 'fs'].includes(spiderData.name)) {
+        //   const bonusTotalWinRegex = /"(bonusWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
+        //   const matches = jsonData.match(bonusTotalWinRegex);
+        //   if (matches && matches.length > 0) {
+        //     spinDataType = SpinDataType.special;
+        //   }
+        // }
       }
     }
 

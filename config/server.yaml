@@ -19,11 +19,11 @@ betConfig:
   buyBouns: false
   extra: false
   special: false
-  gameName: FortunePig
+  gameName: God Of Martial
 huiduConfig:
   coin: 100000
   key: uidList1
-  maxCount: 20
+  maxCount: 10
   uidList0:
     - 1641530
   uidListTest:
@@ -50,6 +50,8 @@ huiduConfig:
     - 7657401
     - 7657355
     - 7657452
+    - 7657425
+    - 7657440
   uidList1:
     - 7656873
     - 7656921
