@@ -12,6 +12,7 @@ import {
 } from '../../protoGeneral/astarte2_196.js';
 import { getCacert } from '../../utils/cacert/cacert.js';
 import type Config from '../../utils/config.js';
+import type { BuyBounsConfig } from '../../utils/config.js';
 import { decryptResponseBuffer } from './jili_utils.js';
 
 export interface WebSocketMessage {
@@ -51,8 +52,8 @@ export class JiliApi extends EventEmitter {
     this.client = axios.create(config);
   }
 
-  async spin(bet: number, isBuyBonus: boolean, isExtra: boolean): Promise<Buffer> {
-    if (isBuyBonus && isExtra) {
+  async spin(bet: number, buyBouns: BuyBounsConfig, isExtra: boolean): Promise<Buffer> {
+    if (buyBouns.enable && isExtra) {
       throw new Error('不能同时为true');
     }
 
@@ -69,10 +70,10 @@ export class JiliApi extends EventEmitter {
         },
       };
 
-      if (isBuyBonus && this.gameInfoAck?.mall) {
+      if (buyBouns.enable && this.gameInfoAck?.mall) {
         spinReqData.mall = {
           type: MallType.NORMAL_MALL,
-          index: 0,
+          index: buyBouns.index,
           bet: this.gameInfoAck.mall.priceOdd * bet,
         };
       }

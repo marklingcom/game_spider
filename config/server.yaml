@@ -16,7 +16,10 @@ spiderConfig:
   compress: 1
 betConfig:
   bet: 0
-  buyBouns: false
+  buyBouns:
+    enable: false
+    index: 0
+    hasDefaultIndex: false
   extra: false
   special: false
   gameName: God Of Martial

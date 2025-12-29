@@ -47,7 +47,7 @@ class SpinDataState {
   }
 
   get total(): number {
-    const isBuyBouns = this.config?.serverConfig?.betConfig?.buyBouns;
+    const isBuyBouns = this.config?.serverConfig?.betConfig?.buyBouns?.enable;
     if (this.isSpecial) {
       if (isBuyBouns) {
         return 5000;
@@ -217,21 +217,31 @@ export class JiliDb {
       tabName += `_${betName}`;
     }
 
-    var isBuy = false;
+    var isBuyBouns = false;
     var isExtra = false;
     if (spinResponse.spinReq?.mall) {
       tabName += '_buy';
-      isBuy = true;
+      isBuyBouns = true;
     } else if (spinResponse.spinReq?.extraSpin) {
       tabName += '_extra';
       isExtra = true;
     }
 
-    const isSpecial = spinDataType === SpinDataType.special || isBuy;
+    const isSpecial = spinDataType === SpinDataType.special || isBuyBouns;
     if (isSpecial) {
       tabName += '_special';
     } else {
       tabName += '_normal';
+    }
+
+    if (isBuyBouns) {
+      const hasDefaultIndex = this.config.serverConfig.betConfig.buyBouns.hasDefaultIndex;
+      const index = spinResponse.spinReq.mall.index;
+      if (!hasDefaultIndex && index === 0) {
+        // 默认索引，不添加到表名
+      } else {
+        tabName += `_${index}`;
+      }
     }
 
     const model = await this.db.ensureTableExists(tabName);

@@ -2,6 +2,7 @@ import { EventEmitter } from 'node:events';
 import type { SpiderData } from '../gameFrom/info.js';
 import type { GameInfoAck } from '../protoGeneral/astarte2_196.js';
 import type Config from '../utils/config.js';
+import type { BuyBounsConfig } from '../utils/config.js';
 import { telegramService } from '../utils/telegram.js';
 import { JiliApi } from './jili/jili_api.js';
 import type { JiliDb } from './jili/jili_db.js';
@@ -72,20 +73,20 @@ export class SpiderWork extends EventEmitter {
       bet = this.config.serverConfig.betConfig.bet;
     }
 
-    const isBuyBouns = this.config.serverConfig.betConfig.buyBouns;
+    const buyBouns = this.config.serverConfig.betConfig.buyBouns;
     const isExtra = this.config.serverConfig.betConfig.extra;
-    await this.spinWorker(bet, isBuyBouns, isExtra);
+    await this.spinWorker(bet, buyBouns, isExtra);
   }
 
-  private async spinWorker(bet: number, isBuyBouns: boolean, isExtra: boolean): Promise<void> {
-    console.log(`开始 spin - bet: ${bet} isBuyBouns: ${isBuyBouns} isExtra: ${isExtra}`);
+  private async spinWorker(bet: number, buyBouns: BuyBounsConfig, isExtra: boolean): Promise<void> {
+    console.log(`开始 spin - bet: ${bet} buyBouns: ${buyBouns} isExtra: ${isExtra}`);
 
     while (true) {
       if (!this.jiliApi.isConnected) {
         throw new Error('WebSocket已关闭');
       }
 
-      const spinBuffer = await this.jiliApi.spin(bet, isBuyBouns, isExtra);
+      const spinBuffer = await this.jiliApi.spin(bet, buyBouns, isExtra);
       // 保存spinData
       await this.jiliDb.saveGaiaResponseData(spinBuffer, this.spiderData);
 

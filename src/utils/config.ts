@@ -3,6 +3,12 @@ import { merge } from 'lodash-es';
 import yaml from 'yaml';
 import { CompressType } from './data_compress.js';
 
+export interface BuyBounsConfig {
+  enable: boolean;
+  index: number;
+  hasDefaultIndex: boolean;
+}
+
 export interface ServerConfig {
   proxy: {
     enable: boolean;
@@ -20,7 +26,7 @@ export interface ServerConfig {
   };
   betConfig: {
     bet: number;
-    buyBouns: boolean;
+    buyBouns: BuyBounsConfig;
     extra: boolean;
     special: boolean;
     gameName: string;
@@ -84,7 +90,11 @@ export default class Config {
     },
     betConfig: {
       bet: 0,
-      buyBouns: false,
+      buyBouns: {
+        enable: false,
+        index: 0,
+        hasDefaultIndex: false,
+      },
       extra: false,
       special: false,
       gameName: '',

@@ -87,10 +87,10 @@ async function reSpinData(
             },
           } as unknown as SpinResponse;
 
-          if (config.serverConfig.betConfig.buyBouns && spinResponse.spinReq) {
+          if (config.serverConfig.betConfig.buyBouns.enable && spinResponse.spinReq) {
             spinResponse.spinReq.mall = {
               type: MallType.NORMAL_MALL,
-              index: 0,
+              index: config.serverConfig.betConfig.buyBouns.index,
               bet: bet,
             };
           }
@@ -165,7 +165,10 @@ async function main() {
     {
       gameName: fullName,
       bet: 0,
-      buyBouns: false,
+      buyBouns: {
+        enable: false,
+        index: 0,
+      },
       extra: false,
       special: false,
     },
