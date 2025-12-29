@@ -153,7 +153,7 @@ async function reSpinData(
 }
 
 async function main() {
-  const tableName = 'jili_spin_bbc_normal_backup';
+  const tableName = 'jili_spin_tks_normal_backup';
   const name = getTableGameName(tableName);
   const fullName = getFullGameName(name);
   if (!fullName) {
