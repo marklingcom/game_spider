@@ -177,9 +177,10 @@ export class JiliDb {
         }
       }
     } else {
-      const freeTotalWinRegex =
-        /"(FreeTotalWin|Free1TotalWin|Free2TotalWin|FreeGameWin|FGWin|BonusTotalWin|bonusWin|FreeGamePlateInfo)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
-      const matches = jsonData.match(freeTotalWinRegex);
+      const freeGameWinRegex =
+        /"(FreeTotalWin|Free1TotalWin|Free2TotalWin|FreeGameWin|FGWin|BonusTotalWin|bonusWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
+      const freeGamePlateInfoRegex = /"FreeGamePlateInfo"\s*:\s*\[/g;
+      const matches = jsonData.match(freeGameWinRegex) || jsonData.match(freeGamePlateInfoRegex);
 
       if (matches && matches.length > 0) {
         spinDataType = SpinDataType.special;
