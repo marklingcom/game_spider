@@ -9,6 +9,12 @@ export interface BuyBounsConfig {
   hasDefaultIndex: boolean;
 }
 
+export interface ExtraConfig {
+  enable: boolean;
+  index: number;
+  hasDefaultIndex: boolean;
+}
+
 export interface ServerConfig {
   proxy: {
     enable: boolean;
@@ -27,7 +33,7 @@ export interface ServerConfig {
   betConfig: {
     bet: number;
     buyBouns: BuyBounsConfig;
-    extra: boolean;
+    extra: ExtraConfig;
     special: boolean;
     gameName: string;
   };
@@ -95,7 +101,11 @@ export default class Config {
         index: 0,
         hasDefaultIndex: false,
       },
-      extra: false,
+      extra: {
+        enable: false,
+        index: 0,
+        hasDefaultIndex: false,
+      },
       special: false,
       gameName: '',
     },

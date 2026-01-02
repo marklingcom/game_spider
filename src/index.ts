@@ -26,6 +26,7 @@ async function main(): Promise<void> {
 
   const { gameName, bet, buyBouns, extra, special } = config.serverConfig.betConfig;
   const buyBounsEnable = buyBouns.enable;
+  const extraEnable = extra.enable;
   const currentUidList = [...config.huiduUidList];
   const noMoneyAccounts = [...config.serverConfig.huiduConfig.noMoneyAccounts];
   var maxCount = config.serverConfig.huiduConfig.maxCount || 0;
@@ -40,7 +41,7 @@ form: ${config.serverConfig.spiderConfig.form}
 compress: ${config.serverConfig.spiderConfig.compress}
 bet: ${bet}
 buyBouns: ${buyBounsEnable}
-extra: ${extra}
+extra: ${extraEnable}
 special: ${special}
 total: 总共${totalCount}个账号
 `

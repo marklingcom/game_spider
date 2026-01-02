@@ -87,17 +87,19 @@ async function reSpinData(
             },
           } as unknown as SpinResponse;
 
-          if (config.serverConfig.betConfig.buyBouns.enable && spinResponse.spinReq) {
-            spinResponse.spinReq.mall = {
-              type: MallType.NORMAL_MALL,
-              index: config.serverConfig.betConfig.buyBouns.index,
-              bet: bet,
-            };
-          }
-          if (config.serverConfig.betConfig.extra && spinResponse.spinReq) {
-            spinResponse.spinReq.extraSpin = {
-              index: 0,
-            };
+          if (spinResponse.spinReq) {
+            if (config.serverConfig.betConfig.buyBouns.enable) {
+              spinResponse.spinReq.mall = {
+                type: MallType.NORMAL_MALL,
+                index: config.serverConfig.betConfig.buyBouns.index,
+                bet: bet,
+              };
+            }
+            if (config.serverConfig.betConfig.extra.enable) {
+              spinResponse.spinReq.extraSpin = {
+                index: config.serverConfig.betConfig.extra.index,
+              };
+            }
           }
 
           await jiliDb.saveSpinData(spinResponse, spiderData);
@@ -168,8 +170,13 @@ async function main() {
       buyBouns: {
         enable: false,
         index: 0,
+        hasDefaultIndex: false,
       },
-      extra: false,
+      extra: {
+        enable: false,
+        index: 0,
+        hasDefaultIndex: false,
+      },
       special: false,
     },
     {

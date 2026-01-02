@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import dayjs from 'dayjs';
 import { AckType, InfoReq, Request, SpinReq } from '../src/protoGeneral/astarte2_196.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -10,7 +11,7 @@ const dataDir = join(__dirname, 'data');
 const base64String: string = '';
 const hexString: string = '';
 const escapeString: string =
-  '\u0012"\u0009\u0000\u0000\u0000\u0000\u0000\u0000ð?º\u0001\r\u0008\u0000\u0010\u0000\u0019\u0000\u0000\u0000\u0000\u0000\u0080C@Ê\u0001\u0006\u0008\u0000\u0010\u0000 \u0000';
+  '\u0012\u0017\u0009\u0000\u0000\u0000\u0000\u0000\u0000\u0008@Ê\u0001\u0006\u0008\u0000\u0010\u0000 \u0000Ò\u0001\u0002\u0008\u0000';
 
 function getAckTypeName(ack: number): string {
   return AckType[ack] || `Unknown(${ack})`;
@@ -189,7 +190,7 @@ async function main() {
     console.log('='.repeat(80));
 
     mkdirSync(dataDir, { recursive: true });
-    const outputFile = join(dataDir, `request_${Date.now()}.json`);
+    const outputFile = join(dataDir, `request_${dayjs().format('YY-MM-DD_HH:mm:ss')}.json`);
     writeFileSync(outputFile, jsonData, 'utf8');
     console.log(`\n✅ 结果已保存到: ${outputFile}`);
   } catch (error) {

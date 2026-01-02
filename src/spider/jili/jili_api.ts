@@ -12,7 +12,7 @@ import {
 } from '../../protoGeneral/astarte2_196.js';
 import { getCacert } from '../../utils/cacert/cacert.js';
 import type Config from '../../utils/config.js';
-import type { BuyBounsConfig } from '../../utils/config.js';
+import type { BuyBounsConfig, ExtraConfig } from '../../utils/config.js';
 import { decryptResponseBuffer } from './jili_utils.js';
 
 export interface WebSocketMessage {
@@ -52,8 +52,8 @@ export class JiliApi extends EventEmitter {
     this.client = axios.create(config);
   }
 
-  async spin(bet: number, buyBouns: BuyBounsConfig, isExtra: boolean): Promise<Buffer> {
-    if (buyBouns.enable && isExtra) {
+  async spin(bet: number, buyBouns: BuyBounsConfig, extra: ExtraConfig): Promise<Buffer> {
+    if (buyBouns.enable && extra.enable) {
       throw new Error('不能同时为true');
     }
 
@@ -78,11 +78,9 @@ export class JiliApi extends EventEmitter {
         };
       }
 
-      if (isExtra) {
-        // 额外旋转倍率1.5倍
-        // spinReqData.bet *= 1.5;
+      if (extra.enable) {
         spinReqData.extraSpin = {
-          index: 0,
+          index: extra.index,
         };
       }
 

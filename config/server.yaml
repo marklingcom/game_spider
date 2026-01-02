@@ -20,9 +20,12 @@ betConfig:
     enable: false
     index: 0
     hasDefaultIndex: false
-  extra: false
+  extra:
+    enable: false
+    index: 0
+    hasDefaultIndex: false
   special: false
-  gameName: God Of Martial
+  gameName: 3 Coin Treasures
 huiduConfig:
   coin: 100000
   key: uidList1
@@ -55,6 +58,7 @@ huiduConfig:
     - 7657452
     - 7657425
     - 7657440
+    - 7657460
   uidList1:
     - 7656873
     - 7656921
