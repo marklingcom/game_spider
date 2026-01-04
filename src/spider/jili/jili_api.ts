@@ -70,12 +70,24 @@ export class JiliApi extends EventEmitter {
         },
       };
 
-      if (buyBouns.enable && this.gameInfoAck?.mall) {
-        spinReqData.mall = {
-          type: MallType.NORMAL_MALL,
-          index: buyBouns.index,
-          bet: this.gameInfoAck.mall.priceOdd * bet,
-        };
+      if (buyBouns.enable) {
+        let priceOdd: number | undefined;
+        let type = MallType.NORMAL_MALL;
+        const index = buyBouns.index;
+        if (this.gameInfoAck?.mall) {
+          priceOdd = this.gameInfoAck.mall.priceOdd;
+        }
+        if (this.gameInfoAck?.gameMall?.priceOdd) {
+          type = MallType.GAME_MALL;
+          priceOdd = this.gameInfoAck.gameMall.priceOdd[index];
+        }
+        if (priceOdd) {
+          spinReqData.mall = {
+            type,
+            index,
+            bet: priceOdd * bet,
+          };
+        }
       }
 
       if (extra.enable) {

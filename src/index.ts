@@ -40,8 +40,8 @@ async function main(): Promise<void> {
 form: ${config.serverConfig.spiderConfig.form}
 compress: ${config.serverConfig.spiderConfig.compress}
 bet: ${bet}
-buyBouns: ${buyBounsEnable}
-extra: ${extraEnable}
+buyBouns: ${JSON.stringify(buyBouns)}
+extra: ${JSON.stringify(extra)}
 special: ${special}
 total: 总共${totalCount}个账号
 `

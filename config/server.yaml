@@ -18,13 +18,13 @@ spiderConfig:
 betConfig:
   bet: 0
   buyBouns:
-    enable: false
+    enable: true
     index: 0
-    hasDefaultIndex: false
+    hasDefaultIndex: true
   extra:
     enable: false
     index: 0
-    hasDefaultIndex: false
+    hasDefaultIndex: true
   special: false
   gameName: 3 Coin Treasures
 huiduConfig:

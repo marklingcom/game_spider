@@ -83,7 +83,9 @@ export class SpiderWork extends EventEmitter {
     buyBouns: BuyBounsConfig,
     extra: ExtraConfig
   ): Promise<void> {
-    console.log(`开始 spin - bet: ${bet} buyBouns: ${buyBouns} extra: ${extra}`);
+    console.log(
+      `开始 spin - bet: ${bet} buyBouns: ${JSON.stringify(buyBouns)} extra: ${JSON.stringify(extra)}`
+    );
 
     while (true) {
       if (!this.jiliApi.isConnected) {
