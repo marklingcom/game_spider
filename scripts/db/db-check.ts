@@ -18,14 +18,18 @@ async function checkRateIndex(queryInterface: QueryInterface, tableName: string)
     index.fields?.some((field) => field.attribute === 'rate')
   );
 
-  if (!hasRateIndex) {
-    console.log(`⏳ 为表 ${tableName} 添加 rate 字段索引...`);
-    await queryInterface.addIndex(tableName, ['rate'], {
-      name: `${tableName}_rate_idx`,
-    });
-    console.log(`✅ 表 ${tableName} 的 rate 索引添加成功`);
-  } else {
-    console.log(`⏭️ 表 ${tableName} 已有 rate 索引`);
+  try {
+    if (!hasRateIndex) {
+      // console.log(`⏳ 为表 ${tableName} 添加 rate 字段索引...`);
+      await queryInterface.addIndex(tableName, ['rate'], {
+        name: `${tableName}_rate_idx`,
+      });
+      console.log(`✅ 表 ${tableName} 的 rate 索引添加成功`);
+    } else {
+      console.log(`⏭️ 表 ${tableName} 已有 rate 索引`);
+    }
+  } catch (error: any) {
+    console.log(`❌ 为表 ${tableName} 添加 rate 字段索引失败:`, error.message);
   }
 }
 
@@ -62,11 +66,11 @@ async function checkIdPrimaryKey(
     isAutoIncrement = true;
   }
   if (isPrimaryKey && isAutoIncrement) {
-    console.log(`✅ 表 ${tableName} 的 id 字段已正确设置为主键且自增`);
+    console.log(`⏭️ 表 ${tableName} 的 id 字段已正确设置为主键且自增`);
   } else {
-    console.log(`🔧 修复表 ${tableName} 的 id 字段为主键且自增...`);
+    // console.log(`🔧 修复表 ${tableName} 的 id 字段为主键且自增...`);
     try {
-      console.log(`🔍 表 ${tableName} 的 id 字段类型:`, idField.type);
+      // console.log(`🔍 表 ${tableName} 的 id 字段类型:`, idField.type);
       await queryInterface.changeColumn(tableName, 'id', {
         type: 'BIGINT',
         allowNull: false,

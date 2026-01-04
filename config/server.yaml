@@ -3,8 +3,8 @@ proxy:
   server: http://127.0.0.1:7890
 db:
   type: mysql
-  # dsn: root:m9KxXa7j@tcp(sss.cpigame.com:13306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
-  dsn: game:dawo97qknk@tcp(sss.duozhigame.com:3306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
+  dsn: root:m9KxXa7j@tcp(sss.cpigame.com:3306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
+  # dsn: game:dawo97qknk@tcp(sss.duozhigame.com:3306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
   dialect: ""
 telegram:
   enable: true
