@@ -1,8 +1,8 @@
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { dbManager } from '../src/models/index.js';
-import { config } from '../src/utils/config.js';
-import { createDirectoryIfNotExists } from '../src/utils/utils.js';
+import { dbManager } from '../../src/models/index.js';
+import { config } from '../../src/utils/config.js';
+import { createDirectoryIfNotExists } from '../../src/utils/utils.js';
 
 const protoDir = './src/proto';
 

@@ -1,9 +1,9 @@
 import { readdirSync } from 'node:fs';
 import { extname } from 'node:path';
 import { createInterface } from 'node:readline';
-import { dbManager } from '../src/models/index.js';
-import { config } from '../src/utils/config.js';
-import { createDirectoryIfNotExists } from '../src/utils/utils.js';
+import { dbManager } from '../../src/models/index.js';
+import { config } from '../../src/utils/config.js';
+import { createDirectoryIfNotExists } from '../../src/utils/utils.js';
 
 const protoDir = './src/proto';
 

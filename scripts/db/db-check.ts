@@ -1,6 +1,6 @@
 import type { ColumnsDescription, QueryInterface } from 'sequelize';
-import { dbManager } from '../src/models/index.js';
-import { config } from '../src/utils/config.js';
+import { dbManager } from '../../src/models/index.js';
+import { config } from '../../src/utils/config.js';
 
 async function getDatabaseConnection() {
   const sequelize = await dbManager.initDB(config.serverConfig.db);
@@ -88,16 +88,20 @@ async function checkDataTables() {
     const queryInterface = sequelize.getQueryInterface();
     const tables = await queryInterface.showAllTables();
 
-    console.log(`找到 ${tables.length} 个表`);
+    const includeTables = ['jili_spin_'];
+    const filteredTables = tables.filter((tableName) =>
+      includeTables.some((table) => tableName.startsWith(table))
+    );
+    console.log(`总共 ${tables.length} 个表，匹配到 ${filteredTables.length} 个表`);
 
-    for (const tableName of tables) {
+    for (const tableName of filteredTables) {
       try {
         const tableDescription = await queryInterface.describeTable(tableName);
 
         if (tableDescription.rate) {
           await checkRateIndex(queryInterface, tableName);
           // await updateRatePrecision(queryInterface, tableName);
-          // await checkIdPrimaryKey(queryInterface, tableName, tableDescription);
+          await checkIdPrimaryKey(queryInterface, tableName, tableDescription);
         } else {
           console.log(`⚠️ 表 ${tableName} 不包含 rate 字段，跳过`);
         }

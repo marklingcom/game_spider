@@ -3,10 +3,10 @@ import { dirname, join } from 'node:path';
 import { performance } from 'node:perf_hooks';
 import { fileURLToPath } from 'node:url';
 import dayjs from 'dayjs';
-import { dbManager } from '../src/models/index.js';
-import { CompressType, compressData, decompressData } from '../src/utils/data_compress.js';
-import { SpinDataReader, type TableInfo } from '../src/utils/spin-data-reader.js';
-import { getTableGameName } from '../src/utils/table.js';
+import { dbManager } from '../../src/models/index.js';
+import { CompressType, compressData, decompressData } from '../../src/utils/data_compress.js';
+import { SpinDataReader, type TableInfo } from '../../src/utils/spin-data-reader.js';
+import { getTableGameName } from '../../src/utils/table.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

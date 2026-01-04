@@ -1,8 +1,8 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse } from 'yaml';
-import { dbManager } from '../src/models/index.js';
-import { config } from '../src/utils/config.js';
+import { dbManager } from '../../src/models/index.js';
+import { config } from '../../src/utils/config.js';
 
 interface ProtoConfig {
   name: string;

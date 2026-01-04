@@ -2,7 +2,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import dayjs from 'dayjs';
-import { AckType, InfoReq, Request, SpinReq } from '../src/protoGeneral/astarte2_196.js';
+import { AckType, InfoReq, Request, SpinReq } from '../../src/protoGeneral/astarte2_196.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
