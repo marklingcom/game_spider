@@ -26,20 +26,16 @@ interface SSHConnection {
   password?: string;
 }
 
-const cpigameSShConfig: SSHConnection = {
+const sshConfig: SSHConnection = {
   host: 'cpigame.com',
+  // host: 'new-prod-static',
+  // host: 'duozhi',
 };
-
-const newProdStaticSShConfig: SSHConnection = {
-  host: 'new-prod-static',
-};
-
-const sshConfig = cpigameSShConfig;
 // const sshConfig = newProdStaticSShConfig;
 
 const deletePaths: string[] = [
-  // '/var/www/html/game_static/jili_history_res/',
-  // '/var/www/html/game_static/jili_res/tct',
+  '/var/www/html/game_static/jili_history_res/',
+  '/var/www/html/game_static/jili_res/',
 ];
 
 function buildSSHCommand(sshConfig: SSHConnection, path: string): string {
