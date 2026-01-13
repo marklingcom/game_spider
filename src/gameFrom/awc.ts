@@ -232,12 +232,12 @@ export class AWC {
     }
   }
 
-  private async getGameList(): Promise<GameIcon[]> {
+  private async getGameList(lang = 'en'): Promise<GameIcon[]> {
     await this.checkAuthorization();
 
     try {
       const apiURL = 'https://tttplay.awcinfo.club/player/gamehall/getAllGame';
-      const requestData = { lang: 'en' };
+      const requestData = { lang };
       const result = await this.postRequest<PartialGameHallResponse>(apiURL, requestData);
 
       for (const icon of result.iconList) {
@@ -314,8 +314,8 @@ export class AWC {
     console.log(`共处理 ${gameInfoList.length} 个游戏`);
   }
 
-  async getGameUrlForGameName(gameName: string): Promise<string> {
-    const gameList = await this.getGameList();
+  async getGameUrlForGameName(gameName: string, lang = 'en'): Promise<string> {
+    const gameList = await this.getGameList(lang);
 
     let gameId = '';
     for (const game of gameList) {

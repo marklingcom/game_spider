@@ -198,6 +198,10 @@ export default class Config {
       },
     });
   }
+
+  getHuiduConfig(gameName: string): HuiduConfig {
+    return this.huiduConfigList.find((item) => item.fullName === gameName);
+  }
 }
 
 export const config = new Config();
