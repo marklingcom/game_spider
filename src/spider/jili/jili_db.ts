@@ -243,6 +243,15 @@ export class JiliDb {
         tabName += `_${index}`;
       }
     }
+    if (isExtra) {
+      const hasDefaultIndex = this.config.serverConfig.betConfig.extra.hasDefaultIndex;
+      const index = spinResponse.spinReq.extraSpin.index;
+      if (!hasDefaultIndex && index === 0) {
+        // 默认索引，不添加到表名
+      } else {
+        tabName += `_${index}`;
+      }
+    }
 
     const model = await this.db.ensureTableExists(tabName);
 

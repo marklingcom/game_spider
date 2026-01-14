@@ -32,7 +32,8 @@ huiduConfig:
   key: uidList1
   maxCount: 10
   uidList0:
-    - 1641530
+    # - 1641530
+    - 7663732
   uidListTest:
     - 7633004
   noMoneyAccounts:
