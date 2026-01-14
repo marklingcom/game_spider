@@ -13,7 +13,7 @@ async function main(options: Options) {
     let gameUrl = '';
     if (options.type === 'huidu') {
       const huiduConfig = config.getHuiduConfig(options.gameName);
-      const langs = ['en-US', 'zh-ZN', 'vi-VN'];
+      const langs = ['en-US', 'zh-CN', 'vi-VN'];
       console.log(chalk.yellow('\n不同语言的游戏URL:'));
       for (const lang of langs) {
         const gameUrl = await getGameUrl({
@@ -45,7 +45,7 @@ async function main(options: Options) {
 }
 
 const options: Options = {
-  gameName: 'Money Pot',
+  gameName: 'Fruity Wheel',
   type: 'huidu',
 };
 
