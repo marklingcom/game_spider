@@ -45,7 +45,7 @@ export async function getGameUrl(huiDuConfig: HuiduConfig): Promise<string> {
 
   const redirectURL = gameResp.data.game_launch_url;
   if (!redirectURL) {
-    throw new Error('游戏启动 URL 为空');
+    throw new Error(`游戏启动 URL 为空, huiduConfig: ${JSON.stringify(gameResp)}`);
   }
 
   console.log('重定向 url:', redirectURL);

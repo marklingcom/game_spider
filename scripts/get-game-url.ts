@@ -8,12 +8,13 @@ interface Options {
   type: 'huidu' | 'awc';
 }
 
+const langs = ['en-US', 'zh-CN', 'vi-VN'];
+
 async function main(options: Options) {
   try {
     let gameUrl = '';
     if (options.type === 'huidu') {
       const huiduConfig = config.getHuiduConfig(options.gameName);
-      const langs = ['en-US', 'zh-CN', 'vi-VN'];
       console.log(chalk.yellow('\n不同语言的游戏URL:'));
       for (const lang of langs) {
         const gameUrl = await getGameUrl({
@@ -32,7 +33,6 @@ async function main(options: Options) {
       gameUrl = await awc.getGameUrlForGameName(options.gameName);
     }
 
-    const langs = ['en-US', 'zh-ZN', 'vi-VN'];
     console.log(chalk.yellow('\n不同语言的游戏URL:'));
     langs.forEach((lang) => {
       const url = new URL(gameUrl);
@@ -45,8 +45,9 @@ async function main(options: Options) {
 }
 
 const options: Options = {
-  gameName: 'Fruity Wheel',
-  type: 'huidu',
+  gameName: 'Lucky Jaguar',
+  // type: 'huidu',
+  type: 'awc',
 };
 
 main(options).catch((error) => {
