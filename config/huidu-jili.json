@@ -1013,5 +1013,15 @@
     "fullName": "Cash Coin",
     "companyId": 1,
     "gameUid": "fe942e56d8f33522e4084e8e3aaa3523"
+  },
+  {
+    "fullName": "Fortune Coins 2",
+    "companyId": 1,
+    "gameUid": "007f5afeab86a47d96038324438c0c1f"
+  },
+  {
+    "fullName": "3 Coin Wild Horse",
+    "companyId": 1,
+    "gameUid": "25bff08b69ccd31c238a627b53afff36"
   }
 ]

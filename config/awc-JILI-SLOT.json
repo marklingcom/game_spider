@@ -24,6 +24,18 @@
     "uuid": "JILI-SLOT-163"
   },
   {
+    "fullName": "3 Witch's Lamp",
+    "gi": 505,
+    "name": "wl",
+    "uuid": "JILI-SLOT-164"
+  },
+  {
+    "fullName": "3 Coin Golden OX",
+    "gi": 547,
+    "name": "tcgox",
+    "uuid": "JILI-SLOT-165"
+  },
+  {
     "fullName": "Joker Coins Expanded",
     "gi": 636,
     "name": "jce",
@@ -54,12 +66,6 @@
     "uuid": "JILI-SLOT-104"
   },
   {
-    "fullName": "Jackpot Joker",
-    "gi": 301,
-    "name": "jpj",
-    "uuid": "JILI-SLOT-100"
-  },
-  {
     "fullName": "3 Lucky Piggy",
     "gi": 400,
     "name": "tlp",
@@ -76,6 +82,12 @@
     "gi": 372,
     "name": "dts",
     "uuid": "JILI-SLOT-106"
+  },
+  {
+    "fullName": "Money Coming Expand Bets",
+    "gi": 302,
+    "name": "mcp",
+    "uuid": "JILI-SLOT-107"
   },
   {
     "fullName": "Egypt's Glow",
@@ -855,6 +867,12 @@
     "fullName": "FortunePig",
     "gi": 33,
     "name": "pp",
+    "uuid": "JILI-SLOT-019"
+  },
+  {
+    "fullName": "Fortune Coins 2",
+    "gi": 573,
+    "name": "rc2",
     "uuid": "JILI-SLOT-019"
   }
 ]

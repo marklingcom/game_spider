@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package rcProto2;
+
+// 列数据，包含整型数组
+message Column {
+  repeated int32 Col = 1;
+}
+
+// 列数据，包含双精度浮点数数组
+message ColumnM {
+  repeated double Col = 1;
+}
+
+// 奖励数据
+message AwardData {
+  int32 Atype = 1;      // 奖励类型
+  int32 Index = 2;      // 索引
+  int32 Symbol = 3;     // 符号
+  int32 Pos = 4;        // 位置
+  double Mul = 5;       // 倍数
+  double Win = 6;       // 赢取金额
+}
+
+// 奖池符号
+message PotSymbol {
+  int32 Pos = 1;                // 位置
+  int32 Symbol = 2;            // 符号
+  double Mul = 3;              // 倍数
+  int32 ScatterMultiplier = 4; // 分散符号倍数
+}
+
+// 回合信息
+message RoundInfo {
+  repeated Column Symbol = 1;              // 符号
+  repeated ColumnM Mul = 2;                // 倍数
+  repeated Column FinalSymbol = 3;         // 最终符号
+  repeated ColumnM FinalMul = 4;           // 最终倍数
+  repeated AwardData AwardDataVec = 5;     // 奖励数据列表
+  double RoundWin = 6;                     // 回合赢取金额
+  repeated PotSymbol PotList = 7;          // 奖池列表
+  int32 BonusRemainRound = 8;              // 剩余奖励回合数
+  int32 BonusTotalRound = 9;               // 总奖励回合数
+  bool GetBonus = 10;                      // 是否获得奖励
+  int32 AwardTypeFlag = 11;                // 奖励类型标志
+  bool MaxFlag = 12;                       // 最大标志
+  int32 PlateChangeFlag = 13;              // 盘面变化标志
+  repeated int32 ScatterMultiplier = 14;   // 分散符号倍数列表
+}
+
+// 旋转响应
+message SpinAck {
+  repeated RoundInfo RoundQueue = 1;      // 回合队列
+  double BonusTotalWin = 2;               // 奖励总赢取金额
+  double TotalWin = 3;                    // 总赢取金额
+  double RTP = 4;                         // 返奖率
+  int32 LID = 5;                          // 左ID
+  int32 RID = 6;                          // 右ID
+  int32 AckType = 7;                      // 响应类型
+  int32 Extra = 8;                        // 额外数据
+}
+
+// 游戏信息数据
+message GameInfoData {
+  bool ShowExtra = 1;                     // 是否显示额外信息
+  repeated double Mul = 2;                // 倍数列表
+}
