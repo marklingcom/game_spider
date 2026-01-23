@@ -214,10 +214,21 @@ export class JiliDb {
         //   }
         // }
         if (['mpt'].includes(spiderData.name)) {
-          const bonusTotalWinRegex = /"(ComboStageWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
-          const matches = jsonData.match(bonusTotalWinRegex);
-          if (matches && matches.length > 0) {
-            spinDataType = SpinDataType.special;
+          const RoundInfo = (spinAckData as any)?.RoundInfo;
+          for (const item of RoundInfo) {
+            if (item.GetReSpin) {
+              spinDataType = SpinDataType.special;
+              break;
+            }
+          }
+        }
+        if (['mpt2'].includes(spiderData.name)) {
+          const RoundQueue = (spinAckData as any)?.RoundQueue;
+          for (const item of RoundQueue) {
+            if (item.GetReSpin) {
+              spinDataType = SpinDataType.special;
+              break;
+            }
           }
         }
       }
