@@ -186,7 +186,7 @@ export class TelegramService extends EventEmitter {
 
     if (!this.isEnabled || !this.bot) {
       const errorMsg = 'Telegram 机器人未启用，跳过发送消息';
-      console.log(errorMsg);
+      // console.log(errorMsg);
       return {
         success: false,
         message,
@@ -283,7 +283,7 @@ export class TelegramService extends EventEmitter {
     this.messageReceivedCallback = (message: ReceivedMessage) => {
       const reply = async (text: string): Promise<boolean> => {
         if (!this.isEnabled || !this.bot) {
-          console.log('Telegram 机器人未启用，跳过发送消息');
+          // console.log('Telegram 机器人未启用，跳过发送消息');
           return false;
         }
 

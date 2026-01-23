@@ -28,6 +28,7 @@
     "db-redata": "tsx scripts/db/db-redata.ts",
     "decode-spin-data": "tsx scripts/decode/decode-spin-data.ts",
     "decode-request": "tsx scripts/decode/decode-request.ts",
+    "decode-response": "tsx scripts/decode/decode-response.ts",
     "config-gen": "tsx scripts/config-gen.ts",
     "ssh-delete": "tsx scripts/ssh-delete.ts",
     "get-game-url": "tsx scripts/get-game-url.ts"
@@ -45,6 +46,7 @@
     "cheerio": "^1.1.2",
     "crypto": "^1.0.1",
     "dayjs": "^1.11.19",
+    "https-proxy-agent": "^7.0.6",
     "koa": "^3.0.3",
     "koa-bodyparser": "^4.4.1",
     "lodash-es": "^4.17.21",

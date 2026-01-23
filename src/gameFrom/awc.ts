@@ -1,9 +1,9 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { decryptAESECB, encryptAESECB } from '../utils/awc_utils.js';
 import { getUrlHtmlContent, parseRedirectResponse } from '../utils/network.js';
+import { getAxiosClient } from '../utils/request.js';
 import { parseJiliGameUrl } from '../utils/url.js';
 
 interface GameIcon {
@@ -124,7 +124,7 @@ export class AWC {
       language: 'EN',
       platform: this.brand,
     });
-    const response = await axios.post(apiURL, formData, {
+    const response = await getAxiosClient().post(apiURL, formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
       },
@@ -144,7 +144,7 @@ export class AWC {
     const loginFormData = await this.parseLoginHtml(htmlContent);
 
     const postURL = 'https://tttplay.awcinfo.club/player/login/apiLogin';
-    const redirectResponse = await axios.post(postURL, loginFormData, {
+    const redirectResponse = await getAxiosClient().post(postURL, loginFormData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
       },
@@ -201,7 +201,7 @@ export class AWC {
     const reqData = encryptAESECB(Buffer.from(jsonBytes));
 
     try {
-      const response = await axios.post(apiURL, reqData, {
+      const response = await getAxiosClient().post(apiURL, reqData, {
         headers: {
           accept: 'application/json, text/plain, */*',
           'accept-language': 'zh-CN,zh-TW;q=0.9,zh;q=0.8,en;q=0.7,ja;q=0.6',

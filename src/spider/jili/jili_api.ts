@@ -1,5 +1,4 @@
 import { EventEmitter } from 'node:events';
-import axios, { type AxiosProxyConfig, type AxiosRequestConfig } from 'axios';
 import WebSocket from 'ws';
 import type { SpiderData } from '../../gameFrom/info.js';
 import {
@@ -11,8 +10,8 @@ import {
   SpinReq,
 } from '../../protoGeneral/astarte2_196.js';
 import { getCacert } from '../../utils/cacert/cacert.js';
-import type Config from '../../utils/config.js';
-import type { BuyBounsConfig, ExtraConfig } from '../../utils/config.js';
+import type { BuyBounsConfig, Config, ExtraConfig } from '../../utils/config.js';
+import { getAxiosClient } from '../../utils/request.js';
 import { decryptResponseBuffer } from './jili_utils.js';
 
 export interface WebSocketMessage {
@@ -23,7 +22,6 @@ export interface WebSocketMessage {
 }
 
 export class JiliApi extends EventEmitter {
-  private client: any;
   private jiliSpider: SpiderData;
   private ws: WebSocket | null = null;
 
@@ -35,21 +33,6 @@ export class JiliApi extends EventEmitter {
   }) {
     super();
     this.jiliSpider = options.spiderData;
-
-    const config: AxiosRequestConfig = {
-      timeout: 30000,
-    };
-
-    if (options.config.serverConfig.proxy.enable) {
-      const [host, portStr] = options.config.serverConfig.proxy.server.split(':');
-      config.proxy = {
-        host: host || 'localhost',
-        port: parseInt(portStr || '8080', 10),
-        protocol: 'http',
-      } as AxiosProxyConfig;
-    }
-
-    this.client = axios.create(config);
   }
 
   async spin(bet: number, buyBouns: BuyBounsConfig, extra: ExtraConfig): Promise<Buffer> {
@@ -103,7 +86,7 @@ export class JiliApi extends EventEmitter {
 
       const postData = Request.toBinary(requestData);
 
-      const response = await this.client.post(url, postData, {
+      const response = await getAxiosClient().post(url, postData, {
         headers: {
           'Content-Type': 'application/x-protobuf',
           token: this.jiliSpider.token,
@@ -164,7 +147,7 @@ export class JiliApi extends EventEmitter {
 
       const postData = Request.toBinary(request);
 
-      const response = await this.client.post(url, postData, {
+      const response = await getAxiosClient().post(url, postData, {
         headers: {
           'Content-Type': 'application/x-protobuf',
           token: this.jiliSpider.token,

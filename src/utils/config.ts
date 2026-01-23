@@ -68,7 +68,7 @@ interface HuiduConfig {
   gameUid: string;
 }
 
-export default class Config {
+export class Config {
   private serverConfigPath = './config/server.yaml';
   private jiliSlotListPath = './config/awc-JILI-SLOT.json';
   private huiduConfigListPath = './config/huidu-jili.json';

@@ -8,7 +8,7 @@ import type { JiliInfoAttributes } from '../../models/JiliInfo.js';
 import type { JiliProtoAttributes } from '../../models/JiliProto.js';
 import type { SpinDataAttributes } from '../../models/SpinData.js';
 import { SpinResponse } from '../../protoGeneral/astarte2_196.js';
-import type Config from '../../utils/config.js';
+import type { Config } from '../../utils/config.js';
 import {
   CompressType,
   CompressTypeMap,
@@ -134,17 +134,19 @@ export class JiliDb {
     }
     const spinResponse = SpinResponse.fromBinary(gaiaResponseData);
 
-    return this.saveSpinData(spinResponse, spiderData);
+    return this.saveSpinData({ spinResponse, spiderData });
   }
 
-  async saveSpinData(
-    spinResponse: SpinResponse,
-    spiderData: SpiderData,
-    compress?: CompressType
-  ): Promise<void> {
+  async saveSpinData(options: {
+    spinResponse: SpinResponse;
+    spiderData: SpiderData;
+    compress?: CompressType;
+    isLog?: boolean;
+  }): Promise<void> {
+    const { spinResponse, spiderData, compress, isLog = true } = options;
     const gameName = spiderData.name;
 
-    const gameProto = await this.getProto(gameName, gameName);
+    const gameProto = await this.getProto(gameName);
     const spinPbName = await this.getSpinPbName(gameName);
 
     if (!spinPbName) {
@@ -206,6 +208,13 @@ export class JiliDb {
         //     spinDataType = SpinDataType.special;
         //   }
         // }
+        if (['mpt'].includes(spiderData.name)) {
+          const bonusTotalWinRegex = /"(ComboStageWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
+          const matches = jsonData.match(bonusTotalWinRegex);
+          if (matches && matches.length > 0) {
+            spinDataType = SpinDataType.special;
+          }
+        }
       }
     }
 
@@ -262,7 +271,7 @@ export class JiliDb {
       return;
     }
 
-    if (this.isComplete(tabName, isSpecial)) {
+    if (this.isComplete(tabName, isSpecial, isLog)) {
       if (this.isStop) {
         console.log(`${tabName} 完成所有数据抓取`);
         await telegramService.sendSuccess(`${tabName} 完成所有数据抓取`);
@@ -289,10 +298,13 @@ export class JiliDb {
       const compressFlag = compressType !== CompressType.None;
       const message = `${compressFlag ? '✅ 压缩成功' : '⚠️ 跳过压缩'}，压缩率: ${compressionRate.toFixed(2)}%，阈值: ${threshold.toFixed(2)}%，压缩方式: ${CompressTypeMap[compressType]}`;
       // telegramService.sendInfo(message);
-      console.log(message);
+      if (isLog) {
+        console.log(message);
+      }
     }
 
-    const saveBet = isExtra ? realBet * 1.5 : realBet;
+    // const saveBet = isExtra ? realBet * 1.5 : realBet;
+    const saveBet = isExtra ? realBet : realBet;
     const spinData: SpinDataAttributes = {
       data,
       totalWin: spinResponse.totalWin || 0,
@@ -364,50 +376,59 @@ export class JiliDb {
     }
   }
 
-  private pbMap: Map<string, unknown> = new Map();
+  private pbMap: Map<string, protobuf.Namespace> = new Map();
   private jiliProtoMap: Map<string, JiliProtoAttributes> = new Map();
+  private protoRootPromiseCache: Map<string, Promise<protobuf.Root>> = new Map();
 
-  private async syncJiliProto(name: string): Promise<JiliProtoAttributes> {
-    const jiliProto = await this.db.jiliProto.findOne({
-      where: { name },
-    });
-
-    if (!jiliProto) {
-      throw new Error(`not found proto:${name}`);
+  private async syncJiliProto(name: string): Promise<protobuf.Root> {
+    if (this.protoRootPromiseCache.has(name)) {
+      return this.protoRootPromiseCache.get(name);
     }
 
-    const result = jiliProto.toJSON();
-    this.jiliProtoMap.set(name, result);
-    return result;
+    const loadPromise = (async () => {
+      const jiliProto = await this.db.jiliProto.findOne({
+        where: { name },
+      });
+
+      if (!jiliProto) {
+        throw new Error(`not found proto:${name}`);
+      }
+
+      const result = jiliProto.toJSON();
+      this.jiliProtoMap.set(name, result);
+
+      createDirectoryIfNotExists(__protoDir);
+
+      const protoFilePath = path.join(__protoDir, `${name}.proto`);
+      writeFileSync(protoFilePath, result.data, 'utf8');
+
+      const root = await protobuf.load(protoFilePath);
+      return root;
+    })();
+
+    this.protoRootPromiseCache.set(name, loadPromise);
+    return loadPromise;
   }
 
-  private async getProto(name: string, gameName: string): Promise<protobuf.Namespace> {
-    if (!this.pbMap.has(name)) {
-      await this.syncJiliProto(name);
+  private async getProto(gameName: string): Promise<protobuf.Namespace> {
+    const root = await this.syncJiliProto(gameName);
+
+    if (this.pbMap.has(gameName)) {
+      return this.pbMap.get(gameName);
     }
-    const result = this.jiliProtoMap.get(name);
-
-    createDirectoryIfNotExists(__protoDir);
-
-    // 将 proto 内容写入文件
-    const protoFilePath = path.join(__protoDir, `${gameName}.proto`);
-    writeFileSync(protoFilePath, result.data, 'utf8');
-
-    // 使用 protobufjs 编译
-    const root = await protobuf.load(protoFilePath);
+    const result = this.jiliProtoMap.get(gameName);
 
     // 获取所有 message
     const messages = Object.values(root.nested).filter((v) => v instanceof protobuf.Namespace);
+    const value = messages[0];
 
     // 缓存结果
-    this.pbMap.set(result.name, messages[0]);
-    return messages[0];
+    this.pbMap.set(result.name, value);
+    return value;
   }
 
   private async getSpinPbName(name: string): Promise<string> {
-    if (!this.jiliProtoMap.has(name)) {
-      await this.syncJiliProto(name);
-    }
+    await this.syncJiliProto(name);
     return this.jiliProtoMap.get(name).spinPbName;
   }
 

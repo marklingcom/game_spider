@@ -1,4 +1,4 @@
-import type Config from '../utils/config.js';
+import type { Config } from '../utils/config.js';
 import { getGameUrl } from './huidu.js';
 import { getGameInfoFromApi, type SpiderData } from './info.js';
 

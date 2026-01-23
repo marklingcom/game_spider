@@ -4,7 +4,6 @@ proxy:
 db:
   type: mysql
   dsn: root:m9KxXa7j@tcp(sss.cpigame.com:3306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
-  # dsn: game:dawo97qknk@tcp(sss.duozhigame.com:3306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
   dialect: ""
 telegram:
   enable: true
@@ -20,65 +19,23 @@ betConfig:
   buyBouns:
     enable: false
     index: 0
-    hasDefaultIndex: true
+    hasDefaultIndex: false
   extra:
     enable: false
     index: 0
-    hasDefaultIndex: true
+    hasDefaultIndex: false
   special: false
-  gameName: Fortune Coins 2
+  gameName: Money Pot
 huiduConfig:
   coin: 100000
   key: uidList1
   maxCount: 10
   uidList0:
-    # - 1641530
-    - 7663732
+    - 7656921
   uidListTest:
     - 7633004
   noMoneyAccounts:
     - 1641530
-    - 7656995
-    - 7656952
-    - 7656940
-    - 7656921
-    - 7656989
-    - 7657012
-    - 7656980
-    - 7657001
-    - 7656873
-    - 7656966
-    - 7657021
-    - 7657033
-    - 7657364
-    - 7657385
-    - 7657374
-    - 7657394
-    - 7657413
-    - 7657401
-    - 7657355
-    - 7657452
-    - 7657425
-    - 7657440
-    - 7657460
-    - 7663104
-    - 7657470
-    - 7663277
-    - 7663143
-    - 7657485
-    - 7663451
-    - 7663361
-    - 7663340
-    - 7663258
-    - 7663428
-    - 7663412
-    - 7663384
-    - 7663296
-    - 7663125
-    - 7663538
-    - 7663463
-    - 7663499
-    - 7663319
   uidList1:
     - 7656873
     - 7656921

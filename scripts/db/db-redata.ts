@@ -10,7 +10,7 @@ import { getFullGameName, getTableGameName } from '../../src/utils/table.js';
 async function reSpinData(
   tableName: string,
   betConfig: ServerConfig['betConfig'],
-  options: { pageSize: number; concurrency: number }
+  options: { pageSize: number }
 ) {
   try {
     console.log('🔍 开始重新保存数据');
@@ -43,14 +43,12 @@ async function reSpinData(
     console.log(`📊 处理表: ${tableName}\n`);
 
     const tableModel = await reader.getTableModel();
-    const { pageSize, concurrency } = options;
+    const { pageSize } = options;
     let errorCount = 0;
-    let totalProcessed = 0;
+    let successCount = 0;
 
-    const result = await reader.readTableDataPaginated(pageSize, async (records, offset) => {
-      if (offset === 0) {
-        console.log(`📦 开始处理数据（每批 ${pageSize} 条，并发数: ${concurrency}）\n`);
-      }
+    const handleCount = await reader.readTableDataPaginated(pageSize, async (records, offset) => {
+      console.log(`📦 处理数据，第 ${offset} 批，共 ${records.length} 条\n`);
 
       const processRecord = async (recordData: (typeof records)[0]) => {
         const oldId = recordData.id;
@@ -102,7 +100,7 @@ async function reSpinData(
             }
           }
 
-          await jiliDb.saveSpinData(spinResponse, spiderData);
+          await jiliDb.saveSpinData({ spinResponse, spiderData, isLog: false });
 
           const oldRecord = await tableModel.findByPk(oldId);
           if (oldRecord) {
@@ -112,37 +110,30 @@ async function reSpinData(
           return { success: true, id: oldId };
         } catch (error) {
           const errorMessage = error instanceof Error ? error.message : String(error);
-          console.error(` ❌ 处理记录 ${oldId} 失败:`, errorMessage);
+          console.error(` ❌ 处理记录 ${oldId} 失败:`, error);
           return { success: false, id: oldId };
         }
       };
 
-      for (let i = 0; i < records.length; i += concurrency) {
-        const batch = records.slice(i, i + concurrency);
-        const results = await Promise.allSettled(batch.map(processRecord));
-
-        for (const result of results) {
-          if (result.status === 'fulfilled') {
-            if (result.value.success) {
-              totalProcessed++;
-            } else {
-              errorCount++;
-            }
-          } else {
-            errorCount++;
-          }
+      const workers = records.map(async (item, _index) => {
+        const result = await processRecord(item);
+        if (result.success) {
+          successCount++;
+        } else {
+          errorCount++;
         }
+        // console.log(
+        //   `dataIndex: ${index}, 处理结果: ${result.success ? '成功' : '失败'}, id: ${result.id}`
+        // );
+      });
 
-        console.log(`✅ 处理完成: ${totalProcessed} 条, 错误: ${errorCount} 条`);
-      }
+      await Promise.all(workers);
+      console.log(`✅ 处理完成: ${successCount} 条, 错误: ${errorCount} 条`);
     });
-
-    totalProcessed = result.totalProcessed;
-    errorCount += result.errorCount;
 
     console.log(`\n${'='.repeat(80)}`);
     console.log(`📊 处理结果:`);
-    console.log(`处理完成: ${totalProcessed}, 错误: ${errorCount}`);
+    console.log(`总数据量: ${handleCount}, 成功: ${successCount}, 失败: ${errorCount}`);
     console.log(`${'='.repeat(80)}`);
 
     await dbManager.getDB()?.close();
@@ -155,7 +146,7 @@ async function reSpinData(
 }
 
 async function main() {
-  const tableName = 'jili_spin_tks_normal_backup';
+  const tableName = 'jili_spin_mpt_normal_backup';
   const name = getTableGameName(tableName);
   const fullName = getFullGameName(name);
   if (!fullName) {
@@ -181,7 +172,6 @@ async function main() {
     },
     {
       pageSize: 1000,
-      concurrency: 100,
     }
   );
   process.exit(0);

@@ -1,7 +1,7 @@
 import { join } from 'node:path';
-import axios from 'axios';
 import protobuf from 'protobufjs';
 import { __protoGeneralDir } from '../utils/env.js';
+import { getAxiosClient } from '../utils/request.js';
 import { parseJiliGameUrl } from '../utils/url.js';
 
 export interface SpiderData {
@@ -156,16 +156,17 @@ export async function getGameInfoFromApi(gameUrl: string): Promise<SpiderData> {
       ssoLoginUrl = `${params.origin}/sso-login.api`;
     }
 
-    const formData = new FormData();
+    const formData = new URLSearchParams();
     formData.append('key', params.ssoKey);
     formData.append('lang', params.lang);
 
     console.log('ssoLoginUrl:', ssoLoginUrl);
 
-    const response = await axios.post(ssoLoginUrl, formData, {
+    const response = await getAxiosClient().post(ssoLoginUrl, formData.toString(), {
       headers: {
         Accept: '*/*',
         'Accept-Language': 'zh,en;q=0.9,zh-CN;q=0.8',
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
         Origin: params.origin,
         Priority: 'u=1, i',
         Referer: `${params.origin}/`,

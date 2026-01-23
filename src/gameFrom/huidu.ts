@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { getRedirectURL } from '../utils/network.js';
+import { getAxiosClient } from '../utils/request.js';
 
 const GAME_API_URL = 'https://bw.yobao.xyz/api/bwGame/getLaunchUrl';
 const TIMEOUT = 30000; // 30 seconds in milliseconds
@@ -30,7 +30,7 @@ export async function getGameUrl(huiDuConfig: HuiduConfig): Promise<string> {
     home_url: '',
   };
 
-  const response = await axios.post(GAME_API_URL, requestData, {
+  const response = await getAxiosClient().post(GAME_API_URL, requestData, {
     headers: {
       'Content-Type': 'application/json',
     },

@@ -1,4 +1,5 @@
-import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios';
+import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { getAxiosClient } from './request.js';
 
 export function parseURL(targetURL: string): {
   protocol: string;
@@ -49,7 +50,7 @@ export async function getRedirectURL(reqConfig: AxiosRequestConfig, retry = 3): 
     maxRedirects: 0, // 禁用自动重定向
     validateStatus: (status) => status >= 200 && status < 400,
   };
-  const response = await axios(config);
+  const response = await getAxiosClient().request(config);
 
   const redirectURL = parseRedirectResponse(response);
 
@@ -64,7 +65,7 @@ export async function getRedirectURL(reqConfig: AxiosRequestConfig, retry = 3): 
 
 export async function getUrlHtmlContent(url: string): Promise<string> {
   try {
-    const response = await axios.get(url);
+    const response = await getAxiosClient().get(url);
     return response.data;
   } catch (error) {
     console.error('获取HTML内容失败:', error);

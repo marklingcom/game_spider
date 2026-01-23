@@ -139,10 +139,9 @@ export class SpinDataReader {
   async readTableDataPaginated(
     pageSize: number = 500,
     onPage?: (records: SpinDataRecord[], offset: number) => Promise<void>
-  ): Promise<{ totalProcessed: number; errorCount: number }> {
+  ): Promise<number> {
     let offset = 0;
-    let totalProcessed = 0;
-    let errorCount = 0;
+    let count = 0;
 
     while (true) {
       const records = await this.readTableData({
@@ -150,6 +149,7 @@ export class SpinDataReader {
         limit: pageSize,
         offset: offset,
       });
+      count += records.length;
 
       if (!records || records.length === 0) {
         break;
@@ -158,20 +158,16 @@ export class SpinDataReader {
       if (onPage) {
         try {
           await onPage(records, offset);
-          totalProcessed += records.length;
         } catch (error) {
-          errorCount += records.length;
           const errorMessage = error instanceof Error ? error.message : String(error);
           console.error(`处理批次失败 (offset: ${offset}):`, errorMessage);
         }
-      } else {
-        totalProcessed += records.length;
       }
 
       offset += pageSize;
     }
 
-    return { totalProcessed, errorCount };
+    return count;
   }
 
   convertToBuffer(data: Buffer | unknown): Buffer {
