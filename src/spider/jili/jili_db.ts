@@ -127,12 +127,17 @@ export class JiliDb {
     }
   }
 
-  async saveGaiaResponseData(spinBuffer: Buffer, spiderData: SpiderData): Promise<void> {
-    const { gaiaResponseData } = await decryptResponseBuffer(spinBuffer, spiderData.token);
+  async getGaiaResponseData(spinBuffer: Buffer, token: string): Promise<SpinResponse> {
+    const { gaiaResponseData } = await decryptResponseBuffer(spinBuffer, token);
     if (!gaiaResponseData || gaiaResponseData.length === 0) {
       throw new Error('gaiaResponseData is empty');
     }
     const spinResponse = SpinResponse.fromBinary(gaiaResponseData);
+    return spinResponse;
+  }
+
+  async saveGaiaResponseData(spinBuffer: Buffer, spiderData: SpiderData): Promise<void> {
+    const spinResponse = await this.getGaiaResponseData(spinBuffer, spiderData.token);
 
     return this.saveSpinData({ spinResponse, spiderData });
   }
@@ -410,7 +415,7 @@ export class JiliDb {
     return loadPromise;
   }
 
-  private async getProto(gameName: string): Promise<protobuf.Namespace> {
+  async getProto(gameName: string): Promise<protobuf.Namespace> {
     const root = await this.syncJiliProto(gameName);
 
     if (this.pbMap.has(gameName)) {
@@ -427,9 +432,14 @@ export class JiliDb {
     return value;
   }
 
-  private async getSpinPbName(name: string): Promise<string> {
+  async getSpinPbName(name: string): Promise<string> {
     await this.syncJiliProto(name);
     return this.jiliProtoMap.get(name).spinPbName;
+  }
+
+  async getGameInfoPbName(name: string): Promise<string> {
+    await this.syncJiliProto(name);
+    return this.jiliProtoMap.get(name).gameInfoPbName;
   }
 
   private countOnesInPlate(plate: unknown): number {

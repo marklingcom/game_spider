@@ -72,7 +72,7 @@ export class TelegramService extends EventEmitter {
     const telegramConfig = config.serverConfig.telegram;
 
     if (!isProd || !telegramConfig.enable) {
-      console.log('Telegram 机器人未启用');
+      // console.log('Telegram 机器人未启用');
       return;
     }
 

@@ -1,116 +1,60 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
-import path, { dirname, join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import dayjs from 'dayjs';
-import protobuf from 'protobufjs';
 import { dbManager } from '../../src/models/index.js';
-import type { JiliProtoAttributes } from '../../src/models/JiliProto.js';
 import { AckType } from '../../src/protoGeneral/astarte2_196.js';
-import { decryptResponseBuffer } from '../../src/spider/jili/jili_utils.js';
+import { JiliDb } from '../../src/spider/jili/jili_db.js';
+import { config } from '../../src/utils/config.js';
 import { dataToBuffer } from '../../src/utils/dataToBuffer.js';
-import { createDirectoryIfNotExists } from '../../src/utils/utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const dataDir = join(__dirname, 'data');
-const __protoDir = path.join(__dirname, '../../__proto');
 
 const base64String: string =
-  'data:application/octet-stream;base64,KqAB3yavxR8+1oYLoAEmjqPUF2GgPXU1hrmTiT5j72BdLdFle2IrhLxN1aADf+QvNxjHaaKCEXv3bcD6/fh7gPtrSYvHbjqgjkxwnmiN9w/Lg2mBCqmliS3TsTOLkdHBtUp53vRY7/bXCFTcCwwpbCwOjWlGYa+AhruBGt1O4k+VHAJlEyjFO1TmL8njjV9r2QTYhq0QhSJ8FRRqJQlvumH+5g==';
+  'data:application/octet-stream;base64,KrAD8WAKbCEP5OXDFRjCiBuRdSCSnJkhg/y2qsVE04VSHqfuYdDKb/+4KfDj1M8Gs1Pw0omwuF9PIcztit0MDeu8tDzLkF1tqaG9bh3nEYSjeRg1panfm2wBy+JKEQUkqnXzPiq/18VlTjn1+lGmCGmCecpbXBc7iMxq9/5Jn0wlxTOuoAsm++76BFGGjJ0JtJQVk+EpDTPxPkxMqXfOHb0uGQe+tj0j0VdGK5sIyeveExs/Qaw8oaLXIr60CjnTLxwhL8fyip1kUpVgDFdtfYiJ8MaoHW2p0Vr75m4BFeCUFEA+52Ih/x+eExBuxxyo7PO4Qy+xdsqPC+5Mf8KV2o3PyaBYifgujBiKQmgh53y3i1V3OkT7RFVGc9FwQKUERn8kb0/5P9UMi7DjVC/F6YZxSnetI5RA0zgc1OkFPtNda0I3MdUSUDg7ubPJW3ckObk7CzjyyeIdg1EEiKccgLi/exCQukpjKRogdJiDDBU63jKeK/vQG9GJZXtH5fFcUYrD1zUmFenI/0jU+vYPZzwhZOWEqo/5ZRlLKIamJesGSbigTJ8TipnXKEbX55k2GZy1MgwIuOLMywYQotbdpAI=';
 const hexString: string = '';
 const escapeString: string = '';
 
-const token: string =
-  '0a0431303031120652786c3168571a046a696c6922033136349806cffccdcb06a2060c633733316432653836666432';
-const gameName: string = 'pirate';
-const ackType: AckType = AckType.spin;
+const token: string = 'b86eafd0aac8eb08ba341868774f068169520353';
+const gameName: string = 'mpt2';
 
 function getAckTypeName(ack: number): string {
   return AckType[ack] || `Unknown(${ack})`;
 }
 
-async function getProto(name: string): Promise<protobuf.Namespace> {
-  const jiliProtoModel = dbManager.jiliProto;
-  const jiliProto = await jiliProtoModel.findOne({
-    where: { name },
-  });
-
-  if (!jiliProto) {
-    throw new Error(`未找到 jili_proto 记录: ${name}`);
-  }
-
-  const protoData = jiliProto.toJSON() as JiliProtoAttributes;
-
-  if (!protoData.data) {
-    throw new Error(`jili_proto 中未找到 data: ${name}`);
-  }
-
-  createDirectoryIfNotExists(__protoDir);
-
-  const protoFilePath = path.join(__protoDir, `${name}.proto`);
-  writeFileSync(protoFilePath, protoData.data, 'utf8');
-
-  const root = await protobuf.load(protoFilePath);
-
-  if (!root.nested) {
-    throw new Error(`proto 文件中没有定义任何消息: ${name}`);
-  }
-
-  const messages = Object.values(root.nested).filter((v) => v instanceof protobuf.Namespace);
-
-  if (messages.length === 0) {
-    throw new Error(`无法加载 proto: ${name}`);
-  }
-
-  return messages[0];
-}
-
-async function getAckPbName(name: string, ack: AckType): Promise<string> {
-  const jiliProtoModel = dbManager.jiliProto;
-  const jiliProto = await jiliProtoModel.findOne({
-    where: { name },
-  });
-
-  if (!jiliProto) {
-    throw new Error(`未找到 jili_proto 记录: ${name}`);
-  }
-
-  const protoData = jiliProto.toJSON() as JiliProtoAttributes;
-
-  switch (ack) {
-    case AckType.spin:
-      if (!protoData.spinPbName) {
-        throw new Error(`jili_proto 中未找到 spinPbName: ${name}`);
-      }
-      return protoData.spinPbName;
-    case AckType.info:
-      if (!protoData.gameInfoPbName) {
-        throw new Error(`jili_proto 中未找到 gameInfoPbName: ${name}`);
-      }
-      return protoData.gameInfoPbName;
-    default:
-      throw new Error(`不支持的 ackType: ${ack} (${getAckTypeName(ack)})`);
-  }
-}
-
-async function decodeResponse(buffer: Buffer, token: string, gameName: string, ackType: AckType) {
+async function decodeResponse(buffer: Buffer, token: string, gameName: string, jiliDb: JiliDb) {
   try {
-    const { gaiaResponseData } = await decryptResponseBuffer(buffer, token);
+    const spinResponse = await jiliDb.getGaiaResponseData(buffer, token);
+    const { data: spinResponseData, spinReq } = spinResponse;
 
-    console.log(`🔓 解密成功，gaiaResponseData 长度: ${gaiaResponseData.length} bytes`);
+    console.log(`🔓 解密成功，gaiaResponseData，spinReq: \n${JSON.stringify(spinReq, null, 2)}`);
 
-    const gameProto = await getProto(gameName);
-    const ackPbName = await getAckPbName(gameName, ackType);
+    const gameProto = await jiliDb.getProto(gameName);
+
+    let ackPbName: string;
+    const ackType = spinResponse.spinType;
+    switch (ackType) {
+      case AckType.spin:
+        ackPbName = await jiliDb.getSpinPbName(gameName);
+        break;
+      case AckType.info:
+        ackPbName = await jiliDb.getGameInfoPbName(gameName);
+        break;
+      default:
+        throw new Error(`不支持的 ackType: ${ackType} (${getAckTypeName(ackType)})`);
+    }
 
     console.log(`📦 使用 proto 消息类型: ${ackPbName}`);
 
     const ackMessage = gameProto.lookupType(ackPbName);
-    const ackData = ackMessage.decode(gaiaResponseData);
+    const spinAckData = ackMessage.decode(spinResponseData);
 
     return {
-      ackType: getAckTypeName(ackType),
       ackPbName,
-      data: ackData.toJSON(),
+      ackType,
+      data: spinAckData.toJSON(),
     };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
@@ -137,7 +81,12 @@ async function main() {
       process.exit(1);
     }
 
-    const decoded = await decodeResponse(dataBuffer, token, gameName, ackType);
+    await dbManager.initDB(config.serverConfig.db);
+    console.log('✅ 成功连接到数据库');
+
+    const jiliDb = new JiliDb({ db: dbManager, config });
+
+    const decoded = await decodeResponse(dataBuffer, token, gameName, jiliDb);
 
     const jsonData = JSON.stringify(decoded, null, 2);
     console.log('\n📊 解析结果:');
