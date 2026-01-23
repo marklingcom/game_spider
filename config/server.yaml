@@ -25,7 +25,7 @@ betConfig:
     index: 0
     hasDefaultIndex: false
   special: false
-  gameName: Money Pot
+  gameName: Boxing King Title Match
 huiduConfig:
   coin: 100000
   key: uidList1
