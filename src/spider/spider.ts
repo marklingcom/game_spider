@@ -1,8 +1,7 @@
 import { EventEmitter } from 'node:events';
 import type { SpiderData } from '../gameFrom/info.js';
 import type { GameInfoAck } from '../protoGeneral/astarte2_196.js';
-import type Config from '../utils/config.js';
-import type { BuyBounsConfig, ExtraConfig } from '../utils/config.js';
+import type { BuyBounsConfig, Config, ExtraConfig } from '../utils/config.js';
 import { telegramService } from '../utils/telegram.js';
 import { JiliApi } from './jili/jili_api.js';
 import type { JiliDb } from './jili/jili_db.js';
