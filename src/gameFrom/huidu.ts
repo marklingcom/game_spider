@@ -18,6 +18,7 @@ interface HuiduConfig {
   coin: number;
   gameUid: string;
   companyId: number;
+  partnerId?: number;
 }
 
 export async function getGameUrl(huiDuConfig: HuiduConfig): Promise<string> {
@@ -26,7 +27,7 @@ export async function getGameUrl(huiDuConfig: HuiduConfig): Promise<string> {
     coin: huiDuConfig.coin,
     game_uid: huiDuConfig.gameUid,
     company_id: huiDuConfig.companyId,
-    partner_id: 1,
+    partner_id: huiDuConfig.partnerId || 1,
     home_url: '',
   };
 

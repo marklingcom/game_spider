@@ -952,7 +952,8 @@
   {
     "fullName": "Boxing King Title Match",
     "companyId": 1,
-    "gameUid": "abcdefghijklmnopqrstuvwxyzabcde2"
+    "gameUid": "31325",
+    "partnerId": 2
   },
   {
     "fullName": "Money Pot Deluxe",

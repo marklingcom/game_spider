@@ -66,6 +66,7 @@ interface HuiduConfig {
   fullName: string;
   companyId: number;
   gameUid: string;
+  partnerId?: number;
 }
 
 export class Config {
