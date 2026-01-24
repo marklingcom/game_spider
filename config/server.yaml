@@ -19,11 +19,11 @@ betConfig:
   buyBouns:
     enable: false
     index: 0
-    hasDefaultIndex: false
+    hasDefaultIndex: true
   extra:
     enable: false
     index: 0
-    hasDefaultIndex: false
+    hasDefaultIndex: true
   special: false
   gameName: Money Pot
 huiduConfig:
