@@ -54,7 +54,11 @@ export async function getRedirectURL(reqConfig: AxiosRequestConfig, retry = 3): 
 
   const redirectURL = parseRedirectResponse(response);
 
-  if ((!redirectURL || redirectURL === reqConfig.url) && retry > 0) {
+  if (!redirectURL) {
+    return reqConfig.url;
+  }
+
+  if (redirectURL === reqConfig.url && retry > 0) {
     const nextRetry = retry - 1;
     // console.log(`获取重定向地址失败, 重试次数: ${nextRetry}`);
     return getRedirectURL(reqConfig, nextRetry);

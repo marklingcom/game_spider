@@ -150,8 +150,10 @@ export async function getGameInfoFromApi(gameUrl: string): Promise<SpiderData> {
     }
 
     let ssoLoginUrl: string;
-    if (params.origin.includes('wbgame')) {
+    if (params.origin.includes('wbgame.cmz56k3w.com')) {
       ssoLoginUrl = `${params.origin.replace('wbgame', 'wbwebapi')}/sso-login.api`;
+    } else if (params.origin.includes('wbgame.quickgaming-asia.com')) {
+      ssoLoginUrl = `${params.origin.replace('wbgame', 'api-jl')}/sso-login.api`;
     } else {
       ssoLoginUrl = `${params.origin}/sso-login.api`;
     }
