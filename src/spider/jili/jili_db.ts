@@ -443,14 +443,19 @@ export class JiliDb {
     return value;
   }
 
-  async getSpinPbName(name: string): Promise<string> {
+  async getSpinPb(name: string): Promise<JiliProtoAttributes> {
     await this.syncJiliProto(name);
-    return this.jiliProtoMap.get(name).spinPbName;
+    return this.jiliProtoMap.get(name);
+  }
+
+  async getSpinPbName(name: string): Promise<string> {
+    const jiliProto = await this.getSpinPb(name);
+    return jiliProto.spinPbName;
   }
 
   async getGameInfoPbName(name: string): Promise<string> {
-    await this.syncJiliProto(name);
-    return this.jiliProtoMap.get(name).gameInfoPbName;
+    const jiliProto = await this.getSpinPb(name);
+    return jiliProto.gameInfoPbName;
   }
 
   private countOnesInPlate(plate: unknown): number {

@@ -13,12 +13,12 @@ const __dirname = dirname(__filename);
 const dataDir = join(__dirname, 'data');
 
 const base64String: string =
-  'data:application/octet-stream;base64,KqAChufrK1dMC7MokteTlr4P61BbVw7/fZTCasBMq7ff3k0mllTSYv6WCflLaY5dYCB7pMizHcfs3JpU2Le/ZDYHnmTRdrhx/AZvYwPMG57g3ZfKXvs8aFtjdwoumLeT1Owoq74AH+4cgyrolYBQXblD8jFkR5Qgz01UAUTOnCA++6o9hAITLLndP68zeNaPM6DiMprWdny/HUQEc76zSK/IEct7ONEb5N2TuEEHD6xG2g6awV3LdvuTlJR++Pf9jHxqVFzTB8J+JskYs8JX0lxYCpGv/U9Cx8TjSajH2QjdPqTdfI49agnvG9KZJ0Zn5j1zv1BgxLyOqGsPRtswvoXfso6wWs4peBmbdpiKexQmb3fay1e8HwX2gpLYh6nxS1yvMgwI0vTMywYQ5OTqsgE=';
+  'data:application/octet-stream;base64,CGUqMHlo6e3z7//ZiRxD6BunwecHuvxKFn1qsVBSuDHOpYWguxwIMEeWOeR1ZO/5yhq7fQ==';
 const hexString: string = '';
 const escapeString: string = '';
 
-const token: string = '3ac7422e7cce61269fe59d45fc4d8504382a6bf3';
-const gameName: string = 'mpt';
+const token: string = '678c649b8d1656319cba994becc95837f0946acf';
+const gameName: string = 'sss';
 
 function getAckTypeName(ack: number): string {
   return AckType[ack] || `Unknown(${ack})`;
@@ -36,9 +36,11 @@ async function decodeResponse(buffer: Buffer, token: string, gameName: string, j
     let ackPbName: string;
     const ackType = spinResponse.spinType;
     switch (ackType) {
-      case AckType.spin:
-        ackPbName = await jiliDb.getSpinPbName(gameName);
+      case AckType.spin: {
+        ackPbName = 'JPInfo';
+        // ackPbName = await jiliDb.getSpinPbName(gameName);
         break;
+      }
       case AckType.info:
         ackPbName = await jiliDb.getGameInfoPbName(gameName);
         break;

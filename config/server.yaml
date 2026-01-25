@@ -28,7 +28,7 @@ betConfig:
   gameName: Boxing King Title Match
 huiduConfig:
   coin: 100000
-  key: uidList0
+  key: uidList1
   maxCount: 10
   uidList0:
     - 7663607
