@@ -35,7 +35,14 @@ export class JiliApi extends EventEmitter {
     this.jiliSpider = options.spiderData;
   }
 
-  async spin(bet: number, buyBouns: BuyBounsConfig, extra: ExtraConfig): Promise<Buffer> {
+  async spin(
+    bet: number,
+    buyBouns: BuyBounsConfig,
+    extra: ExtraConfig
+  ): Promise<{
+    spinReqData: SpinReq;
+    spinResBuffer: Buffer;
+  }> {
     if (buyBouns.enable && extra.enable) {
       throw new Error('不能同时为true');
     }
@@ -104,7 +111,10 @@ export class JiliApi extends EventEmitter {
         throw new Error('spinAckByte is empty');
       }
 
-      return body;
+      return {
+        spinReqData,
+        spinResBuffer: body,
+      };
     } catch (error: any) {
       if (error.response && error.response.status === 429) {
         const retryError = new Error('NeedRetryError');

@@ -7,7 +7,7 @@ import type DatabaseManager from '../../models/index.js';
 import type { JiliInfoAttributes } from '../../models/JiliInfo.js';
 import type { JiliProtoAttributes } from '../../models/JiliProto.js';
 import type { SpinDataAttributes } from '../../models/SpinData.js';
-import { SpinResponse } from '../../protoGeneral/astarte2_196.js';
+import { type SpinReq, SpinResponse } from '../../protoGeneral/astarte2_196.js';
 import type { Config } from '../../utils/config.js';
 import {
   CompressType,
@@ -136,19 +136,25 @@ export class JiliDb {
     return spinResponse;
   }
 
-  async saveGaiaResponseData(spinBuffer: Buffer, spiderData: SpiderData): Promise<void> {
-    const spinResponse = await this.getGaiaResponseData(spinBuffer, spiderData.token);
+  async saveGaiaResponseData(_options: {
+    spinResBuffer: Buffer;
+    spinReqData: SpinReq;
+    spiderData: SpiderData;
+  }): Promise<void> {
+    const { spinResBuffer, spinReqData, spiderData } = _options;
+    const spinResponse = await this.getGaiaResponseData(spinResBuffer, spiderData.token);
 
-    return this.saveSpinData({ spinResponse, spiderData });
+    return this.saveSpinData({ spinResponse, spinReqData, spiderData });
   }
 
   async saveSpinData(options: {
     spinResponse: SpinResponse;
     spiderData: SpiderData;
+    spinReqData?: SpinReq;
     compress?: CompressType;
     isLog?: boolean;
   }): Promise<void> {
-    const { spinResponse, spiderData, compress, isLog = true } = options;
+    const { spinResponse, spinReqData, spiderData, compress, isLog = true } = options;
     const gameName = spiderData.name;
 
     const gameProto = await this.getProto(gameName);
@@ -234,7 +240,7 @@ export class JiliDb {
       }
     }
 
-    const realBet = spinResponse.realBet || spinResponse.spinReq.bet || 0;
+    const realBet = spinResponse.realBet || spinResponse.spinReq?.bet || spinReqData?.bet || 0;
     let tabName = `jili_spin_${gameName}`;
 
     if (this.config.serverConfig.betConfig.bet !== 0) {

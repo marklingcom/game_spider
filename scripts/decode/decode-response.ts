@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import dayjs from 'dayjs';
 import { dbManager } from '../../src/models/index.js';
-import { AckType, GameInfoAck, SpinResponse } from '../../src/protoGeneral/astarte2_196.js';
+import { AckType, SpinResponse } from '../../src/protoGeneral/astarte2_196.js';
 import { JiliDb } from '../../src/spider/jili/jili_db.js';
 import { decryptResponseBuffer } from '../../src/spider/jili/jili_utils.js';
 import { config } from '../../src/utils/config.js';
@@ -14,12 +14,12 @@ const __dirname = dirname(__filename);
 const dataDir = join(__dirname, 'data');
 
 const base64String: string =
-  'data:application/octet-stream;base64,CAEqgALpYaaT57oZya2oFKomYg773hXi+FslxOXjgfmHw63FPKlAG/e4DCsa7Z38AMrNRAyFj2TXwI+KqnkM2rUxvKbpSdEPIhKPJFyI60Ojiufz7GZzg9PhNH8ZtjAo+QviRanldq06+cnW3pBM34rK+unM1BtOpp6h2jUqVkpwugRR2OdAYKrssyMmG4RqhWaka5K6qwk8tjn9Nar9BqLmhCR11JM0CzAkL2Zfnl9A9o0cJhGLkqnRdaetjZZIsWVabkwWJetl6QPm+OlNptxDGyC6RPuUpnT9vfhf8s9PdOOPqjfSelpZQnh4p3eV83JxbecZ1JNUm2VwfjMYG+6oBIbYMgwIwpbbywYQ14ygtQE=';
+  'data:application/x-protobuf;base64,GiBjZTI2ZWMzZDRhN2NmNWRiY2MwMjFiODMxMGM4MWY0ZSqgAwEx9/sduutfTnXZ1OxPQkSUg+r+AMo9TYA2qtn0PrR7LOeQCZMskt8uM2qwm0+T1vHVQPD2IXz1kgLZvf23TNLC6/oeQ4mJuJJ/viKnQVY6dbSGOS6SuPLoINHKUoVfVJyNZJXLZMvaYNrgUxcFedajqXu++PBqlmJzmX0mvv9bJeYEUoXpo9P1cj0YoKflZYMdbLYkjKJyWPGT50g/bz4yezghDwV+FxiP/1L1ZX7ec65XHemwj9YrmRh9HIfI2WNzDnJBZS4VHubonbQE3U/aHDa8m67PWp/p5O9LKJySSXlVS+CIVh+br/lXCSBZcF7VCKQ8uv1iN2SldIk3wGhbPpjSuA8dB/KYlefpAUB8PVGsPAMLdPpE91e+fuSDVtMqUAduvtDf0LXAtn9rAL/Za7gNRdwpTubsbQchI3Cs0tBWR/rSIGp3NSh8R1RTtuG8n6MUql9qtyGjJPqjIS7Yna2c5hI2HcbJuihOJ439vATBCsazjgywkK1JipyKvadiZKUvy/wtmKWiykzwfzYKjuyu6zCXoDWFL3iZaoU+';
 const hexString: string = '';
 const escapeString: string = '';
 
-const token: string = '354f9188093c4a13aa3c16d89dbed62e83e304f5';
-const gameName: string = 'bkex';
+const token: string = 'ce26ec3d4a7cf5dbcc021b8310c81f4e';
+const gameName: string = 'mpt2';
 
 function getAckTypeName(ack: number): string {
   return AckType[ack] || `Unknown(${ack})`;
@@ -28,7 +28,7 @@ function getAckTypeName(ack: number): string {
 async function decodeResponse(buffer: Buffer, token: string, gameName: string, jiliDb: JiliDb) {
   try {
     const { gaiaResponseData } = await decryptResponseBuffer(buffer, token);
-    const gameInfoAck = GameInfoAck.fromBinary(gaiaResponseData);
+    // const gameInfoAck = GameInfoAck.fromBinary(gaiaResponseData);
     const spinResponse = SpinResponse.fromBinary(gaiaResponseData);
     const { data: spinResponseData, spinReq } = spinResponse;
 
