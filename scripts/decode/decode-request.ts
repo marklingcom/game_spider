@@ -18,7 +18,8 @@ const dataDir = join(__dirname, 'data');
 
 const base64String: string = '';
 const hexString: string = '';
-const escapeString: string = '\u0008\u0000';
+const escapeString: string =
+  '\u0008\u0001\u0012<\n\u0004OS X\u0012\u0005zh-CN\u001a \n\u0006chrome\u0012\u0009144.0.0.0\u001a\u0005zh-CN ¾\u000b(¼\u0007"\u0000*\u0009Macintosh';
 
 function getAckTypeName(ack: number): string {
   return AckType[ack] || `Unknown(${ack})`;

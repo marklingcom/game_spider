@@ -278,8 +278,11 @@ protos:
   #   gi: 495
   #   spin_pb_name: SpinAck
   #   game_info_pb_name:
-  - name: mpt2
-    gi: 541
+  # - name: mpt2
+  #   gi: 541
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  - name: aa
+    gi: 115
     spin_pb_name: SpinAck
-    game_info_pb_name: GameInfoData
-
+    game_info_pb_name: GameInfoAck

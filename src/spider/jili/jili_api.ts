@@ -125,19 +125,20 @@ export class JiliApi extends EventEmitter {
     try {
       const browser: Browser = {
         type: 'chrome',
-        version: '137.0.0.0',
+        version: '144.0.0.0',
         language: 'en-US',
         width: 1034,
         height: 1877,
-        ratio: 1.0,
+        ratio: 0,
       };
 
       const infoReq: InfoReq = {
-        os: 'Android',
+        os: 'OS X',
         language: 'en-US',
         browser: browser,
-        version: '6.0',
-        model: 'Nexus 5',
+        version: '',
+        // model: 'Nexus 5',
+        model: 'Macintosh',
       };
 
       const request = {
@@ -149,7 +150,7 @@ export class JiliApi extends EventEmitter {
 
       const response = await getAxiosClient().post(url, postData, {
         headers: {
-          'Content-Type': 'application/x-protobuf',
+          // 'Content-Type': 'application/x-protobuf',
           token: this.jiliSpider.token,
         },
         responseType: 'arraybuffer',
