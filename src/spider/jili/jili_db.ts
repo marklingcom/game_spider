@@ -265,22 +265,31 @@ export class JiliDb {
       tabName += '_normal';
     }
 
-    if (isBuyBouns) {
-      const hasDefaultIndex = this.config.serverConfig.betConfig.buyBouns.hasDefaultIndex;
-      const index = spinResponse.spinReq.mall.index;
-      if (!hasDefaultIndex && index === 0) {
-        // 默认索引，不添加到表名
+    // Gold Rush 特殊处理
+    if (['ge'].includes(spiderData.name) && isSpecial) {
+      const isFree1 = /"(Free1TotalWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
+      if (isFree1.test(jsonData)) {
+        tabName += '_0';
       } else {
-        tabName += `_${index}`;
+        tabName += '_1';
       }
-    }
-    if (isExtra) {
-      const hasDefaultIndex = this.config.serverConfig.betConfig.extra.hasDefaultIndex;
-      const index = spinResponse.spinReq.extraSpin.index;
-      if (!hasDefaultIndex && index === 0) {
-        // 默认索引，不添加到表名
-      } else {
-        tabName += `_${index}`;
+    } else {
+      if (isBuyBouns) {
+        const hasDefaultIndex = this.config.serverConfig.betConfig.buyBouns.hasDefaultIndex;
+        const index = spinResponse.spinReq.mall.index;
+        if (!hasDefaultIndex && index === 0) {
+          // 默认索引，不添加到表名
+        } else {
+          tabName += `_${index}`;
+        }
+      } else if (isExtra) {
+        const hasDefaultIndex = this.config.serverConfig.betConfig.extra.hasDefaultIndex;
+        const index = spinResponse.spinReq.extraSpin.index;
+        if (!hasDefaultIndex && index === 0) {
+          // 默认索引，不添加到表名
+        } else {
+          tabName += `_${index}`;
+        }
       }
     }
 

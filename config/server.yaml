@@ -25,21 +25,22 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   special: false
-  gameName: Money Pot Deluxe
+  gameName: Gold Rush
 huiduConfig:
   coin: 100000
-  key: uidList1
+  key: uidList0
   maxCount: 10
   uidList0:
     - 7663607
-    # - 7663633
-    # - 7663690
-    # - 7663706
-    # - 7663732
+    - 7663633
+    - 7663690
+    - 7663706
+    - 7663732
   uidListTest:
     - 7633004
   noMoneyAccounts:
     - 1641530
+    - 7663633
   uidList1:
     - 7656873
     - 7656921
