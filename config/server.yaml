@@ -25,7 +25,7 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   special: false
-  gameName: Agent Ace
+  gameName: Money Pot Deluxe
 huiduConfig:
   coin: 100000
   key: uidList1
