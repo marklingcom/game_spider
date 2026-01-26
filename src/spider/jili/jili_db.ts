@@ -239,8 +239,9 @@ export class JiliDb {
         }
       }
     }
+    const spinReq = spinResponse.spinReq || spinReqData;
 
-    const realBet = spinResponse.realBet || spinResponse.spinReq?.bet || spinReqData?.bet || 0;
+    const realBet = spinResponse.realBet || spinReq?.bet || spinReq?.bet || 0;
     let tabName = `jili_spin_${gameName}`;
 
     if (this.config.serverConfig.betConfig.bet !== 0) {
@@ -250,10 +251,10 @@ export class JiliDb {
 
     var isBuyBouns = false;
     var isExtra = false;
-    if (spinResponse.spinReq?.mall) {
+    if (spinReq?.mall) {
       tabName += '_buy';
       isBuyBouns = true;
-    } else if (spinResponse.spinReq?.extraSpin) {
+    } else if (spinReq?.extraSpin) {
       tabName += '_extra';
       isExtra = true;
     }
@@ -276,7 +277,7 @@ export class JiliDb {
     } else {
       if (isBuyBouns) {
         const hasDefaultIndex = this.config.serverConfig.betConfig.buyBouns.hasDefaultIndex;
-        const index = spinResponse.spinReq.mall.index;
+        const index = spinReq.mall.index;
         if (!hasDefaultIndex && index === 0) {
           // 默认索引，不添加到表名
         } else {
@@ -284,7 +285,7 @@ export class JiliDb {
         }
       } else if (isExtra) {
         const hasDefaultIndex = this.config.serverConfig.betConfig.extra.hasDefaultIndex;
-        const index = spinResponse.spinReq.extraSpin.index;
+        const index = spinReq.extraSpin.index;
         if (!hasDefaultIndex && index === 0) {
           // 默认索引，不添加到表名
         } else {
