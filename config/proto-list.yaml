@@ -294,7 +294,11 @@ protos:
   #   gi: 299
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  - name: cnt
-    gi: 392
+  # - name: cnt
+  #   gi: 392
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name:
+  - name: ka
+    gi: 214
     spin_pb_name: SpinAck
-    game_info_pb_name:
+    game_info_pb_name: GameInfoData
