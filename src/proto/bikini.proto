@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package bikiniProto;
+
+message Column {
+  repeated int32 Col = 1;
+}
+
+message AwardData {
+  int32 Symbol = 1;
+  int32 Count = 2;
+  double Win = 3;
+}
+
+message ComboStageInfo {
+  repeated Column ComboStageSymbol = 1;
+  repeated Column FinalStageSymbol = 2;
+  double ComboStageWin = 3;
+  repeated AwardData AwardDataVec = 4;
+  bool GetTrans = 5;
+  repeated int32 KeepSymbol = 6;
+  repeated Column ComboTag = 7;
+  repeated Column FillSymbols = 8;
+  bool GetBonus = 9;
+  int32 BonusType = 10;
+}
+
+message RoundInfo {
+  repeated ComboStageInfo ComboStageData = 1;
+  double RoundWin = 2;
+  repeated int32 BounsData = 3;
+  int32 FreeRemainRound = 4;
+  int32 FreeTotalRound = 5;
+  int32 SpecialCount = 6;
+  int32 AddRounds = 7;
+  int32 AwardTypeFlag = 8;
+  bool MaxFlag = 9;
+}
+
+message SpinAck {
+  repeated RoundInfo RoundQueue = 1;
+  double FreeTotalWin = 2;
+  double TotalWin = 3;
+  double RTP = 4;
+  int32 LID = 5;
+  int32 RID = 6;
+}

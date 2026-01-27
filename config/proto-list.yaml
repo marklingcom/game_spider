@@ -282,7 +282,19 @@ protos:
   #   gi: 541
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  - name: aa
-    gi: 115
+  # - name: aa
+  #   gi: 115
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoAck
+  # - name: bikini
+  #   gi: 423
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name:
+  # - name: pw
+  #   gi: 299
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  - name: cnt
+    gi: 392
     spin_pb_name: SpinAck
-    game_info_pb_name: GameInfoAck
+    game_info_pb_name:
