@@ -26,10 +26,10 @@ betConfig:
     hasDefaultIndex: true
   special: false
   # gameName: Gold Rush
-  gameName: Money Pot Deluxe
+  gameName: Dabanggg
 huiduConfig:
   coin: 100000
-  key: uidList1
+  key: uidList0
   maxCount: 10
   uidList0:
     - 7663607

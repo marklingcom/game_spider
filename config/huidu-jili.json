@@ -320,7 +320,7 @@
     "gameUid": "5a962d0e31e0d4c0798db5f331327e4f"
   },
   {
-    "fullName": "DiamondParty",
+    "fullName": "Diamond Party",
     "companyId": 1,
     "gameUid": "48d598e922e8c60643218ccda302af08"
   },
@@ -557,7 +557,8 @@
   {
     "fullName": "Bikini Lady",
     "companyId": 1,
-    "gameUid": "702565a827764d10e470a0f76398a978"
+    "gameUid": "31314",
+    "partnerId": 2
   },
   {
     "fullName": "Money Coming",
@@ -760,34 +761,9 @@
     "gameUid": "756cf3c73a323b4bfec8d14864e3fada"
   },
   {
-    "fullName": "Hyper Burst",
-    "companyId": 1,
-    "gameUid": "a47b17970036b37c1347484cf6956920"
-  },
-  {
-    "fullName": "Hawaii Beauty",
-    "companyId": 1,
-    "gameUid": "6409b758471b6df30c6b137b49f4d92e"
-  },
-  {
-    "fullName": "XiYangYang",
-    "companyId": 1,
-    "gameUid": "5a962d0e31e0d4c0798db5f331327e4f"
-  },
-  {
-    "fullName": "DiamondParty",
-    "companyId": 1,
-    "gameUid": "48d598e922e8c60643218ccda302af08"
-  },
-  {
     "fullName": "Golden Queen",
     "companyId": 1,
     "gameUid": "8de99455c2f23f6827666fd798eb80ef"
-  },
-  {
-    "fullName": "TWIN WINS",
-    "companyId": 1,
-    "gameUid": "c74b3cbda5d16f77523e41c25104e602"
   },
   {
     "fullName": "Medusa",
@@ -798,11 +774,6 @@
     "fullName": "Thor X",
     "companyId": 1,
     "gameUid": "7e6aa773fa802aaa9cb1f2fac464736e"
-  },
-  {
-    "fullName": "Happy Taxi",
-    "companyId": 1,
-    "gameUid": "1ed896aae4bdc78c984021307b1dd177"
   },
   {
     "fullName": "Crazy Pusher",
