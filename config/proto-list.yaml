@@ -302,7 +302,11 @@ protos:
   #   gi: 214
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  - name: dbg
-    gi: 239
+  # - name: dbg
+  #   gi: 239
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoAck
+  - name: lj
+    gi: 421
     spin_pb_name: SpinAck
-    game_info_pb_name: GameInfoAck
+    game_info_pb_name: GemInfo
