@@ -14,12 +14,13 @@ const __dirname = dirname(__filename);
 const dataDir = join(__dirname, 'data');
 
 const base64String: string =
-  'data:application/x-protobuf;base64,GiBjZTI2ZWMzZDRhN2NmNWRiY2MwMjFiODMxMGM4MWY0ZSqgAwEx9/sduutfTnXZ1OxPQkSUg+r+AMo9TYA2qtn0PrR7LOeQCZMskt8uM2qwm0+T1vHVQPD2IXz1kgLZvf23TNLC6/oeQ4mJuJJ/viKnQVY6dbSGOS6SuPLoINHKUoVfVJyNZJXLZMvaYNrgUxcFedajqXu++PBqlmJzmX0mvv9bJeYEUoXpo9P1cj0YoKflZYMdbLYkjKJyWPGT50g/bz4yezghDwV+FxiP/1L1ZX7ec65XHemwj9YrmRh9HIfI2WNzDnJBZS4VHubonbQE3U/aHDa8m67PWp/p5O9LKJySSXlVS+CIVh+br/lXCSBZcF7VCKQ8uv1iN2SldIk3wGhbPpjSuA8dB/KYlefpAUB8PVGsPAMLdPpE91e+fuSDVtMqUAduvtDf0LXAtn9rAL/Za7gNRdwpTubsbQchI3Cs0tBWR/rSIGp3NSh8R1RTtuG8n6MUql9qtyGjJPqjIS7Yna2c5hI2HcbJuihOJ439vATBCsazjgywkK1JipyKvadiZKUvy/wtmKWiykzwfzYKjuyu6zCXoDWFL3iZaoU+';
+  'data:application/octet-stream;base64,KsAC01fDkIL3PrW9sj0WgGu5DvAkpyU5XYMKMOyi++R9s7GUZQVzaNXoeUubgig+o4nSgbcyRVKV1Zuzv1XAw1bCz5os9z7wqAEdMrA4uFr2sH8NO/V20NQulOP3Dk9aQo2/2w3b8mUlNytnpJYHWQvAjS0dNv855mJC0tqKasbzbabhz9E1QZbE8dVtippLkNQdL2FT5bb7PgvY+u1lsUGCMmoA1fg9TvJlMI7IQN019KTqwINkItVQCX9gIx814qHo9Sbi1aNg+m/sUgJPMV+cJP52/XyMDoIIdT9s8sNRJC3zSbv1FWHxMcTuUmkqbpKD74Fir2XYM22XJpl+Wg+Mz/noGfI3Yyb+ecoPLrsGr03qvvVzZwyeDdZvCLA/CJetTPG9F2AXc7N0KAQqpohO9UZQitI4jJ+wYOZUqanuHHQ=';
 const hexString: string = '';
 const escapeString: string = '';
 
-const token: string = 'ce26ec3d4a7cf5dbcc021b8310c81f4e';
-const gameName: string = 'mpt2';
+const token: string =
+  '0a0431303031120652786c3168571a046a696c6922033337399806ea85f7cb06a2060c363034663463646165303636';
+const gameName: string = 'mpt';
 
 function getAckTypeName(ack: number): string {
   return AckType[ack] || `Unknown(${ack})`;
