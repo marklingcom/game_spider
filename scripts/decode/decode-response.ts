@@ -14,13 +14,12 @@ const __dirname = dirname(__filename);
 const dataDir = join(__dirname, 'data');
 
 const base64String: string =
-  'data:application/octet-stream;base64,KsAC01fDkIL3PrW9sj0WgGu5DvAkpyU5XYMKMOyi++R9s7GUZQVzaNXoeUubgig+o4nSgbcyRVKV1Zuzv1XAw1bCz5os9z7wqAEdMrA4uFr2sH8NO/V20NQulOP3Dk9aQo2/2w3b8mUlNytnpJYHWQvAjS0dNv855mJC0tqKasbzbabhz9E1QZbE8dVtippLkNQdL2FT5bb7PgvY+u1lsUGCMmoA1fg9TvJlMI7IQN019KTqwINkItVQCX9gIx814qHo9Sbi1aNg+m/sUgJPMV+cJP52/XyMDoIIdT9s8sNRJC3zSbv1FWHxMcTuUmkqbpKD74Fir2XYM22XJpl+Wg+Mz/noGfI3Yyb+ecoPLrsGr03qvvVzZwyeDdZvCLA/CJetTPG9F2AXc7N0KAQqpohO9UZQitI4jJ+wYOZUqanuHHQ=';
+  'data:application/octet-stream;base64,KqACEMdVsEUswI9btEWKmqzOBeePUZKMWX+29nAnTxzPtf1P2cAr2FMby4uYEqsKHtIyh/wVoyy+LH0tlVPdFvLWDBAoMijcjmUMEq0UvJlSJo9JvXCq3Yc+ScXi0lxjXs86MGegbBfcP9k0xyN6eyQimzd9lHxJGbICss+LeP1nARClsa4YOZC623g9EcOB2QIvsM71Lhxxgkp3DU8UzN9MFvFyrsB7vlGRtc+tE6fQn1ywEUEvfgwkyvc/2Hlq+pDZbdPAg+ZBtyJ1THLCqv0+GwE0/cc9VmKODD/bunpeWVJrlaRG4T3NOqUHUVTvufAjINZGAzWjRntkT4+9tQbcjie/naE3R403vY34Pu9NSzu5a3CJv87eduRhZzreFoO0MgwIovP3ywYQ/JG+1AM=';
 const hexString: string = '';
 const escapeString: string = '';
 
-const token: string =
-  '0a0431303031120652786c3168571a046a696c6922033337399806ea85f7cb06a2060c363034663463646165303636';
-const gameName: string = 'mpt';
+const token: string = '3e2a0ba90945ed22a54cb8f5742d93c4fe06b53b';
+const gameName: string = 'luckytree';
 
 function getAckTypeName(ack: number): string {
   return AckType[ack] || `Unknown(${ack})`;

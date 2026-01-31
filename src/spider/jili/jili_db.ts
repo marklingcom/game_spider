@@ -237,10 +237,9 @@ export class JiliDb {
             }
           }
         }
-        if (['bfs2'].includes(spiderData.name)) {
-          const RoundWinRegex = /"RoundWin"\s*:\s*\[/g;
-          const matches = jsonData.match(RoundWinRegex);
-          if (matches && matches.length > 0) {
+        if (['luckytree'].includes(spiderData.name)) {
+          const TotalWin = (spinAckData as any)?.BonusGameData?.TotalWin || 0;
+          if (TotalWin > 0) {
             spinDataType = SpinDataType.special;
           }
         }
