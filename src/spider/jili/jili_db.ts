@@ -237,6 +237,13 @@ export class JiliDb {
             }
           }
         }
+        if (['bfs2'].includes(spiderData.name)) {
+          const RoundWinRegex = /"RoundWin"\s*:\s*\[/g;
+          const matches = jsonData.match(RoundWinRegex);
+          if (matches && matches.length > 0) {
+            spinDataType = SpinDataType.special;
+          }
+        }
       }
     }
     const spinReq = spinResponse.spinReq || spinReqData;
