@@ -25,7 +25,7 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   special: false
-  gameName: Fortune Tree
+  gameName: Gold Rush
 huiduConfig:
   coin: 100000
   key: uidList1

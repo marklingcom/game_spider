@@ -33,9 +33,15 @@ class SpinDataState {
   private config: Config;
   private type: SpinDataType;
 
-  constructor(config: Config, type: SpinDataType) {
+  constructor(options: {
+    config: Config;
+    type: SpinDataType;
+    tabName: string;
+  }) {
+    const { config, type, tabName } = options;
     this.config = config;
     this.type = type;
+    this.tabName = tabName;
   }
 
   get isSpecial(): boolean {
@@ -66,8 +72,7 @@ export class JiliDb {
   private db: DatabaseManager;
   private config: Config;
 
-  private specialState: SpinDataState;
-  private normalState: SpinDataState;
+  private stateMap: Map<string, SpinDataState> = new Map();
 
   constructor(options: {
     db: DatabaseManager;
@@ -75,8 +80,6 @@ export class JiliDb {
   }) {
     this.db = options.db;
     this.config = options.config;
-    this.specialState = new SpinDataState(this.config, SpinDataType.special);
-    this.normalState = new SpinDataState(this.config, SpinDataType.normal);
 
     this.onStart();
   }
@@ -302,14 +305,14 @@ export class JiliDb {
 
     const model = await this.db.ensureTableExists(tabName);
 
-    await this.initCount(tabName, isSpecial);
+    const currentState = await this.initState(tabName, isSpecial);
 
     // 如果配置抓取特殊模式，并且当前不是特殊模式，则不抓取数据
     if (this.config.serverConfig.betConfig.special && !isSpecial) {
       return;
     }
 
-    if (this.isComplete(tabName, isSpecial, isLog)) {
+    if (this.isComplete(currentState, isLog)) {
       if (this.isStop) {
         console.log(`${tabName} 完成所有数据抓取`);
         await telegramService.sendSuccess(`${tabName} 完成所有数据抓取`);
@@ -353,36 +356,33 @@ export class JiliDb {
     };
 
     await model.create({ ...spinData });
-
-    if (isSpecial) {
-      this.specialState.current++;
-    } else {
-      this.normalState.current++;
-    }
+    currentState.current++;
   }
 
-  onNotify(tabName: string, current: number, total: number, isSpecial: boolean, threshold = 3) {
+  onNotify(tabName: string, current: number, total: number, _isSpecial: boolean, threshold = 3) {
     const progress = (current / total) * 100;
-    const state = this.getState(isSpecial);
-    const lastProgress = state.lastProgress || 0;
+    const currentState = this.stateMap.get(tabName);
+    if (!currentState) {
+      throw new Error(`currentState is empty:${tabName}`);
+    }
+    const lastProgress = currentState.lastProgress || 0;
 
     if (lastProgress === 0 || progress >= lastProgress + threshold) {
-      state.lastProgress = progress;
+      currentState.lastProgress = progress;
       telegramService.sendSuccess(
         `表 ${tabName} 抓取进度: ${Math.floor(progress)}% (${current}/${total})`
       );
     }
   }
 
-  isComplete(tabName: string, isSpecial: boolean, isLog = true) {
-    const state = this.getState(isSpecial);
-    const current = state.current;
-    const total = state.total;
+  isComplete(currentState: SpinDataState, isLog = true) {
+    const current = currentState.current;
+    const total = currentState.total;
 
     if (isLog) {
-      console.log(`表 ${tabName} 抓取进度: ${current}/${total}`);
+      console.log(`表 ${currentState.tabName} 抓取进度: ${current}/${total}`);
 
-      this.onNotify(tabName, current, total, isSpecial);
+      this.onNotify(currentState.tabName, current, total, currentState.isSpecial);
     }
 
     if (current >= total) {
@@ -392,26 +392,40 @@ export class JiliDb {
   }
 
   get isStop() {
-    return (
-      this.specialState.current >= this.specialState.total &&
-      this.normalState.current >= this.normalState.total
-    );
-  }
-
-  getState(isSpecial: boolean): SpinDataState {
-    return isSpecial ? this.specialState : this.normalState;
-  }
-
-  async initCount(tabName: string, isSpecial: boolean) {
-    const state = this.getState(isSpecial);
-
-    if (!state.isInit) {
-      state.isInit = true;
-      const count = await this.db.getTableCount(tabName);
-      state.current = count;
-      state.tabName = tabName;
-      this.onNotify(tabName, state.current, state.total, isSpecial);
+    let hasSpecial = false;
+    for (const state of this.stateMap.values()) {
+      if (state.isSpecial) {
+        hasSpecial = true;
+      }
+      if (state.current < state.total) {
+        return false;
+      }
     }
+    if (!hasSpecial && this.config.serverConfig.betConfig.special) {
+      return false;
+    }
+    return true;
+  }
+
+  async initState(tabName: string, isSpecial: boolean) {
+    let currentState = this.stateMap.get(tabName);
+    if (!currentState) {
+      currentState = new SpinDataState({
+        config: this.config,
+        type: isSpecial ? SpinDataType.special : SpinDataType.normal,
+        tabName,
+      });
+      this.stateMap.set(tabName, currentState);
+    }
+
+    if (!currentState.isInit) {
+      currentState.isInit = true;
+      const count = await this.db.getTableCount(tabName);
+      currentState.current = count;
+      currentState.tabName = tabName;
+      this.onNotify(tabName, currentState.current, currentState.total, isSpecial);
+    }
+    return currentState;
   }
 
   private pbMap: Map<string, protobuf.Namespace> = new Map();
@@ -523,8 +537,9 @@ export class JiliDb {
 
     const onProcessMessage = () => {
       const message = `当前进度：
-normal表 ${this.normalState.tabName} 抓取进度: ${this.normalState.tabName ? this.normalState.current : 0}/${this.normalState.total}
-special表 ${this.specialState.tabName} 抓取进度: ${this.specialState.tabName ? this.specialState.current : 0}/${this.specialState.total}
+${Array.from(this.stateMap.values())
+  .map((state) => `${state.tabName} 抓取进度: ${state.current}/${state.total}`)
+  .join('\n')}
 `;
       return message;
     };
