@@ -307,7 +307,8 @@
   {
     "fullName": "Hawaii Beauty",
     "companyId": 1,
-    "gameUid": "6409b758471b6df30c6b137b49f4d92e"
+    "gameUid": "31286",
+    "partnerId": 2
   },
   {
     "fullName": "Bao boon chin",
@@ -317,7 +318,8 @@
   {
     "fullName": "XiYangYang",
     "companyId": 1,
-    "gameUid": "5a962d0e31e0d4c0798db5f331327e4f"
+    "gameUid": "31210",
+    "partnerId": 2
   },
   {
     "fullName": "Diamond Party",
@@ -332,7 +334,8 @@
   {
     "fullName": "Monkey Party",
     "companyId": 1,
-    "gameUid": "fd369a4a7486ff303beea267ec5c8eff"
+    "gameUid": "31290",
+    "partnerId": 2
   },
   {
     "fullName": "Magic Lamp",
@@ -347,7 +350,8 @@
   {
     "fullName": "TWIN WINS",
     "companyId": 1,
-    "gameUid": "c74b3cbda5d16f77523e41c25104e602"
+    "gameUid": "31252",
+    "partnerId": 2
   },
   {
     "fullName": "Medusa",
@@ -362,7 +366,8 @@
   {
     "fullName": "Happy Taxi",
     "companyId": 1,
-    "gameUid": "1ed896aae4bdc78c984021307b1dd177"
+    "gameUid": "31254",
+    "partnerId": 2
   },
   {
     "fullName": "Crazy Pusher",
@@ -377,7 +382,8 @@
   {
     "fullName": "World Cup",
     "companyId": 1,
-    "gameUid": "28374b7ad7c91838a46404f1df046e5a"
+    "gameUid": "31255",
+    "partnerId": 2
   },
   {
     "fullName": "Samba",
@@ -402,12 +408,14 @@
   {
     "fullName": "Cricket Sah 75",
     "companyId": 1,
-    "gameUid": "6720a0ce1d06648ff390fbea832798a9"
+    "gameUid": "31261",
+    "partnerId": 2
   },
   {
     "fullName": "Dabanggg",
     "companyId": 1,
-    "gameUid": "5404a45b06826911c3537fdf935c281f"
+    "gameUid": "31266",
+    "partnerId": 2
   },
   {
     "fullName": "Sin City",
@@ -417,7 +425,8 @@
   {
     "fullName": "King Arthur",
     "companyId": 1,
-    "gameUid": "fafab1a17a237d0fc0e50c20d2c2bf4c"
+    "gameUid": "31268",
+    "partnerId": 2
   },
   {
     "fullName": "Witches Night",
@@ -473,7 +482,8 @@
   {
     "fullName": "Potion Wizard",
     "companyId": 1,
-    "gameUid": "fba154365cdf8fad07565cf93bae3521"
+    "gameUid": "31273",
+    "partnerId": 2
   },
   {
     "fullName": "Money Coming Expand Bets",
@@ -782,11 +792,6 @@
     "gameUid": "00d92d5cec10cf85623938222a6c2bb6"
   },
   {
-    "fullName": "World Cup",
-    "companyId": 1,
-    "gameUid": "28374b7ad7c91838a46404f1df046e5a"
-  },
-  {
     "fullName": "Master Tiger",
     "companyId": 1,
     "gameUid": "d2b48fe98ac2956eeefd2bc4f7e0335a"
@@ -795,11 +800,6 @@
     "fullName": "Elf Bingo",
     "companyId": 1,
     "gameUid": "5cec2b309a8845b38f8e9b4e6d649ea2"
-  },
-  {
-    "fullName": "Cricket Sah 75",
-    "companyId": 1,
-    "gameUid": "6720a0ce1d06648ff390fbea832798a9"
   },
   {
     "fullName": "Devil Fire 2",
@@ -879,7 +879,8 @@
   {
     "fullName": "Fortune Hook",
     "companyId": 1,
-    "gameUid": "abcdefghijklmnopqrstuvwxyzabcde0"
+    "gameUid": "31315",
+    "partnerId": 2
   },
   {
     "fullName": "Rapid Gems 777",
@@ -901,7 +902,8 @@
   {
     "fullName": "SUPER MAHJONG",
     "companyId": 1,
-    "gameUid": "abcdefghijklmnopqrstuvwxyzabcde4"
+    "gameUid": "31324",
+    "partnerId": 2
   },
   {
     "fullName": "Crazy777 2",

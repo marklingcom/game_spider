@@ -393,7 +393,11 @@ export class JiliDb {
 
   get isStop() {
     let hasSpecial = false;
+    const isSpecial = this.config.serverConfig.betConfig.special;
     for (const state of this.stateMap.values()) {
+      if (isSpecial && !state.isSpecial) {
+        continue;
+      }
       if (state.isSpecial) {
         hasSpecial = true;
       }
@@ -401,7 +405,7 @@ export class JiliDb {
         return false;
       }
     }
-    if (!hasSpecial && this.config.serverConfig.betConfig.special) {
+    if (!hasSpecial && isSpecial) {
       return false;
     }
     return true;
