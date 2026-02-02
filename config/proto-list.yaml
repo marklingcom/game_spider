@@ -306,7 +306,11 @@ protos:
   #   gi: 239
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoAck
-  - name: lj
-    gi: 421
-    spin_pb_name: SpinAck
-    game_info_pb_name: GemInfo
+  # - name: lj
+  #   gi: 421
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GemInfo
+  - name: twinwins
+    gi: 106
+    spin_pb_name: AllPlate
+    game_info_pb_name:
