@@ -19,7 +19,13 @@ message Block {
 }
 
 message Row {
-  repeated int32 row = 1;  // Note: These should be Symbol enum values
+  repeated Symbol row = 1;
+}
+
+message ExtraInfo {
+  uint32 hyperCount = 1;
+  double hyperBonus = 2;
+  double hyperBet = 3;
 }
 
 message Plate {
@@ -35,12 +41,6 @@ message Plate {
   repeated AwardReel award = 2;
   double win = 3;
   bool isBonus = 4;
-}
-
-message ExtraInfo {
-  uint32 hyperCount = 1;
-  double hyperBonus = 2;
-  double hyperBet = 3;
 }
 
 message AllPlate {

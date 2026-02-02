@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package taxiProto;
+
+message Column {
+  repeated int32 Col = 1;
+}
+
+message ColumnFloat {
+  repeated double Col = 1;
+}
+
+message Grid {
+  int32 Col = 1;
+  int32 Row = 2;
+  int32 Symbol = 3;
+}
+
+message NumCollectData {
+  repeated Grid Target = 1;
+  repeated Grid Source = 2;
+}
+
+message AwardData {
+  int32 Symbol = 1;
+  int32 Count = 2;
+  int32 Line = 3;
+  double Win = 4;
+}
+
+message RoundInfo {
+  repeated Column PlateSymbol = 1;
+  repeated ColumnFloat PlateSymbolNum = 2;
+  repeated AwardData AwardDataVec = 3;
+  int32 AwardTypeFlag = 4;
+  int32 BonusRemainRound = 5;
+  double RoundWin = 6;
+  repeated NumCollectData NumCollectPosDriver = 7;
+  repeated NumCollectData NumCollectPosRolls = 8;
+  repeated ColumnFloat PlateSymbolNumLog = 9;
+}
+
+message SpinAck {
+  repeated RoundInfo RoundQueue = 1;
+  double BonusTotalWin = 2;
+  double TotalWin = 3;
+  repeated ColumnFloat FinalCheck = 4;
+  string ShowIndex = 5;
+  double NowMoney = 6;
+  int32 AckType = 7;
+  double RTP = 12;
+  int32 LID = 13;
+  int32 RID = 14;
+}
+
+message GameInfoAck {}

@@ -874,5 +874,11 @@
     "gi": 573,
     "name": "rc2",
     "uuid": "JILI-SLOT-019"
+  },
+  {
+    "fullName": "Fortune Hook",
+    "gi": 393,
+    "name": "bite",
+    "uuid": "JILI-SLOT-019"
   }
 ]

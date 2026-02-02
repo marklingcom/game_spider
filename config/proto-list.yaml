@@ -310,7 +310,27 @@ protos:
   #   gi: 421
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GemInfo
-  - name: twinwins
-    gi: 106
-    spin_pb_name: AllPlate
-    game_info_pb_name:
+  # - name: twinwins
+  #   gi: 106
+  #   spin_pb_name: AllPlate
+  #   game_info_pb_name:
+  # - name: taxi
+  #   gi: 116
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoAck
+  # - name: fb
+  #   gi: 146
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoAck
+  # - name: cts
+  #   gi: 230
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoAck
+  # - name: starburst
+  #   gi: 14
+  #   spin_pb_name: AllPlate
+  #   game_info_pb_name:
+  # - name: bite
+  #   gi: 393
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name:

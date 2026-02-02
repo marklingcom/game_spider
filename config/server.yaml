@@ -25,7 +25,7 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   special: false
-  gameName: Hawaii Beauty
+  gameName: Fortune Hook
 huiduConfig:
   coin: 100000
   key: uidList1

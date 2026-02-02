@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package biteProto;
+
+// 奖励数据
+message AwardData {
+  int32 Index = 1;
+  int32 Symbol = 2;
+  int32 Count = 3;
+  double Win = 4;
+}
+
+// 列数据
+message Column {
+  repeated int32 Col = 1;
+}
+
+// 回合信息
+message RoundInfo {
+  repeated Column FakePlateSymbol = 1;      // 假板符号（动画用）
+  bool GetFake = 2;                         // 是否获取假板
+  repeated Column FinalPlateSymbol = 3;     // 最终板符号
+  double LineWin = 4;                       // 线赢
+  double RoundWin = 5;                      // 回合赢
+  repeated AwardData AwardDataVec = 6;      // 奖励数据数组
+  int32 AwardTypeFlag = 7;                  // 奖励类型标志
+  int32 ScatterCount = 8;                   // 散点数量
+  int32 AddRound = 9;                       // 额外回合
+  repeated bool Bonus = 10;                 // 奖励状态
+  int32 FishMult = 11;                      // 捕鱼倍数
+  double FishWin = 12;                      // 捕鱼赢取
+  int32 TotalWildCount = 13;                // 总wild数量
+  int32 NowLevel = 14;                      // 当前等级
+  int32 NowFreeRemainRound = 15;            // 当前免费剩余回合
+  int32 NowFreeTotalRound = 16;             // 当前免费总回合
+  int32 FreeTotalRound = 17;                // 免费总回合
+  bool IsInReSpin = 18;                     // 是否在ReSpin中
+  repeated int32 SuperWildPos = 19;         // 超级wild位置
+  int32 NextLevel = 20;                     // 下一等级
+  bool MaxFlag = 21;                        // 最大标志
+}
+
+// 旋转响应
+message SpinAck {
+  repeated RoundInfo RoundQueue = 1;        // 回合队列
+  double FreeTotalWin = 2;                  // 免费总赢取
+  int32 BuyType = 3;                        // 购买类型
+  double TotalWin = 4;                      // 总赢取
+  int32 AckType = 5;                        // 响应类型
+  double RTP = 6;                           // 返回给玩家百分比
+  int32 LID = 7;                            // 左ID（可能是游戏ID或房间ID）
+  int32 RID = 8;                            // 右ID（可能是游戏ID或房间ID）
+}
