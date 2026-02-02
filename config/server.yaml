@@ -25,7 +25,7 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   special: false
-  gameName: TWIN WINS
+  gameName: Hawaii Beauty
 huiduConfig:
   coin: 100000
   key: uidList1
@@ -50,6 +50,7 @@ huiduConfig:
     - 7657012
     - 7656995
     - 7656873
+    - 7656980
   uidList1:
     - 7656873
     - 7656921
