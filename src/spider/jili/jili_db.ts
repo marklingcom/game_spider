@@ -246,6 +246,12 @@ export class JiliDb {
             spinDataType = SpinDataType.special;
           }
         }
+        if (['lj'].includes(spiderData.name)) {
+          const GetBonus = (spinAckData as any)?.GetBonus;
+          if (GetBonus) {
+            spinDataType = SpinDataType.special;
+          }
+        }
       }
     }
     const spinReq = spinResponse.spinReq || spinReqData;
