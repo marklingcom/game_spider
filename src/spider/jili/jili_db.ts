@@ -289,6 +289,28 @@ export class JiliDb {
       } else {
         tabName += '_1';
       }
+    } else if (['tct'].includes(spiderData.name) && isSpecial) {
+      const RoundQueue = (spinAckData as any)?.RoundQueue;
+      const firstData = RoundQueue[0];
+      // BlueData
+      // RedData
+      // GreenData
+      const keys = Object.keys(firstData);
+      if (keys.includes('BlueData') && keys.includes('RedData') && keys.includes('GreenData')) {
+        tabName += `_6`;
+      } else if (keys.includes('RedData') && keys.includes('GreenData')) {
+        tabName += `_5`;
+      } else if (keys.includes('BlueData') && keys.includes('GreenData')) {
+        tabName += `_4`;
+      } else if (keys.includes('BlueData') && keys.includes('RedData')) {
+        tabName += `_3`;
+      } else if (keys.includes('GreenData')) {
+        tabName += `_2`;
+      } else if (keys.includes('RedData')) {
+        tabName += `_1`;
+      } else if (keys.includes('BlueData')) {
+        tabName += `_0`;
+      }
     } else {
       if (isBuyBouns) {
         const hasDefaultIndex = this.config.serverConfig.betConfig.buyBouns.hasDefaultIndex;
