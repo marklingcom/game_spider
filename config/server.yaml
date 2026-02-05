@@ -25,7 +25,7 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   special: false
-  gameName: Lucky Goldbricks
+  gameName: Lucky Jaguar
 huiduConfig:
   coin: 100000
   key: uidList1
