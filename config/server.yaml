@@ -24,7 +24,7 @@ betConfig:
     enable: false
     index: 0
     hasDefaultIndex: true
-  special: false
+  special: true
   gameName: 3 Coin Treasures
 huiduConfig:
   coin: 100000

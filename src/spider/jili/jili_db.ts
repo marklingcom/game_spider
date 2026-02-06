@@ -296,19 +296,22 @@ export class JiliDb {
       // RedData
       // GreenData
       const keys = Object.keys(firstData);
-      if (keys.includes('BlueData') && keys.includes('RedData') && keys.includes('GreenData')) {
+      const hasData = (key: string) => {
+        return keys.includes(key) && firstData[key]?.length > 0;
+      };
+      if (hasData('BlueData') && hasData('RedData') && hasData('GreenData')) {
         tabName += `_6`;
-      } else if (keys.includes('RedData') && keys.includes('GreenData')) {
+      } else if (hasData('RedData') && hasData('GreenData')) {
         tabName += `_5`;
-      } else if (keys.includes('BlueData') && keys.includes('GreenData')) {
+      } else if (hasData('BlueData') && hasData('GreenData')) {
         tabName += `_4`;
-      } else if (keys.includes('BlueData') && keys.includes('RedData')) {
+      } else if (hasData('BlueData') && hasData('RedData')) {
         tabName += `_3`;
-      } else if (keys.includes('GreenData')) {
+      } else if (hasData('GreenData')) {
         tabName += `_2`;
-      } else if (keys.includes('RedData')) {
+      } else if (hasData('RedData')) {
         tabName += `_1`;
-      } else if (keys.includes('BlueData')) {
+      } else if (hasData('BlueData')) {
         tabName += `_0`;
       }
     } else {
