@@ -25,7 +25,7 @@ export function decrypted(token: string, gaiaResponse: Buffer): Buffer {
 
     return pkcs5UnPadding(decrypted);
   } catch (error) {
-    console.error('解密失败:', error);
+    console.log('解密失败');
     throw error;
   }
 }

@@ -47,7 +47,7 @@ export class JiliApi extends EventEmitter {
       throw new Error('不能同时为true');
     }
 
-    const url = `${this.jiliSpider.spin}/${this.jiliSpider.name}/req`;
+    const url = `${this.jiliSpider.spin}/${this.jiliSpider.name}/req?D=0`;
 
     try {
       const spinReqData: SpinReq = {
@@ -130,7 +130,7 @@ export class JiliApi extends EventEmitter {
     gaiaResponseData: Buffer;
     gameInfoAck: GameInfoAck;
   }> {
-    const url = `${this.jiliSpider.spin}/${this.jiliSpider.name}/req`;
+    const url = `${this.jiliSpider.spin}/${this.jiliSpider.name}/req?D=1`;
 
     try {
       const browser: Browser = {

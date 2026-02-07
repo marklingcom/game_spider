@@ -21,8 +21,8 @@ export async function decryptResponseBuffer(
     gaiaResponse.data = data;
   } catch (error) {
     console.error('buff可能无加密');
-    error.message = 'buff可能无加密, 解密失败';
-    throw error;
+    // error.message = 'buff可能无加密, 解密失败';
+    // throw error;
   }
 
   const out = GaiaResponse.toBinary(gaiaResponse);
