@@ -82,6 +82,20 @@ export class JiliDb {
     this.config = options.config;
 
     this.onStart();
+    this.initStateMap();
+  }
+
+  initStateMap() {
+    if (this.config.currentJiliGame.jiliConfig.name === 'tct') {
+      for (let index = 0; index < 7; index++) {
+        const state = new SpinDataState({
+          config: this.config,
+          type: SpinDataType.normal,
+          tabName: `jili_spin_tct_special_${index}`,
+        });
+        this.stateMap.set(`jili_spin_tct_special_${index}`, state);
+      }
+    }
   }
 
   async init(name: string) {
