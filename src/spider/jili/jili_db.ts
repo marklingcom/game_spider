@@ -313,7 +313,10 @@ export class JiliDb {
       const hasData = (key: string) => {
         return keys.includes(key) && firstData[key]?.length > 0;
       };
-      tabNames.pop();
+      const index = tabNames.indexOf('buy');
+      if (index !== -1) {
+        tabNames.splice(index, 1);
+      }
       if (hasData('BlueData') && hasData('RedData') && hasData('GreenData')) {
         tabNames.push('6');
       } else if (hasData('RedData') && hasData('GreenData')) {

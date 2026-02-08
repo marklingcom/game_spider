@@ -26,7 +26,7 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   special: false
-  gameName: TWIN WINS
+  gameName: 3 Coin Treasures
 huiduConfig:
   coin: 100000
   key: uidList1
