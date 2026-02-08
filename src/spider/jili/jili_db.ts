@@ -90,7 +90,7 @@ export class JiliDb {
       for (let index = 0; index < 7; index++) {
         const state = new SpinDataState({
           config: this.config,
-          type: SpinDataType.normal,
+          type: SpinDataType.special,
           tabName: `jili_spin_tct_special_${index}`,
         });
         this.stateMap.set(`jili_spin_tct_special_${index}`, state);
