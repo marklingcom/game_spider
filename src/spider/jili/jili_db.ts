@@ -37,12 +37,16 @@ class SpinDataState {
     config: Config;
     type: SpinDataType;
     tabName: string;
+    total?: number;
   }) {
-    const { config, type, tabName } = options;
+    const { config, type, tabName, total } = options;
     this.config = config;
     this.type = type;
     this.tabName = tabName;
+    this._total = total;
   }
+
+  _total: number = 0;
 
   get isSpecial(): boolean {
     return this.type === SpinDataType.special;
@@ -53,6 +57,9 @@ class SpinDataState {
   }
 
   get total(): number {
+    if (this._total && this._total > 0) {
+      return this._total;
+    }
     const isBuyBouns = this.config?.serverConfig?.betConfig?.buyBouns?.enable;
     if (this.isSpecial) {
       if (isBuyBouns) {
@@ -88,12 +95,14 @@ export class JiliDb {
   initStateMap() {
     if (this.config.currentJiliGame.jiliConfig.name === 'tct') {
       for (let index = 0; index < 7; index++) {
+        const tabName = `jili_spin_tct_special_${index}`;
         const state = new SpinDataState({
           config: this.config,
           type: SpinDataType.special,
-          tabName: `jili_spin_tct_special_${index}`,
+          tabName,
+          total: 3000,
         });
-        this.stateMap.set(`jili_spin_tct_special_${index}`, state);
+        this.stateMap.set(tabName, state);
       }
     }
   }
