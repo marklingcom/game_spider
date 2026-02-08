@@ -16,6 +16,7 @@ spiderConfig:
   compress: 1
 betConfig:
   bet: 0
+  isOld: false
   buyBouns:
     enable: false
     index: 0

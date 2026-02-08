@@ -32,6 +32,7 @@ export interface ServerConfig {
   };
   betConfig: {
     bet: number;
+    isOld: boolean;
     buyBouns: BuyBounsConfig;
     extra: ExtraConfig;
     special: boolean;
@@ -97,6 +98,7 @@ export class Config {
     },
     betConfig: {
       bet: 0,
+      isOld: false,
       buyBouns: {
         enable: false,
         index: 0,
