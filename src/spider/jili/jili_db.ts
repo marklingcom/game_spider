@@ -271,37 +271,37 @@ export class JiliDb {
     const spinReq = spinResponse.spinReq || spinReqData;
 
     const realBet = spinResponse.realBet || spinReq?.bet || spinReq?.bet || 0;
-    let tabName = `jili_spin_${gameName}`;
+    const tabNames = [`jili_spin_${gameName}`];
 
     if (this.config.serverConfig.betConfig.bet !== 0) {
       const betName = this.config.serverConfig.betConfig.bet.toString().replace('.', 'p');
-      tabName += `_${betName}`;
+      tabNames.push(betName);
     }
 
     var isBuyBouns = false;
     var isExtra = false;
     if (spinReq?.mall) {
-      tabName += '_buy';
+      tabNames.push('buy');
       isBuyBouns = true;
     } else if (spinReq?.extraSpin) {
-      tabName += '_extra';
+      tabNames.push('extra');
       isExtra = true;
     }
 
     const isSpecial = spinDataType === SpinDataType.special || isBuyBouns;
     if (isSpecial) {
-      tabName += '_special';
+      tabNames.push('special');
     } else {
-      tabName += '_normal';
+      tabNames.push('normal');
     }
 
     // Gold Rush 特殊处理
     if (['ge'].includes(spiderData.name) && isSpecial) {
       const isFree1 = /"(Free1TotalWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
       if (isFree1.test(jsonData)) {
-        tabName += '_0';
+        tabNames.push('0');
       } else {
-        tabName += '_1';
+        tabNames.push('1');
       }
     } else if (['tct'].includes(spiderData.name) && isSpecial) {
       const RoundQueue = (spinAckData as any)?.RoundQueue;
@@ -313,20 +313,21 @@ export class JiliDb {
       const hasData = (key: string) => {
         return keys.includes(key) && firstData[key]?.length > 0;
       };
+      tabNames.pop();
       if (hasData('BlueData') && hasData('RedData') && hasData('GreenData')) {
-        tabName += `_6`;
+        tabNames.push('6');
       } else if (hasData('RedData') && hasData('GreenData')) {
-        tabName += `_5`;
+        tabNames.push('5');
       } else if (hasData('BlueData') && hasData('GreenData')) {
-        tabName += `_4`;
+        tabNames.push('4');
       } else if (hasData('BlueData') && hasData('RedData')) {
-        tabName += `_3`;
+        tabNames.push('3');
       } else if (hasData('GreenData')) {
-        tabName += `_2`;
+        tabNames.push('2');
       } else if (hasData('RedData')) {
-        tabName += `_1`;
+        tabNames.push('1');
       } else if (hasData('BlueData')) {
-        tabName += `_0`;
+        tabNames.push('0');
       }
     } else {
       if (isBuyBouns) {
@@ -335,7 +336,7 @@ export class JiliDb {
         if (!hasDefaultIndex && index === 0) {
           // 默认索引，不添加到表名
         } else {
-          tabName += `_${index}`;
+          tabNames.push(index.toString());
         }
       } else if (isExtra) {
         const hasDefaultIndex = this.config.serverConfig.betConfig.extra.hasDefaultIndex;
@@ -343,10 +344,11 @@ export class JiliDb {
         if (!hasDefaultIndex && index === 0) {
           // 默认索引，不添加到表名
         } else {
-          tabName += `_${index}`;
+          tabNames.push(index.toString());
         }
       }
     }
+    const tabName = tabNames.join('_');
 
     const model = await this.db.ensureTableExists(tabName);
 
