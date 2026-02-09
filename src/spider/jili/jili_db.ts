@@ -269,7 +269,7 @@ export class JiliDb {
             spinDataType = SpinDataType.special;
           }
         }
-        if (['lj'].includes(spiderData.name)) {
+        if (['lj', 'pw'].includes(spiderData.name)) {
           const GetBonus = (spinAckData as any)?.GetBonus;
           if (GetBonus) {
             spinDataType = SpinDataType.special;
