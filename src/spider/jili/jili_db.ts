@@ -93,7 +93,7 @@ export class JiliDb {
   }
 
   initStateMap() {
-    if (this.config.currentJiliGame.jiliConfig.name === 'tct') {
+    if (this.is6Special) {
       for (let index = 0; index < 7; index++) {
         const tabName = `jili_spin_tct_special_${index}`;
         const state = new SpinDataState({
@@ -105,6 +105,10 @@ export class JiliDb {
         this.stateMap.set(tabName, state);
       }
     }
+  }
+
+  get is6Special(): boolean {
+    return ['tct', 'tlp'].includes(this.config.currentJiliGame.jiliConfig.name);
   }
 
   async init(name: string) {
@@ -312,7 +316,7 @@ export class JiliDb {
       } else {
         tabNames.push('1');
       }
-    } else if (['tct'].includes(spiderData.name) && isSpecial) {
+    } else if (this.is6Special && isSpecial) {
       const RoundQueue = (spinAckData as any)?.RoundQueue;
       const firstData = RoundQueue[0];
       // BlueData
