@@ -334,3 +334,11 @@ protos:
   #   gi: 393
   #   spin_pb_name: SpinAck
   #   game_info_pb_name:
+  - name: fullhouse6
+    gi: 549
+    spin_pb_name: AllPlate
+    game_info_pb_name:
+  - name: mp
+    gi: 67
+    spin_pb_name: SpinAck
+    game_info_pb_name: GameInfoAck

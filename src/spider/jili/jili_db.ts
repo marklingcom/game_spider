@@ -407,8 +407,8 @@ export class JiliDb {
       }
     }
 
-    // const saveBet = isExtra ? realBet * 1.5 : realBet;
-    const saveBet = isExtra ? realBet : realBet;
+    const saveBet = isExtra ? realBet * 1.5 : realBet;
+    // const saveBet = isExtra ? realBet : realBet;
     const spinData: SpinDataAttributes = {
       data,
       totalWin: spinResponse.totalWin || 0,
