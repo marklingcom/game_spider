@@ -288,7 +288,8 @@
   {
     "fullName": "Lucky Ball",
     "companyId": 1,
-    "gameUid": "893669898cd25d9da589a384f1d004df"
+    "gameUid": "31285",
+    "partnerId": 2
   },
   {
     "fullName": "Hyper Burst",
@@ -696,11 +697,6 @@
     "fullName": "Gold Rush",
     "companyId": 1,
     "gameUid": "2a5d731e0fd60f52873a24ece11f2c0b"
-  },
-  {
-    "fullName": "3 Lucky Piggy",
-    "companyId": 1,
-    "gameUid": "e09d4c9612ea540bc0afabf76e4f9148"
   },
   {
     "fullName": "Super Rich",
