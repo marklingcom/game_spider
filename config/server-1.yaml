@@ -1,0 +1,49 @@
+proxy:
+  enable: false
+  server: http://127.0.0.1:7890
+db:
+  type: mysql
+  dsn: root:m9KxXa7j@tcp(sss.cpigame.com:3306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
+  dialect: ""
+telegram:
+  enable: false
+  botToken: 7562408962:AAGYI_b79AhEjscuTBPsQ6s3U2e_SNEs8x0
+  chatId: "-4923815416"
+  machine: local
+spiderConfig:
+  autoMigrate: false
+  form: huidu
+  compress: 1
+betConfig:
+  bet: 0
+  isOld: true
+  buyBouns:
+    enable: false
+    index: 0
+    hasDefaultIndex: true
+  extra:
+    enable: false
+    index: 0
+    hasDefaultIndex: true
+  special: false
+  gameName: Cricket Sah 75
+huiduConfig:
+  coin: 100000
+  key: uidList1
+  maxCount: 10
+  uidList0:
+    - 7663607
+  uidListTest:
+    - 7633004
+  noMoneyAccounts:
+    - 1641530
+    - 7657413
+    - 7657394
+  uidList1:
+    - 7657394
+    - 7657401
+    - 7657413
+    - 7657425
+    - 7657440
+    - 7657452
+  uidList2: []

@@ -33,6 +33,60 @@ message SpinAck {
   int32 AckType = 6;
 }
 
+message GameInfoAck {
+  repeated WalletInfo WalletInfo = 1;
+  int32 ArcadeNo = 2;
+  bool CanIntoArcade = 3;
+  bool Test = 4;
+  PreferRoundShow Prefer = 5;
+  int32 FreeSpinRemain = 6;
+}
+
+message VolInfo {
+  int32 VolPos = 1;
+  repeated int32 VolList = 2;
+}
+
+message GameReqData {
+  int32 aid = 1;
+  int32 apiid = 2;
+  string token = 3;
+  bytes encode = 4;
+  SpinReq spin = 5;
+  CheckMallReq checkMall = 6;
+}
+
+message SpinReq {
+  double Bet = 1;
+  int32 Currency = 3;
+  int32 TestMode = 4;
+  int32 MallID = 5;
+  double MallBet = 6;
+  int32 VipLv = 7;
+  int32 Free = 8;
+  int32 Trial = 9;
+  int32 VolType = 10;
+}
+
+message ResData {
+  int32 ret = 1;
+  int32 type = 2;
+  string token = 3;
+  string msg = 4;
+  InfoData data = 5;
+}
+
+message InfoData {
+  bytes encode = 1;
+  SpinAllData spinAll = 2;
+  GameInfoAck gameInfo = 3;
+  CheckMallAck checkMall = 4;
+  LoginDataAck loginData = 5;
+  HeartAck heart = 6;
+  ExchangeAck exchange = 7;
+  LastSpinAck lastSpin = 8;
+}
+
 message SpinAllData {
   SpinAck info = 1;
   ServiceData serviceInfo = 2;
@@ -72,34 +126,13 @@ message PreferRoundShow {
   int32 Show = 7;
 }
 
-message GameInfoAck {
-  repeated WalletInfo WalletInfo = 1;
-  int32 ArcadeNo = 2;
-  bool CanIntoArcade = 3;
-  bool Test = 4;
-  PreferRoundShow Prefer = 5;
-  int32 FreeSpinRemain = 6;
-}
-
-message VolInfo {
-  int32 VolPos = 1;
-  repeated int32 VolList = 2;
-}
-
-message SpinReq {
-  double Bet = 1;
-  int32 Currency = 3;
-  int32 TestMode = 4;
-  int32 MallID = 5;
-  double MallBet = 6;
-  int32 VipLv = 7;
-  int32 Free = 8;
-  int32 Trial = 9;
-  int32 VolType = 10;
-}
-
 message CheckMallReq {
   int32 Currency = 1;
+}
+
+message CheckMallAck {
+  repeated GameMallSetting Settings = 1;
+  int32 Show = 2;
 }
 
 message GameMallSetting {
@@ -117,9 +150,9 @@ message GameMallSetting {
   bool Event = 12;
 }
 
-message CheckMallAck {
-  repeated GameMallSetting Settings = 1;
-  int32 Show = 2;
+message LoginDataAck {
+  int32 result = 1;
+  int32 aid = 2;
 }
 
 message LoginDataReq {
@@ -138,11 +171,6 @@ message LoginDataReq {
   int32 Cheat = 13;
 }
 
-message LoginDataAck {
-  int32 result = 1;
-  int32 aid = 2;
-}
-
 message LogoutReq {
   int32 aid = 1;
 }
@@ -158,17 +186,17 @@ message ExchangeReq {
   string stamp = 3;
 }
 
+message ExchangeAck {
+  repeated Wallet wallet = 1;
+  string stamp = 2;
+}
+
 message Wallet {
   double coin = 1;
   int32 currencyNumber = 2;
   double ratio = 3;
   double rate = 4;
   double unit = 5;
-}
-
-message ExchangeAck {
-  repeated Wallet wallet = 1;
-  string stamp = 2;
 }
 
 message LastReq {
@@ -179,32 +207,4 @@ message LastReq {
 message LastSpinAck {
   int32 result = 1;
   SpinAck lastSpin = 2;
-}
-
-message GameReqData {
-  int32 aid = 1;
-  int32 apiid = 2;
-  string token = 3;
-  bytes encode = 4;
-  SpinReq spin = 5;
-  CheckMallReq checkMall = 6;
-}
-
-message InfoData {
-  bytes encode = 1;
-  SpinAllData spinAll = 2;
-  GameInfoAck gameInfo = 3;
-  CheckMallAck checkMall = 4;
-  LoginDataAck loginData = 5;
-  HeartAck heart = 6;
-  ExchangeAck exchange = 7;
-  LastSpinAck lastSpin = 8;
-}
-
-message ResData {
-  int32 ret = 1;
-  int32 type = 2;
-  string token = 3;
-  string msg = 4;
-  InfoData data = 5;
 }
