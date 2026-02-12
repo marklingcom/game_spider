@@ -26,7 +26,7 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   special: false
-  gameName: Monkey Party
+  gameName: Hyper Burst
 huiduConfig:
   coin: 100000
   key: uidList1
@@ -42,20 +42,9 @@ huiduConfig:
   noMoneyAccounts:
     - 1641530
   uidList1:
-    - 7663384
-    - 7663412
-    - 7663428
-    - 7663451
-    - 7663463
-    - 7663477
-    - 7663499
-    - 7663511
-    - 7663538
-    - 7663560
-    - 7663589
-    - 7663607
-    - 7663633
-    - 7663690
-    - 7663706
-    - 7663732
+    - 7663104
+    - 7663125
+    - 7663143
+    - 7663258
+    - 7663277
   uidList2: []

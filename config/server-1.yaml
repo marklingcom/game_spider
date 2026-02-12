@@ -22,7 +22,7 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   extra:
-    enable: false
+    enable: true
     index: 0
     hasDefaultIndex: true
   special: false
@@ -37,13 +37,15 @@ huiduConfig:
     - 7633004
   noMoneyAccounts:
     - 1641530
-    - 7657413
-    - 7657394
   uidList1:
-    - 7657394
-    - 7657401
-    - 7657413
-    - 7657425
-    - 7657440
-    - 7657452
+    - 7663499
+    - 7663511
+    - 7663538
+    - 7663560
+    - 7663589
+    - 7663607
+    - 7663633
+    - 7663690
+    - 7663706
+    - 7663732
   uidList2: []

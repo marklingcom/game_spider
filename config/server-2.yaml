@@ -22,11 +22,11 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   extra:
-    enable: false
+    enable: true
     index: 0
     hasDefaultIndex: true
   special: false
-  gameName: Diamond Party
+  gameName: World Cup
 huiduConfig:
   coin: 100000
   key: uidList1
@@ -42,10 +42,14 @@ huiduConfig:
   noMoneyAccounts:
     - 1641530
   uidList1:
-    - 7657460
-    - 7657470
-    - 7657485
-    - 7663104
-    - 7663125
-    - 7663143
+    - 7663296
+    - 7663319
+    - 7663340
+    - 7663361
+    - 7663384
+    - 7663412
+    - 7663428
+    - 7663451
+    - 7663463
+    - 7663477
   uidList2: []

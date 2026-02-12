@@ -26,7 +26,7 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   special: false
-  gameName: SUPER MAHJONG
+  gameName: Lucky Ball
 huiduConfig:
   coin: 100000
   key: uidList1
@@ -42,10 +42,9 @@ huiduConfig:
   noMoneyAccounts:
     - 1641530
   uidList1:
-    - 7663258
-    - 7663277
-    - 7663296
-    - 7663319
-    - 7663340
-    - 7663361
+    - 7657440
+    - 7657452
+    - 7657460
+    - 7657470
+    - 7657485
   uidList2: []
