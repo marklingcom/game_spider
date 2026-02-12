@@ -219,6 +219,11 @@ export class JiliDb {
           }
         }
       }
+      if (['wondershow'].includes(spiderData.name)) {
+        if (plates.length > 1) {
+          spinDataType = SpinDataType.special;
+        }
+      }
     } else {
       const freeGameWinRegex =
         /"(FreeTotalWin|Free1TotalWin|Free2TotalWin|FreeGameWin|FGWin|BonusTotalWin|bonusWin)"\s*:\s*"?([0-9]+(?:\.[0-9]+)?)"?/g;
@@ -276,12 +281,6 @@ export class JiliDb {
         if (['lj', 'pw'].includes(spiderData.name)) {
           const GetBonus = (spinAckData as any)?.GetBonus;
           if (GetBonus) {
-            spinDataType = SpinDataType.special;
-          }
-        }
-        if (['wondershow'].includes(spiderData.name)) {
-          const plate = spinAckData as any;
-          if (plate && plate.length > 1) {
             spinDataType = SpinDataType.special;
           }
         }
