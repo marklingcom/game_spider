@@ -26,7 +26,7 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   special: false
-  gameName: Lucky Ball
+  gameName: Monkey Party
 huiduConfig:
   coin: 100000
   key: uidList0

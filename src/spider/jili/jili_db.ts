@@ -280,7 +280,7 @@ export class JiliDb {
           }
         }
         if (['wondershow'].includes(spiderData.name)) {
-          const plate = (spinAckData as any)?.plate;
+          const plate = spinAckData as any;
           if (plate && plate.length > 1) {
             spinDataType = SpinDataType.special;
           }
