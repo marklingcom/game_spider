@@ -22,11 +22,11 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   extra:
-    enable: false
+    enable: true
     index: 0
     hasDefaultIndex: true
   special: false
-  gameName: Lucky Ball
+  gameName: World Cup
 huiduConfig:
   coin: 100000
   key: uidList0
