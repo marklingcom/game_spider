@@ -23,30 +23,30 @@ services:
     restart: on-failure
     networks:
       - jili-spider-network
-  # app-3:
-  #   build:
-  #     context: .
-  #     no_cache: true
-  #   image: jili-spider-3:latest
-  #   container_name: jili-spider-3
-  #   volumes:
-  #     - ./config:/app/config
-  #     - ./config/server-3.yaml:/app/config/server.yaml
-  #   restart: on-failure
-  #   networks:
-  #     - jili-spider-network
-  # app-4:
-  #   build:
-  #     context: .
-  #     no_cache: true
-  #   image: jili-spider-4:latest
-  #   container_name: jili-spider-4
-  #   volumes:
-  #     - ./config:/app/config
-  #     - ./config/server-4.yaml:/app/config/server.yaml
-  #   restart: on-failure
-  #   networks:
-  #     - jili-spider-network
+  app-3:
+    build:
+      context: .
+      no_cache: true
+    image: jili-spider-3:latest
+    container_name: jili-spider-3
+    volumes:
+      - ./config:/app/config
+      - ./config/server-3.yaml:/app/config/server.yaml
+    restart: on-failure
+    networks:
+      - jili-spider-network
+  app-4:
+    build:
+      context: .
+      no_cache: true
+    image: jili-spider-4:latest
+    container_name: jili-spider-4
+    volumes:
+      - ./config:/app/config
+      - ./config/server-4.yaml:/app/config/server.yaml
+    restart: on-failure
+    networks:
+      - jili-spider-network
 
   # mysql:
   #   image: mysql:8.0
