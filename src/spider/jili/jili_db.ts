@@ -94,8 +94,9 @@ export class JiliDb {
 
   initStateMap() {
     if (this.is6Special) {
+      const name = this.config.currentJiliGame.jiliConfig.name;
       for (let index = 0; index < 7; index++) {
-        const tabName = `jili_spin_tct_special_${index}`;
+        const tabName = `jili_spin_${name}_special_${index}`;
         const state = new SpinDataState({
           config: this.config,
           type: SpinDataType.special,
