@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import dayjs from 'dayjs';
 import { dbManager } from '../../src/models/index.js';
-import { AckType, SpinResponse } from '../../src/protoGeneral/astarte2_196.js';
+import { AckType, GameInfoAck, SpinResponse } from '../../src/protoGeneral/astarte2_196.js';
 import { JiliDb } from '../../src/spider/jili/jili_db.js';
 import { decryptResponseBuffer } from '../../src/spider/jili/jili_utils.js';
 import { config } from '../../src/utils/config.js';
@@ -14,12 +14,14 @@ const __dirname = dirname(__filename);
 const dataDir = join(__dirname, 'data');
 
 const base64String: string =
-  'data:application/x-protobuf;base64,GiA5Y2RlYThlNDBiMGYxY2M1ODI0OTM0ZWRjZGIyMDE0ZCqeAgrnAQrkAQofCgMKBAUSGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAofCgMABQgSGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAofCgMDCQASGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAofCgMFAgkSGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAofCgMKCgISGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIbCA4SAggCEgQIARABEgQIAhACGTMzMzMzM/M/EhcIERIAEgIQARIECAIQAhm4HoXrUbi+PxkfhetRuB71PxIAGR+F61G4HvU/INSyiY2O1JIDMWZmZmZ+Uu1AoAG74bORlo7hyRi6AQkJAAAAAAAACEA=';
+  'data:application/octet-stream;base64,CAEq4AHN2c2DOAekhtuBrdd0VU0DuvFjDZs5FORpNThEgEZfePeEYRrjRl7ye5cl3iR6UGU0SCYsMW1atrnFSfNSxG1BgZ/OUo8pELBgBaDCLYkStfAEwTgk3VHiZwVzJQ6x2z8Dp9MCLxIaykXDwGx1KNcr8GcagZWvUuaeX4ew0H/gt7kKF6NZyVniKyoLr7RuDOePcr47uJPOTo50JzCiD6Ys/M+uaipqyhzfv0vHVwWygGM1giQF0vnBUOOQE3DD3ygjVD7hzYA4Zii4ArVmBwUOOP+GuJNJHEJJVMfYxw8dOQ==';
 const hexString: string = '';
 const escapeString: string = '';
 
-const token: string = '9cdea8e40b0f1cc5824934edcdb2014d';
+const token: string =
+  '0a0431303031120652786c3168571a046a696c69220231339806bfcaffcc06a2060c343266333435383436373165';
 const gameName: string = 'wondershow';
+const gameInfo: boolean = true;
 
 function getAckTypeName(ack: number): string {
   return AckType[ack] || `Unknown(${ack})`;
@@ -28,7 +30,15 @@ function getAckTypeName(ack: number): string {
 async function decodeResponse(buffer: Buffer, token: string, gameName: string, jiliDb: JiliDb) {
   try {
     const { gaiaResponseData } = await decryptResponseBuffer(buffer, token);
-    // const gameInfoAck = GameInfoAck.fromBinary(gaiaResponseData);
+    if (gameInfo) {
+      const gameInfoAck = GameInfoAck.fromBinary(gaiaResponseData);
+      console.log(`🔓 解密成功，gameInfoAck: \n${JSON.stringify(gameInfoAck, null, 2)}`);
+      return {
+        ackPbName: 'GameInfoAck',
+        ackType: AckType.info,
+        data: gameInfoAck,
+      };
+    }
     const spinResponse = SpinResponse.fromBinary(gaiaResponseData);
     const { data: spinResponseData, spinReq } = spinResponse;
 
