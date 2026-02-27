@@ -26,7 +26,7 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   special: false
-  gameName: 3 Lucky Piggy
+  gameName: 3 Charge Buffalo
 huiduConfig:
   coin: 100000
   key: uidList1
