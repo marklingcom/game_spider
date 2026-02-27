@@ -29,6 +29,7 @@
     "decode-spin-data": "tsx scripts/decode/decode-spin-data.ts",
     "decode-request": "tsx scripts/decode/decode-request.ts",
     "decode-response": "tsx scripts/decode/decode-response.ts",
+    "decode-pb": "tsx scripts/decode/decode-pb.ts",
     "config-gen": "tsx scripts/config-gen.ts",
     "ssh-delete": "tsx scripts/ssh-delete.ts",
     "get-game-url": "tsx scripts/get-game-url.ts"

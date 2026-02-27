@@ -43,5 +43,18 @@
       ],
       "type": "node"
     },
+    {
+      "name": "decode-pb",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "decode-pb"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
   ]
 }
