@@ -109,7 +109,7 @@ export class JiliDb {
   }
 
   get is6Special(): boolean {
-    return ['tct', 'tlp'].includes(this.config.currentJiliGame.jiliConfig.name);
+    return ['tct', 'tlp', 'tcb'].includes(this.config.currentJiliGame.jiliConfig.name);
   }
 
   async init(name: string) {
@@ -324,32 +324,40 @@ export class JiliDb {
       }
     } else if (this.is6Special && isSpecial) {
       const RoundQueue = (spinAckData as any)?.RoundQueue;
-      const firstData = RoundQueue[0];
-      // BlueData
-      // RedData
-      // GreenData
-      const keys = Object.keys(firstData);
-      const hasData = (key: string) => {
-        return keys.includes(key) && firstData[key]?.length > 0;
-      };
-      const index = tabNames.indexOf('buy');
-      if (index !== -1) {
-        tabNames.splice(index, 1);
-      }
-      if (hasData('BlueData') && hasData('RedData') && hasData('GreenData')) {
-        tabNames.push('6');
-      } else if (hasData('RedData') && hasData('GreenData')) {
-        tabNames.push('5');
-      } else if (hasData('BlueData') && hasData('GreenData')) {
-        tabNames.push('4');
-      } else if (hasData('BlueData') && hasData('RedData')) {
-        tabNames.push('3');
-      } else if (hasData('GreenData')) {
-        tabNames.push('2');
-      } else if (hasData('RedData')) {
-        tabNames.push('1');
-      } else if (hasData('BlueData')) {
-        tabNames.push('0');
+      if (spiderData.name === 'tcb') {
+        const GameType = (spinAckData as any)?.GameType;
+        if (GameType) {
+          const index = GameType - 1;
+          tabNames.push(index.toString());
+        }
+      } else {
+        const firstData = RoundQueue[0];
+        // BlueData
+        // RedData
+        // GreenData
+        const keys = Object.keys(firstData);
+        const hasData = (key: string) => {
+          return keys.includes(key) && firstData[key]?.length > 0;
+        };
+        const index = tabNames.indexOf('buy');
+        if (index !== -1) {
+          tabNames.splice(index, 1);
+        }
+        if (hasData('BlueData') && hasData('RedData') && hasData('GreenData')) {
+          tabNames.push('6');
+        } else if (hasData('RedData') && hasData('GreenData')) {
+          tabNames.push('5');
+        } else if (hasData('BlueData') && hasData('GreenData')) {
+          tabNames.push('4');
+        } else if (hasData('BlueData') && hasData('RedData')) {
+          tabNames.push('3');
+        } else if (hasData('GreenData')) {
+          tabNames.push('2');
+        } else if (hasData('RedData')) {
+          tabNames.push('1');
+        } else if (hasData('BlueData')) {
+          tabNames.push('0');
+        }
       }
     } else {
       if (isBuyBouns) {
