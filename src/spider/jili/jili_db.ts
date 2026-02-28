@@ -323,6 +323,10 @@ export class JiliDb {
         tabNames.push('1');
       }
     } else if (this.is6Special && isSpecial) {
+      const index = tabNames.indexOf('buy');
+      if (index !== -1) {
+        tabNames.splice(index, 1);
+      }
       const RoundQueue = (spinAckData as any)?.RoundQueue;
       if (spiderData.name === 'tcb') {
         const GameType = (spinAckData as any)?.GameType;
@@ -339,10 +343,6 @@ export class JiliDb {
         const hasData = (key: string) => {
           return keys.includes(key) && firstData[key]?.length > 0;
         };
-        const index = tabNames.indexOf('buy');
-        if (index !== -1) {
-          tabNames.splice(index, 1);
-        }
         if (hasData('BlueData') && hasData('RedData') && hasData('GreenData')) {
           tabNames.push('6');
         } else if (hasData('RedData') && hasData('GreenData')) {
