@@ -4,7 +4,7 @@ import * as cheerio from 'cheerio';
 import { decryptAESECB, encryptAESECB } from '../utils/awc_utils.js';
 import { getUrlHtmlContent, parseRedirectResponse } from '../utils/network.js';
 import { getAxiosClient } from '../utils/request.js';
-import { parseJiliGameUrl } from '../utils/url.js';
+import { parseJiliGameUrl, parsePPGameUrl } from '../utils/url.js';
 
 interface GameIcon {
   uuid: string;
@@ -72,7 +72,7 @@ interface RefInfo {
   platform: string;
 }
 
-type BrandType = 'JILI';
+type BrandType = 'JILI' | 'PP';
 
 type GameType = 'SLOT';
 
@@ -261,8 +261,8 @@ export class AWC {
     try {
       const requestData = {
         lang: 'en',
-        origin: '/platform/JILI_tabType=SLOT',
-        platform: 'JILI',
+        // origin: '/platform/JILI_tabType=SLOT',
+        platform: this.brand,
         uuid: uuid,
       };
       const result = await this.postRequest<GamePathResponse>(apiURL, requestData);
@@ -275,26 +275,29 @@ export class AWC {
 
   async genGameInfo() {
     const gameList = await this.getGameList();
-    const gameInfoList: Array<{
-      fullName: string;
-      gi: number;
-      name: string;
-      uuid: string;
-    }> = [];
+    const gameInfoList: any[] = [];
 
     for (const game of gameList) {
       try {
         const gameUrl = await this.getGameUrl(game.uuid);
         console.log(`获取到游戏URL: ${gameUrl}`);
-        const params = parseJiliGameUrl(gameUrl);
-        console.log(`获取到游戏参数: ${JSON.stringify(params)}`);
-
-        gameInfoList.push({
-          fullName: game.gameName,
-          gi: parseInt(params.gameID, 10),
-          name: params.gameName,
-          uuid: game.uuid,
-        });
+        if (this.brand === 'JILI') {
+          const params = parseJiliGameUrl(gameUrl);
+          console.log(`获取到游戏参数: ${JSON.stringify(params)}`);
+          gameInfoList.push({
+            fullName: game.gameName,
+            gi: parseInt(params.gameID, 10),
+            name: params.gameName,
+            uuid: game.uuid,
+          });
+        } else if (this.brand === 'PP') {
+          const params = parsePPGameUrl(gameUrl);
+          console.log(`获取到游戏参数: ${JSON.stringify(params)}`);
+          gameInfoList.push({
+            id: params.gameID,
+            name: game.gameName,
+          });
+        }
       } catch (error) {
         console.error(`获取游戏 ${game.gameName} 信息失败:`, error);
       }

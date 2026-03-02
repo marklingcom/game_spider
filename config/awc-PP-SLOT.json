@@ -1,0 +1,666 @@
+[
+  {
+    "id": "vs10floatdrg",
+    "name": "Floating Dragon"
+  },
+  {
+    "id": "vs5luckymly",
+    "name": "Lucky Monkey"
+  },
+  {
+    "id": "vs5luckydogly",
+    "name": "Lucky Dog"
+  },
+  {
+    "id": "vs5luckyphnly",
+    "name": "Lucky Phoenix"
+  },
+  {
+    "id": "vs5luckyt1kly",
+    "name": "Lucky Tiger 1000"
+  },
+  {
+    "id": "vs25pfarmfp",
+    "name": "Pig Farm"
+  },
+  {
+    "id": "vswayssw",
+    "name": "Starlight Wins"
+  },
+  {
+    "id": "vswaysolwfp",
+    "name": "Olympus Wins"
+  },
+  {
+    "id": "vswaysaztecgm",
+    "name": "Fortune of Aztec"
+  },
+  {
+    "id": "vs5t8goldfp",
+    "name": "777 Rush"
+  },
+  {
+    "id": "vs1mjokfp",
+    "name": "Master Gems"
+  },
+  {
+    "id": "vs5tdragresk",
+    "name": "Dino Drop"
+  },
+  {
+    "id": "vs7fire88fp",
+    "name": "Mystic Wishes"
+  },
+  {
+    "id": "vs5spjokfp",
+    "name": "Code of Cairo"
+  },
+  {
+    "id": "vs20fishptrn",
+    "name": "Happy Nets"
+  },
+  {
+    "id": "vs5luckdce88",
+    "name": "Lucky Dice"
+  },
+  {
+    "id": "vs10djneko",
+    "name": "DJ Neko"
+  },
+  {
+    "id": "vs5lckpnd",
+    "name": "Lucky Panda"
+  },
+  {
+    "id": "vs20swrbon",
+    "name": "Sweet Rush Bonanza"
+  },
+  {
+    "id": "vs100hsandks",
+    "name": "Hundreds and Thousands"
+  },
+  {
+    "id": "vs10bhallbnza3",
+    "name": "Big Bass Halloween 3"
+  },
+  {
+    "id": "vs20mmdtres",
+    "name": "Mermaid's Treasure Trove"
+  },
+  {
+    "id": "vs25caishen2",
+    "name": "Chests of Cai Shen 2"
+  },
+  {
+    "id": "vs576hokkwolf",
+    "name": "Hokkaido Wolf"
+  },
+  {
+    "id": "vs30bingomania",
+    "name": "Bingo Mania"
+  },
+  {
+    "id": "vswayslavabls",
+    "name": "Lava Balls"
+  },
+  {
+    "id": "vs40pdmrsg",
+    "name": "Pandemic Rising"
+  },
+  {
+    "id": "vs20frankie",
+    "name": "Frightening Frankie"
+  },
+  {
+    "id": "vs20starprss",
+    "name": "Starlight Princess Super Scatter"
+  },
+  {
+    "id": "vs10bbglxmas",
+    "name": "Big Bass Christmas - Frozen Lake"
+  },
+  {
+    "id": "vs10emotiwins",
+    "name": "Emotiwins"
+  },
+  {
+    "id": "vs5wfrog",
+    "name": "Wealthy Frog"
+  },
+  {
+    "id": "vs10forwildly",
+    "name": "Lucky Mouse"
+  },
+  {
+    "id": "vs5luckytigly",
+    "name": "Lucky Tiger"
+  },
+  {
+    "id": "vs5jellyc",
+    "name": "Jelly Candy"
+  },
+  {
+    "id": "vs10fortnhsly",
+    "name": "Lucky Ox"
+  },
+  {
+    "id": "vs1dragon888",
+    "name": "Plushie Wins"
+  },
+  {
+    "id": "vs20olgatssc",
+    "name": "Gates of Gatot Kaca Super Scatter"
+  },
+  {
+    "id": "vs20procountxm",
+    "name": "Wisdom of Athena 1000 Xmas"
+  },
+  {
+    "id": "vs20chestcol",
+    "name": "Sweet Craze"
+  },
+  {
+    "id": "vs20shmnarise",
+    "name": "Gates of Pyroth"
+  },
+  {
+    "id": "vs40hmrstrm",
+    "name": "Hammerstorm"
+  },
+  {
+    "id": "vs20olympgcl",
+    "name": "Fortune of Olympus"
+  },
+  {
+    "id": "vswaysacnd",
+    "name": "Anaconda Gold"
+  },
+  {
+    "id": "vswaysreelbtl",
+    "name": "Zeus vs Typhon"
+  },
+  {
+    "id": "vs10santasl",
+    "name": "Santa’s Slay"
+  },
+  {
+    "id": "vs10hottuna",
+    "name": "Hot Tuna"
+  },
+  {
+    "id": "vs20speark",
+    "name": "King of Spear"
+  },
+  {
+    "id": "vs10fdwhorses",
+    "name": "Floating Dragon Wild Horses"
+  },
+  {
+    "id": "vswayshuffpbh",
+    "name": "Dragon Tiger Fortunes"
+  },
+  {
+    "id": "vs5tikistrike",
+    "name": "Super Tiki Strike"
+  },
+  {
+    "id": "vs5jokjewhs",
+    "name": "Joker’s Jewels Hold & Spin"
+  },
+  {
+    "id": "vswayswildeq",
+    "name": "Wheel of Happiness"
+  },
+  {
+    "id": "vs20sugrushss",
+    "name": "Sugar Rush Super Scatter"
+  },
+  {
+    "id": "vs10bbsplashx",
+    "name": "Big Bass Splash 1000"
+  },
+  {
+    "id": "vswaysyinyang",
+    "name": "Duel of Night & Day"
+  },
+  {
+    "id": "vswayswwrichr",
+    "name": "Wild Wild Riches Returns"
+  },
+  {
+    "id": "vs20stararx",
+    "name": "Starlight Archer 1000"
+  },
+  {
+    "id": "vs5supergummy",
+    "name": "Super Gummy Strike"
+  },
+  {
+    "id": "vs25wolfgmm",
+    "name": "3 Magic Eggs"
+  },
+  {
+    "id": "vs15zeushadseq",
+    "name": "Zeus vs Hades Gods of War 250"
+  },
+  {
+    "id": "vs10cenrlgdevl",
+    "name": "Knights vs Barbarians"
+  },
+  {
+    "id": "vswaysfirest3",
+    "name": "Fire Stampede Ultimate"
+  },
+  {
+    "id": "vs25tripleps",
+    "name": "Treasures of Osiris"
+  },
+  {
+    "id": "vs10dublin",
+    "name": "Emerald King – Wheel of Wealth"
+  },
+  {
+    "id": "vswayscyhecity",
+    "name": "Cyberheist City"
+  },
+  {
+    "id": "vs5luckycol",
+    "name": "Lucky Fortune Tree"
+  },
+  {
+    "id": "vswaysmjwl2",
+    "name": "Mummy’s Jewels 100"
+  },
+  {
+    "id": "vs20rnriches",
+    "name": "Rolling in Treasures"
+  },
+  {
+    "id": "vs20dhcluster2",
+    "name": "The Dog House – Muttley Crew"
+  },
+  {
+    "id": "vswayssavlgnd",
+    "name": "Savannah Legend"
+  },
+  {
+    "id": "vs10booklight",
+    "name": "John Hunter and Galileo’s Secrets"
+  },
+  {
+    "id": "vs10bbrttr",
+    "name": "Big Bass Return to the Races"
+  },
+  {
+    "id": "vs12bgrbspl",
+    "name": "Bigger Bass Splash"
+  },
+  {
+    "id": "vsways5lions2",
+    "name": "5 Lions Megaways™ 2"
+  },
+  {
+    "id": "vswaystonypzz",
+    "name": "Peppe’s Pepperoni Pizza Plaza"
+  },
+  {
+    "id": "vswaysmltchmgw",
+    "name": "Raging Waterfall Megaways™"
+  },
+  {
+    "id": "vs10fortnpig",
+    "name": "Greedy Fortune Pig"
+  },
+  {
+    "id": "vswayswwjoker",
+    "name": "Wild Wild Joker"
+  },
+  {
+    "id": "vswaysmodfr",
+    "name": "Ancient Island Megaways™"
+  },
+  {
+    "id": "vswaysasiatrzn",
+    "name": "Triple Pot Gold"
+  },
+  {
+    "id": "vs20dhsuper",
+    "name": "The Dog House – Royal Hunt"
+  },
+  {
+    "id": "vs20lightblitz",
+    "name": "Blitz Super Wheel"
+  },
+  {
+    "id": "vs20fatbook",
+    "name": "Book of Monsters"
+  },
+  {
+    "id": "vs5jokerjc",
+    "name": "Joker’s Jewels Cash"
+  },
+  {
+    "id": "vswaysbandit",
+    "name": "Bandit Megaways™"
+  },
+  {
+    "id": "vsways5lionsr",
+    "name": "5 Lions Reborn"
+  },
+  {
+    "id": "vs9ridelightng",
+    "name": "Ride The Lightning"
+  },
+  {
+    "id": "vswaysvlcgds",
+    "name": "Volcano Goddess"
+  },
+  {
+    "id": "vs25luckwildpb",
+    "name": "Lucky's Wild Pub"
+  },
+  {
+    "id": "vswaysbblitz",
+    "name": "Money Stacks Megaways"
+  },
+  {
+    "id": "vs10dkinghp",
+    "name": "Dragon King Hot Pots"
+  },
+  {
+    "id": "vs5bb3reeler",
+    "name": "Big Bass Bonanza 3 Reeler"
+  },
+  {
+    "id": "vs20plsmcannon",
+    "name": "Aztec Smash"
+  },
+  {
+    "id": "vs20minerush",
+    "name": "Mining Rush"
+  },
+  {
+    "id": "vs10fdsnake",
+    "name": "Floating Dragon – Year of the Snake"
+  },
+  {
+    "id": "vswaysaztec",
+    "name": "Aztec Gems Megaways™"
+  },
+  {
+    "id": "vswaysbrickhos",
+    "name": "Brick House Bonanza"
+  },
+  {
+    "id": "vswayspearls",
+    "name": "Wild Wild Pearls"
+  },
+  {
+    "id": "vs10fireice",
+    "name": "Escape the Pyramid - Fire & Ice"
+  },
+  {
+    "id": "vswaysbufstamp",
+    "name": "Wild Wildebeest Wins"
+  },
+  {
+    "id": "vs20swbonsup",
+    "name": "Sweet Bonanza Super Scatter"
+  },
+  {
+    "id": "vs10bbrrp",
+    "name": "Big Bass Reel Repeat"
+  },
+  {
+    "id": "vs20popbottles",
+    "name": "Ice Mints"
+  },
+  {
+    "id": "vswaysargonts",
+    "name": "Argonauts"
+  },
+  {
+    "id": "vs10spellmastr",
+    "name": "Spell Master"
+  },
+  {
+    "id": "vs20alieninv",
+    "name": "Alien Invaders"
+  },
+  {
+    "id": "vs10chillihmr",
+    "name": "Chilli Heat Spicy Spins"
+  },
+  {
+    "id": "vs10piggybank",
+    "name": "You Can Piggy Bank On It"
+  },
+  {
+    "id": "vs25quadwolf",
+    "name": "Wolf Gold 4 Pack"
+  },
+  {
+    "id": "vs9gemtrio",
+    "name": "Gem Trio"
+  },
+  {
+    "id": "vs20bhunter",
+    "name": "Bounty Hunter"
+  },
+  {
+    "id": "vs10beekeep",
+    "name": "Bee Keeper"
+  },
+  {
+    "id": "vswaysbbarnh",
+    "name": "Bigger Barn House Bonanza"
+  },
+  {
+    "id": "vswaysfortsup",
+    "name": "Fortune Ace Super Scatter"
+  },
+  {
+    "id": "vswaysfirest2",
+    "name": "Fire Stampede 2"
+  },
+  {
+    "id": "vswayspompmr2",
+    "name": "Zombie School Megaways"
+  },
+  {
+    "id": "vs20gengembnz",
+    "name": "Genie's Gem Bonanza"
+  },
+  {
+    "id": "vs10jpblaze",
+    "name": "Jackpot Blaze"
+  },
+  {
+    "id": "vs20lbstrhouse",
+    "name": "Lobster House"
+  },
+  {
+    "id": "vswayschilhtwo",
+    "name": "Captain Kraken Megaways"
+  },
+  {
+    "id": "vs25sleepdrag",
+    "name": "Sleeping Dragon"
+  },
+  {
+    "id": "vswayswildbrst",
+    "name": "Witch Heart Megaways™"
+  },
+  {
+    "id": "vs20jjjack",
+    "name": "Jumbo Safari"
+  },
+  {
+    "id": "vs10gbseries",
+    "name": "Fiesta Fortune"
+  },
+  {
+    "id": "vs25goldrexp",
+    "name": "Majestic Express – Gold Run"
+  },
+  {
+    "id": "vswaysresurich",
+    "name": "Resurrecting Riches"
+  },
+  {
+    "id": "vs20gtsofhades",
+    "name": "Gates of Hades"
+  },
+  {
+    "id": "vs10bbbnz1000",
+    "name": "Big Bass Bonanza 1000"
+  },
+  {
+    "id": "vs20olympgold",
+    "name": "Gates of Olympus Super Scatter"
+  },
+  {
+    "id": "vswayscashsurg",
+    "name": "Cash Surge"
+  },
+  {
+    "id": "vs10fingerlfs",
+    "name": "Finger Lick’n Free Spins"
+  },
+  {
+    "id": "vs25goldpartya",
+    "name": "Gold Party 2 – After Hours"
+  },
+  {
+    "id": "vs20gemfirefor",
+    "name": "Gem Fire Fortune"
+  },
+  {
+    "id": "vs20wwgcluster",
+    "name": "Wild West Gold Blazing Bounty"
+  },
+  {
+    "id": "vs12trpcnhour",
+    "name": "Club Tropicana – Happy Hour"
+  },
+  {
+    "id": "vs20bigmass",
+    "name": "Waves of Poseidon"
+  },
+  {
+    "id": "vswaysmjwl",
+    "name": "Mummy’s Jewels"
+  },
+  {
+    "id": "vs15eyeofspart",
+    "name": "Eye of Spartacus"
+  },
+  {
+    "id": "vs10diamondrgh",
+    "name": "Temple Guardians"
+  },
+  {
+    "id": "vs10bbbbrnd",
+    "name": "Big Bass Boxing Bonus Round"
+  },
+  {
+    "id": "vs20gatotx",
+    "name": "Gates of Gatot Kaca 1000"
+  },
+  {
+    "id": "vs20yotdk",
+    "name": "Year of the Dragon King"
+  },
+  {
+    "id": "vswaysjapan",
+    "name": "Starlight Princess Pachi"
+  },
+  {
+    "id": "vs10dyndigd",
+    "name": "Dynamite Diggin Doug"
+  },
+  {
+    "id": "vswayspizza",
+    "name": "PIZZA! PIZZA? PIZZA!"
+  },
+  {
+    "id": "vs10bbhas",
+    "name": "Big Bass Bonanza - Hold & Spinner"
+  },
+  {
+    "id": "vs50jucier",
+    "name": "Kraken's Sky Bounty"
+  },
+  {
+    "id": "vswaysjkrdrop",
+    "name": "Tropical Tiki"
+  },
+  {
+    "id": "vs20leprexmas",
+    "name": "Leprechaun Carol"
+  },
+  {
+    "id": "vs10madame",
+    "name": "Madame Destiny"
+  },
+  {
+    "id": "vs20leprechaun",
+    "name": "Leprechaun Song"
+  },
+  {
+    "id": "vs20eking",
+    "name": "Emerald King"
+  },
+  {
+    "id": "vs9aztecgemsdx",
+    "name": "Aztec Gems Deluxe"
+  },
+  {
+    "id": "vs20olympgate",
+    "name": "Gates of Olympus"
+  },
+  {
+    "id": "vs20oragold",
+    "name": "Oracle of Gold"
+  },
+  {
+    "id": "vswayswildb",
+    "name": "Bloody Dawn"
+  },
+  {
+    "id": "vs20fruitswx",
+    "name": "Sweet Bonanza 1000"
+  },
+  {
+    "id": "vs20sugarrushx",
+    "name": "Sugar Rush 1000"
+  },
+  {
+    "id": "vs20fruitsw",
+    "name": "Sweet Bonanza"
+  },
+  {
+    "id": "vs20procountx",
+    "name": "Wisdom of Athena 1000"
+  },
+  {
+    "id": "vs20sbxmas",
+    "name": "Sweet Bonanza Xmas"
+  },
+  {
+    "id": "vs20fourmc",
+    "name": "Candy Corner"
+  },
+  {
+    "id": "vs20olympxmas",
+    "name": "Gates of Olympus Xmas 1000"
+  },
+  {
+    "id": "vs20clustext",
+    "name": "Gears of Horus"
+  },
+  {
+    "id": "vs10bbbnz",
+    "name": "Big Bass Day at the Races"
+  }
+]

@@ -56,5 +56,18 @@
       ],
       "type": "node"
     },
+    {
+      "name": "config-gen",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "config-gen"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
   ]
 }
