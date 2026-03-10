@@ -32,7 +32,8 @@
     "decode-pb": "tsx scripts/decode/decode-pb.ts",
     "config-gen": "tsx scripts/config-gen.ts",
     "ssh-delete": "tsx scripts/ssh-delete.ts",
-    "get-game-url": "tsx scripts/get-game-url.ts"
+    "get-game-url": "tsx scripts/get-game-url.ts",
+    "gen-fullname-protos": "tsx scripts/gen-fullname-protos.ts"
   },
   "keywords": [],
   "author": "",
