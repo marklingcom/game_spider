@@ -69,5 +69,18 @@
       ],
       "type": "node"
     },
+    {
+      "name": "rtp-route-check",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "rtp-route-check"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
   ]
 }
