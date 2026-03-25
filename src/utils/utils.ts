@@ -10,9 +10,12 @@ export function pkcs5UnPadding(origData: Buffer): Buffer {
   return origData.slice(0, length - unpadding);
 }
 
-export function decrypted(token: string, gaiaResponse: Buffer): Buffer {
+export function decrypted(token: string, gaiaResponse: Buffer, type = 0): Buffer {
   try {
-    const key = Buffer.concat([Buffer.from(token.slice(0, 16)), Buffer.from(token.slice(-16))]);
+    let key = Buffer.concat([Buffer.from(token.slice(0, 16)), Buffer.from(token.slice(-16))]);
+    if (type === 1) {
+      key = Buffer.from(token.slice(0, 32));
+    }
 
     const iv = gaiaResponse.slice(0, 16);
     const encryptedData = gaiaResponse.slice(16);

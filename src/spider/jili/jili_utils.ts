@@ -4,7 +4,8 @@ import { decrypted } from '../../utils/utils.js';
 
 export async function decryptResponseBuffer(
   buff: Buffer,
-  token: string
+  token: string,
+  type?: number
 ): Promise<{ data: Buffer; gaiaResponseData: Buffer }> {
   const gaiaResponse = GaiaResponse.fromBinary(buff);
 
@@ -17,7 +18,7 @@ export async function decryptResponseBuffer(
   const originData = gaiaResponse.data;
 
   try {
-    const data = decrypted(token, Buffer.from(originData));
+    const data = decrypted(token, Buffer.from(originData), type);
     gaiaResponse.data = data;
   } catch (error) {
     console.error('buff可能无加密');

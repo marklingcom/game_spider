@@ -32,7 +32,7 @@ interface SpecialExtItem {
 
 const QUERY_GAME_BRAND = 'jili';
 // const QUERY_GAME_ID = '421';
-const QUERY_GAME_ID = '460';
+const QUERY_GAME_ID = '299';
 
 function createSequelize(dsn: string, database: string): Sequelize {
   const dsnMatch = dsn.match(/^([^:]+):([^@]+)@tcp\(([^:]+):(\d+)\)\//);
