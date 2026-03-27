@@ -109,7 +109,7 @@ export class JiliDb {
   }
 
   get is6Special(): boolean {
-    return ['tct', 'tlp', 'tcb'].includes(this.config.currentJiliGame.jiliConfig.name);
+    return ['tct', 'tlp', 'tcb', 'dts'].includes(this.config.currentJiliGame.jiliConfig.name);
   }
 
   async init(name: string) {
@@ -333,6 +333,37 @@ export class JiliDb {
         if (GameType) {
           const index = GameType - 1;
           tabNames.push(index.toString());
+        }
+      } else if (spiderData.name === 'dts') {
+        const firstData = RoundQueue[0];
+        const PlateSymbol = firstData.PlateSymbol;
+        let hasRed = false;
+        let hasGreen = false;
+        let hasBlue = false;
+        for (const item of PlateSymbol) {
+          const Col = item.Col;
+          if (Col.includes(12)) {
+            hasRed = true;
+          } else if (Col.includes(13)) {
+            hasBlue = true;
+          } else if (Col.includes(14)) {
+            hasGreen = true;
+          }
+        }
+        if (hasRed && hasGreen && hasBlue) {
+          tabNames.push('6');
+        } else if (hasRed && hasGreen) {
+          tabNames.push('5');
+        } else if (hasGreen && hasBlue) {
+          tabNames.push('4');
+        } else if (hasRed && hasBlue) {
+          tabNames.push('3');
+        } else if (hasGreen) {
+          tabNames.push('2');
+        } else if (hasRed) {
+          tabNames.push('1');
+        } else if (hasBlue) {
+          tabNames.push('0');
         }
       } else {
         const firstData = RoundQueue[0];
