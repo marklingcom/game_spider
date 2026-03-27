@@ -342,7 +342,11 @@ protos:
   #   gi: 67
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoAck
-  - name: tcb
-    gi: 460
-    spin_pb_name: SpinAck
-    game_info_pb_name: GameInfoData
+  # - name: tcb
+  #   gi: 460
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  - name: luckygoldbricks
+    gi: 48
+    spin_pb_name: AllPlate
+    game_info_pb_name:
