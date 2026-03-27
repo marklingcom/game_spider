@@ -109,7 +109,7 @@ export class JiliDb {
   }
 
   get is6Special(): boolean {
-    return ['tct', 'tlp', 'tcb', 'dts'].includes(this.config.currentJiliGame.jiliConfig.name);
+    return ['tct', 'tlp', 'tcb', 'dts', 'cc'].includes(this.config.currentJiliGame.jiliConfig.name);
   }
 
   async init(name: string) {
@@ -361,6 +361,37 @@ export class JiliDb {
         } else if (hasGreen) {
           tabNames.push('2');
         } else if (hasRed) {
+          tabNames.push('1');
+        } else if (hasBlue) {
+          tabNames.push('0');
+        }
+      } else if (spiderData.name === 'cc') {
+        const firstData = RoundQueue[0];
+        const PlateSymbol = firstData.PlateSymbol;
+        let hasRed = false;
+        let hasGreen = false;
+        let hasBlue = false;
+        for (const item of PlateSymbol) {
+          const column = item.Column;
+          if (column.includes(14)) {
+            hasBlue = true;
+          } else if (column.includes(15)) {
+            hasGreen = true;
+          } else if (column.includes(16)) {
+            hasRed = true;
+          }
+        }
+        if (hasRed && hasGreen && hasBlue) {
+          tabNames.push('6');
+        } else if (hasRed && hasGreen) {
+          tabNames.push('5');
+        } else if (hasRed && hasBlue) {
+          tabNames.push('4');
+        } else if (hasGreen && hasBlue) {
+          tabNames.push('3');
+        } else if (hasRed) {
+          tabNames.push('2');
+        } else if (hasGreen) {
           tabNames.push('1');
         } else if (hasBlue) {
           tabNames.push('0');
