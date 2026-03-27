@@ -26,7 +26,7 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   special: false
-  gameName: Lucky Goldbricks
+  gameName: 3 Pot Dragons
 huiduConfig:
   coin: 100000
   key: uidList0
