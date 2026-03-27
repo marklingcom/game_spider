@@ -1,0 +1,99 @@
+syntax = "proto3";
+
+package ccProto;
+
+// 奖项数据
+message AwardData {
+  int32 Symbol = 1;      // 符号ID
+  int32 Count = 2;       // 数量
+  int32 LineNum = 3;     // 线号
+  double Win = 4;        // 赢取金额
+}
+
+// 列数据
+message Column {
+  repeated int32 Column = 1;  // 列中的符号列表
+}
+
+// 免费游戏红包硬币
+message FGRedCoin {
+  int32 Pos = 1;        // 位置
+  int32 AddRound = 2;   // 增加轮数
+  double Win = 3;       // 赢取金额
+}
+
+// JP数据
+message JPData {
+  repeated int32 SymbolSerial = 1;  // 符号序列
+  double Win = 2;                    // 赢取金额
+  int32 HitSymbol = 3;              // 命中符号
+  int32 JPType = 4;                 // JP类型
+  bool IsUpgraded = 5;              // 是否升级
+}
+
+// 回合信息
+message RoundInfo {
+  repeated Column PlateSymbol = 1;           // 盘面符号
+  repeated int32 NewWildPos = 2;             // 新Wild位置
+  repeated int32 NowWildPos = 3;             // 当前Wild位置
+  repeated int32 RedEnvelopePos = 4;         // 红包位置
+  double RedEnvelopeWin = 5;                 // 红包赢取金额
+  double RoundWin = 6;                       // 回合赢取金额
+  JPData JPPlate = 7;                        // JP盘面
+  repeated AwardData AwardDataVec = 8;       // 奖项数据列表
+  int32 AwardTypeFlag = 9;                   // 奖项类型标志
+  int32 GameType = 10;                       // 游戏类型
+  int32 FreeRemainRound = 11;                // 免费游戏剩余轮数
+  int32 FreeNowRound = 12;                   // 当前免费游戏轮数
+  int32 FreeTotalRound = 13;                 // 免费游戏总轮数
+  int32 WildSymbol = 14;                     // Wild符号
+  repeated FGRedCoin FGRedCoins = 15;         // 免费游戏红包硬币列表
+  repeated bool AddCrack = 16;               // 添加裂纹标志
+  bool MaxFlag = 17;                         // 最大标志
+  repeated int32 AddCrackLv = 18;            // 添加裂纹等级
+  repeated int32 CrackLevels = 19;           // 裂纹等级列表
+}
+
+// Wild记录集
+message WildRecordSet {
+  double Bet = 1;           // 下注金额
+  repeated int32 Pos = 2;   // 位置列表
+}
+
+// 状态信息
+message StateInfo {
+  repeated int32 CrackLevels = 1;              // 裂纹等级列表
+  repeated WildRecordSet WildRecordVec = 2;    // Wild记录列表
+}
+
+// 游戏信息数据
+message GameInfoData {
+  bool ShowExtra = 1;              // 是否显示额外内容
+  repeated double Mul = 2;         // 倍数列表
+  repeated int32 JPOdds = 3;       // JP赔率列表
+  StateInfo State = 4;             // 状态信息
+}
+
+// 旋转响应
+message SpinAck {
+  repeated RoundInfo RoundQueue = 1;   // 回合队列
+  double FreeTotalWin = 2;             // 免费游戏总赢取金额
+  double TotalWin = 3;                 // 总赢取金额
+  StateInfo LastInfo = 4;              // 最后状态信息
+  double JPFrontBefore = 5;            // 之前的JP前置金额
+  double RTP = 6;                      // RTP值
+}
+
+// JP信息
+message JPInfo {
+  double Front = 1;   // 前置金额
+}
+
+// JP通知
+message JPNotice {
+  int64 AccountID = 1;      // 账户ID
+  int32 ApiID = 2;          // API ID
+  string NickName = 3;      // 昵称
+  double RatedJPWin = 4;    // 评级JP赢取金额
+  int64 TimeStamp = 5;      // 时间戳
+}
