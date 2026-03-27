@@ -32,7 +32,7 @@ export interface ServerConfig {
   };
   betConfig: {
     bet: number;
-    isOld: boolean;
+    isOld?: boolean;
     buyBouns: BuyBounsConfig;
     extra: ExtraConfig;
     special: boolean;
