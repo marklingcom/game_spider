@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package fgProto;
+
+// 奖项数据
+message AwardData {
+  int32 Symbol = 1;   // 符号ID
+  int32 Line = 2;     // 线号
+  double Win = 3;     // 赢取金额
+}
+
+// 列数据
+message Column {
+  repeated int32 Col = 1;  // 列中的符号列表
+}
+
+// 旋转响应
+message SpinAck {
+  repeated Column PlateSymbol = 1;      // 盘面符号（二维数组，每列为一个Column）
+  repeated AwardData AwardDataVec = 2;  // 奖项数据列表
+  int32 AwardTypeFlag = 3;              // 奖项类型标志
+  double Mult = 4;                      // 倍数
+  double TotalWin = 5;                  // 总赢取金额
+  string ShowIndex = 6;                 // 显示索引
+  double NowMoney = 7;                  // 当前金额
+  int32 AckType = 8;                    // 响应类型
+  bool Extra = 9;                       // 额外标志
+  double RTP = 10;                      // RTP值
+}
+
+// 游戏信息数据
+message GameInfoData {
+  bool ShowExtra = 1;        // 是否显示额外内容
+  repeated double Mul = 2;   // 倍数列表
+}
