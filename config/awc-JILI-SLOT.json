@@ -1,9 +1,45 @@
 [
   {
+    "fullName": "3 Coin Wild Tiger",
+    "gi": 622,
+    "name": "tcwt",
+    "uuid": "JILI-SLOT-183"
+  },
+  {
+    "fullName": "Coin of Lightning",
+    "gi": 623,
+    "name": "col",
+    "uuid": "JILI-SLOT-180"
+  },
+  {
     "fullName": "10 Sparkling Crown 2",
     "gi": 676,
     "name": "crown102",
     "uuid": "JILI-SLOT-188"
+  },
+  {
+    "fullName": "SUPER MAHJONG 2",
+    "gi": 757,
+    "name": "mahjong2",
+    "uuid": "JILI-SLOT-192"
+  },
+  {
+    "fullName": "Party Ape",
+    "gi": 586,
+    "name": "pa",
+    "uuid": "JILI-SLOT-194"
+  },
+  {
+    "fullName": "3 Super Ace",
+    "gi": 588,
+    "name": "fullhouse9",
+    "uuid": "JILI-SLOT-195"
+  },
+  {
+    "fullName": "Fortune Hook Antarctic",
+    "gi": 659,
+    "name": "fha",
+    "uuid": "JILI-SLOT-191"
   },
   {
     "fullName": "Boxing King Title Match",
@@ -16,6 +52,18 @@
     "gi": 541,
     "name": "mpt2",
     "uuid": "JILI-SLOT-162"
+  },
+  {
+    "fullName": "Lucky Jaguar 2",
+    "gi": 536,
+    "name": "lj2",
+    "uuid": "JILI-SLOT-167"
+  },
+  {
+    "fullName": "3 Lucky Baozhu",
+    "gi": 563,
+    "name": "tlb",
+    "uuid": "JILI-SLOT-168"
   },
   {
     "fullName": "Clover Coins 3x3",
@@ -34,6 +82,12 @@
     "gi": 547,
     "name": "tcgox",
     "uuid": "JILI-SLOT-165"
+  },
+  {
+    "fullName": "20 Blazing Clover",
+    "gi": 581,
+    "name": "bc20",
+    "uuid": "JILI-SLOT-166"
   },
   {
     "fullName": "Joker Coins Expanded",
@@ -64,6 +118,12 @@
     "gi": 240,
     "name": "ps",
     "uuid": "JILI-SLOT-104"
+  },
+  {
+    "fullName": "Jackpot Joker",
+    "gi": 301,
+    "name": "jpj",
+    "uuid": "JILI-SLOT-100"
   },
   {
     "fullName": "3 Lucky Piggy",
@@ -166,6 +226,12 @@
     "gi": 543,
     "name": "mcp2",
     "uuid": "JILI-SLOT-146"
+  },
+  {
+    "fullName": "Fortune Coins 2",
+    "gi": 573,
+    "name": "rc2",
+    "uuid": "JILI-SLOT-147"
   },
   {
     "fullName": "Clover Coins 4x4",
@@ -288,12 +354,6 @@
     "uuid": "JILI-SLOT-121"
   },
   {
-    "fullName": "Coin Infinity",
-    "gi": 458,
-    "name": "coininfinity",
-    "uuid": "JILI-SLOT-122"
-  },
-  {
     "fullName": "Bikini Lady",
     "gi": 423,
     "name": "bikini",
@@ -354,10 +414,10 @@
     "uuid": "JILI-SLOT-133"
   },
   {
-    "fullName": "Lion 2 Dance",
-    "gi": null,
-    "name": "_Macross",
-    "uuid": "JILI-SLOT-139"
+    "fullName": "Fortune Gems 500",
+    "gi": 540,
+    "name": "fg4",
+    "uuid": "JILI-SLOT-138"
   },
   {
     "fullName": "JILI CAISHEN",
@@ -867,30 +927,6 @@
     "fullName": "FortunePig",
     "gi": 33,
     "name": "pp",
-    "uuid": "JILI-SLOT-019"
-  },
-  {
-    "fullName": "Fortune Coins 2",
-    "gi": 573,
-    "name": "rc2",
-    "uuid": "JILI-SLOT-019"
-  },
-  {
-    "fullName": "Fortune Hook",
-    "gi": 393,
-    "name": "bite",
-    "uuid": "JILI-SLOT-019"
-  },
-  {
-    "fullName": "SUPER MAHJONG",
-    "gi": 549,
-    "name": "fullhouse6",
-    "uuid": "JILI-SLOT-019"
-  },
-  {
-    "fullName": "Monkey Party",
-    "gi": 67,
-    "name": "mp",
     "uuid": "JILI-SLOT-019"
   }
 ]

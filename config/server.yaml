@@ -12,7 +12,7 @@ telegram:
   machine: local
 spiderConfig:
   autoMigrate: false
-  form: huidu
+  form: awc
   compress: 1
 betConfig:
   bet: 0
@@ -26,7 +26,7 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   special: false
-  gameName: 3 Pot Dragons
+  gameName: Fortune Gems 500
 huiduConfig:
   coin: 100000
   key: uidList1

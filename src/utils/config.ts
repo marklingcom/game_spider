@@ -141,7 +141,7 @@ export class Config {
 
     const huiduConfig = this.huiduConfigList.find((item) => item.fullName === gameName);
     if (!huiduConfig) {
-      throw new Error(`游戏 ${gameName} 的 huiduConfig 不存在`);
+      // throw new Error(`游戏 ${gameName} 的 huiduConfig 不存在`);
     }
 
     return {
