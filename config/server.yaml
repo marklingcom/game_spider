@@ -12,10 +12,10 @@ telegram:
   machine: local
 spiderConfig:
   autoMigrate: false
-  form: awc
+  form: huidu
   compress: 1
 betConfig:
-  bet: 0
+  bet: 5
   isOld: true
   buyBouns:
     enable: false
@@ -26,7 +26,7 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   special: false
-  gameName: Fortune Gems 500
+  gameName: Lucky Goldbricks
 huiduConfig:
   coin: 100000
   key: uidList1
