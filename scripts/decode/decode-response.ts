@@ -14,12 +14,12 @@ const __dirname = dirname(__filename);
 const dataDir = join(__dirname, 'data');
 
 const base64String: string =
-  'data:application/octet-stream;base64,CAEq8AEEXyFm0Bvjs9ZUSbH9QQ4i4lQTdlNDhTvy81QK1J4vQDrsZ/XhV2Ntgquv7vyC72pUWn0hhxWTQovWpDLasLPEAgwFq4bNTZdbHd2lhXGxLKJp0IEARBDhsVYfVivr4sL0i8loPzf3DM/uK96XD95P7WGpv4oKmmQJx9u/5RPHpK7iQNrS1pjjGwITvaEU56dIKcmLUmT8rBEROCI2RKSI4I/2ZiwMs0chrfcyrqR/6FInF+NtBTfZPTCNA+fDUKeXqZayrdUsM2higg/Ux8EmirCcc/gf+xn9j2mcyyFy3z01444JSX4MVs2IkpQTvrYyDAjYk6nOBhCe5PrGAg==';
+  'data:application/x-protobuf;base64,CAEaanNzbzo2NDY1NmQ2ZjNhNmU2OTY3Njg3NDY2NjE2YzZjMmQ2ODc1NmU3NDY5NmU2NzNhNjc0MTU5N2E1NjRjNDE0OTVhN2E1YTZhMzY2MjUwNmM2MTRmNmE2YzMxNDI1MDYyNWY1NTUzNDQq+gEKogEIThIDVVNEGgEkIQAAAAAAVsNAKnCamZmZmZnJP5qZmZmZmdk/MzMzMzMz4z8AAAAAAADwPwAAAAAAAABAAAAAAAAAEEAAAAAAAAAgQAAAAAAAACRAAAAAAAAAKEAAAAAAAAAuQAAAAAAAADRAAAAAAAAAOUAAAAAAAAA+QAAAAAAAAERAMQAAAAAAAPA/OQAAAAAAAPA/QR+F61G4HvU/YAoqFAgBEhAAAAAAAADwPwAAAAAAAPg/OgBCFgkAAAAAAIBGQBkAAAAAAABEQCAyKAJICGIWCQAAAAAAAERAEggAAAAAAIBGQBoBMmkAAAAAAIjDQHIAMgwI3t3nzgYQwNKhzgI=';
 const hexString: string = '';
 const escapeString: string = '';
 
-const token: string = '38d36588e89a4d48a4578320bf26e0c6c1a006c9';
-const gameName: string = 'fg4';
+const token: string = '4436fd20916bff8ab3fbd936062c8116bf919e81';
+const gameName: string = 'ed';
 const gameInfo: boolean = true;
 const type: number = 0;
 
