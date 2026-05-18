@@ -1,5 +1,11 @@
 [
   {
+    "fullName": "Fortune Gems Legend",
+    "gi": 812,
+    "name": "ftl",
+    "uuid": "JILI-SLOT-204"
+  },
+  {
     "fullName": "3 Coin Wild Tiger",
     "gi": 622,
     "name": "tcwt",
@@ -24,6 +30,12 @@
     "uuid": "JILI-SLOT-192"
   },
   {
+    "fullName": "Fortune Garuda 500",
+    "gi": 696,
+    "name": "fg5",
+    "uuid": "JILI-SLOT-193"
+  },
+  {
     "fullName": "Party Ape",
     "gi": 586,
     "name": "pa",
@@ -40,6 +52,12 @@
     "gi": 659,
     "name": "fha",
     "uuid": "JILI-SLOT-191"
+  },
+  {
+    "fullName": "Lucky Jaguar 500",
+    "gi": 664,
+    "name": "lj500",
+    "uuid": "JILI-SLOT-160"
   },
   {
     "fullName": "Boxing King Title Match",
@@ -94,6 +112,12 @@
     "gi": 636,
     "name": "jce",
     "uuid": "JILI-SLOT-175"
+  },
+  {
+    "fullName": "100 Blazing Clover",
+    "gi": 591,
+    "name": "bc100",
+    "uuid": "JILI-SLOT-176"
   },
   {
     "fullName": "3 Coin Treasures",
@@ -418,6 +442,12 @@
     "gi": 540,
     "name": "fg4",
     "uuid": "JILI-SLOT-138"
+  },
+  {
+    "fullName": "Lion 2 Dance",
+    "gi": null,
+    "name": "_Macross",
+    "uuid": "JILI-SLOT-139"
   },
   {
     "fullName": "JILI CAISHEN",
