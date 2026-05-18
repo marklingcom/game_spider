@@ -92,7 +92,7 @@ async function checkDataTables() {
     const queryInterface = sequelize.getQueryInterface();
     const tables = await queryInterface.showAllTables();
 
-    const includeTables = ['jili_spin_'];
+    const includeTables = ['jili_spin_', 'pg_spin_'];
     const filteredTables = tables.filter((tableName) =>
       includeTables.some((table) => tableName.startsWith(table))
     );

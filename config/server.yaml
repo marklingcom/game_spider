@@ -5,6 +5,9 @@ db:
   type: mysql
   dsn: root:m9KxXa7j@tcp(sss.cpigame.com:13306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
   dialect: ""
+  # type: mysql
+  # dsn: root:7aJ4wQ0uS@tcp(3.1.2.35:33306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
+  # dialect: ""
 telegram:
   enable: true
   botToken: 7562408962:AAGYI_b79AhEjscuTBPsQ6s3U2e_SNEs8x0
