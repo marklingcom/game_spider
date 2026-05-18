@@ -912,5 +912,15 @@
     "fullName": "3 Coin Wild Horse",
     "companyId": 1,
     "gameUid": "25bff08b69ccd31c238a627b53afff36"
+  },
+  {
+    "fullName": "Fortune Gems Legend",
+    "companyId": 1,
+    "gameUid": "9b0e726a171b2ca972ba8f18329ee4a4"
+  },
+  {
+    "fullName": "Fortune Garuda 500",
+    "companyId": 1,
+    "gameUid": "ddfbe3b51c60ab9166310916a43cb17f"
   }
 ]
