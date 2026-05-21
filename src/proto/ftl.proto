@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package fgProto;
+
+// Reconstructed from /Users/taumulu/Downloads/deobfuscated.js and matched
+// against the existing fg.proto schema found under Downloads.
+message AwardData {
+  int32 Symbol = 1;
+  int32 Line = 2;
+  double Win = 3;
+}
+
+message Column {
+  repeated int32 Col = 1;
+}
+
+message SpinAck {
+  repeated Column PlateSymbol = 1;
+  repeated AwardData AwardDataVec = 2;
+  int32 AwardTypeFlag = 3;
+  double Mult = 4;
+  double TotalWin = 5;
+  string ShowIndex = 6;
+  double NowMoney = 7;
+  int32 AckType = 8;
+  bool Extra = 9;
+  double RTP = 10;
+
+  // Present in deobfuscated.js sample data, not present in the matched fg.proto.
+  // Field numbers are inferred as the next available tags and need packet
+  // capture or encoder/decoder code to confirm.
+  repeated int32 NudgeSymbolList = 11;
+  repeated double MultList = 12;
+}
+
+message GameInfoData {
+  bool ShowExtra = 1;
+  repeated double Mul = 2;
+}
+
+enum Symbol {
+  J = 0;
+  Q = 1;
+  K = 2;
+  A = 3;
+  Emerald = 4;
+  Sapphire = 5;
+  Ruby = 6;
+  Wild = 7;
+  X1 = 8;
+  X2 = 9;
+  X3 = 10;
+  X5 = 11;
+  X10 = 12;
+  X15 = 13;
+  X20 = 14;
+  X25 = 15;
+  X50 = 16;
+  X100 = 17;
+  X500 = 18;
+  Nudge = 19;
+}
+
+enum AwardType {
+  Non = 0;
+  Line = 1;
+  NudgeAward = 3;
+}

@@ -9,6 +9,7 @@ import {
   Request,
   SpinReq,
 } from '../../protoGeneral/astarte2_196.js';
+// import { type Browser, InfoReq } from '../../protoGeneral/astarte2_196.js';
 import { getCacert } from '../../utils/cacert/cacert.js';
 import type { BuyBounsConfig, Config, ExtraConfig } from '../../utils/config.js';
 import { getAxiosClient } from '../../utils/request.js';
@@ -143,10 +144,10 @@ export class JiliApi extends EventEmitter {
     try {
       const browser: Browser = {
         type: 'chrome',
-        version: '144.0.0.0',
+        version: '148.0.0.0',
         language: 'en-US',
-        width: 1034,
-        height: 1877,
+        width: 1470,
+        height: 956,
         ratio: 0,
       };
 
@@ -166,9 +167,18 @@ export class JiliApi extends EventEmitter {
 
       const postData = Request.toBinary(request);
 
+      //       const postData = parseHexInput(`08 01 12 3C 0A 04 4F 53 20 58 12 05 65 6E 2D 55
+      // 53 1A 20 0A 06 63 68 72 6F 6D 65 12 09 31 34 38
+      // 2E 30 2E 30 2E 30 1A 05 65 6E 2D 55 53 20 BE 0B
+      // 28 BC 07 22 00 2A 09 4D 61 63 69 6E 74 6F 73 68
+      // 1A 14 69 C2 FB 6E 0A 9E E7 DB AE 9E 9B 8E 01 8B
+      // D9 6A 7B E6 6C 8D 22 20 E5 98 56 F3 B8 39 53 1E
+      // 05 40 A0 DD 14 4C 0D 8E 19 EB 57 C5 C4 9B C8 73
+      // 0B A4 83 76 5B DC 62 56`);
+
       const response = await getAxiosClient().post(url, postData, {
         headers: {
-          // 'Content-Type': 'application/x-protobuf',
+          'Content-Type': 'application/x-protobuf',
           token: this.jiliSpider.token,
         },
         responseType: 'arraybuffer',

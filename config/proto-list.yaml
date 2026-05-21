@@ -358,7 +358,11 @@ protos:
   #   gi: 485
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  - name: fg4
-    gi: 540
+  # - name: fg4
+  #   gi: 540
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  - name: ftl
+    gi: 812
     spin_pb_name: SpinAck
     game_info_pb_name: GameInfoData

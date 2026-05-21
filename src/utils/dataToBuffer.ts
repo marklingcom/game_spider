@@ -81,9 +81,15 @@ function parseEscapeString(str: string): Buffer {
 }
 
 export function dataToBuffer(
-  options: { escapeString?: string; base64String?: string; hexString?: string } = {}
+  options: {
+    escapeString?: string;
+    base64String?: string;
+    hexString?: string;
+    /** 空格/换行分隔的 hex dump，与 hexString 二选一 */
+    hexDumpString?: string;
+  } = {}
 ): Buffer {
-  const { escapeString, base64String, hexString } = options;
+  const { escapeString, base64String, hexString, hexDumpString } = options;
   if (escapeString) {
     try {
       const data = parseEscapeString(escapeString);
@@ -114,11 +120,12 @@ export function dataToBuffer(
     }
   }
 
-  if (hexString) {
+  const hexInput = hexDumpString || hexString;
+  if (hexInput) {
     try {
-      const cleanHex = hexString.startsWith('0x') ? hexString.slice(2) : hexString;
-      const data = Buffer.from(cleanHex, 'hex');
-      console.log(`📥 从十六进制字符串读取数据 (${data.length} bytes)`);
+      const data = parseHexInput(hexInput);
+      const source = hexDumpString ? 'hex dump' : '十六进制';
+      console.log(`📥 从${source}字符串读取数据 (${data.length} bytes)`);
       return data;
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
@@ -126,5 +133,21 @@ export function dataToBuffer(
     }
   }
 
-  throw new Error('请在脚本中设置 base64String、hexString 或 escapeString 变量');
+  throw new Error('请在脚本中设置 base64String、hexString、hexDumpString 或 escapeString 变量');
+}
+
+/** 支持连续 hex、0x 前缀，以及空格/换行分隔的 hex dump（如抓包复制格式） */
+export function parseHexInput(hex: string): Buffer {
+  let cleanHex = hex.trim();
+  if (cleanHex.startsWith('0x') || cleanHex.startsWith('0X')) {
+    cleanHex = cleanHex.slice(2);
+  }
+  cleanHex = cleanHex.replace(/[^0-9a-fA-F]/g, '');
+  if (cleanHex.length === 0) {
+    throw new Error('十六进制字符串为空');
+  }
+  if (cleanHex.length % 2 !== 0) {
+    throw new Error(`十六进制长度必须为偶数，当前为 ${cleanHex.length} 个字符`);
+  }
+  return Buffer.from(cleanHex, 'hex');
 }
