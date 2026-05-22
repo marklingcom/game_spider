@@ -405,7 +405,11 @@ export class JiliDb {
         // GreenData
         const keys = Object.keys(firstData);
         const hasData = (key: string) => {
-          return keys.includes(key) && firstData[key]?.length > 0 && Object.keys(firstData[key][0]).length > 0;
+          let flag = keys.includes(key) && firstData[key]?.length > 0;
+          if (spiderData.name === 'tct2') {
+            flag = flag && firstData[key][0]?.FED?.length > 0;
+          }
+          return flag;
         };
         if (hasData('BlueData') && hasData('RedData') && hasData('GreenData')) {
           tabNames.push('6');

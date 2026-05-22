@@ -21,7 +21,7 @@ betConfig:
   bet: 0
   isOld: false
   buyBouns:
-    enable: false
+    enable: true
     index: 0
     hasDefaultIndex: true
   extra:
