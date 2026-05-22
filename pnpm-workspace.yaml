@@ -2,4 +2,4 @@ ignoredBuiltDependencies:
   - esbuild
   - protobufjs
 onlyBuiltDependencies:
-  - '@mongodb-js/zstd'
+  - "@mongodb-js/zstd"
