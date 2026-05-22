@@ -15,6 +15,8 @@ export function decrypted(token: string, gaiaResponse: Buffer, type = 0): Buffer
     let key = Buffer.concat([Buffer.from(token.slice(0, 16)), Buffer.from(token.slice(-16))]);
     if (type === 1) {
       key = Buffer.from(token.slice(0, 32));
+    } else if (type === 2) {
+      key = Buffer.from(token.slice(0));
     }
 
     const iv = gaiaResponse.slice(0, 16);

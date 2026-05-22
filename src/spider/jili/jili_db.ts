@@ -109,7 +109,9 @@ export class JiliDb {
   }
 
   get is6Special(): boolean {
-    return ['tct', 'tlp', 'tcb', 'dts', 'cc'].includes(this.config.currentJiliGame.jiliConfig.name);
+    return ['tct', 'tlp', 'tcb', 'dts', 'cc', 'tct2'].includes(
+      this.config.currentJiliGame.jiliConfig.name
+    );
   }
 
   async init(name: string) {

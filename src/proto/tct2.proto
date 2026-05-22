@@ -40,7 +40,7 @@ message FeatureEffectData {
 }
 
 message RoundInfo {
-  repeated CColumn MainPlateSymbol = 1;
+  repeated Column MainPlateSymbol = 1;
   repeated FreePlateCSymbolData FreePlateSymbol = 2;
   repeated FreePlateCSymbolData FreePlateSymbolLog = 3;
   repeated AwardData AwardDataVec = 4;

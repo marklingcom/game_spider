@@ -13,14 +13,23 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const dataDir = join(__dirname, 'data');
 
-const base64String: string =
-  'data:application/x-protobuf;base64,CAEaanNzbzo2NDY1NmQ2ZjNhNmU2OTY3Njg3NDY2NjE2YzZjMmQ2ODc1NmU3NDY5NmU2NzNhNjc0MTU5N2E1NjRjNDE0OTVhN2E1YTZhMzY2MjUwNmM2MTRmNmE2YzMxNDI1MDYyNWY1NTUzNDQq+gEKogEIThIDVVNEGgEkIQAAAAAAVsNAKnCamZmZmZnJP5qZmZmZmdk/MzMzMzMz4z8AAAAAAADwPwAAAAAAAABAAAAAAAAAEEAAAAAAAAAgQAAAAAAAACRAAAAAAAAAKEAAAAAAAAAuQAAAAAAAADRAAAAAAAAAOUAAAAAAAAA+QAAAAAAAAERAMQAAAAAAAPA/OQAAAAAAAPA/QR+F61G4HvU/YAoqFAgBEhAAAAAAAADwPwAAAAAAAPg/OgBCFgkAAAAAAIBGQBkAAAAAAABEQCAyKAJICGIWCQAAAAAAAERAEggAAAAAAIBGQBoBMmkAAAAAAIjDQHIAMgwI3t3nzgYQwNKhzgI=';
+const base64String: string = '';
 const hexString: string = '';
 const escapeString: string = '';
+const hexDumpString: string = `2A 90 01 19 C4 36 DE 61 F8 6D 79 3E DC 10 2F EB
+CA D7 88 C5 2F 6E D1 B5 96 83 1B 08 DF 06 37 5E
+3C 11 4E D5 F0 1F 79 22 DD 48 CF AC BA 4F 8B 0E
+19 0A D7 4A 13 2E 97 B9 C3 FB 24 9D 76 09 76 77
+0F F8 99 34 98 29 0A 8A 46 F5 93 A5 02 B2 AB DC
+48 09 2D 35 6C A4 FE CA B2 E8 25 5E C3 0B F1 0B
+C4 AA F6 87 7C EA D8 04 08 EE 24 47 63 42 11 AB
+B9 1A 32 D3 3B A9 FE C0 F8 97 A3 5F 31 9F 38 25
+76 40 86 D6 FD CC CC 19 4F 60 EA 75 DE 10 05 19
+F2 74 28 32 0B 08 D2 C4 C0 D0 06 10 B2 C6 98 1B`;
 
-const token: string = '4436fd20916bff8ab3fbd936062c8116bf919e81';
-const gameName: string = 'ed';
-const gameInfo: boolean = true;
+const token: string = '353eba01c893ed98920a8425b1e9a9443ccf57a7';
+const gameName: string = 'tct2';
+const gameInfo: boolean = false;
 const type: number = 0;
 
 function getAckTypeName(ack: number): string {
@@ -89,7 +98,7 @@ async function main() {
       process.exit(1);
     }
 
-    const dataBuffer = dataToBuffer({ escapeString, base64String, hexString });
+    const dataBuffer = dataToBuffer({ escapeString, base64String, hexString, hexDumpString });
 
     if (dataBuffer.length === 0) {
       console.error('❌ 输入数据为空');
