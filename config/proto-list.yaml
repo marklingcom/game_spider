@@ -362,7 +362,11 @@ protos:
   #   gi: 540
   #   spin_pb_name: SpinAck
   #   game_info_pb_name: GameInfoData
-  - name: ftl
-    gi: 812
+  # - name: ftl
+  #   gi: 812
+  #   spin_pb_name: SpinAck
+  #   game_info_pb_name: GameInfoData
+  - name: tct2
+    gi: 472
     spin_pb_name: SpinAck
     game_info_pb_name: GameInfoData

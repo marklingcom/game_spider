@@ -29,7 +29,7 @@ betConfig:
     index: 0
     hasDefaultIndex: true
   special: false
-  gameName: Fortune Gems Legend
+  gameName: 3 Coin Treasures 2
 huiduConfig:
   coin: 100000
   key: uidList1
