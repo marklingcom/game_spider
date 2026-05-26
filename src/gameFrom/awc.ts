@@ -303,9 +303,9 @@ export class AWC {
       }
     }
 
-    const fileName = `awc-${this.brand}-${this.gameType}.json`;
+    const fileName = `${this.brand}-${this.gameType}.json`;
     console.log(`游戏信息: ${this.brand}-${this.gameType} 写入文件: ${fileName}`);
-    const outputPath = path.join(process.cwd(), 'config', fileName);
+    const outputPath = path.join(process.cwd(), 'config', 'awc', fileName);
     const outputDir = path.dirname(outputPath);
 
     if (!fs.existsSync(outputDir)) {

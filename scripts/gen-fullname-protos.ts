@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const rootDir = path.resolve(__dirname, '..');
-const configPath = path.join(rootDir, 'config', 'awc-JILI-SLOT.json');
+const configPath = path.join(rootDir, 'config', 'awc', 'JILI-SLOT.json');
 const protoPath = path.join(rootDir, 'src', 'proto');
 const outputDir = path.join(rootDir, 'src', 'protoFullname');
 

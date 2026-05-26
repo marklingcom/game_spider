@@ -1,4 +1,4 @@
-import jiliSlotConfig from '../../config/awc-JILI-SLOT.json' with { type: 'json' };
+import jiliSlotConfig from '../../config/awc/JILI-SLOT.json' with { type: 'json' };
 
 export const getTableGameName = (tableName: string) => {
   const tableNameList = tableName.split('_');
