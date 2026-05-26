@@ -2,26 +2,30 @@ proxy:
   enable: false
   server: http://127.0.0.1:7890
 db:
-  type: mysql
-  dsn: root:m9KxXa7j@tcp(sss.cpigame.com:13306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
-  dialect: ""
+  # type: mysql
+  # dsn: root:m9KxXa7j@tcp(sss.cpigame.com:13306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
+  # dialect: ""
   # type: mysql
   # dsn: root:7aJ4wQ0uS@tcp(3.1.2.35:33306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
   # dialect: ""
+  type: mysql
+  dsn: root:7aJ4wQ0uS@tcp(217.15.162.172:33306)/aigc?charset=utf8mb4&parseTime=True&loc=Local
+  dialect: ""
 telegram:
   enable: true
   botToken: 7562408962:AAGYI_b79AhEjscuTBPsQ6s3U2e_SNEs8x0
   chatId: "-4923815416"
   machine: local
+provider: jili
 spiderConfig:
   autoMigrate: false
   form: huidu
   compress: 1
-betConfig:
+gameConfig:
   bet: 0
   isOld: false
   buyBouns:
-    enable: true
+    enable: false
     index: 0
     hasDefaultIndex: true
   extra:
@@ -32,7 +36,7 @@ betConfig:
   gameName: 3 Coin Treasures 2
 huiduConfig:
   coin: 100000
-  key: uidList1
+  key: uidList0
   maxCount: 10
   uidList0:
     - 7663732

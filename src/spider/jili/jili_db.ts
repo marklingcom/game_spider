@@ -4,17 +4,17 @@ import { isNil } from 'lodash-es';
 import protobuf from 'protobufjs';
 import type { SpiderData } from '../../gameFrom/info.js';
 import type DatabaseManager from '../../models/index.js';
-import type { JiliInfoAttributes } from '../../models/JiliInfo.js';
-import type { JiliProtoAttributes } from '../../models/JiliProto.js';
+import { buildSpinTableName } from '../../core/table-names.js';
+import type { GameInfoAttributes, GameProtoAttributes } from '../../models/index.js';
 import type { SpinDataAttributes } from '../../models/SpinData.js';
-import { type SpinReq, SpinResponse } from '../../protoGeneral/astarte2_196.js';
+import { type SpinReq, SpinResponse } from '../../providers/jili/proto/general/astarte2_196.js';
 import type { Config } from '../../utils/config.js';
 import {
   CompressType,
   CompressTypeMap,
   compressDataWithThreshold,
 } from '../../utils/data_compress.js';
-import { __protoDir } from '../../utils/env.js';
+import { getProviderProtoGamesDir } from '../../utils/env.js';
 import { TelegramEventName, telegramService } from '../../utils/telegram.js';
 import { createDirectoryIfNotExists, formatNumber } from '../../utils/utils.js';
 import { decryptResponseBuffer } from './jili_utils.js';
@@ -60,7 +60,7 @@ class SpinDataState {
     if (this._total && this._total > 0) {
       return this._total;
     }
-    const isBuyBouns = this.config?.serverConfig?.betConfig?.buyBouns?.enable;
+    const isBuyBouns = this.config?.serverConfig?.gameConfig?.buyBouns?.enable;
     if (this.isSpecial) {
       if (isBuyBouns) {
         return 5000;
@@ -94,9 +94,9 @@ export class JiliDb {
 
   initStateMap() {
     if (this.is6Special) {
-      const name = this.config.currentJiliGame.jiliConfig.name;
+      const name = this.config.currentGame.catalog.name;
       for (let index = 0; index < 7; index++) {
-        const tabName = `jili_spin_${name}_special_${index}`;
+        const tabName = buildSpinTableName(this.config.provider, name, 'special', String(index));
         const state = new SpinDataState({
           config: this.config,
           type: SpinDataType.special,
@@ -110,19 +110,18 @@ export class JiliDb {
 
   get is6Special(): boolean {
     return ['tct', 'tlp', 'tcb', 'dts', 'cc', 'tct2'].includes(
-      this.config.currentJiliGame.jiliConfig.name
+      this.config.currentGame.catalog.name
     );
   }
 
   async init(name: string) {
     // 检查jiliProto
-    const JiliProto = this.db.jiliProto;
-    const jiliProto = await JiliProto.findOne({
+    const gameProto = await this.db.gameProto.findOne({
       where: { name },
     });
 
-    if (!jiliProto) {
-      throw new Error(`未找到jiliProto数据: ${name}`);
+    if (!gameProto) {
+      throw new Error(`未找到 ${this.config.provider}_proto 数据: ${name}`);
     }
   }
 
@@ -130,19 +129,19 @@ export class JiliDb {
     data: Buffer,
     gaiaResponseData: Buffer,
     spiderData: SpiderData
-  ): Promise<JiliInfoAttributes> {
+  ): Promise<GameInfoAttributes> {
     if (!gaiaResponseData || gaiaResponseData.length === 0) {
       throw new Error('gaiaResponseData is empty');
     }
 
     const value =
-      (await this.db.jiliInfo.findOne({
+      (await this.db.gameInfo.findOne({
         where: { name: spiderData.name },
       })) || null;
 
     const info = {
       name: spiderData.name,
-      fullName: this.config.currentJiliGame.jiliConfig.fullName,
+      fullName: this.config.currentGame.catalog.fullName,
       from: spiderData.from,
       data: gaiaResponseData,
       fullData: data,
@@ -150,10 +149,10 @@ export class JiliDb {
     };
 
     if (!value) {
-      const gameInfo = await this.db.jiliInfo.create(info);
+      const gameInfo = await this.db.gameInfo.create(info);
       return gameInfo.toJSON();
     } else {
-      await this.db.jiliInfo.update(info, {
+      await this.db.gameInfo.update(info, {
         where: { name: spiderData.name },
       });
       return info;
@@ -292,10 +291,10 @@ export class JiliDb {
     const spinReq = spinResponse.spinReq || spinReqData;
 
     const realBet = spinResponse.realBet || spinReq?.bet || spinReq?.bet || 0;
-    const tabNames = [`jili_spin_${gameName}`];
+    const tabNames = [buildSpinTableName(this.config.provider, gameName)];
 
-    if (this.config.serverConfig.betConfig.bet !== 0) {
-      const betName = this.config.serverConfig.betConfig.bet.toString().replace('.', 'p');
+    if (this.config.serverConfig.gameConfig.bet !== 0) {
+      const betName = this.config.serverConfig.gameConfig.bet.toString().replace('.', 'p');
       tabNames.push(betName);
     }
 
@@ -429,7 +428,7 @@ export class JiliDb {
       }
     } else {
       if (isBuyBouns) {
-        const hasDefaultIndex = this.config.serverConfig.betConfig.buyBouns.hasDefaultIndex;
+        const hasDefaultIndex = this.config.serverConfig.gameConfig.buyBouns.hasDefaultIndex;
         const index = spinReq.mall.index;
         if (!hasDefaultIndex && index === 0) {
           // 默认索引，不添加到表名
@@ -437,7 +436,7 @@ export class JiliDb {
           tabNames.push(index.toString());
         }
       } else if (isExtra) {
-        const hasDefaultIndex = this.config.serverConfig.betConfig.extra.hasDefaultIndex;
+        const hasDefaultIndex = this.config.serverConfig.gameConfig.extra.hasDefaultIndex;
         const index = spinReq.extraSpin.index;
         if (!hasDefaultIndex && index === 0) {
           // 默认索引，不添加到表名
@@ -453,7 +452,7 @@ export class JiliDb {
     const currentState = await this.initState(tabName, isSpecial);
 
     // 如果配置抓取特殊模式，并且当前不是特殊模式，则不抓取数据
-    if (this.config.serverConfig.betConfig.special && !isSpecial) {
+    if (this.config.serverConfig.gameConfig.special && !isSpecial) {
       return;
     }
 
@@ -538,7 +537,7 @@ export class JiliDb {
 
   get isStop() {
     let hasSpecial = false;
-    const isSpecial = this.config.serverConfig.betConfig.special;
+    const isSpecial = this.config.serverConfig.gameConfig.special;
     for (const state of this.stateMap.values()) {
       if (isSpecial && !state.isSpecial) {
         continue;
@@ -578,7 +577,7 @@ export class JiliDb {
   }
 
   private pbMap: Map<string, protobuf.Namespace> = new Map();
-  private jiliProtoMap: Map<string, JiliProtoAttributes> = new Map();
+  private gameProtoMap: Map<string, GameProtoAttributes> = new Map();
   private protoRootPromiseCache: Map<string, Promise<protobuf.Root>> = new Map();
 
   private async syncJiliProto(name: string): Promise<protobuf.Root> {
@@ -587,20 +586,21 @@ export class JiliDb {
     }
 
     const loadPromise = (async () => {
-      const jiliProto = await this.db.jiliProto.findOne({
+      const protoRecord = await this.db.gameProto.findOne({
         where: { name },
       });
 
-      if (!jiliProto) {
+      if (!protoRecord) {
         throw new Error(`not found proto:${name}`);
       }
 
-      const result = jiliProto.toJSON();
-      this.jiliProtoMap.set(name, result);
+      const result = protoRecord.toJSON() as GameProtoAttributes;
+      this.gameProtoMap.set(name, result);
 
-      createDirectoryIfNotExists(__protoDir);
+      const protoGamesDir = getProviderProtoGamesDir(this.config.provider);
+      createDirectoryIfNotExists(protoGamesDir);
 
-      const protoFilePath = path.join(__protoDir, `${name}.proto`);
+      const protoFilePath = path.join(protoGamesDir, `${name}.proto`);
       writeFileSync(protoFilePath, result.data, 'utf8');
 
       const root = await protobuf.load(protoFilePath);
@@ -617,7 +617,7 @@ export class JiliDb {
     if (this.pbMap.has(gameName)) {
       return this.pbMap.get(gameName);
     }
-    const result = this.jiliProtoMap.get(gameName);
+    const result = this.gameProtoMap.get(gameName);
 
     // 获取所有 message
     const messages = Object.values(root.nested).filter((v) => v instanceof protobuf.Namespace);
@@ -628,19 +628,19 @@ export class JiliDb {
     return value;
   }
 
-  async getSpinPb(name: string): Promise<JiliProtoAttributes> {
+  async getSpinPb(name: string): Promise<GameProtoAttributes> {
     await this.syncJiliProto(name);
-    return this.jiliProtoMap.get(name);
+    return this.gameProtoMap.get(name);
   }
 
   async getSpinPbName(name: string): Promise<string> {
-    const jiliProto = await this.getSpinPb(name);
-    return jiliProto.spinPbName;
+    const protoRecord = await this.getSpinPb(name);
+    return protoRecord.spinPbName;
   }
 
   async getGameInfoPbName(name: string): Promise<string> {
-    const jiliProto = await this.getSpinPb(name);
-    return jiliProto.gameInfoPbName;
+    const protoRecord = await this.getSpinPb(name);
+    return protoRecord.gameInfoPbName;
   }
 
   private countOnesInPlate(plate: unknown): number {

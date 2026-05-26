@@ -14,7 +14,8 @@ spiderConfig:
   autoMigrate: false
   form: huidu
   compress: 1
-betConfig:
+provider: jili
+gameConfig:
   bet: 0
   isOld: true
   buyBouns:

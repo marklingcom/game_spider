@@ -1,10 +1,9 @@
 import { EventEmitter } from 'node:events';
-import type { SpiderData } from '../gameFrom/info.js';
-import type { GameInfoAck } from '../protoGeneral/astarte2_196.js';
-import type { BuyBounsConfig, Config, ExtraConfig } from '../utils/config.js';
+import type { GameInfoAck } from '../providers/jili/proto/general/astarte2_196.js';
+import type { GameConfig, BuyBounsConfig, ExtraConfig } from '../core/config-types.js';
+import type { GameSession, IGameApi, ISpinRepository } from '../core/types.js';
+import type { Config } from '../utils/config.js';
 import { telegramService } from '../utils/telegram.js';
-import { JiliApi } from './jili/jili_api.js';
-import type { JiliDb } from './jili/jili_db.js';
 
 export enum SpiderWorkEvent {
   SPIN_SAVE = 'spinSave',
@@ -12,41 +11,34 @@ export enum SpiderWorkEvent {
 
 export class SpiderWork extends EventEmitter {
   private config: Config;
-
-  private spiderData: SpiderData;
-
-  private jiliApi: JiliApi;
-
-  private jiliDb: JiliDb;
+  private session: GameSession;
+  private gameApi: IGameApi;
+  private spinRepository: ISpinRepository;
 
   constructor(options: {
     config: Config;
-    spiderData: SpiderData;
-    jiliDb: JiliDb;
+    session: GameSession;
+    gameApi: IGameApi;
+    spinRepository: ISpinRepository;
   }) {
     super();
-
     this.config = options.config;
-    this.spiderData = options.spiderData;
-    this.jiliDb = options.jiliDb;
-
-    this.jiliApi = new JiliApi({ config: this.config, spiderData: this.spiderData });
+    this.session = options.session;
+    this.gameApi = options.gameApi;
+    this.spinRepository = options.spinRepository;
   }
 
   async start() {
-    await this.jiliDb.init(this.spiderData.name);
+    await this.spinRepository.init(this.session.name);
 
-    const { data, gaiaResponseData, gameInfoAck } = await this.jiliApi.requestGameInfo();
+    const { data, gaiaResponseData, gameInfoAck } = await this.gameApi.requestGameInfo();
     console.log('获取 gameInfoAck 成功');
 
-    // 保存gameInfo
-    await this.jiliDb.saveGameInfo(data, gaiaResponseData, this.spiderData);
+    await this.spinRepository.saveGameInfo(data, gaiaResponseData, this.session);
 
-    await this.jiliApi.doWebSocket();
+    await this.gameApi.connectRealtime();
 
-    await this.startSpinning(gameInfoAck);
-
-    // this.jiliApi.closeWebSocket();
+    await this.startSpinning(gameInfoAck as GameInfoAck);
     console.log('执行完成');
   }
 
@@ -59,9 +51,13 @@ export class SpiderWork extends EventEmitter {
     return [0, false];
   }
 
+  private get gameConfig(): GameConfig {
+    return this.config.serverConfig.gameConfig;
+  }
+
   private async startSpinning(gameInfoAck: GameInfoAck): Promise<void> {
     let bet = 0;
-    if (this.config.serverConfig.betConfig.bet === 0) {
+    if (this.gameConfig.bet === 0) {
       const [denominator, ok] = this.findValidDenominator(gameInfoAck.walletInfo[0]?.bet ?? []);
       if (ok) {
         bet = denominator;
@@ -69,12 +65,10 @@ export class SpiderWork extends EventEmitter {
         bet = gameInfoAck.walletInfo[0]?.bet[0] ?? 0;
       }
     } else {
-      bet = this.config.serverConfig.betConfig.bet;
+      bet = this.gameConfig.bet;
     }
 
-    const buyBouns = this.config.serverConfig.betConfig.buyBouns;
-    const extra = this.config.serverConfig.betConfig.extra;
-    await this.spinWorker(bet, buyBouns, extra);
+    await this.spinWorker(bet, this.gameConfig.buyBouns, this.gameConfig.extra);
   }
 
   private async spinWorker(
@@ -87,21 +81,20 @@ export class SpiderWork extends EventEmitter {
     );
 
     while (true) {
-      if (!this.jiliApi.isConnected) {
+      if (!this.gameApi.isConnected) {
         throw new Error('WebSocket已关闭');
       }
 
-      const spinBuffer = await this.jiliApi.spin(bet, buyBouns, extra);
-      // 保存spinData
-      await this.jiliDb.saveGaiaResponseData({
-        spinResBuffer: spinBuffer.spinResBuffer,
-        spinReqData: spinBuffer.spinReqData,
-        spiderData: this.spiderData,
+      const spinResult = await this.gameApi.spin(bet, buyBouns, extra);
+      await this.spinRepository.saveSpin({
+        spinResBuffer: spinResult.spinResBuffer,
+        spinReqData: spinResult.spinReqData,
+        session: this.session,
       });
 
-      this.emit(SpiderWorkEvent.SPIN_SAVE, spinBuffer);
+      this.emit(SpiderWorkEvent.SPIN_SAVE, spinResult);
 
-      if (this.jiliDb.isStop) {
+      if (this.spinRepository.isStop) {
         const msg = '数据库已停止，停止spin';
         console.log(msg);
         telegramService.sendInfo(msg);

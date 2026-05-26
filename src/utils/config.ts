@@ -1,21 +1,15 @@
 import fs from 'node:fs';
 import { merge } from 'lodash-es';
 import yaml from 'yaml';
+import type { GameConfig, BuyBounsConfig, ExtraConfig } from '../core/config-types.js';
+import type { GameCatalogEntry, GameProvider, LaunchGameEntry } from '../core/types.js';
+import { getAwcCatalogPath, getHuiduListPath } from '../core/paths.js';
 import { CompressType } from './data_compress.js';
 
-export interface BuyBounsConfig {
-  enable: boolean;
-  index: number;
-  hasDefaultIndex: boolean;
-}
-
-export interface ExtraConfig {
-  enable: boolean;
-  index: number;
-  hasDefaultIndex: boolean;
-}
+export type { BuyBounsConfig, ExtraConfig, GameConfig };
 
 export interface ServerConfig {
+  provider: GameProvider;
   proxy: {
     enable: boolean;
     server: string;
@@ -30,14 +24,7 @@ export interface ServerConfig {
     form: string;
     compress: CompressType;
   };
-  betConfig: {
-    bet: number;
-    isOld?: boolean;
-    buyBouns: BuyBounsConfig;
-    extra: ExtraConfig;
-    special: boolean;
-    gameName: string;
-  };
+  gameConfig: GameConfig;
   huiduConfig: {
     coin: number;
     key: string;
@@ -56,26 +43,14 @@ export interface ServerConfig {
   };
 }
 
-interface JiliSlotConfig {
-  fullName: string;
-  gi: number;
-  name: string;
-  uuid: string;
-}
-
-interface HuiduConfig {
-  fullName: string;
-  companyId: number;
-  gameUid: string;
-  partnerId?: number;
-}
+/** @deprecated 使用 gameConfig */
+export type JiliConfig = GameConfig;
 
 export class Config {
   private serverConfigPath = './config/server.yaml';
-  private jiliSlotListPath = './config/awc/JILI-SLOT.json';
-  private huiduConfigListPath = './config/huidu/jili.json';
 
   serverConfig: ServerConfig = {
+    provider: 'jili',
     proxy: {
       enable: false,
       server: '',
@@ -96,7 +71,7 @@ export class Config {
       form: '',
       compress: CompressType.None,
     },
-    betConfig: {
+    gameConfig: {
       bet: 0,
       isOld: false,
       buyBouns: {
@@ -124,29 +99,39 @@ export class Config {
     },
   };
 
-  jiliSlotList: JiliSlotConfig[];
-
-  huiduConfigList: HuiduConfig[];
+  catalogList: GameCatalogEntry[] = [];
+  launchList: LaunchGameEntry[] = [];
 
   constructor() {
     this.loadConfig();
   }
 
+  get provider(): GameProvider {
+    return this.serverConfig.provider;
+  }
+
+  /** 当前运行游戏的目录项 + 启动参数 */
+  get currentGame(): {
+    catalog: GameCatalogEntry;
+    launch?: LaunchGameEntry;
+  } {
+    const gameName = this.serverConfig.gameConfig.gameName;
+    const catalog = this.catalogList.find((item) => item.fullName === gameName);
+    if (!catalog) {
+      throw new Error(`游戏 ${gameName} 在厂商 ${this.provider} 目录中不存在`);
+    }
+
+    const launch = this.launchList.find((item) => item.fullName === gameName);
+
+    return { catalog, launch };
+  }
+
+  /** @deprecated 使用 currentGame */
   get currentJiliGame() {
-    const gameName = this.serverConfig.betConfig.gameName;
-    const jiliConfig = this.jiliSlotList.find((item) => item.fullName === gameName);
-    if (!jiliConfig) {
-      throw new Error(`游戏 ${gameName} 的 jiliSlotConfig 不存在`);
-    }
-
-    const huiduConfig = this.huiduConfigList.find((item) => item.fullName === gameName);
-    if (!huiduConfig) {
-      // throw new Error(`游戏 ${gameName} 的 huiduConfig 不存在`);
-    }
-
+    const { catalog, launch } = this.currentGame;
     return {
-      jiliConfig,
-      huiduConfig,
+      jiliConfig: catalog,
+      huiduConfig: launch,
     };
   }
 
@@ -176,16 +161,29 @@ export class Config {
   private loadConfig(): Config {
     try {
       const serverConfigStr = fs.readFileSync(this.serverConfigPath, 'utf8');
-      const serverConfigData = yaml.parse(serverConfigStr) as Partial<ServerConfig>;
+      const serverConfigData = yaml.parse(serverConfigStr) as Partial<ServerConfig> & {
+        jiliConfig?: GameConfig;
+      };
+
+      // 兼容旧配置键名
+      if (serverConfigData.jiliConfig && !serverConfigData.gameConfig) {
+        serverConfigData.gameConfig = serverConfigData.jiliConfig;
+        delete serverConfigData.jiliConfig;
+      }
+
       this.serverConfig = merge(this.serverConfig, serverConfigData);
 
-      const jiliSlotStr = fs.readFileSync(this.jiliSlotListPath, 'utf8');
-      const jiliSlotData = JSON.parse(jiliSlotStr) as JiliSlotConfig[];
-      this.jiliSlotList = jiliSlotData;
+      if (!this.serverConfig.provider) {
+        this.serverConfig.provider = 'jili';
+      }
 
-      const huiduConfigStr = fs.readFileSync(this.huiduConfigListPath, 'utf8');
-      const huiduConfigData = JSON.parse(huiduConfigStr) as HuiduConfig[];
-      this.huiduConfigList = huiduConfigData;
+      const catalogPath = getAwcCatalogPath(this.serverConfig.provider);
+      const catalogStr = fs.readFileSync(catalogPath, 'utf8');
+      this.catalogList = JSON.parse(catalogStr) as GameCatalogEntry[];
+
+      const launchPath = getHuiduListPath(this.serverConfig.provider);
+      const launchStr = fs.readFileSync(launchPath, 'utf8');
+      this.launchList = JSON.parse(launchStr) as LaunchGameEntry[];
 
       return this;
     } catch (error) {
@@ -193,17 +191,27 @@ export class Config {
     }
   }
 
-  updateBetConfig(updates: Partial<ServerConfig['betConfig']>): void {
+  updateGameConfig(updates: Partial<GameConfig>): void {
     this.updateServerConfig({
-      betConfig: {
-        ...this.serverConfig.betConfig,
+      gameConfig: {
+        ...this.serverConfig.gameConfig,
         ...updates,
       },
     });
   }
 
-  getHuiduConfig(gameName: string): HuiduConfig {
-    return this.huiduConfigList.find((item) => item.fullName === gameName);
+  /** @deprecated 使用 updateGameConfig */
+  updateJiliConfig(updates: Partial<GameConfig>): void {
+    this.updateGameConfig(updates);
+  }
+
+  getLaunchConfig(gameName: string): LaunchGameEntry | undefined {
+    return this.launchList.find((item) => item.fullName === gameName);
+  }
+
+  /** @deprecated 使用 getLaunchConfig */
+  getHuiduConfig(gameName: string): LaunchGameEntry | undefined {
+    return this.getLaunchConfig(gameName);
   }
 }
 

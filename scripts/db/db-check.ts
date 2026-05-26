@@ -1,9 +1,10 @@
 import type { ColumnsDescription, QueryInterface } from 'sequelize';
+import { spinTablePrefix } from '../../src/core/table-names.js';
 import { dbManager } from '../../src/models/index.js';
 import { config } from '../../src/utils/config.js';
 
 async function getDatabaseConnection() {
-  const sequelize = await dbManager.initDB(config.serverConfig.db);
+  const sequelize = await dbManager.initDB(config.serverConfig.db, config.provider);
   console.log('✅ 成功连接到数据库');
   return sequelize;
 }
@@ -92,7 +93,7 @@ async function checkDataTables() {
     const queryInterface = sequelize.getQueryInterface();
     const tables = await queryInterface.showAllTables();
 
-    const includeTables = ['jili_spin_', 'pg_spin_'];
+    const includeTables = [spinTablePrefix(config.provider), 'pg_spin_'];
     const filteredTables = tables.filter((tableName) =>
       includeTables.some((table) => tableName.startsWith(table))
     );

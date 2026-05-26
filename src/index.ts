@@ -1,7 +1,7 @@
 import { debounce } from 'lodash-es';
-import { getGameInfo } from './gameFrom/index.js';
+import { getGameSession } from './gameFrom/index.js';
 import { dbManager } from './models/index.js';
-import { JiliDb } from './spider/jili/jili_db.js';
+import { createProviderRuntime } from './providers/registry.js';
 import { SpiderWork, SpiderWorkEvent } from './spider/spider.js';
 import { config } from './utils/config.js';
 import { RetError } from './utils/errors.js';
@@ -11,7 +11,10 @@ import { sleep } from './utils/utils.js';
 async function main(): Promise<void> {
   console.log('配置文件加载成功');
 
-  await dbManager.initDB(config.serverConfig.db);
+  const providerRuntime = createProviderRuntime(config);
+  console.log(`厂商: ${providerRuntime.provider}`);
+
+  await dbManager.initDB(config.serverConfig.db, config.provider);
 
   if (config.serverConfig.spiderConfig.autoMigrate) {
     console.log('🔄 运行数据库迁移...');
@@ -24,7 +27,7 @@ async function main(): Promise<void> {
     }
   }
 
-  const { gameName, bet, buyBouns, extra, special } = config.serverConfig.betConfig;
+  const { gameName, bet, buyBouns, extra, special } = config.serverConfig.gameConfig;
   const buyBounsEnable = buyBouns.enable;
   const extraEnable = extra.enable;
   const currentUidList = [...config.huiduUidList];
@@ -37,6 +40,7 @@ async function main(): Promise<void> {
 
   telegramService.sendSuccess(
     `开始执行抓取任务: ${gameName}
+provider: ${providerRuntime.provider}
 form: ${config.serverConfig.spiderConfig.form}
 compress: ${config.serverConfig.spiderConfig.compress}
 bet: ${bet}
@@ -62,7 +66,7 @@ total: 总共${totalCount}个账号
     telegramService.sendWarning(msg);
   }, 3000);
 
-  const jiliDb = new JiliDb({ db: dbManager, config });
+  const spinRepository = providerRuntime.createRepository(dbManager);
 
   const getNextAvailableUid = (): number | null => {
     while (currentIndex < currentUidList.length) {
@@ -81,11 +85,13 @@ total: 总共${totalCount}个账号
     try {
       await sleep(time);
       console.log(`开始执行账号: ${uid}`);
-      const gameInfo = await getGameInfo(config, uid);
+      const session = await getGameSession(config, uid);
+      const gameApi = providerRuntime.createApi(session);
       const spiderWork = new SpiderWork({
         config,
-        spiderData: gameInfo,
-        jiliDb,
+        session,
+        gameApi,
+        spinRepository,
       });
 
       spiderWork.once(SpiderWorkEvent.SPIN_SAVE, () => {
@@ -165,7 +171,6 @@ total: 总共${totalCount}个账号
   console.log(msg);
   telegramService.sendSuccess(msg);
 
-  // await sleepForever();
   process.exit(0);
 }
 

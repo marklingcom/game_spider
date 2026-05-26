@@ -1,17 +1,12 @@
 import { join } from 'node:path';
 import protobuf from 'protobufjs';
-import { __protoGeneralDir } from '../utils/env.js';
+import { getProviderProtoGeneralDir } from '../utils/env.js';
 import { getAxiosClient } from '../utils/request.js';
 import { parseJiliGameUrl } from '../utils/url.js';
 
-export interface SpiderData {
-  token: string;
-  spin: string;
-  name: string;
-  from: string;
-  webSocketData: Buffer;
-  gi: number;
-}
+import type { GameSession } from '../core/types.js';
+
+export type SpiderData = GameSession;
 
 interface JiliSSOLoginResponse {
   homeUrl: string;
@@ -82,7 +77,7 @@ export async function generateWebSocketData(
   accountId: string
 ): Promise<Buffer> {
   try {
-    const protoPath = join(__protoGeneralDir, 'lifeServiceProto.proto');
+    const protoPath = join(getProviderProtoGeneralDir('jili'), 'lifeServiceProto.proto');
     const root = await protobuf.load(protoPath);
     const LifeServiceInitInfo = root.lookupType('lifeServiceProto.LifeServiceInitInfo');
 

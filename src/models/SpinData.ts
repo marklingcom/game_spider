@@ -1,4 +1,4 @@
-import { DataTypes, Model, type Sequelize } from 'sequelize';
+import { DataTypes } from 'sequelize';
 
 export interface SpinDataAttributes {
   id?: number;
@@ -8,72 +8,66 @@ export interface SpinDataAttributes {
   from?: string;
   bet?: number;
   rate?: number;
+  nextId?: number | null;
+  groupId?: string | null;
   createTime?: Date;
 }
 
-export class SpinDataModel extends Model<SpinDataAttributes> implements SpinDataAttributes {
-  declare id: number;
-  declare data?: Buffer;
-  declare compress?: number;
-  declare totalWin?: number;
-  declare from?: string;
-  declare bet?: number;
-  declare rate?: number;
-  declare createTime?: Date;
-}
-
-export const SpinData = (sequelize: Sequelize): typeof SpinDataModel => {
-  SpinDataModel.init(
-    {
-      id: {
-        type: DataTypes.BIGINT.UNSIGNED,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      data: {
-        type: DataTypes.BLOB('long'),
-        comment: 'spin数据',
-      },
-      compress: {
-        type: DataTypes.TINYINT.UNSIGNED,
-        defaultValue: 0,
-        comment: '压缩方式，0=不压缩',
-      },
-      totalWin: {
-        type: DataTypes.DOUBLE,
-        comment: '赢的钱',
-      },
-      from: {
-        type: DataTypes.STRING,
-        comment: '数据来源',
-      },
-      bet: {
-        type: DataTypes.DOUBLE,
-        comment: '下注的金额',
-      },
-      rate: {
-        type: DataTypes.DOUBLE,
-        comment: '单局的回报率',
-      },
-      createTime: {
-        type: DataTypes.DATE,
-        field: 'create_time',
-        defaultValue: DataTypes.NOW,
-        comment: '创建时间',
-      },
-    },
-    {
-      sequelize,
-      tableName: 'spin_data',
-      timestamps: false,
-      indexes: [
-        {
-          name: 'rate_idx',
-          fields: ['rate'],
-        },
-      ],
-    }
-  );
-
-  return SpinDataModel;
+/** 动态 spin 表（{provider}_spin_*）的字段定义，不对应物理表 spin_data */
+export const spinDataAttributes = {
+  id: {
+    type: DataTypes.BIGINT.UNSIGNED,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  data: {
+    type: DataTypes.BLOB('long'),
+    comment: 'spin数据',
+  },
+  compress: {
+    type: DataTypes.TINYINT.UNSIGNED,
+    defaultValue: 0,
+    comment: '压缩方式，0=不压缩',
+  },
+  totalWin: {
+    type: DataTypes.DOUBLE,
+    comment: '赢的钱',
+  },
+  from: {
+    type: DataTypes.STRING,
+    comment: '数据来源',
+  },
+  bet: {
+    type: DataTypes.DOUBLE,
+    comment: '下注的金额',
+  },
+  rate: {
+    type: DataTypes.DOUBLE,
+    comment: '单局的回报率',
+  },
+  nextId: {
+    type: DataTypes.BIGINT.UNSIGNED,
+    field: 'next_id',
+    allowNull: true,
+    comment: '关联 id',
+  },
+  groupId: {
+    type: DataTypes.STRING(32),
+    field: 'group_id',
+    allowNull: true,
+    comment: '分组 id',
+  },
+  createTime: {
+    type: DataTypes.DATE,
+    field: 'create_time',
+    defaultValue: DataTypes.NOW,
+    comment: '创建时间',
+  },
 };
+
+export const spinDataIndexes = [
+  {
+    name: 'rate_idx',
+    fields: ['rate'] as const,
+  },
+];

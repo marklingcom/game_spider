@@ -1,27 +1,34 @@
 import type { Config } from '../utils/config.js';
+import type { GameSession } from '../core/types.js';
 import { getGameUrl } from './huidu.js';
-import { getGameInfoFromApi, type SpiderData } from './info.js';
+import { resolveGameSession } from './session.js';
 
-export async function getGameInfo(config: Config, uid: number): Promise<SpiderData> {
+export type { GameSession };
+
+export async function getGameSession(config: Config, uid: number): Promise<GameSession> {
   let url = '';
   const form = config.serverConfig.spiderConfig.form;
+  const { catalog, launch } = config.currentGame;
 
   switch (form) {
     case 'huidu':
       console.log('抓取来源 huidu');
+      if (!launch) {
+        throw new Error(`游戏 ${catalog.fullName} 缺少 huidu 启动配置`);
+      }
       url = await getGameUrl({
         uid,
         coin: config.serverConfig.huiduConfig.coin,
-        gameUid: config.currentJiliGame.huiduConfig.gameUid,
-        companyId: config.currentJiliGame.huiduConfig.companyId,
-        partnerId: config.currentJiliGame.huiduConfig.partnerId,
+        gameUid: launch.gameUid,
+        companyId: launch.companyId,
+        partnerId: launch.partnerId,
       });
       break;
     case 'awc':
       console.log('抓取来源 awc');
-      break;
+      throw new Error('awc 启动流程尚未接入通用抓取链路');
     default:
-      throw new Error('未知的数据源');
+      throw new Error(`未知的数据源: ${form}`);
   }
 
   if (!url) {
@@ -29,14 +36,14 @@ export async function getGameInfo(config: Config, uid: number): Promise<SpiderDa
   }
 
   console.log('成功获取游戏 URL:', url);
-  const ret = await getGameInfoFromApi(url);
-  if (!ret) {
-    throw new Error('返回结果为空');
-  }
-  if (!ret.token) {
+  const session = await resolveGameSession(config, url);
+  if (!session.token) {
     throw new Error('获取token失败, token为空');
   }
-  ret.from = form;
+  session.from = form;
 
-  return ret;
+  return session;
 }
+
+/** @deprecated 使用 getGameSession */
+export const getGameInfo = getGameSession;

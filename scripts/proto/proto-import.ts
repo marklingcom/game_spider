@@ -1,8 +1,10 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse } from 'yaml';
+import { providerProtoTable } from '../../src/core/table-names.js';
 import { dbManager } from '../../src/models/index.js';
 import { config } from '../../src/utils/config.js';
+import { getProviderProtoGamesDir } from '../../src/utils/env.js';
 
 interface ProtoConfig {
   name: string;
@@ -19,7 +21,7 @@ async function main() {
   try {
     console.log('📖 开始导入proto配置到数据库...');
 
-    await dbManager.initDB(config.serverConfig.db);
+    await dbManager.initDB(config.serverConfig.db, config.provider);
     console.log('✅ 成功连接到数据库');
 
     console.log('🔄 运行数据库迁移...');
@@ -33,7 +35,7 @@ async function main() {
 
     console.log('🔧 强制修复ID自增...');
     try {
-      await dbManager.fixTableIdAutoIncrement('jili_proto');
+      await dbManager.fixTableIdAutoIncrement(providerProtoTable(config.provider));
       console.log('✅ ID自增修复完成');
     } catch (error) {
       console.log(`⚠️  ID自增修复失败: ${(error as Error).message}`);
@@ -50,7 +52,7 @@ async function main() {
 
     console.log(`📋 配置文件中包含 ${importList.protos.length} 个proto配置`);
 
-    const protoDir = './src/proto';
+    const protoDir = getProviderProtoGamesDir(config.provider);
     if (!existsSync(protoDir)) {
       throw new Error(`proto目录不存在: ${protoDir}`);
     }
@@ -81,7 +83,7 @@ async function main() {
         `gi: ${protoConfig.gi}, spin_pb_name: ${protoConfig.spin_pb_name}, game_info_pb_name: ${protoConfig.game_info_pb_name}`
       );
 
-      const jiliProtoModel = dbManager.jiliProto;
+      const jiliProtoModel = dbManager.gameProto;
       const existingProto = await jiliProtoModel.findOne({
         where: { name: protoConfig.name },
       });

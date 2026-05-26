@@ -1,6 +1,6 @@
 import { DataTypes, Model, type Sequelize } from 'sequelize';
 
-export interface JiliProtoAttributes {
+export interface GameProtoAttributes {
   id?: number;
   name?: string;
   gi?: number;
@@ -11,7 +11,10 @@ export interface JiliProtoAttributes {
   updateTime?: Date;
 }
 
-class JiliProtoModel extends Model<JiliProtoAttributes> implements JiliProtoAttributes {
+/** @deprecated 使用 GameProtoAttributes */
+export type JiliProtoAttributes = GameProtoAttributes;
+
+class GameProtoModel extends Model<GameProtoAttributes> implements GameProtoAttributes {
   declare id: number;
   declare name?: string;
   declare gi?: number;
@@ -22,8 +25,11 @@ class JiliProtoModel extends Model<JiliProtoAttributes> implements JiliProtoAttr
   declare updateTime?: Date;
 }
 
-export const JiliProto = (sequelize: Sequelize): typeof JiliProtoModel => {
-  JiliProtoModel.init(
+export const createGameProtoModel = (
+  sequelize: Sequelize,
+  tableName: string
+): typeof GameProtoModel => {
+  GameProtoModel.init(
     {
       id: {
         type: DataTypes.BIGINT.UNSIGNED,
@@ -68,10 +74,10 @@ export const JiliProto = (sequelize: Sequelize): typeof JiliProtoModel => {
     },
     {
       sequelize,
-      tableName: 'jili_proto',
+      tableName,
       timestamps: false,
     }
   );
 
-  return JiliProtoModel;
+  return GameProtoModel;
 };

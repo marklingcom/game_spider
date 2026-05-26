@@ -2,21 +2,22 @@ import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { dbManager } from '../../src/models/index.js';
 import { config } from '../../src/utils/config.js';
+import { getProviderProtoGamesDir } from '../../src/utils/env.js';
 import { createDirectoryIfNotExists } from '../../src/utils/utils.js';
 
-const protoDir = './src/proto';
+const protoDir = getProviderProtoGamesDir(config.provider);
 
 async function main() {
   try {
     console.log('开始同步 proto 文件...');
 
-    await dbManager.initDB(config.serverConfig.db);
+    await dbManager.initDB(config.serverConfig.db, config.provider);
 
     console.log('✅ 成功连接到数据库');
 
     await createDirectoryIfNotExists(protoDir);
 
-    const jiliProtoModel = dbManager.jiliProto;
+    const jiliProtoModel = dbManager.gameProto;
     const protoList = await jiliProtoModel.findAll({
       attributes: ['id', 'name', 'gi', 'data'],
     });

@@ -1,6 +1,6 @@
 import type { SpiderData } from '../../src/gameFrom/info.js';
 import { dbManager } from '../../src/models/index.js';
-import { MallType, type SpinResponse } from '../../src/protoGeneral/astarte2_196.js';
+import { MallType, type SpinResponse } from '../../src/providers/jili/proto/general/astarte2_196.js';
 import { JiliDb } from '../../src/spider/jili/jili_db.js';
 import { config, type ServerConfig } from '../../src/utils/config.js';
 import { CompressType, decompressData } from '../../src/utils/data_compress.js';
@@ -9,21 +9,21 @@ import { getFullGameName, getTableGameName } from '../../src/utils/table.js';
 
 async function reSpinData(
   tableName: string,
-  betConfig: ServerConfig['betConfig'],
+  gameConfig: ServerConfig['gameConfig'],
   options: { pageSize: number }
 ) {
   try {
     console.log('🔍 开始重新保存数据');
-    config.updateBetConfig(betConfig);
+    config.updateGameConfig(gameConfig);
 
-    await dbManager.initDB(config.serverConfig.db);
+    await dbManager.initDB(config.serverConfig.db, config.provider);
     console.log('✅ 成功连接到数据库');
 
-    const { gameName } = config.serverConfig.betConfig;
+    const { gameName } = config.serverConfig.gameConfig;
     if (!gameName) {
       throw new Error('配置中未找到 gameName');
     }
-    const name = config.currentJiliGame.jiliConfig.name;
+    const name = config.currentGame.catalog.name;
 
     console.log(`📋 游戏名: ${gameName} (${name}) 表名: ${tableName}`);
 
@@ -86,16 +86,16 @@ async function reSpinData(
           } as unknown as SpinResponse;
 
           if (spinResponse.spinReq) {
-            if (config.serverConfig.betConfig.buyBouns.enable) {
+            if (config.serverConfig.gameConfig.buyBouns.enable) {
               spinResponse.spinReq.mall = {
                 type: MallType.NORMAL_MALL,
-                index: config.serverConfig.betConfig.buyBouns.index,
+                index: config.serverConfig.gameConfig.buyBouns.index,
                 bet: bet,
               };
             }
-            if (config.serverConfig.betConfig.extra.enable) {
+            if (config.serverConfig.gameConfig.extra.enable) {
               spinResponse.spinReq.extraSpin = {
-                index: config.serverConfig.betConfig.extra.index,
+                index: config.serverConfig.gameConfig.extra.index,
               };
             }
           }
@@ -109,22 +109,18 @@ async function reSpinData(
 
           return { success: true, id: oldId };
         } catch (error) {
-          const errorMessage = error instanceof Error ? error.message : String(error);
           console.error(` ❌ 处理记录 ${oldId} 失败:`, error);
           return { success: false, id: oldId };
         }
       };
 
-      const workers = records.map(async (item, _index) => {
+      const workers = records.map(async (item) => {
         const result = await processRecord(item);
         if (result.success) {
           successCount++;
         } else {
           errorCount++;
         }
-        // console.log(
-        //   `dataIndex: ${index}, 处理结果: ${result.success ? '成功' : '失败'}, id: ${result.id}`
-        // );
       });
 
       await Promise.all(workers);

@@ -8,8 +8,8 @@ import {
   MallType,
   Request,
   SpinReq,
-} from '../../protoGeneral/astarte2_196.js';
-// import { type Browser, InfoReq } from '../../protoGeneral/astarte2_196.js';
+} from '../../providers/jili/proto/general/astarte2_196.js';
+// import { type Browser, InfoReq } from '../../providers/jili/proto/general/astarte2_196.js';
 import { getCacert } from '../../utils/cacert/cacert.js';
 import type { BuyBounsConfig, Config, ExtraConfig } from '../../utils/config.js';
 import { getAxiosClient } from '../../utils/request.js';
@@ -51,7 +51,7 @@ export class JiliApi extends EventEmitter {
     }
 
     let url = `${this.jiliSpider.spin}/${this.jiliSpider.name}/req`;
-    if (this.config.serverConfig.betConfig.isOld) {
+    if (this.config.serverConfig.gameConfig.isOld) {
       url += '?D=0';
     }
 
@@ -137,7 +137,7 @@ export class JiliApi extends EventEmitter {
     gameInfoAck: GameInfoAck;
   }> {
     let url = `${this.jiliSpider.spin}/${this.jiliSpider.name}/req`;
-    if (this.config.serverConfig.betConfig.isOld) {
+    if (this.config.serverConfig.gameConfig.isOld) {
       url += '?D=1';
     }
 

@@ -1,18 +1,27 @@
 import { type Model, type ModelStatic, Sequelize } from 'sequelize';
+import { providerInfoTable, providerProtoTable } from '../core/table-names.js';
+import type { GameProvider } from '../core/types.js';
 import type { ServerConfig } from '../utils/config.js';
 import { telegramService } from '../utils/telegram.js';
-import { JiliInfo } from './JiliInfo.js';
-import { JiliProto } from './JiliProto.js';
-import { SpinData } from './SpinData.js';
+import { createGameInfoModel } from './provider/GameInfo.js';
+import { createGameProtoModel } from './provider/GameProto.js';
+import { spinDataAttributes, spinDataIndexes } from './SpinData.js';
+
+export type { GameInfoAttributes, JiliInfoAttributes } from './provider/GameInfo.js';
+export type { GameProtoAttributes, JiliProtoAttributes } from './provider/GameProto.js';
 
 export default class DatabaseManager {
   private sequelize: Sequelize | null = null;
   private models = new Map<string, ModelStatic<Model>>();
   private pendingTableCreations = new Map<string, Promise<ModelStatic<Model>>>();
+  private provider: GameProvider = 'jili';
 
-  async initDB(db: ServerConfig['db']): Promise<Sequelize> {
+  get currentProvider(): GameProvider {
+    return this.provider;
+  }
+
+  async initDB(db: ServerConfig['db'], provider: GameProvider = 'jili'): Promise<Sequelize> {
     try {
-      // 解析 DSN 字符串
       const dsnMatch = db.dsn.match(/^([^:]+):([^@]+)@tcp\(([^:]+):(\d+)\)\/([^?]+)/);
       if (!dsnMatch) {
         throw new Error('无法解析数据库连接字符串');
@@ -37,9 +46,12 @@ export default class DatabaseManager {
       await this.sequelize.authenticate();
       console.log('数据库连接成功');
 
-      this.models.set('SpinData', SpinData(this.sequelize));
-      this.models.set('JiliInfo', JiliInfo(this.sequelize));
-      this.models.set('JiliProto', JiliProto(this.sequelize));
+      this.provider = provider;
+      const infoTable = providerInfoTable(provider);
+      const protoTable = providerProtoTable(provider);
+
+      this.models.set('GameInfo', createGameInfoModel(this.sequelize, infoTable));
+      this.models.set('GameProto', createGameProtoModel(this.sequelize, protoTable));
 
       return this.sequelize;
     } catch (error) {
@@ -48,12 +60,22 @@ export default class DatabaseManager {
     }
   }
 
-  get jiliInfo() {
-    return this.getModel('JiliInfo')!;
+  get gameInfo() {
+    return this.getModel('GameInfo')!;
   }
 
+  get gameProto() {
+    return this.getModel('GameProto')!;
+  }
+
+  /** @deprecated 使用 gameInfo */
+  get jiliInfo() {
+    return this.gameInfo;
+  }
+
+  /** @deprecated 使用 gameProto */
   get jiliProto() {
-    return this.getModel('JiliProto')!;
+    return this.gameProto;
   }
 
   async sync(force: boolean = false): Promise<void> {
@@ -61,7 +83,8 @@ export default class DatabaseManager {
       throw new Error('数据库未初始化');
     }
 
-    await this.sequelize.sync({ force });
+    await this.gameInfo.sync({ force });
+    await this.gameProto.sync({ force });
     console.log('数据库同步完成');
   }
 
@@ -93,18 +116,14 @@ export default class DatabaseManager {
         }
 
         const tables = await this.sequelize.getQueryInterface().showAllTables();
-        const SpinDataModel = this.getModel('SpinData');
         const queryInterface = this.sequelize.getQueryInterface();
         if (!tables.includes(tabName)) {
-          const attributes = SpinDataModel.getAttributes();
-          await queryInterface.createTable(tabName, attributes);
-          const indexes = (SpinDataModel as any).options?.indexes || [];
-          for (const idx of indexes) {
+          await queryInterface.createTable(tabName, spinDataAttributes);
+          for (const idx of spinDataIndexes) {
             if (idx.fields && idx.fields.length > 0) {
               const indexName = idx.name ? `${tabName}_${idx.name}` : undefined;
-              await queryInterface.addIndex(tabName, idx.fields, {
+              await queryInterface.addIndex(tabName, [...idx.fields], {
                 name: indexName,
-                unique: idx.unique,
               });
             }
           }
@@ -114,7 +133,7 @@ export default class DatabaseManager {
           await this.fixTableIdAutoIncrement(tabName);
         }
 
-        const tableModel = this.sequelize.define(tabName, SpinDataModel.getAttributes(), {
+        const tableModel = this.sequelize.define(tabName, spinDataAttributes, {
           tableName: tabName,
           timestamps: false,
         });

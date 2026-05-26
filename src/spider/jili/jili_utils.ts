@@ -1,4 +1,4 @@
-import { GaiaResponse } from '../../protoGeneral/astarte2_196.js';
+import { GaiaResponse } from '../../providers/jili/proto/general/astarte2_196.js';
 import { RetError } from '../../utils/errors.js';
 import { decrypted } from '../../utils/utils.js';
 

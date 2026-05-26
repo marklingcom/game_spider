@@ -3,20 +3,21 @@ import { extname } from 'node:path';
 import { createInterface } from 'node:readline';
 import { dbManager } from '../../src/models/index.js';
 import { config } from '../../src/utils/config.js';
+import { getProviderProtoGamesDir } from '../../src/utils/env.js';
 import { createDirectoryIfNotExists } from '../../src/utils/utils.js';
 
-const protoDir = './src/proto';
+const protoDir = getProviderProtoGamesDir(config.provider);
 
 async function main() {
   try {
     console.log('🔍 开始检查本地proto文件和数据库记录的差异...');
 
-    await dbManager.initDB(config.serverConfig.db);
+    await dbManager.initDB(config.serverConfig.db, config.provider);
     console.log('✅ 成功连接到数据库');
 
     await createDirectoryIfNotExists(protoDir);
 
-    const jiliProtoModel = dbManager.jiliProto;
+    const jiliProtoModel = dbManager.gameProto;
     const dbProtos = await jiliProtoModel.findAll({
       attributes: ['id', 'name', 'gi', 'data', 'createTime', 'updateTime'],
     });

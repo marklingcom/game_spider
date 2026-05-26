@@ -1,8 +1,10 @@
 import jiliSlotConfig from '../../config/awc/JILI-SLOT.json' with { type: 'json' };
+import { parseSpinTableGameName } from '../core/table-names.js';
+import type { GameProvider } from '../core/types.js';
+import { config } from './config.js';
 
-export const getTableGameName = (tableName: string) => {
-  const tableNameList = tableName.split('_');
-  return tableNameList[2];
+export const getTableGameName = (tableName: string, provider: GameProvider = config.provider) => {
+  return parseSpinTableGameName(tableName, provider);
 };
 
 export const getFullGameName = (name: string) => {

@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import dayjs from 'dayjs';
 import { dbManager } from '../../src/models/index.js';
-import { AckType, GameInfoAck, SpinResponse } from '../../src/protoGeneral/astarte2_196.js';
+import { AckType, GameInfoAck, SpinResponse } from '../../src/providers/jili/proto/general/astarte2_196.js';
 import { JiliDb } from '../../src/spider/jili/jili_db.js';
 import { decryptResponseBuffer } from '../../src/spider/jili/jili_utils.js';
 import { config } from '../../src/utils/config.js';
@@ -943,7 +943,7 @@ async function main() {
       process.exit(1);
     }
 
-    await dbManager.initDB(config.serverConfig.db);
+    await dbManager.initDB(config.serverConfig.db, config.provider);
     console.log('✅ 成功连接到数据库');
 
     const jiliDb = new JiliDb({ db: dbManager, config });

@@ -4,9 +4,11 @@ import protobuf from 'protobufjs';
 import type { Model, ModelStatic } from 'sequelize';
 import type DatabaseManager from '../models/index.js';
 import { dbManager } from '../models/index.js';
-import type { JiliProtoAttributes } from '../models/JiliProto.js';
+import { providerProtoTable } from '../core/table-names.js';
+import type { GameProvider } from '../core/types.js';
+import type { GameProtoAttributes } from '../models/provider/GameProto.js';
 import { config } from './config.js';
-import { __protoDir } from './env.js';
+import { getProviderProtoGamesDir } from './env.js';
 import { createDirectoryIfNotExists } from './utils.js';
 
 export interface SpinDataRecord {
@@ -18,6 +20,8 @@ export interface SpinDataRecord {
   from: string;
   createTime: Date;
   compress?: number;
+  nextId?: number | null;
+  groupId?: string | null;
 }
 
 export interface QueryOptions {
@@ -35,46 +39,49 @@ export interface TableInfo {
 
 export class SpinDataReader {
   private db: DatabaseManager;
-  private protoData: JiliProtoAttributes | null = null;
+  private provider: GameProvider;
+  private protoData: GameProtoAttributes | null = null;
   private spinAckType: protobuf.Type | null = null;
   private gameProto: protobuf.Namespace | null = null;
   private tableInfo: TableInfo;
-  constructor(tableInfo: TableInfo) {
+  constructor(tableInfo: TableInfo, provider: GameProvider = config.provider) {
     this.db = dbManager;
+    this.provider = provider;
     this.tableInfo = tableInfo;
   }
 
   async init(): Promise<void> {
-    await this.db.initDB(config.serverConfig.db);
+    await this.db.initDB(config.serverConfig.db, this.provider);
     console.log('✅ 成功连接到数据库');
     await this.loadProto();
     console.log(`✅ Proto 加载成功`);
   }
 
   private async loadProto(): Promise<void> {
-    const jiliProtoModel = this.db.jiliProto;
-    const jiliProto = await jiliProtoModel.findOne({
+    const protoTable = providerProtoTable(this.provider);
+    const protoRecord = await this.db.gameProto.findOne({
       where: { name: this.tableInfo.gameName },
     });
 
-    if (!jiliProto) {
-      throw new Error(`未找到 jili_proto 记录: ${this.tableInfo.gameName}`);
+    if (!protoRecord) {
+      throw new Error(`未找到 ${protoTable} 记录: ${this.tableInfo.gameName}`);
     }
 
-    this.protoData = jiliProto.toJSON() as JiliProtoAttributes;
+    this.protoData = protoRecord.toJSON() as GameProtoAttributes;
     const spinPbName = this.protoData.spinPbName;
 
     if (!spinPbName) {
-      throw new Error(`jili_proto 中未找到 spinPbName: ${this.tableInfo.gameName}`);
+      throw new Error(`${protoTable} 中未找到 spinPbName: ${this.tableInfo.gameName}`);
     }
 
     if (!this.protoData.data) {
-      throw new Error(`jili_proto 中未找到 data: ${this.tableInfo.gameName}`);
+      throw new Error(`${protoTable} 中未找到 data: ${this.tableInfo.gameName}`);
     }
 
-    createDirectoryIfNotExists(__protoDir);
+    const protoGamesDir = getProviderProtoGamesDir(this.provider);
+    createDirectoryIfNotExists(protoGamesDir);
 
-    const protoFilePath = path.join(__protoDir, `${this.tableInfo.gameName}.proto`);
+    const protoFilePath = path.join(protoGamesDir, `${this.tableInfo.gameName}.proto`);
     writeFileSync(protoFilePath, this.protoData.data, 'utf8');
 
     const root = await protobuf.load(protoFilePath);
@@ -93,7 +100,7 @@ export class SpinDataReader {
     }
   }
 
-  getProtoData(): JiliProtoAttributes {
+  getProtoData(): GameProtoAttributes {
     if (!this.protoData) {
       throw new Error('Proto 数据未初始化，请先调用 init()');
     }
