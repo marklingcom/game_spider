@@ -1,7 +1,7 @@
 import type { ColumnsDescription, QueryInterface } from 'sequelize';
-import { spinTablePrefix } from '../../src/core/table-names.js';
+import { spinTablePrefix } from '../../src/config/index.js';
 import { dbManager } from '../../src/models/index.js';
-import { config } from '../../src/utils/config.js';
+import { config } from '../../src/config/index.js';
 
 async function getDatabaseConnection() {
   const sequelize = await dbManager.initDB(config.serverConfig.db, config.provider);

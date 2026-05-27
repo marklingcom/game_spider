@@ -1,6 +1,6 @@
 import ora from 'ora';
 import { QueryTypes, Sequelize } from 'sequelize';
-import { config } from '../../src/utils/config.js';
+import { config } from '../../src/config/index.js';
 
 interface RtpRouteConfig {
   id: number;
@@ -32,7 +32,7 @@ interface SpecialExtItem {
 
 const QUERY_GAME_BRAND = 'jili';
 // const QUERY_GAME_ID = '421';
-const QUERY_GAME_ID = '299';
+const QUERY_GAME_ID = '372';
 
 function createSequelize(dsn: string, database: string): Sequelize {
   const dsnMatch = dsn.match(/^([^:]+):([^@]+)@tcp\(([^:]+):(\d+)\)\//);

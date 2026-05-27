@@ -8,10 +8,10 @@ import {
   MallType,
   Request,
   SpinReq,
-} from '../../providers/jili/proto/general/astarte2_196.js';
-// import { type Browser, InfoReq } from '../../providers/jili/proto/general/astarte2_196.js';
+} from './proto/general/astarte2_196.js';
+// import { type Browser, InfoReq } from './proto/general/astarte2_196.js';
 import { getCacert } from '../../utils/cacert/cacert.js';
-import type { BuyBounsConfig, Config, ExtraConfig } from '../../utils/config.js';
+import type { BuyBounsConfig, Config, ExtraConfig } from '../../config/index.js';
 import { getAxiosClient } from '../../utils/request.js';
 import { decryptResponseBuffer } from './jili_utils.js';
 

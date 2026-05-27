@@ -1,7 +1,7 @@
 import { type Model, type ModelStatic, Sequelize } from 'sequelize';
-import { providerInfoTable, providerProtoTable } from '../core/table-names.js';
-import type { GameProvider } from '../core/types.js';
-import type { ServerConfig } from '../utils/config.js';
+import type { GameProvider } from '../config/index.js';
+import { infoTable, protoTable } from '../config/index.js';
+import type { ServerConfig } from '../config/index.js';
 import { telegramService } from '../utils/telegram.js';
 import { createGameInfoModel } from './provider/GameInfo.js';
 import { createGameProtoModel } from './provider/GameProto.js';
@@ -47,11 +47,11 @@ export default class DatabaseManager {
       console.log('数据库连接成功');
 
       this.provider = provider;
-      const infoTable = providerInfoTable(provider);
-      const protoTable = providerProtoTable(provider);
+      const infoTableName = infoTable(provider);
+      const protoTableName = protoTable(provider);
 
-      this.models.set('GameInfo', createGameInfoModel(this.sequelize, infoTable));
-      this.models.set('GameProto', createGameProtoModel(this.sequelize, protoTable));
+      this.models.set('GameInfo', createGameInfoModel(this.sequelize, infoTableName));
+      this.models.set('GameProto', createGameProtoModel(this.sequelize, protoTableName));
 
       return this.sequelize;
     } catch (error) {

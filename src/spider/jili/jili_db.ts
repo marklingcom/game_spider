@@ -4,17 +4,17 @@ import { isNil } from 'lodash-es';
 import protobuf from 'protobufjs';
 import type { SpiderData } from '../../gameFrom/info.js';
 import type DatabaseManager from '../../models/index.js';
-import { buildSpinTableName } from '../../core/table-names.js';
+import { buildSpinTable } from '../../config/index.js';
 import type { GameInfoAttributes, GameProtoAttributes } from '../../models/index.js';
 import type { SpinDataAttributes } from '../../models/SpinData.js';
-import { type SpinReq, SpinResponse } from '../../providers/jili/proto/general/astarte2_196.js';
-import type { Config } from '../../utils/config.js';
+import { type SpinReq, SpinResponse } from './proto/general/astarte2_196.js';
+import type { Config } from '../../config/index.js';
 import {
   CompressType,
   CompressTypeMap,
   compressDataWithThreshold,
 } from '../../utils/data_compress.js';
-import { getProviderProtoGamesDir } from '../../utils/env.js';
+import { protoGamesDir } from '../../config/index.js';
 import { TelegramEventName, telegramService } from '../../utils/telegram.js';
 import { createDirectoryIfNotExists, formatNumber } from '../../utils/utils.js';
 import { decryptResponseBuffer } from './jili_utils.js';
@@ -96,7 +96,7 @@ export class JiliDb {
     if (this.is6Special) {
       const name = this.config.currentGame.catalog.name;
       for (let index = 0; index < 7; index++) {
-        const tabName = buildSpinTableName(this.config.provider, name, 'special', String(index));
+        const tabName = buildSpinTable(this.config.provider, name, 'special', String(index));
         const state = new SpinDataState({
           config: this.config,
           type: SpinDataType.special,
@@ -291,7 +291,7 @@ export class JiliDb {
     const spinReq = spinResponse.spinReq || spinReqData;
 
     const realBet = spinResponse.realBet || spinReq?.bet || spinReq?.bet || 0;
-    const tabNames = [buildSpinTableName(this.config.provider, gameName)];
+    const tabNames = [buildSpinTable(this.config.provider, gameName)];
 
     if (this.config.serverConfig.gameConfig.bet !== 0) {
       const betName = this.config.serverConfig.gameConfig.bet.toString().replace('.', 'p');
@@ -597,10 +597,10 @@ export class JiliDb {
       const result = protoRecord.toJSON() as GameProtoAttributes;
       this.gameProtoMap.set(name, result);
 
-      const protoGamesDir = getProviderProtoGamesDir(this.config.provider);
-      createDirectoryIfNotExists(protoGamesDir);
+      const gamesDir = protoGamesDir(this.config.provider);
+      createDirectoryIfNotExists(gamesDir);
 
-      const protoFilePath = path.join(protoGamesDir, `${name}.proto`);
+      const protoFilePath = path.join(gamesDir, `${name}.proto`);
       writeFileSync(protoFilePath, result.data, 'utf8');
 
       const root = await protobuf.load(protoFilePath);

@@ -1,7 +1,6 @@
-import type { Config } from '../utils/config.js';
-import type { GameSession } from '../core/types.js';
+import type { Config, GameSession } from '../config/index.js';
 import { getGameUrl } from './huidu.js';
-import { resolveGameSession } from './session.js';
+import { getGameInfoFromApi } from './info.js';
 
 export type { GameSession };
 
@@ -26,7 +25,7 @@ export async function getGameSession(config: Config, uid: number): Promise<GameS
       break;
     case 'awc':
       console.log('抓取来源 awc');
-      throw new Error('awc 启动流程尚未接入通用抓取链路');
+      throw new Error('awc 启动流程尚未接入');
     default:
       throw new Error(`未知的数据源: ${form}`);
   }
@@ -36,7 +35,12 @@ export async function getGameSession(config: Config, uid: number): Promise<GameS
   }
 
   console.log('成功获取游戏 URL:', url);
-  const session = await resolveGameSession(config, url);
+
+  if (config.provider !== 'jili') {
+    throw new Error(`厂商 ${config.provider} 暂不支持会话解析`);
+  }
+
+  const session = await getGameInfoFromApi(url);
   if (!session.token) {
     throw new Error('获取token失败, token为空');
   }

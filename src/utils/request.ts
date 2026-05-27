@@ -1,6 +1,6 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
 import { HttpsProxyAgent } from 'https-proxy-agent';
-import { config } from './config.js';
+import { config } from '../config/index.js';
 
 let axiosClient: AxiosInstance | null = null;
 

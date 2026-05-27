@@ -1,6 +1,6 @@
 import EventEmitter from 'node:events';
 import TelegramBot from 'node-telegram-bot-api';
-import { config } from './config.js';
+import { config } from '../config/index.js';
 import { isProd } from './env.js';
 import { sleep } from './utils.js';
 

@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { AWC } from '../src/gameFrom/awc.js';
 import { getGameUrl } from '../src/gameFrom/huidu.js';
-import { config } from '../src/utils/config.js';
+import { config } from '../src/config/index.js';
 
 interface Options {
   gameName: string;

@@ -15,7 +15,7 @@
     "start-dev": "NODE_ENV=production npm run dev",
     "start-server": "NODE_ENV=production node dist/server.js",
     "clean": "rm -rf dist",
-    "proto-gen": "npx protoc --plugin=./node_modules/.bin/protoc-gen-ts --ts_out=src/providers/jili/proto/general --proto_path=src/providers/jili/proto/general src/providers/jili/proto/general/*.proto",
+    "proto-gen": "npx protoc --plugin=./node_modules/.bin/protoc-gen-ts --ts_out=src/spider/jili/proto/general --proto_path=src/spider/jili/proto/general src/spider/jili/proto/general/*.proto",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "lint": "biome lint .",

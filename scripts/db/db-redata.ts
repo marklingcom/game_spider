@@ -1,8 +1,8 @@
 import type { SpiderData } from '../../src/gameFrom/info.js';
 import { dbManager } from '../../src/models/index.js';
-import { MallType, type SpinResponse } from '../../src/providers/jili/proto/general/astarte2_196.js';
+import { MallType, type SpinResponse } from '../../src/spider/jili/proto/general/astarte2_196.js';
 import { JiliDb } from '../../src/spider/jili/jili_db.js';
-import { config, type ServerConfig } from '../../src/utils/config.js';
+import { config, type ServerConfig } from '../../src/config/index.js';
 import { CompressType, decompressData } from '../../src/utils/data_compress.js';
 import { SpinDataReader } from '../../src/utils/spin-data-reader.js';
 import { getFullGameName, getTableGameName } from '../../src/utils/table.js';

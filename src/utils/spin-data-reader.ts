@@ -4,11 +4,9 @@ import protobuf from 'protobufjs';
 import type { Model, ModelStatic } from 'sequelize';
 import type DatabaseManager from '../models/index.js';
 import { dbManager } from '../models/index.js';
-import { providerProtoTable } from '../core/table-names.js';
-import type { GameProvider } from '../core/types.js';
+import { protoGamesDir, protoTable, type GameProvider } from '../config/index.js';
 import type { GameProtoAttributes } from '../models/provider/GameProto.js';
-import { config } from './config.js';
-import { getProviderProtoGamesDir } from './env.js';
+import { config } from '../config/index.js';
 import { createDirectoryIfNotExists } from './utils.js';
 
 export interface SpinDataRecord {
@@ -58,30 +56,30 @@ export class SpinDataReader {
   }
 
   private async loadProto(): Promise<void> {
-    const protoTable = providerProtoTable(this.provider);
+    const protoTableName = protoTable(this.provider);
     const protoRecord = await this.db.gameProto.findOne({
       where: { name: this.tableInfo.gameName },
     });
 
     if (!protoRecord) {
-      throw new Error(`未找到 ${protoTable} 记录: ${this.tableInfo.gameName}`);
+      throw new Error(`未找到 ${protoTableName} 记录: ${this.tableInfo.gameName}`);
     }
 
     this.protoData = protoRecord.toJSON() as GameProtoAttributes;
     const spinPbName = this.protoData.spinPbName;
 
     if (!spinPbName) {
-      throw new Error(`${protoTable} 中未找到 spinPbName: ${this.tableInfo.gameName}`);
+      throw new Error(`${protoTableName} 中未找到 spinPbName: ${this.tableInfo.gameName}`);
     }
 
     if (!this.protoData.data) {
-      throw new Error(`${protoTable} 中未找到 data: ${this.tableInfo.gameName}`);
+      throw new Error(`${protoTableName} 中未找到 data: ${this.tableInfo.gameName}`);
     }
 
-    const protoGamesDir = getProviderProtoGamesDir(this.provider);
-    createDirectoryIfNotExists(protoGamesDir);
+    const gamesDir = protoGamesDir(this.provider);
+    createDirectoryIfNotExists(gamesDir);
 
-    const protoFilePath = path.join(protoGamesDir, `${this.tableInfo.gameName}.proto`);
+    const protoFilePath = path.join(gamesDir, `${this.tableInfo.gameName}.proto`);
     writeFileSync(protoFilePath, this.protoData.data, 'utf8');
 
     const root = await protobuf.load(protoFilePath);

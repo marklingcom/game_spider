@@ -1,11 +1,11 @@
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { dbManager } from '../../src/models/index.js';
-import { config } from '../../src/utils/config.js';
-import { getProviderProtoGamesDir } from '../../src/utils/env.js';
+import { config } from '../../src/config/index.js';
+import { protoGamesDir } from '../../src/config/index.js';
 import { createDirectoryIfNotExists } from '../../src/utils/utils.js';
 
-const protoDir = getProviderProtoGamesDir(config.provider);
+const protoDir = protoGamesDir(config.provider);
 
 async function main() {
   try {

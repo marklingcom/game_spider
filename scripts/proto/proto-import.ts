@@ -1,10 +1,9 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse } from 'yaml';
-import { providerProtoTable } from '../../src/core/table-names.js';
 import { dbManager } from '../../src/models/index.js';
-import { config } from '../../src/utils/config.js';
-import { getProviderProtoGamesDir } from '../../src/utils/env.js';
+import { protoGamesDir, protoTable } from '../../src/config/index.js';
+import { config } from '../../src/config/index.js';
 
 interface ProtoConfig {
   name: string;
@@ -35,7 +34,7 @@ async function main() {
 
     console.log('🔧 强制修复ID自增...');
     try {
-      await dbManager.fixTableIdAutoIncrement(providerProtoTable(config.provider));
+      await dbManager.fixTableIdAutoIncrement(protoTable(config.provider));
       console.log('✅ ID自增修复完成');
     } catch (error) {
       console.log(`⚠️  ID自增修复失败: ${(error as Error).message}`);
@@ -52,7 +51,7 @@ async function main() {
 
     console.log(`📋 配置文件中包含 ${importList.protos.length} 个proto配置`);
 
-    const protoDir = getProviderProtoGamesDir(config.provider);
+    const protoDir = protoGamesDir(config.provider);
     if (!existsSync(protoDir)) {
       throw new Error(`proto目录不存在: ${protoDir}`);
     }

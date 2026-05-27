@@ -3,10 +3,10 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import dayjs from 'dayjs';
 import { dbManager } from '../../src/models/index.js';
-import { AckType, GameInfoAck, SpinResponse } from '../../src/providers/jili/proto/general/astarte2_196.js';
+import { AckType, GameInfoAck, SpinResponse } from '../../src/spider/jili/proto/general/astarte2_196.js';
 import { JiliDb } from '../../src/spider/jili/jili_db.js';
 import { decryptResponseBuffer } from '../../src/spider/jili/jili_utils.js';
-import { config } from '../../src/utils/config.js';
+import { config } from '../../src/config/index.js';
 import { dataToBuffer } from '../../src/utils/dataToBuffer.js';
 
 const __filename = fileURLToPath(import.meta.url);

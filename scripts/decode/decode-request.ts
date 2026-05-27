@@ -9,7 +9,7 @@ import {
   InfoReq,
   Request,
   SpinReq,
-} from '../../src/providers/jili/proto/general/astarte2_196.js';
+} from '../../src/spider/jili/proto/general/astarte2_196.js';
 import { dataToBuffer } from '../../src/utils/dataToBuffer.js';
 
 const __filename = fileURLToPath(import.meta.url);

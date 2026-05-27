@@ -1,9 +1,9 @@
 import { EventEmitter } from 'node:events';
-import type { GameInfoAck } from '../providers/jili/proto/general/astarte2_196.js';
-import type { GameConfig, BuyBounsConfig, ExtraConfig } from '../core/config-types.js';
-import type { GameSession, IGameApi, ISpinRepository } from '../core/types.js';
-import type { Config } from '../utils/config.js';
+import type { GameInfoAck } from './jili/proto/general/astarte2_196.js';
+import type { BuyBounsConfig, Config, ExtraConfig, GameSession } from '../config/index.js';
 import { telegramService } from '../utils/telegram.js';
+import { JiliApi } from './jili/jili_api.js';
+import type { JiliDb } from './jili/jili_db.js';
 
 export enum SpiderWorkEvent {
   SPIN_SAVE = 'spinSave',
@@ -12,33 +12,26 @@ export enum SpiderWorkEvent {
 export class SpiderWork extends EventEmitter {
   private config: Config;
   private session: GameSession;
-  private gameApi: IGameApi;
-  private spinRepository: ISpinRepository;
+  private jiliApi: JiliApi;
+  private jiliDb: JiliDb;
 
-  constructor(options: {
-    config: Config;
-    session: GameSession;
-    gameApi: IGameApi;
-    spinRepository: ISpinRepository;
-  }) {
+  constructor(options: { config: Config; session: GameSession; jiliDb: JiliDb }) {
     super();
     this.config = options.config;
     this.session = options.session;
-    this.gameApi = options.gameApi;
-    this.spinRepository = options.spinRepository;
+    this.jiliDb = options.jiliDb;
+    this.jiliApi = new JiliApi({ config: this.config, spiderData: this.session });
   }
 
   async start() {
-    await this.spinRepository.init(this.session.name);
+    await this.jiliDb.init(this.session.name);
 
-    const { data, gaiaResponseData, gameInfoAck } = await this.gameApi.requestGameInfo();
+    const { data, gaiaResponseData, gameInfoAck } = await this.jiliApi.requestGameInfo();
     console.log('获取 gameInfoAck 成功');
 
-    await this.spinRepository.saveGameInfo(data, gaiaResponseData, this.session);
-
-    await this.gameApi.connectRealtime();
-
-    await this.startSpinning(gameInfoAck as GameInfoAck);
+    await this.jiliDb.saveGameInfo(data, gaiaResponseData, this.session);
+    await this.jiliApi.doWebSocket();
+    await this.startSpinning(gameInfoAck);
     console.log('执行完成');
   }
 
@@ -51,24 +44,17 @@ export class SpiderWork extends EventEmitter {
     return [0, false];
   }
 
-  private get gameConfig(): GameConfig {
-    return this.config.serverConfig.gameConfig;
-  }
-
   private async startSpinning(gameInfoAck: GameInfoAck): Promise<void> {
+    const { bet: betConfig, buyBouns, extra } = this.config.serverConfig.gameConfig;
     let bet = 0;
-    if (this.gameConfig.bet === 0) {
+    if (betConfig === 0) {
       const [denominator, ok] = this.findValidDenominator(gameInfoAck.walletInfo[0]?.bet ?? []);
-      if (ok) {
-        bet = denominator;
-      } else {
-        bet = gameInfoAck.walletInfo[0]?.bet[0] ?? 0;
-      }
+      bet = ok ? denominator : (gameInfoAck.walletInfo[0]?.bet[0] ?? 0);
     } else {
-      bet = this.gameConfig.bet;
+      bet = betConfig;
     }
 
-    await this.spinWorker(bet, this.gameConfig.buyBouns, this.gameConfig.extra);
+    await this.spinWorker(bet, buyBouns, extra);
   }
 
   private async spinWorker(
@@ -81,20 +67,20 @@ export class SpiderWork extends EventEmitter {
     );
 
     while (true) {
-      if (!this.gameApi.isConnected) {
+      if (!this.jiliApi.isConnected) {
         throw new Error('WebSocket已关闭');
       }
 
-      const spinResult = await this.gameApi.spin(bet, buyBouns, extra);
-      await this.spinRepository.saveSpin({
+      const spinResult = await this.jiliApi.spin(bet, buyBouns, extra);
+      await this.jiliDb.saveGaiaResponseData({
         spinResBuffer: spinResult.spinResBuffer,
         spinReqData: spinResult.spinReqData,
-        session: this.session,
+        spiderData: this.session,
       });
 
       this.emit(SpiderWorkEvent.SPIN_SAVE, spinResult);
 
-      if (this.spinRepository.isStop) {
+      if (this.jiliDb.isStop) {
         const msg = '数据库已停止，停止spin';
         console.log(msg);
         telegramService.sendInfo(msg);

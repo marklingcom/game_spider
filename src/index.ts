@@ -1,18 +1,16 @@
 import { debounce } from 'lodash-es';
 import { getGameSession } from './gameFrom/index.js';
 import { dbManager } from './models/index.js';
-import { createProviderRuntime } from './providers/registry.js';
+import { JiliDb } from './spider/jili/jili_db.js';
 import { SpiderWork, SpiderWorkEvent } from './spider/spider.js';
-import { config } from './utils/config.js';
+import { config } from './config/index.js';
 import { RetError } from './utils/errors.js';
 import { telegramService } from './utils/telegram.js';
 import { sleep } from './utils/utils.js';
 
 async function main(): Promise<void> {
   console.log('配置文件加载成功');
-
-  const providerRuntime = createProviderRuntime(config);
-  console.log(`厂商: ${providerRuntime.provider}`);
+  console.log(`厂商: ${config.provider}`);
 
   await dbManager.initDB(config.serverConfig.db, config.provider);
 
@@ -28,8 +26,6 @@ async function main(): Promise<void> {
   }
 
   const { gameName, bet, buyBouns, extra, special } = config.serverConfig.gameConfig;
-  const buyBounsEnable = buyBouns.enable;
-  const extraEnable = extra.enable;
   const currentUidList = [...config.huiduUidList];
   const noMoneyAccounts = [...config.serverConfig.huiduConfig.noMoneyAccounts];
   var maxCount = config.serverConfig.huiduConfig.maxCount || 0;
@@ -40,7 +36,7 @@ async function main(): Promise<void> {
 
   telegramService.sendSuccess(
     `开始执行抓取任务: ${gameName}
-provider: ${providerRuntime.provider}
+provider: ${config.provider}
 form: ${config.serverConfig.spiderConfig.form}
 compress: ${config.serverConfig.spiderConfig.compress}
 bet: ${bet}
@@ -51,22 +47,17 @@ total: 总共${totalCount}个账号
 `
   );
 
-  let spinCount = 0;
   let currentIndex = 0;
+  const jiliDb = new JiliDb({ db: dbManager, config });
 
   const onSpinCountNotify = debounce(() => {
-    const msg = `当前抓取账号数量: ${totalCount}`;
-    console.log(msg);
-    telegramService.sendInfo(msg);
+    telegramService.sendInfo(`当前抓取账号数量: ${totalCount}`);
   }, 3000);
 
   const onNoMoneyAccountsNotify = debounce(() => {
     const msg = `💰 没钱需要充值的账号 (${noMoneyAccounts.length}个): ${noMoneyAccounts.join(', ')}`;
-    console.log(msg);
     telegramService.sendWarning(msg);
   }, 3000);
-
-  const spinRepository = providerRuntime.createRepository(dbManager);
 
   const getNextAvailableUid = (): number | null => {
     while (currentIndex < currentUidList.length) {
@@ -86,17 +77,10 @@ total: 总共${totalCount}个账号
       await sleep(time);
       console.log(`开始执行账号: ${uid}`);
       const session = await getGameSession(config, uid);
-      const gameApi = providerRuntime.createApi(session);
-      const spiderWork = new SpiderWork({
-        config,
-        session,
-        gameApi,
-        spinRepository,
-      });
+      const spiderWork = new SpiderWork({ config, session, jiliDb });
 
       spiderWork.once(SpiderWorkEvent.SPIN_SAVE, () => {
         isSpinSave = true;
-        spinCount++;
         onSpinCountNotify();
       });
 
@@ -120,9 +104,7 @@ total: 总共${totalCount}个账号
 
           const nextUid = getNextAvailableUid();
           if (nextUid) {
-            const msg = `替换账号: ${uid} -> ${nextUid}`;
-            console.log(msg);
-            telegramService.sendInfo(msg);
+            telegramService.sendInfo(`替换账号: ${uid} -> ${nextUid}`);
             await run(nextUid, 1000);
           }
           return;
@@ -131,9 +113,6 @@ total: 总共${totalCount}个账号
         }
       }
 
-      if (isSpinSave) {
-        spinCount--;
-      }
       console.log(errorMessage);
       console.log('堆栈信息:', stackTrace);
       telegramService.sendError(`开始重试: ${errorMessage}`, `堆栈信息:\n${stackTrace}`);
@@ -143,7 +122,6 @@ total: 总共${totalCount}个账号
 
   const startProcessing = async () => {
     const uidsToProcess: number[] = [];
-
     for (let i = 0; i < maxCount; i++) {
       const uid = getNextAvailableUid();
       if (uid) {
@@ -166,11 +144,8 @@ total: 总共${totalCount}个账号
   };
 
   await startProcessing();
-
-  const msg = `程序执行结束`;
-  console.log(msg);
-  telegramService.sendSuccess(msg);
-
+  console.log('程序执行结束');
+  telegramService.sendSuccess('程序执行结束');
   process.exit(0);
 }
 

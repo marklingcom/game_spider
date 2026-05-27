@@ -1,4 +1,4 @@
-src/providers/jili/proto/general/**
+src/spider/jili/proto/general/**
 dist/**
 
 proto/**

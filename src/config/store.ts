@@ -1,50 +1,18 @@
 import fs from 'node:fs';
 import { merge } from 'lodash-es';
 import yaml from 'yaml';
-import type { GameConfig, BuyBounsConfig, ExtraConfig } from '../core/config-types.js';
-import type { GameCatalogEntry, GameProvider, LaunchGameEntry } from '../core/types.js';
-import { getAwcCatalogPath, getHuiduListPath } from '../core/paths.js';
-import { CompressType } from './data_compress.js';
+import { awcCatalogPath, huiduListPath } from './paths.js';
+import type {
+  GameCatalogEntry,
+  GameConfig,
+  GameProvider,
+  LaunchGameEntry,
+  ServerConfig,
+} from './types.js';
+import { CompressType } from '../utils/data_compress.js';
 
-export type { BuyBounsConfig, ExtraConfig, GameConfig };
-
-export interface ServerConfig {
-  provider: GameProvider;
-  proxy: {
-    enable: boolean;
-    server: string;
-  };
-  db: {
-    type: string;
-    dsn: string;
-    dialect?: string;
-  };
-  spiderConfig: {
-    autoMigrate: boolean;
-    form: string;
-    compress: CompressType;
-  };
-  gameConfig: GameConfig;
-  huiduConfig: {
-    coin: number;
-    key: string;
-    maxCount: number;
-    noMoneyAccounts: number[];
-    uidList0: number[];
-    uidListTest: number[];
-    uidList1: number[];
-    uidList2: number[];
-  };
-  telegram: {
-    enable: boolean;
-    botToken: string;
-    chatId: string;
-    machine: string;
-  };
-}
-
-/** @deprecated 使用 gameConfig */
-export type JiliConfig = GameConfig;
+export type { GameProvider, GameSession } from './types.js';
+export type { ServerConfig } from './types.js';
 
 export class Config {
   private serverConfigPath = './config/server.yaml';
@@ -110,6 +78,11 @@ export class Config {
     return this.serverConfig.provider;
   }
 
+  get huiduUidList() {
+    const key = this.serverConfig.huiduConfig.key;
+    return this.serverConfig.huiduConfig[key as keyof ServerConfig['huiduConfig']] as number[];
+  }
+
   /** 当前运行游戏的目录项 + 启动参数 */
   get currentGame(): {
     catalog: GameCatalogEntry;
@@ -122,22 +95,16 @@ export class Config {
     }
 
     const launch = this.launchList.find((item) => item.fullName === gameName);
-
     return { catalog, launch };
   }
 
-  /** @deprecated 使用 currentGame */
+  /** @deprecated 使用 currentGame（JILI 兼容字段名） */
   get currentJiliGame() {
     const { catalog, launch } = this.currentGame;
     return {
       jiliConfig: catalog,
       huiduConfig: launch,
     };
-  }
-
-  get huiduUidList() {
-    const key = this.serverConfig.huiduConfig.key;
-    return this.serverConfig.huiduConfig[key as keyof ServerConfig['huiduConfig']] as number[];
   }
 
   updateServerConfig(updates: Partial<ServerConfig>): void {
@@ -156,39 +123,6 @@ export class Config {
         noMoneyAccounts,
       },
     });
-  }
-
-  private loadConfig(): Config {
-    try {
-      const serverConfigStr = fs.readFileSync(this.serverConfigPath, 'utf8');
-      const serverConfigData = yaml.parse(serverConfigStr) as Partial<ServerConfig> & {
-        jiliConfig?: GameConfig;
-      };
-
-      // 兼容旧配置键名
-      if (serverConfigData.jiliConfig && !serverConfigData.gameConfig) {
-        serverConfigData.gameConfig = serverConfigData.jiliConfig;
-        delete serverConfigData.jiliConfig;
-      }
-
-      this.serverConfig = merge(this.serverConfig, serverConfigData);
-
-      if (!this.serverConfig.provider) {
-        this.serverConfig.provider = 'jili';
-      }
-
-      const catalogPath = getAwcCatalogPath(this.serverConfig.provider);
-      const catalogStr = fs.readFileSync(catalogPath, 'utf8');
-      this.catalogList = JSON.parse(catalogStr) as GameCatalogEntry[];
-
-      const launchPath = getHuiduListPath(this.serverConfig.provider);
-      const launchStr = fs.readFileSync(launchPath, 'utf8');
-      this.launchList = JSON.parse(launchStr) as LaunchGameEntry[];
-
-      return this;
-    } catch (error) {
-      throw new Error(`配置文件加载失败: ${(error as Error).message}`);
-    }
   }
 
   updateGameConfig(updates: Partial<GameConfig>): void {
@@ -213,6 +147,40 @@ export class Config {
   getHuiduConfig(gameName: string): LaunchGameEntry | undefined {
     return this.getLaunchConfig(gameName);
   }
+
+  private loadConfig(): Config {
+    try {
+      const serverConfigStr = fs.readFileSync(this.serverConfigPath, 'utf8');
+      const serverConfigData = yaml.parse(serverConfigStr) as Partial<ServerConfig> & {
+        jiliConfig?: GameConfig;
+      };
+
+      // 兼容旧配置键名
+      if (serverConfigData.jiliConfig && !serverConfigData.gameConfig) {
+        serverConfigData.gameConfig = serverConfigData.jiliConfig;
+        delete serverConfigData.jiliConfig;
+      }
+
+      this.serverConfig = merge(this.serverConfig, serverConfigData);
+
+      if (!this.serverConfig.provider) {
+        this.serverConfig.provider = 'jili';
+      }
+
+      const catalogPath = awcCatalogPath(this.serverConfig.provider);
+      const catalogStr = fs.readFileSync(catalogPath, 'utf8');
+      this.catalogList = JSON.parse(catalogStr) as GameCatalogEntry[];
+
+      const launchPath = huiduListPath(this.serverConfig.provider);
+      const launchStr = fs.readFileSync(launchPath, 'utf8');
+      this.launchList = JSON.parse(launchStr) as LaunchGameEntry[];
+
+      return this;
+    } catch (error) {
+      throw new Error(`配置文件加载失败: ${(error as Error).message}`);
+    }
+  }
 }
 
 export const config = new Config();
+
