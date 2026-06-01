@@ -18,7 +18,7 @@ export interface SpinDataRecord {
   from: string;
   createTime: Date;
   compress?: number;
-  nextId?: number | null;
+  groupSeq?: number | null;
   groupId?: string | null;
 }
 

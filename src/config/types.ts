@@ -1,28 +1,37 @@
 import type { CompressType } from '../utils/data_compress.js';
 
 /** 已接入的游戏厂商 */
-export type GameProvider = 'jili';
+export type GameProvider = 'jili' | 'gameart';
 
 export interface BuyBounsConfig {
   enable: boolean;
   index: number;
-  hasDefaultIndex: boolean;
 }
 
 export interface ExtraConfig {
   enable: boolean;
   index: number;
-  hasDefaultIndex: boolean;
 }
 
 export interface GameConfig {
   bet: number;
-  isOld?: boolean;
   buyBouns: BuyBounsConfig;
   extra: ExtraConfig;
   special: boolean;
   gameName: string;
 }
+
+export interface JiliConfig extends GameConfig {
+  isOld?: boolean;
+  buyBouns: BuyBounsConfig & {
+    hasDefaultIndex: boolean;
+  };
+  extra: ExtraConfig & {
+    hasDefaultIndex: boolean;
+  };
+}
+
+export interface GameArtConfig extends GameConfig {}
 
 export interface GameSession {
   token: string;
@@ -31,6 +40,11 @@ export interface GameSession {
   from: string;
   webSocketData: Buffer;
   gi: number;
+  origin?: string;
+  referer?: string;
+  sid?: string;
+  kid?: string;
+  key?: string;
 }
 
 export interface GameCatalogEntry {
@@ -65,7 +79,8 @@ export interface ServerConfig {
     form: string;
     compress: CompressType;
   };
-  gameConfig: GameConfig;
+  jiliConfig: JiliConfig;
+  gameartConfig: GameArtConfig;
   huiduConfig: {
     coin: number;
     key: string;
@@ -83,7 +98,3 @@ export interface ServerConfig {
     machine: string;
   };
 }
-
-/** @deprecated 使用 gameConfig */
-export type JiliConfig = GameConfig;
-

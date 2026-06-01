@@ -3,6 +3,7 @@ import type { GameProvider } from './types.js';
 /** 统一集中维护：各厂商相关配置文件名 */
 const PROVIDER_FILES: Record<GameProvider, { awc: string; huidu: string }> = {
   jili: { awc: 'JILI-SLOT.json', huidu: 'jili.json' },
+  gameart: { awc: 'GAMEART-SLOT.json', huidu: 'gameart.json' },
 };
 
 export function awcCatalogPath(provider: GameProvider): string {

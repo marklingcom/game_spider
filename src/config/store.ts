@@ -3,10 +3,12 @@ import { merge } from 'lodash-es';
 import yaml from 'yaml';
 import { awcCatalogPath, huiduListPath } from './paths.js';
 import type {
+  GameArtConfig,
   GameCatalogEntry,
   GameConfig,
   GameProvider,
   LaunchGameEntry,
+  JiliConfig,
   ServerConfig,
 } from './types.js';
 import { CompressType } from '../utils/data_compress.js';
@@ -39,7 +41,7 @@ export class Config {
       form: '',
       compress: CompressType.None,
     },
-    gameConfig: {
+    jiliConfig: {
       bet: 0,
       isOld: false,
       buyBouns: {
@@ -54,7 +56,20 @@ export class Config {
       },
       special: false,
       gameName: '',
-    },
+    } as JiliConfig,
+    gameartConfig: {
+      bet: 0,
+      buyBouns: {
+        enable: false,
+        index: 0,
+      },
+      extra: {
+        enable: false,
+        index: 0,
+      },
+      special: false,
+      gameName: '',
+    } as GameArtConfig,
     huiduConfig: {
       coin: 0,
       key: 'uidList1',
@@ -83,12 +98,25 @@ export class Config {
     return this.serverConfig.huiduConfig[key as keyof ServerConfig['huiduConfig']] as number[];
   }
 
+  get currentGameConfig(): GameConfig {
+    const key = `${this.provider}Config` as 'jiliConfig' | 'gameartConfig';
+    return this.serverConfig[key];
+  }
+
+  get currentJiliConfig(): JiliConfig {
+    return this.serverConfig.jiliConfig;
+  }
+
+  get currentGameartConfig(): GameArtConfig {
+    return this.serverConfig.gameartConfig;
+  }
+
   /** 当前运行游戏的目录项 + 启动参数 */
   get currentGame(): {
     catalog: GameCatalogEntry;
     launch?: LaunchGameEntry;
   } {
-    const gameName = this.serverConfig.gameConfig.gameName;
+    const gameName = this.currentGameConfig.gameName;
     const catalog = this.catalogList.find((item) => item.fullName === gameName);
     if (!catalog) {
       throw new Error(`游戏 ${gameName} 在厂商 ${this.provider} 目录中不存在`);
@@ -96,15 +124,6 @@ export class Config {
 
     const launch = this.launchList.find((item) => item.fullName === gameName);
     return { catalog, launch };
-  }
-
-  /** @deprecated 使用 currentGame（JILI 兼容字段名） */
-  get currentJiliGame() {
-    const { catalog, launch } = this.currentGame;
-    return {
-      jiliConfig: catalog,
-      huiduConfig: launch,
-    };
   }
 
   updateServerConfig(updates: Partial<ServerConfig>): void {
@@ -126,40 +145,19 @@ export class Config {
   }
 
   updateGameConfig(updates: Partial<GameConfig>): void {
+    const key = `${this.provider}Config` as 'jiliConfig' | 'gameartConfig';
     this.updateServerConfig({
-      gameConfig: {
-        ...this.serverConfig.gameConfig,
+      [key]: {
+        ...this.serverConfig[key],
         ...updates,
       },
     });
   }
 
-  /** @deprecated 使用 updateGameConfig */
-  updateJiliConfig(updates: Partial<GameConfig>): void {
-    this.updateGameConfig(updates);
-  }
-
-  getLaunchConfig(gameName: string): LaunchGameEntry | undefined {
-    return this.launchList.find((item) => item.fullName === gameName);
-  }
-
-  /** @deprecated 使用 getLaunchConfig */
-  getHuiduConfig(gameName: string): LaunchGameEntry | undefined {
-    return this.getLaunchConfig(gameName);
-  }
-
   private loadConfig(): Config {
     try {
       const serverConfigStr = fs.readFileSync(this.serverConfigPath, 'utf8');
-      const serverConfigData = yaml.parse(serverConfigStr) as Partial<ServerConfig> & {
-        jiliConfig?: GameConfig;
-      };
-
-      // 兼容旧配置键名
-      if (serverConfigData.jiliConfig && !serverConfigData.gameConfig) {
-        serverConfigData.gameConfig = serverConfigData.jiliConfig;
-        delete serverConfigData.jiliConfig;
-      }
+      const serverConfigData = yaml.parse(serverConfigStr) as Partial<ServerConfig>;
 
       this.serverConfig = merge(this.serverConfig, serverConfigData);
 
@@ -173,7 +171,8 @@ export class Config {
 
       const launchPath = huiduListPath(this.serverConfig.provider);
       const launchStr = fs.readFileSync(launchPath, 'utf8');
-      this.launchList = JSON.parse(launchStr) as LaunchGameEntry[];
+      const launchConfig = JSON.parse(launchStr) as LaunchGameEntry[] | LaunchGameEntry;
+      this.launchList = Array.isArray(launchConfig) ? launchConfig : [launchConfig];
 
       return this;
     } catch (error) {
@@ -183,4 +182,3 @@ export class Config {
 }
 
 export const config = new Config();
-

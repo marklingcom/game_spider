@@ -18,7 +18,7 @@ export function parseURL(targetURL: string): {
 export function parseRedirectResponse(response: AxiosResponse): string {
   let redirectURL = '';
   // 检查是否是重定向状态码
-  if (response.status === 302 || response.status === 301) {
+  if ([301, 302, 303, 307, 308].includes(response.status)) {
     redirectURL = response.headers.location;
   }
   if (!redirectURL && response.status === 200) {
@@ -35,36 +35,39 @@ export function parseRedirectResponse(response: AxiosResponse): string {
   return redirectURL;
 }
 
-export async function getRedirectURL(reqConfig: AxiosRequestConfig, retry = 3): Promise<string> {
+export async function getRedirectURL(reqConfig: AxiosRequestConfig, maxRedirects = 10): Promise<string> {
   const method = reqConfig.method || 'POST';
+  let currentURL = reqConfig.url;
+
+  if (!currentURL) {
+    throw new Error('getRedirectURL: url 不能为空');
+  }
 
   // const { host } = parseURL(reqConfig.url);
   // headers.Origin = origin;
   // headers.Referer = origin;
   // headers.Host = host;
 
-  const config: AxiosRequestConfig = {
-    timeout: 30000,
-    ...reqConfig,
-    method: method.toLowerCase() as any,
-    maxRedirects: 0, // 禁用自动重定向
-    validateStatus: (status) => status >= 200 && status < 400,
-  };
-  const response = await getAxiosClient().request(config);
+  for (let i = 0; i <= maxRedirects; i++) {
+    const config: AxiosRequestConfig = {
+      timeout: 30000,
+      ...reqConfig,
+      url: currentURL,
+      method: method.toLowerCase() as any,
+      maxRedirects: 0, // 禁用自动重定向
+      validateStatus: (status) => status >= 200 && status < 400,
+    };
+    const response = await getAxiosClient().request(config);
 
-  const redirectURL = parseRedirectResponse(response);
+    const redirectURL = parseRedirectResponse(response);
+    if (!redirectURL) {
+      return currentURL;
+    }
 
-  if (!redirectURL) {
-    return reqConfig.url;
+    currentURL = new URL(redirectURL, currentURL).toString();
   }
 
-  if (redirectURL === reqConfig.url && retry > 0) {
-    const nextRetry = retry - 1;
-    // console.log(`获取重定向地址失败, 重试次数: ${nextRetry}`);
-    return getRedirectURL(reqConfig, nextRetry);
-  }
-
-  return redirectURL;
+  throw new Error(`重定向次数超过限制: ${maxRedirects}, url=${currentURL}`);
 }
 
 export async function getUrlHtmlContent(url: string): Promise<string> {

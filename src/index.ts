@@ -1,12 +1,12 @@
 import { debounce } from 'lodash-es';
 import { getGameSession } from './gameFrom/index.js';
 import { dbManager } from './models/index.js';
-import { JiliDb } from './spider/jili/jili_db.js';
-import { SpiderWork, SpiderWorkEvent } from './spider/spider.js';
+import { SpiderWorkEvent } from './spider/spider_base.js';
 import { config } from './config/index.js';
 import { RetError } from './utils/errors.js';
 import { telegramService } from './utils/telegram.js';
 import { sleep } from './utils/utils.js';
+import { createSpiderWork } from './spider/spider_factory.js';
 
 async function main(): Promise<void> {
   console.log('配置文件加载成功');
@@ -25,7 +25,7 @@ async function main(): Promise<void> {
     }
   }
 
-  const { gameName, bet, buyBouns, extra, special } = config.serverConfig.gameConfig;
+  const { gameName, bet, buyBouns, extra, special } = config.currentGameConfig;
   const currentUidList = [...config.huiduUidList];
   const noMoneyAccounts = [...config.serverConfig.huiduConfig.noMoneyAccounts];
   var maxCount = config.serverConfig.huiduConfig.maxCount || 0;
@@ -48,7 +48,6 @@ total: 总共${totalCount}个账号
   );
 
   let currentIndex = 0;
-  const jiliDb = new JiliDb({ db: dbManager, config });
 
   const onSpinCountNotify = debounce(() => {
     telegramService.sendInfo(`当前抓取账号数量: ${totalCount}`);
@@ -77,13 +76,11 @@ total: 总共${totalCount}个账号
       await sleep(time);
       console.log(`开始执行账号: ${uid}`);
       const session = await getGameSession(config, uid);
-      const spiderWork = new SpiderWork({ config, session, jiliDb });
-
+      const spiderWork = createSpiderWork({ config, session });
       spiderWork.once(SpiderWorkEvent.SPIN_SAVE, () => {
         isSpinSave = true;
         onSpinCountNotify();
       });
-
       await spiderWork.start();
     } catch (error) {
       let errorMessage = `账号 ${uid} 执行失败: ${(error as Error).message}`;

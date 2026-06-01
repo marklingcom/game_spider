@@ -1,7 +1,6 @@
 import { type Model, type ModelStatic, Sequelize } from 'sequelize';
-import type { GameProvider } from '../config/index.js';
+import type { GameProvider, ServerConfig } from '../config/index.js';
 import { infoTable, protoTable } from '../config/index.js';
-import type { ServerConfig } from '../config/index.js';
 import { telegramService } from '../utils/telegram.js';
 import { createGameInfoModel } from './provider/GameInfo.js';
 import { createGameProtoModel } from './provider/GameProto.js';
@@ -131,6 +130,10 @@ export default class DatabaseManager {
           telegramService.sendInfo(`创建表: ${tabName}`);
         } else {
           await this.fixTableIdAutoIncrement(tabName);
+          if (this.provider === 'gameart') {
+            await this.ensureSpinTableColumns(tabName);
+            await this.ensureSpinTableIndexes(tabName);
+          }
         }
 
         const tableModel = this.sequelize.define(tabName, spinDataAttributes, {
@@ -159,6 +162,70 @@ export default class DatabaseManager {
     }
     const count = await model.count();
     return count;
+  }
+
+  async getSpinLogicalCount(tabName: string): Promise<number> {
+    if (!this.sequelize) {
+      throw new Error('数据库未初始化');
+    }
+
+    const quotedTable = this.quoteTable(tabName);
+    const [rows] = await this.sequelize.query(
+      `SELECT COUNT(*) AS count FROM (
+        SELECT id FROM ${quotedTable} WHERE group_id IS NULL
+        UNION ALL
+        SELECT MIN(id) AS id FROM ${quotedTable} WHERE group_id IS NOT NULL GROUP BY group_id
+      ) AS logical_rows`
+    );
+    const row = (rows as Array<{ count?: number | string }>)[0];
+    return Number(row?.count ?? 0);
+  }
+
+  private async ensureSpinTableIndexes(tabName: string): Promise<void> {
+    if (!this.sequelize) {
+      throw new Error('数据库未初始化');
+    }
+
+    const queryInterface = this.sequelize.getQueryInterface();
+    const indexes = (await queryInterface.showIndex(tabName)) as Array<{ name?: string }>;
+    for (const idx of spinDataIndexes) {
+      const indexName = idx.name ? `${tabName}_${idx.name}` : undefined;
+      if (!indexName || indexes.some((item) => item.name === indexName)) {
+        continue;
+      }
+      await queryInterface.addIndex(tabName, [...idx.fields], {
+        name: indexName,
+      });
+      console.log(`Added index: ${indexName}`);
+    }
+  }
+
+  private quoteTable(tabName: string): string {
+    const queryGenerator = this.sequelize?.getQueryInterface().queryGenerator as
+      | { quoteTable?: (tableName: string) => string }
+      | undefined;
+    return queryGenerator?.quoteTable?.(tabName) ?? `\`${tabName.replace(/`/g, '``')}\``;
+  }
+
+  private async ensureSpinTableColumns(tabName: string): Promise<void> {
+    if (!this.sequelize) {
+      throw new Error('数据库未初始化');
+    }
+
+    const queryInterface = this.sequelize.getQueryInterface();
+    const tableDescription = await queryInterface.describeTable(tabName);
+    const columns = [
+      { name: 'group_seq', attribute: spinDataAttributes.groupSeq },
+      { name: 'group_id', attribute: spinDataAttributes.groupId },
+    ];
+
+    for (const column of columns) {
+      if (tableDescription[column.name]) {
+        continue;
+      }
+      await queryInterface.addColumn(tabName, column.name, column.attribute);
+      console.log(`Added column: ${tabName}.${column.name}`);
+    }
   }
 
   async fixTableIdAutoIncrement(tabName: string) {

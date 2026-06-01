@@ -8,7 +8,7 @@ export interface SpinDataAttributes {
   from?: string;
   bet?: number;
   rate?: number;
-  nextId?: number | null;
+  groupSeq?: number | null;
   groupId?: string | null;
   createTime?: Date;
 }
@@ -45,11 +45,11 @@ export const spinDataAttributes = {
     type: DataTypes.DOUBLE,
     comment: '单局的回报率',
   },
-  nextId: {
+  groupSeq: {
     type: DataTypes.BIGINT.UNSIGNED,
-    field: 'next_id',
+    field: 'group_seq',
     allowNull: true,
-    comment: '关联 id',
+    comment: '组内序号',
   },
   groupId: {
     type: DataTypes.STRING(32),
@@ -69,5 +69,9 @@ export const spinDataIndexes = [
   {
     name: 'rate_idx',
     fields: ['rate'] as const,
+  },
+  {
+    name: 'group_id_idx',
+    fields: ['group_id'] as const,
   },
 ];

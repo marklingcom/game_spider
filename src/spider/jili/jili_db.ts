@@ -60,7 +60,7 @@ class SpinDataState {
     if (this._total && this._total > 0) {
       return this._total;
     }
-    const isBuyBouns = this.config?.serverConfig?.gameConfig?.buyBouns?.enable;
+    const isBuyBouns = this.config?.currentJiliConfig?.buyBouns?.enable;
     if (this.isSpecial) {
       if (isBuyBouns) {
         return 5000;
@@ -293,8 +293,8 @@ export class JiliDb {
     const realBet = spinResponse.realBet || spinReq?.bet || spinReq?.bet || 0;
     const tabNames = [buildSpinTable(this.config.provider, gameName)];
 
-    if (this.config.serverConfig.gameConfig.bet !== 0) {
-      const betName = this.config.serverConfig.gameConfig.bet.toString().replace('.', 'p');
+    if (this.config.currentJiliConfig.bet !== 0) {
+      const betName = this.config.currentJiliConfig.bet.toString().replace('.', 'p');
       tabNames.push(betName);
     }
 
@@ -428,7 +428,7 @@ export class JiliDb {
       }
     } else {
       if (isBuyBouns) {
-        const hasDefaultIndex = this.config.serverConfig.gameConfig.buyBouns.hasDefaultIndex;
+        const hasDefaultIndex = this.config.currentJiliConfig.buyBouns.hasDefaultIndex;
         const index = spinReq.mall.index;
         if (!hasDefaultIndex && index === 0) {
           // 默认索引，不添加到表名
@@ -436,7 +436,7 @@ export class JiliDb {
           tabNames.push(index.toString());
         }
       } else if (isExtra) {
-        const hasDefaultIndex = this.config.serverConfig.gameConfig.extra.hasDefaultIndex;
+        const hasDefaultIndex = this.config.currentJiliConfig.extra.hasDefaultIndex;
         const index = spinReq.extraSpin.index;
         if (!hasDefaultIndex && index === 0) {
           // 默认索引，不添加到表名
@@ -452,7 +452,7 @@ export class JiliDb {
     const currentState = await this.initState(tabName, isSpecial);
 
     // 如果配置抓取特殊模式，并且当前不是特殊模式，则不抓取数据
-    if (this.config.serverConfig.gameConfig.special && !isSpecial) {
+    if (this.config.currentJiliConfig.special && !isSpecial) {
       return;
     }
 
@@ -537,7 +537,7 @@ export class JiliDb {
 
   get isStop() {
     let hasSpecial = false;
-    const isSpecial = this.config.serverConfig.gameConfig.special;
+    const isSpecial = this.config.currentJiliConfig.special;
     for (const state of this.stateMap.values()) {
       if (isSpecial && !state.isSpecial) {
         continue;

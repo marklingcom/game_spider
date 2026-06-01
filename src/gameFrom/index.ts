@@ -1,6 +1,7 @@
 import type { Config, GameSession } from '../config/index.js';
 import { getGameUrl } from './huidu.js';
 import { getGameInfoFromApi } from './info.js';
+import { getGameArtSessionFromUrl } from './gameart.js';
 
 export type { GameSession };
 
@@ -35,6 +36,15 @@ export async function getGameSession(config: Config, uid: number): Promise<GameS
   }
 
   console.log('成功获取游戏 URL:', url);
+
+  if (config.provider === 'gameart') {
+    if (!launch) {
+      throw new Error(`游戏 ${catalog.fullName} 缺少 gameart 启动配置`);
+    }
+    const session = await getGameArtSessionFromUrl(url, catalog.name, catalog.gi);
+    session.from = form;
+    return session;
+  }
 
   if (config.provider !== 'jili') {
     throw new Error(`厂商 ${config.provider} 暂不支持会话解析`);

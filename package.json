@@ -55,6 +55,7 @@
     "koa-bodyparser": "^4.4.1",
     "lodash-es": "^4.17.21",
     "mysql2": "^3.14.5",
+    "nanoid": "^5.1.11",
     "node-telegram-bot-api": "^0.66.0",
     "ora": "^9.3.0",
     "playwright": "^1.55.0",

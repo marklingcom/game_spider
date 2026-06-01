@@ -15,7 +15,7 @@ spiderConfig:
   form: huidu
   compress: 1
 provider: jili
-gameConfig:
+jiliConfig:
   bet: 0
   isOld: true
   buyBouns:
@@ -28,6 +28,16 @@ gameConfig:
     hasDefaultIndex: true
   special: false
   gameName: World Cup
+gameartConfig:
+  bet: 0
+  buyBouns:
+    enable: false
+    index: 0
+  extra:
+    enable: false
+    index: 0
+  special: false
+  gameName: Lunar Rabbit
 huiduConfig:
   coin: 100000
   key: uidList1

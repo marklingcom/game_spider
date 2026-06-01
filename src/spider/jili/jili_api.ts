@@ -51,7 +51,7 @@ export class JiliApi extends EventEmitter {
     }
 
     let url = `${this.jiliSpider.spin}/${this.jiliSpider.name}/req`;
-    if (this.config.serverConfig.gameConfig.isOld) {
+    if (this.config.currentJiliConfig.isOld) {
       url += '?D=0';
     }
 
@@ -137,7 +137,7 @@ export class JiliApi extends EventEmitter {
     gameInfoAck: GameInfoAck;
   }> {
     let url = `${this.jiliSpider.spin}/${this.jiliSpider.name}/req`;
-    if (this.config.serverConfig.gameConfig.isOld) {
+    if (this.config.currentJiliConfig.isOld) {
       url += '?D=1';
     }
 

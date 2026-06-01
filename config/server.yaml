@@ -16,12 +16,13 @@ telegram:
   botToken: 7562408962:AAGYI_b79AhEjscuTBPsQ6s3U2e_SNEs8x0
   chatId: "-4923815416"
   machine: local
-provider: jili
+# provider: jili
+provider: gameart
 spiderConfig:
   autoMigrate: false
   form: huidu
-  compress: 1
-gameConfig:
+  compress: 0
+jiliConfig:
   bet: 0
   isOld: false
   buyBouns:
@@ -34,6 +35,16 @@ gameConfig:
     hasDefaultIndex: true
   special: false
   gameName: 3 Coin Treasures 2
+gameartConfig:
+  bet: 0
+  buyBouns:
+    enable: false
+    index: 0
+  extra:
+    enable: false
+    index: 0
+  special: false
+  gameName: Lunar Rabbit
 huiduConfig:
   coin: 100000
   key: uidList0
