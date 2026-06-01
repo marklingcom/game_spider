@@ -3,19 +3,19 @@ services:
     build:
       context: .
       no_cache: true
-    image: jili-spider:latest
-    container_name: jili-spider
+    image: game-spider:latest
+    container_name: game-spider
     volumes:
       - ./config:/app/config
     restart: on-failure
     networks:
-      - jili-spider-network
+      - game-spider-network
     # depends_on:
     #   - mysql
 
   # mysql:
   #   image: mysql:8.0
-  #   container_name: jili-spider-mysql
+  #   container_name: game-spider-mysql
   #   environment:
   #     MYSQL_ROOT_PASSWORD: root123
   #     MYSQL_DATABASE: aigc
@@ -24,8 +24,8 @@ services:
   #   volumes:
   #     - ./mysql_data:/var/lib/mysql
   #   networks:
-  #     - jili-spider-network
+  #     - game-spider-network
 
 networks:
-  jili-spider-network:
+  game-spider-network:
     driver: bridge

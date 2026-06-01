@@ -3,54 +3,54 @@ services:
     build:
       context: .
       no_cache: true
-    image: jili-spider-1:latest
-    container_name: jili-spider-1
+    image: game-spider-1:latest
+    container_name: game-spider-1
     volumes:
       - ./config:/app/config
       - ./config/servers/1.yaml:/app/config/server.yaml
     restart: on-failure
     networks:
-      - jili-spider-network
+      - game-spider-network
   app-2:
     build:
       context: .
       no_cache: true
-    image: jili-spider-2:latest
-    container_name: jili-spider-2
+    image: game-spider-2:latest
+    container_name: game-spider-2
     volumes:
       - ./config:/app/config
       - ./config/servers/2.yaml:/app/config/server.yaml
     restart: on-failure
     networks:
-      - jili-spider-network
+      - game-spider-network
   app-3:
     build:
       context: .
       no_cache: true
-    image: jili-spider-3:latest
-    container_name: jili-spider-3
+    image: game-spider-3:latest
+    container_name: game-spider-3
     volumes:
       - ./config:/app/config
       - ./config/servers/3.yaml:/app/config/server.yaml
     restart: on-failure
     networks:
-      - jili-spider-network
+      - game-spider-network
   app-4:
     build:
       context: .
       no_cache: true
-    image: jili-spider-4:latest
-    container_name: jili-spider-4
+    image: game-spider-4:latest
+    container_name: game-spider-4
     volumes:
       - ./config:/app/config
       - ./config/servers/4.yaml:/app/config/server.yaml
     restart: on-failure
     networks:
-      - jili-spider-network
+      - game-spider-network
 
   # mysql:
   #   image: mysql:8.0
-  #   container_name: jili-spider-mysql
+  #   container_name: game-spider-mysql
   #   environment:
   #     MYSQL_ROOT_PASSWORD: root123
   #     MYSQL_DATABASE: aigc
@@ -59,8 +59,8 @@ services:
   #   volumes:
   #     - ./mysql_data:/var/lib/mysql
   #   networks:
-  #     - jili-spider-network
+  #     - game-spider-network
 
 networks:
-  jili-spider-network:
+  game-spider-network:
     driver: bridge
