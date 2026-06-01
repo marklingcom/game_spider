@@ -19,6 +19,7 @@ interface GameArtRoundClassify {
   multiplier: number;
   isSpecial: boolean;
   isGroupRound: boolean;
+  total: number;
 }
 
 class GameArtSpinState {
@@ -92,7 +93,7 @@ export class GameArtDb {
       ...roundClassify.tableParts
     );
     const model = await this.db.ensureTableExists(tabName);
-    const state = await this.initState(tabName);
+    const state = await this.initState(tabName, roundClassify.total);
 
     if (this.isComplete(state)) {
       return;
@@ -160,10 +161,9 @@ export class GameArtDb {
     return this.stateMap.size > 0;
   }
 
-  private async initState(tabName: string): Promise<GameArtSpinState> {
+  private async initState(tabName: string, total: number): Promise<GameArtSpinState> {
     let state = this.stateMap.get(tabName);
     if (!state) {
-      const total = this.config.currentGameartConfig.special ? 3000 : 300000;
       state = new GameArtSpinState(tabName, total);
       this.stateMap.set(tabName, state);
     }
@@ -237,12 +237,14 @@ export class GameArtDb {
             multiplier: 1,
             isSpecial: true,
             isGroupRound: true,
+            total: 3000,
           }
         : {
             tableParts: ['normal'],
             multiplier: 1,
             isSpecial: false,
             isGroupRound: false,
+            total: this.config.currentGameartConfig.buyBouns.enable ? 0 : 300000,
           };
     }
 
@@ -252,6 +254,7 @@ export class GameArtDb {
         multiplier: result.multiplier,
         isSpecial: true,
         isGroupRound: true,
+        total: 5000,
       };
     }
 
@@ -261,6 +264,7 @@ export class GameArtDb {
         multiplier: result.multiplier,
         isSpecial: hasBonus,
         isGroupRound: hasBonus,
+        total: hasBonus ? 3000 : 300000,
       };
     }
 
@@ -269,6 +273,7 @@ export class GameArtDb {
       multiplier: 1,
       isSpecial: false,
       isGroupRound: false,
+      total: this.config.currentGameartConfig.buyBouns.enable ? 0 : 300000,
     };
   }
 }
