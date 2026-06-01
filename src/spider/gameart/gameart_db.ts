@@ -1,5 +1,6 @@
 import { isNil } from 'lodash-es';
 import { nanoid } from 'nanoid';
+import type { Model, ModelStatic } from 'sequelize';
 import type { Config, GameSession } from '../../config/index.js';
 import { buildSpinTable } from '../../config/index.js';
 import type DatabaseManager from '../../models/index.js';
@@ -21,6 +22,17 @@ interface GameArtRoundClassify {
   isGroupRound: boolean;
   total: number;
 }
+
+interface BuildSpinDataListOptions {
+  result: GameArtRoundResult;
+  spiderData: GameSession;
+  bet: number;
+  isGroupRound: boolean;
+  compress?: CompressType;
+}
+
+type SpinDataModel = ModelStatic<Model<any, any>>;
+type SpinDataCreateValues = Omit<SpinDataAttributes, 'id' | 'createTime'>;
 
 class GameArtSpinState {
   current = 0;
@@ -99,55 +111,15 @@ export class GameArtDb {
       return;
     }
 
-    const bet = getRealBet(result, roundClassify.multiplier);
-    const responses = roundClassify.isGroupRound
-      ? [result.betResponse, ...(result.playResponses ?? [])]
-      : [result.betResponse];
-    const groupId = responses.length > 1 ? buildGroupId() : null;
-    const spinDataList: SpinDataAttributes[] = [];
-    let groupWinTotal = 0;
+    const spinDataList = await this.buildSpinDataList({
+      result,
+      spiderData,
+      bet: getRealBet(result, roundClassify.multiplier),
+      isGroupRound: roundClassify.isGroupRound,
+      compress,
+    });
 
-    for (const [index, response] of responses.entries()) {
-      const totalWin = groupId ? getGroupResponseWin(response, groupWinTotal) : getResponseWin(response);
-      groupWinTotal = formatNumber(groupWinTotal + totalWin, 6);
-      const spinData = await this.buildSpinData({
-        response,
-        spiderData,
-        bet,
-        groupId,
-        groupSeq: groupId ? index + 1 : null,
-        totalWin,
-        compress,
-      });
-      spinDataList.push(spinData);
-    }
-
-    validateCollectWin(result, spinDataList);
-    if (groupId && result.collectResponse) {
-      const collectIndex = spinDataList.length;
-      const collectData = await this.buildSpinData({
-        response: result.collectResponse,
-        spiderData,
-        bet,
-        groupId,
-        groupSeq: collectIndex + 1,
-        totalWin: groupWinTotal,
-        compress,
-      });
-      spinDataList.push(collectData);
-    }
-
-    if (groupId) {
-      const sequelize = this.db.getDB();
-      if (!sequelize) {
-        throw new Error('数据库未初始化');
-      }
-      await sequelize.transaction(async (transaction) => {
-        await model.bulkCreate(spinDataList as any[], { transaction });
-      });
-    } else {
-      await model.create({ ...spinDataList[0] });
-    }
+    await this.saveSpinDataList(model, spinDataList);
 
     state.current++;
   }
@@ -225,6 +197,71 @@ export class GameArtDb {
       groupId,
       groupSeq,
     };
+  }
+
+  private async buildSpinDataList(
+    options: BuildSpinDataListOptions
+  ): Promise<SpinDataAttributes[]> {
+    const { result, spiderData, bet, isGroupRound, compress } = options;
+    const responses = isGroupRound
+      ? [result.betResponse, ...(result.playResponses ?? [])]
+      : [result.betResponse];
+    const groupId = responses.length > 1 ? buildGroupId() : null;
+    const spinDataList: SpinDataAttributes[] = [];
+    let groupWinTotal = 0;
+
+    for (const [index, response] of responses.entries()) {
+      const totalWin = groupId
+        ? getGroupResponseWin(response, groupWinTotal)
+        : getResponseWin(response);
+      groupWinTotal = formatNumber(groupWinTotal + totalWin, 6);
+      spinDataList.push(
+        await this.buildSpinData({
+          response,
+          spiderData,
+          bet,
+          groupId,
+          groupSeq: groupId ? index + 1 : null,
+          totalWin,
+          compress,
+        })
+      );
+    }
+
+    validateCollectWin(result, spinDataList);
+    if (groupId && result.collectResponse) {
+      spinDataList.push(
+        await this.buildSpinData({
+          response: result.collectResponse,
+          spiderData,
+          bet,
+          groupId,
+          groupSeq: spinDataList.length + 1,
+          totalWin: groupWinTotal,
+          compress,
+        })
+      );
+    }
+
+    return spinDataList;
+  }
+
+  private async saveSpinDataList(
+    model: SpinDataModel,
+    spinDataList: SpinDataAttributes[]
+  ): Promise<void> {
+    if (spinDataList.some((item) => item.groupId)) {
+      const sequelize = this.db.getDB();
+      if (!sequelize) {
+        throw new Error('数据库未初始化');
+      }
+      await sequelize.transaction(async (transaction) => {
+        await model.bulkCreate(spinDataList.map(toCreateValues), { transaction });
+      });
+      return;
+    }
+
+    await model.create(toCreateValues(spinDataList[0]));
   }
 
   private getRoundClassify(result: GameArtRoundResult): GameArtRoundClassify {
@@ -441,4 +478,17 @@ function hasBonusSignal(response: unknown): boolean {
 
 function buildGroupId(): string {
   return nanoid(16);
+}
+
+function toCreateValues(item: SpinDataAttributes): SpinDataCreateValues {
+  return {
+    data: item.data,
+    compress: item.compress,
+    totalWin: item.totalWin,
+    from: item.from,
+    bet: item.bet,
+    rate: item.rate,
+    groupId: item.groupId,
+    groupSeq: item.groupSeq,
+  };
 }

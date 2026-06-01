@@ -9,17 +9,17 @@ import { getFullGameName, getTableGameName } from '../../src/utils/table.js';
 
 async function reSpinData(
   tableName: string,
-  gameConfig: ServerConfig['gameConfig'],
+  jiliConfig: Partial<ServerConfig['jiliConfig']>,
   options: { pageSize: number }
 ) {
   try {
     console.log('🔍 开始重新保存数据');
-    config.updateGameConfig(gameConfig);
+    config.updateGameConfig(jiliConfig);
 
     await dbManager.initDB(config.serverConfig.db, config.provider);
     console.log('✅ 成功连接到数据库');
 
-    const { gameName } = config.serverConfig.gameConfig;
+    const { gameName } = config.serverConfig.jiliConfig;
     if (!gameName) {
       throw new Error('配置中未找到 gameName');
     }
@@ -86,16 +86,16 @@ async function reSpinData(
           } as unknown as SpinResponse;
 
           if (spinResponse.spinReq) {
-            if (config.serverConfig.gameConfig.buyBouns.enable) {
+            if (config.serverConfig.jiliConfig.buyBouns.enable) {
               spinResponse.spinReq.mall = {
                 type: MallType.NORMAL_MALL,
-                index: config.serverConfig.gameConfig.buyBouns.index,
+                index: config.serverConfig.jiliConfig.buyBouns.index,
                 bet: bet,
               };
             }
-            if (config.serverConfig.gameConfig.extra.enable) {
+            if (config.serverConfig.jiliConfig.extra.enable) {
               spinResponse.spinReq.extraSpin = {
-                index: config.serverConfig.gameConfig.extra.index,
+                index: config.serverConfig.jiliConfig.extra.index,
               };
             }
           }
