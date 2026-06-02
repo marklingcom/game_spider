@@ -15,7 +15,11 @@ import {
   compressDataWithThreshold,
 } from '../../utils/data_compress.js';
 import { protoGamesDir } from '../../config/index.js';
-import { TelegramEventName, telegramService } from '../../utils/telegram.js';
+import {
+  ProgressNotifier,
+  TelegramEventName,
+  telegramService,
+} from '../../utils/telegram/index.js';
 import { createDirectoryIfNotExists, formatNumber } from '../../utils/utils.js';
 import { decryptResponseBuffer } from './jili_utils.js';
 
@@ -28,7 +32,6 @@ class SpinDataState {
   current: number = 0;
   tabName: string = '';
   isInit: boolean = false;
-  lastProgress = 0;
 
   private config: Config;
   private type: SpinDataType;
@@ -78,6 +81,7 @@ class SpinDataState {
 export class JiliDb {
   private db: DatabaseManager;
   private config: Config;
+  private progressNotifier = new ProgressNotifier();
 
   private stateMap: Map<string, SpinDataState> = new Map();
 
@@ -459,7 +463,11 @@ export class JiliDb {
     if (this.isComplete(currentState, isLog)) {
       if (this.isStop) {
         console.log(`${tabName} 完成所有数据抓取`);
-        await telegramService.sendSuccess(`${tabName} 完成所有数据抓取`);
+        this.progressNotifier.notifyComplete({
+          name: tabName,
+          current: currentState.current,
+          total: currentState.total,
+        });
         this.onStop();
         // setTimeout(() => {
         //   process.exit(0);
@@ -503,20 +511,12 @@ export class JiliDb {
     currentState.current++;
   }
 
-  onNotify(tabName: string, current: number, total: number, _isSpecial: boolean, threshold = 3) {
-    const progress = (current / total) * 100;
-    const currentState = this.stateMap.get(tabName);
-    if (!currentState) {
-      throw new Error(`currentState is empty:${tabName}`);
-    }
-    const lastProgress = currentState.lastProgress || 0;
-
-    if (lastProgress === 0 || progress >= lastProgress + threshold) {
-      currentState.lastProgress = progress;
-      telegramService.sendSuccess(
-        `表 ${tabName} 抓取进度: ${Math.floor(progress)}% (${current}/${total})`
-      );
-    }
+  onNotify(tabName: string, current: number, total: number, _isSpecial: boolean) {
+    this.progressNotifier.notify({
+      name: tabName,
+      current,
+      total,
+    });
   }
 
   isComplete(currentState: SpinDataState, isLog = true) {
@@ -571,7 +571,11 @@ export class JiliDb {
       const count = await this.db.getTableCount(tabName);
       currentState.current = count;
       currentState.tabName = tabName;
-      this.onNotify(tabName, currentState.current, currentState.total, isSpecial);
+      this.progressNotifier.notifyInitial({
+        name: tabName,
+        current: currentState.current,
+        total: currentState.total,
+      });
     }
     return currentState;
   }

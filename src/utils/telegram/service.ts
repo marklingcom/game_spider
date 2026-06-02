@@ -1,58 +1,19 @@
 import EventEmitter from 'node:events';
 import TelegramBot from 'node-telegram-bot-api';
-import { config } from '../config/index.js';
-import { isProd } from './env.js';
-import { sleep } from './utils.js';
+import { config } from '../../config/index.js';
+import { isProd } from '../env.js';
+import { sleep } from '../utils.js';
+import {
+  TelegramEventName,
+  type MessageResult,
+  type ReceivedMessage,
+  type TelegramMessage,
+} from './types.js';
 
 interface MessageQueueItem {
   message: string;
   resolve: (value: boolean) => void;
   reject: (reason?: unknown) => void;
-}
-
-export interface MessageResult {
-  success: boolean;
-  message: string;
-  timestamp: Date;
-  error?: string;
-}
-
-export interface ReceivedMessage {
-  messageId: number;
-  text: string;
-  from: {
-    id: number;
-    username?: string;
-    first_name?: string;
-    last_name?: string;
-  };
-  chat: {
-    id: number;
-    type: string;
-  };
-  date: number;
-  timestamp: Date;
-}
-
-interface TelegramMessage {
-  message_id: number;
-  text?: string;
-  from: {
-    id: number;
-    username?: string;
-    first_name?: string;
-    last_name?: string;
-  };
-  chat: {
-    id: number;
-    type: string;
-  };
-  date: number;
-}
-
-export enum TelegramEventName {
-  PROCESS = 'process',
-  MESSAGE = 'message',
 }
 
 export class TelegramService extends EventEmitter {

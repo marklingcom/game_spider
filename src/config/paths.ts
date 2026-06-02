@@ -1,4 +1,5 @@
-import type { GameProvider } from './types.js';
+import fs from 'node:fs';
+import type { GameCatalogEntry, GameProvider } from './types.js';
 
 /** 统一集中维护：各厂商相关配置文件名 */
 const PROVIDER_FILES: Record<GameProvider, { awc: string; huidu: string }> = {
@@ -44,6 +45,20 @@ export function parseSpinTableGameName(tableName: string, provider: GameProvider
     return tableName.split('_')[2] ?? '';
   }
   return tableName.slice(prefix.length).split('_')[0] ?? '';
+}
+
+export function getTableGameName(tableName: string, provider: GameProvider): string {
+  return parseSpinTableGameName(tableName, provider);
+}
+
+export function getCatalogList(provider: GameProvider): GameCatalogEntry[] {
+  const catalogStr = fs.readFileSync(awcCatalogPath(provider), 'utf8');
+  return JSON.parse(catalogStr) as GameCatalogEntry[];
+}
+
+export function getFullGameName(name: string, provider: GameProvider): string {
+  const entry = getCatalogList(provider).find((item) => item.name === name);
+  return entry?.fullName || '';
 }
 
 export function spinTablePrefix(provider: GameProvider): string {

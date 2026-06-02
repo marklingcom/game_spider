@@ -3,10 +3,10 @@ import { dirname, join } from 'node:path';
 import { performance } from 'node:perf_hooks';
 import { fileURLToPath } from 'node:url';
 import dayjs from 'dayjs';
+import { getTableGameName, type GameProvider } from '../../src/config/index.js';
 import { dbManager } from '../../src/models/index.js';
 import { CompressType, compressData, decompressData } from '../../src/utils/data_compress.js';
 import { SpinDataReader, type TableInfo } from '../../src/utils/spin-data-reader.js';
-import { getTableGameName } from '../../src/utils/table.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -104,13 +104,13 @@ async function compareCompressionMethods(originalData: Buffer) {
   return results[0];
 }
 
-async function decodeSpinData(tableInfo: TableInfo, id?: number) {
+async function decodeSpinData(tableInfo: TableInfo, provider: GameProvider, id?: number) {
   try {
     console.log(`🔍 开始处理: ${tableInfo.gameName} - ${tableInfo.tableName}`);
 
     mkdirSync(dataDir, { recursive: true });
 
-    const reader = new SpinDataReader(tableInfo);
+    const reader = new SpinDataReader(tableInfo, provider);
     await reader.init();
 
     if (id) {
@@ -201,12 +201,13 @@ async function decodeSpinData(tableInfo: TableInfo, id?: number) {
 }
 
 async function main() {
+  const provider: GameProvider = 'jili';
   // const name = 'bbc';
   const tableName = 'jili_spin_tct_special_6';
   // const tableName = 'jili_spin_cny_special';
   const id = 1;
-  const gameName = getTableGameName(tableName);
-  await decodeSpinData({ gameName, tableName: tableName }, id);
+  const gameName = getTableGameName(tableName, provider);
+  await decodeSpinData({ gameName, tableName: tableName }, provider, id);
   process.exit(0);
 }
 

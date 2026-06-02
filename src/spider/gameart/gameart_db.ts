@@ -10,6 +10,7 @@ import {
   CompressTypeMap,
   compressDataWithThreshold,
 } from '../../utils/data_compress.js';
+import { ProgressNotifier } from '../../utils/telegram/index.js';
 import { formatNumber } from '../../utils/utils.js';
 import type { GameArtAction, GameArtRoundResult } from './gameart_api.js';
 
@@ -37,7 +38,6 @@ type SpinDataCreateValues = Omit<SpinDataAttributes, 'id' | 'createTime'>;
 class GameArtSpinState {
   current = 0;
   isInit = false;
-  lastProgress = 0;
 
   constructor(
     readonly tabName: string,
@@ -48,6 +48,7 @@ class GameArtSpinState {
 export class GameArtDb {
   private db: DatabaseManager;
   private config: Config;
+  private progressNotifier = new ProgressNotifier();
   private stateMap = new Map<string, GameArtSpinState>();
 
   constructor(options: { db: DatabaseManager; config: Config }) {
@@ -143,7 +144,7 @@ export class GameArtDb {
     if (!state.isInit) {
       state.isInit = true;
       state.current = await this.db.getSpinLogicalCount(tabName);
-      this.notifyProgress(state);
+      this.notifyInitialProgress(state);
     }
     return state;
   }
@@ -151,15 +152,24 @@ export class GameArtDb {
   private isComplete(state: GameArtSpinState): boolean {
     console.log(`表 ${state.tabName} 抓取进度: ${state.current}/${state.total}`);
     this.notifyProgress(state);
-    return state.current >= state.total;
+    const isComplete = state.current >= state.total;
+    return isComplete;
   }
 
   private notifyProgress(state: GameArtSpinState): void {
-    const progress = (state.current / state.total) * 100;
-    if (state.lastProgress === 0 || progress >= state.lastProgress + 3) {
-      state.lastProgress = progress;
-      console.log(`表 ${state.tabName} 抓取进度: ${Math.floor(progress)}%`);
-    }
+    this.progressNotifier.notify({
+      name: state.tabName,
+      current: state.current,
+      total: state.total,
+    });
+  }
+
+  private notifyInitialProgress(state: GameArtSpinState): void {
+    this.progressNotifier.notifyInitial({
+      name: state.tabName,
+      current: state.current,
+      total: state.total,
+    });
   }
 
   private async buildSpinData(options: {

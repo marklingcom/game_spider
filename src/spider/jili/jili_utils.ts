@@ -1,6 +1,6 @@
 import { GaiaResponse } from './proto/general/astarte2_196.js';
 import { RetError } from '../../utils/errors.js';
-import { decrypted } from '../../utils/utils.js';
+import { decrypted } from '../../utils/crypto/index.js';
 
 export async function decryptResponseBuffer(
   buff: Buffer,

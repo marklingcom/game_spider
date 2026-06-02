@@ -1,7 +1,7 @@
 import { type Model, type ModelStatic, Sequelize } from 'sequelize';
 import type { GameProvider, ServerConfig } from '../config/index.js';
 import { infoTable, protoTable } from '../config/index.js';
-import { telegramService } from '../utils/telegram.js';
+import { telegramService } from '../utils/telegram/index.js';
 import { createGameInfoModel } from './provider/GameInfo.js';
 import { createGameProtoModel } from './provider/GameProto.js';
 import { spinDataAttributes, spinDataIndexes } from './SpinData.js';

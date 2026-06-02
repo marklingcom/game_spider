@@ -4,7 +4,7 @@ import { dbManager } from './models/index.js';
 import { SpiderWorkEvent } from './spider/spider_base.js';
 import { config } from './config/index.js';
 import { RetError } from './utils/errors.js';
-import { telegramService } from './utils/telegram.js';
+import { telegramService } from './utils/telegram/index.js';
 import { sleep } from './utils/utils.js';
 import { createSpiderWork } from './spider/spider_factory.js';
 

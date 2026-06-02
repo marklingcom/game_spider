@@ -1,4 +1,4 @@
-import { telegramService } from '../utils/telegram.js';
+import { telegramService } from '../utils/telegram/index.js';
 
 async function telegramExample() {
   console.log('开始 Telegram 机器人测试...');

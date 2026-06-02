@@ -1,6 +1,6 @@
 import { EventEmitter } from 'node:events';
 import type { BuyBounsConfig, Config, ExtraConfig, GameSession } from '../config/index.js';
-import { telegramService } from '../utils/telegram.js';
+import { telegramService } from '../utils/telegram/index.js';
 
 export enum SpiderWorkEvent {
   SPIN_SAVE = 'spinSave',

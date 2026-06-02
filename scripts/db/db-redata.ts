@@ -2,21 +2,30 @@ import type { SpiderData } from '../../src/gameFrom/info.js';
 import { dbManager } from '../../src/models/index.js';
 import { MallType, type SpinResponse } from '../../src/spider/jili/proto/general/astarte2_196.js';
 import { JiliDb } from '../../src/spider/jili/jili_db.js';
-import { config, type ServerConfig } from '../../src/config/index.js';
+import {
+  config,
+  type GameProvider,
+  getCatalogList,
+  getFullGameName,
+  getTableGameName,
+  type ServerConfig,
+} from '../../src/config/index.js';
 import { CompressType, decompressData } from '../../src/utils/data_compress.js';
 import { SpinDataReader } from '../../src/utils/spin-data-reader.js';
-import { getFullGameName, getTableGameName } from '../../src/utils/table.js';
 
 async function reSpinData(
   tableName: string,
   jiliConfig: Partial<ServerConfig['jiliConfig']>,
-  options: { pageSize: number }
+  options: { pageSize: number; provider: GameProvider }
 ) {
   try {
+    const { provider } = options;
     console.log('🔍 开始重新保存数据');
+    config.serverConfig.provider = provider;
+    config.catalogList = getCatalogList(provider);
     config.updateGameConfig(jiliConfig);
 
-    await dbManager.initDB(config.serverConfig.db, config.provider);
+    await dbManager.initDB(config.serverConfig.db, provider);
     console.log('✅ 成功连接到数据库');
 
     const { gameName } = config.serverConfig.jiliConfig;
@@ -142,9 +151,10 @@ async function reSpinData(
 }
 
 async function main() {
+  const provider: GameProvider = 'jili';
   const tableName = 'jili_spin_mpt_normal_backup';
-  const name = getTableGameName(tableName);
-  const fullName = getFullGameName(name);
+  const name = getTableGameName(tableName, provider);
+  const fullName = getFullGameName(name, provider);
   if (!fullName) {
     console.error(`❌ 游戏 ${name} 不存在`);
     process.exit(1);
@@ -168,6 +178,7 @@ async function main() {
     },
     {
       pageSize: 1000,
+      provider,
     }
   );
   process.exit(0);

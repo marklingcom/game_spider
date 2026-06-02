@@ -1,7 +1,7 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as cheerio from 'cheerio';
-import { decryptAESECB, encryptAESECB } from '../utils/awc_utils.js';
+import { decryptAESECB, encryptAESECB } from '../utils/crypto/index.js';
 import { getUrlHtmlContent, parseRedirectResponse } from '../utils/network.js';
 import { getAxiosClient } from '../utils/request.js';
 import { parseJiliGameUrl, parsePPGameUrl } from '../utils/url.js';
