@@ -16,9 +16,10 @@ interface ProgressNotifyState {
   isCompleteNotified: boolean;
 }
 
+const progressStateMap = new Map<string, ProgressNotifyState>();
+
 export class ProgressNotifier {
   private readonly threshold: number;
-  private readonly stateMap = new Map<string, ProgressNotifyState>();
 
   constructor(options: ProgressNotifierOptions = {}) {
     this.threshold = options.threshold ?? 3;
@@ -82,14 +83,14 @@ export class ProgressNotifier {
   }
 
   private getState(name: string): ProgressNotifyState {
-    let state = this.stateMap.get(name);
+    let state = progressStateMap.get(name);
     if (!state) {
       state = {
         isInitialNotified: false,
         lastProgress: null,
         isCompleteNotified: false,
       };
-      this.stateMap.set(name, state);
+      progressStateMap.set(name, state);
     }
     return state;
   }

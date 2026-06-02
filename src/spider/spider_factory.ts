@@ -3,33 +3,48 @@ import { dbManager } from '../models/index.js';
 import { GameArtDb } from './gameart/gameart_db.js';
 import { GameArtSpiderWork } from './gameart/gameart_spider.js';
 import { JiliDb } from './jili/jili_db.js';
-import { SpiderWork } from './jili/jili_spider.js';
+import { JiliSpiderWork } from './jili/jili_spider.js';
 
-export interface SpiderWorkerLike {
+export interface SpiderWork {
   once(event: string | symbol, listener: (...args: any[]) => void): this;
   start(): Promise<void>;
+}
+
+let gameArtDb: GameArtDb | null = null;
+let jiliDb: JiliDb | null = null;
+
+function getGameArtDb(config: Config): GameArtDb {
+  if (!gameArtDb) {
+    gameArtDb = new GameArtDb({ db: dbManager, config });
+  }
+  return gameArtDb;
+}
+
+function getJiliDb(config: Config): JiliDb {
+  if (!jiliDb) {
+    jiliDb = new JiliDb({ db: dbManager, config });
+  }
+  return jiliDb;
 }
 
 export function createSpiderWork(options: {
   config: Config;
   session: GameSession;
-}): SpiderWorkerLike {
+}): SpiderWork {
   const { config, session } = options;
   switch (config.provider) {
     case 'gameart': {
-      const gameArtDb = new GameArtDb({ db: dbManager, config });
       return new GameArtSpiderWork({
         config,
         session,
-        gameArtDb,
+        gameArtDb: getGameArtDb(config),
       });
     }
     case 'jili': {
-      const jiliDb = new JiliDb({ db: dbManager, config });
-      return new SpiderWork({
+      return new JiliSpiderWork({
         config,
         session,
-        jiliDb,
+        jiliDb: getJiliDb(config),
       });
     }
     default:

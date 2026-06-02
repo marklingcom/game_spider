@@ -6,7 +6,10 @@ import type { JiliDb } from './jili_db.js';
 import { SpiderBase } from '../spider_base.js';
 export { SpiderWorkEvent } from '../spider_base.js';
 
-export class SpiderWork extends SpiderBase<GameInfoAck, { spinReqData: any; spinResBuffer: Buffer }> {
+export class JiliSpiderWork extends SpiderBase<
+  GameInfoAck,
+  { spinReqData: any; spinResBuffer: Buffer }
+> {
   private jiliApi: JiliApi;
   private jiliDb: JiliDb;
 

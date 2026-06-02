@@ -60,7 +60,7 @@ src/
 
 工厂在 `src/spider/spider_factory.ts`：
 
-- `provider = jili` 时创建 `JiliDb` + `SpiderWork`。
+- `provider = jili` 时创建 `JiliDb` + `JiliSpiderWork`。
 - `provider = gameart` 时创建 `GameArtDb` + `GameArtSpiderWork`。
 
 ## 配置变化
