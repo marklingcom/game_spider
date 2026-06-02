@@ -6,6 +6,8 @@ export enum SpiderWorkEvent {
   SPIN_SAVE = 'spinSave',
 }
 
+const notifiedStopMessages = new Set<string>();
+
 export abstract class SpiderBase<TGameInfo, TSpinResult> extends EventEmitter {
   protected config: Config;
   protected session: GameSession;
@@ -46,11 +48,20 @@ export abstract class SpiderBase<TGameInfo, TSpinResult> extends EventEmitter {
 
       if (this.isStop()) {
         const msg = this.getStopMessage();
-        console.log(msg);
-        telegramService.sendInfo(msg);
+        this.notifyStopOnce(msg);
         break;
       }
     }
+  }
+
+  private notifyStopOnce(message: string): void {
+    if (notifiedStopMessages.has(message)) {
+      return;
+    }
+
+    notifiedStopMessages.add(message);
+    console.log(message);
+    telegramService.sendInfo(message);
   }
 
   protected abstract init(): Promise<void>;
