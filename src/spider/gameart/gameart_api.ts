@@ -1,4 +1,5 @@
 import type { BuyBounsConfig, Config, ExtraConfig, GameSession } from '../../config/index.js';
+import { RetError } from '../../utils/errors.js';
 import { getAxiosClient } from '../../utils/request.js';
 import { decodeGameArtText, encodeGameArtText } from './gameart_utils.js';
 
@@ -254,8 +255,20 @@ class GameArtResponseError extends Error {
 function assertGameArtResponseOk(payload: unknown, request: GameArtAction[], seq: number): void {
   const response = payload as { error?: unknown; errorCode?: unknown };
   if (response?.error || response?.errorCode) {
+    if (isNotEnoughCredits(response)) {
+      throw new RetError(305);
+    }
     throw new GameArtResponseError(payload, request, seq);
   }
+}
+
+function isNotEnoughCredits(response: { error?: unknown; errorCode?: unknown }): boolean {
+  if (response.errorCode === 105) {
+    return true;
+  }
+
+  const error = response.error;
+  return typeof error === 'string' && error.includes('not enough credits');
 }
 
 function getGameEndWin(response: unknown): number {

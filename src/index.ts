@@ -84,7 +84,6 @@ total: 总共${totalCount}个账号
       await spiderWork.start();
     } catch (error) {
       let errorMessage = `账号 ${uid} 执行失败: ${(error as Error).message}`;
-      const stackTrace = (error as Error).stack || '无堆栈信息';
 
       if (error instanceof RetError) {
         if (error.retCode === 254) {
@@ -111,8 +110,7 @@ total: 总共${totalCount}个账号
       }
 
       console.log(errorMessage);
-      console.log('堆栈信息:', stackTrace);
-      telegramService.sendError(`开始重试: ${errorMessage}`, `堆栈信息:\n${stackTrace}`);
+      telegramService.sendError(`开始重试: ${errorMessage}`);
       await run(uid, 2000);
     }
   };
