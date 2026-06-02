@@ -21,10 +21,6 @@ export interface GameArtRoundResult {
   multiplier: number;
 }
 
-const DEFAULT_BUY_CONTEXTS = ['BONUS'];
-const DEFAULT_EXTRA_CONTEXTS = ['FEATURE1', 'FEATURE2', 'FEATURE3', 'FEATURE4'];
-const DEFAULT_BUY_MULTIPLIERS = [100];
-const DEFAULT_EXTRA_MULTIPLIERS = [50, 175, 450, 550];
 const GAMEART_AMOUNT_SCALE = 100;
 const GAMEART_PAYLINES = 25;
 const DEFAULT_DISPLAY_BET = 1;
@@ -115,9 +111,9 @@ export class GameArtApi {
     const outcome = outcomes[index];
     if (!outcome) {
       throw new Error(
-        `GameArt ${type} index 无效: ${index}, 可用项: ${outcomes
-          .map((item) => item.name)
-          .join(',')}`
+        `GameArt ${type} index 无效或当前 config 不支持: ${index}, 可用项: ${formatOutcomeNames(
+          outcomes
+        )}`
       );
     }
     return { context: outcome.name, multiplier: outcome.multiplier };
@@ -126,10 +122,10 @@ export class GameArtApi {
   private getBuyOutcomes(type: 'BONUS' | 'FEATURE'): Array<{ name: string; multiplier: number }> {
     const buyOutcomes = this.configResponse?.events?.[0]?.context?.buyOutcomes;
     if (!Array.isArray(buyOutcomes)) {
-      return getDefaultBuyOutcomes(type);
+      return [];
     }
 
-    const outcomes = buyOutcomes
+    return buyOutcomes
       .map((item) => ({
         name: (item as { name?: unknown })?.name,
         multiplier: (item as { multiplier?: unknown })?.multiplier,
@@ -140,12 +136,6 @@ export class GameArtApi {
           item.name.startsWith(type) &&
           typeof item.multiplier === 'number'
       );
-
-    if (outcomes.length === 0) {
-      return getDefaultBuyOutcomes(type);
-    }
-
-    return outcomes;
   }
 
   private buildBetRequest(displayBet: number, context: string | null): GameArtAction[] {
@@ -347,14 +337,9 @@ function hasEvent(events: unknown[], eventName: string): boolean {
   return events.some((event) => (event as { event?: string })?.event === eventName);
 }
 
-function getDefaultBuyOutcomes(type: 'BONUS' | 'FEATURE'): Array<{
-  name: string;
-  multiplier: number;
-}> {
-  const names = type === 'BONUS' ? DEFAULT_BUY_CONTEXTS : DEFAULT_EXTRA_CONTEXTS;
-  const multipliers = type === 'BONUS' ? DEFAULT_BUY_MULTIPLIERS : DEFAULT_EXTRA_MULTIPLIERS;
-  return names.map((name, index) => ({
-    name,
-    multiplier: multipliers[index] ?? 1,
-  }));
+function formatOutcomeNames(outcomes: Array<{ name: string; multiplier: number }>): string {
+  if (outcomes.length === 0) {
+    return '无';
+  }
+  return outcomes.map((item) => item.name).join(',');
 }

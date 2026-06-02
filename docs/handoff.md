@@ -188,10 +188,7 @@ realBet = baseBet * buyOutcome.multiplier
 
 然后按 `buyBouns.index` 或 `extra.index` 取对应项。
 
-如果服务端 config 没返回 `buyOutcomes`，才使用兜底：
-
-- BONUS：`BONUS`
-- FEATURE：`FEATURE1`、`FEATURE2`、`FEATURE3`、`FEATURE4`
+如果服务端 config 没返回 `buyOutcomes`，或者对应 index 不存在，会直接报错，不再兜底发送 `BONUS` / `FEATURE1`。这是为了避免线上服务端未开放购买项时返回 `unexpected args for action "play"`。
 
 表名用配置里的 index 区分，从 0 开始。
 

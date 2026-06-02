@@ -193,10 +193,7 @@ configResponse.events[0].context.buyOutcomes
 
 然后按配置 index 取对应项。
 
-如果服务端没有返回 `buyOutcomes`，才使用兜底值：
-
-- BONUS：`BONUS`
-- FEATURE：`FEATURE1`、`FEATURE2`、`FEATURE3`、`FEATURE4`
+如果服务端没有返回 `buyOutcomes`，或者对应 index 不存在，会直接报错，不再兜底发送 `BONUS` / `FEATURE1`。这是为了避免线上服务端未开放购买项时返回 `unexpected args for action "play"`。
 
 表名按配置 index 区分，从 0 开始。
 
